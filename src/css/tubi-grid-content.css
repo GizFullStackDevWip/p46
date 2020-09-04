@@ -1,0 +1,136 @@
+.content-grid {
+	margin-bottom: 0;
+}
+
+.content-grid .grid-list {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0;
+	padding: 0;
+}
+
+.content-grid .grid-list li {
+	position: relative;
+	list-style: none;
+	width: 50%;
+	flex: 50%;
+	max-width: 50%;
+	margin-bottom: 70px !important;
+}
+
+.content-grid .grid-list li .container {
+	padding: 0;
+}
+
+.content-grid .grid-list li .wpb_single_image {
+	padding: 0;
+	margin: 0;
+}
+
+.content-grid .grid-list li .tubi-content {
+	position: initial;
+	padding: 20px 50px 38px;
+}
+
+.content-grid .grid-list li .tubi-content.b-color-border p {
+	max-width: 320px;
+}
+
+.content-grid .grid-list li .tubi-content.b-color-border:after {
+	height: 2px;
+}
+
+.content-grid .grid-list li .tubi-content.b-color-border:after {
+	width: calc(100% - 50px);
+	left: 50px;
+}
+
+.content-grid .grid-list li .tubi-quotes {
+	position: initial;
+}
+
+.content-grid .grid-list li .tubi-quotes .quote {
+	font-size: 14px;
+	line-height: 1.71;
+	font-style: normal;
+	color: #26262d;
+	background-size: 25px;
+	background-position: 50px 0;
+	padding: 50px 50px 0;
+}
+
+.content-grid .grid-list li .tubi-quotes .quote span {
+	font-weight: bold;
+	line-height: 1.71;
+}
+
+.content-grid .grid-list li .tubi-quotes .quote span > span {
+	padding: 0;
+	display: block;
+	font-weight: normal;
+}
+
+.content-grid .grid-list li .tubi-quotes.b-color-border:after {
+	width: calc(100% - 50px);
+	left: 50px;
+}
+
+.content-grid .grid-list li:nth-child(odd) .tubi-content {
+	padding-left: 0;
+}
+
+.content-grid .grid-list li:nth-child(odd) .tubi-content.b-color-border:after {
+	left: 0;
+}
+
+.content-grid .grid-list li:nth-child(odd) .tubi-quotes .quote {
+	padding-left: 0;
+}
+
+.content-grid .grid-list li:nth-child(odd) .tubi-quotes.b-color-border:after {
+	left: 0;
+}
+
+@media screen and (max-width: 768px) {
+	.content-grid .grid-list li {
+		width: 100%;
+		flex: 100%;
+		max-width: 100%;
+		margin-bottom: 18px !important;
+	}
+
+	.content-grid .grid-list li .tubi-content {
+		position: relative;
+		padding: 0 0 22px;
+		margin-bottom: 15px !important;
+	}
+
+	.content-grid .grid-list li .tubi-content.b-color-border:after {
+		width: 100%;
+		left: 0;
+	}
+
+	.content-grid .grid-list li .tubi-quotes .quote {
+		padding: 50px 0 22px;
+		background-position: left top;
+	}
+
+	.content-grid .grid-list li .tubi-quotes.b-color-border:after {
+		width: 100%;
+		left: 0;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.content-grid.swap_mobile ul li {
+		order: 3;
+	}
+
+	.content-grid.swap_mobile ul li:first-child {
+		order: 2;
+	}
+
+	.content-grid.swap_mobile ul li:nth-child(2) {
+		order: 1;
+	}
+}
