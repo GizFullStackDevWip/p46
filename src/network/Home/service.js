@@ -1,4 +1,5 @@
 const axios = require('axios');
+
 function fetchHomeBannerDetails() {
     var token = localStorage.getItem('access-token');
     let uId = 74961;
@@ -23,29 +24,7 @@ function fetchHomeBannerDetails() {
             return [];
         });
 }
-
-function fetchCategories() {
-    var token = localStorage.getItem('access-token');
-    const customConfig = {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Access-Control-Allow-Origin': true,
-            crossorigin: true,
-            'access-token': token,
-        },
-        params: {
-            pubid: 50023
-        }
-    };
-    return axios.get('https://poppo.tv/platform/bk/api/getCategories', customConfig).then(
-        response => {
-            return response.data;
-        })
-        .catch((error) => {
-            return [];
-        });
-}
-function getShowsByCategory(categoryId) {
+function getshowsbyCategory(){
     var token = localStorage.getItem('access-token');
     var uId = 74961
     let user_id = getCookie('userId');
@@ -61,11 +40,10 @@ function getShowsByCategory(categoryId) {
         },
         params: {
             pubid: 50023,
-            cat_id: categoryId,
             user_id: uId
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/getShowsBycatweb', customConfig).then(
+    return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
         response => {
             return response.data;
         })
@@ -86,6 +64,5 @@ function getCookie(name) {
 }
 export const service = {
     fetchHomeBannerDetails,
-    fetchCategories,
-    getShowsByCategory
+    getshowsbyCategory
 };

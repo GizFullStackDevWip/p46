@@ -1,3 +1,4 @@
+import $ from 'jquery';
 $(document).ready(function(){
     // MENU HOVER FUNCTION
     $(".menuIcon").hover(function(){

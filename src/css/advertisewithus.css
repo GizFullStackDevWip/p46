@@ -1,0 +1,267 @@
+.tubi-header > .main-bg:after {
+    background-image: url(../images/advertise/main-bg.JPG);
+}
+.tubi-header {
+    height: 810px;
+}
+.tubi-header .header-content h1 {
+    max-width: 100%;
+}
+.tubi-header .header-content h1 span {
+    max-width: 650px;
+    margin: 0 auto;
+}
+.vc_custom_1584031025503 {
+    margin-bottom: 4.2vw !important;
+}
+@media screen and (max-width: 768px) {
+    .tubi-header {
+        height: 608px;
+    }    
+}
+
+
+
+.vc_custom_1581450206425 {
+    margin-bottom: 25px !important;
+}
+
+.vc_custom_1596016433165 {
+    padding-top: 2px !important;
+}
+
+.vc_custom_1578573634779 {
+    margin-bottom: 90px !important;
+}
+
+.vc_custom_1578573724366 {
+    margin-bottom: 90px !important;
+}
+
+.vc_custom_1586815928312 {
+    margin-bottom: 4.2vw !important;
+}
+
+.vc_custom_1586820513875 {
+    margin-top: 50px !important;
+}
+
+.vc_custom_1581602957907 {
+    background-image: url(../images/experiance.jpg) !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.vc_custom_1583773001819 {
+    margin-bottom: 0px !important;
+    border-bottom-width: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.vc_custom_1578648045732 {
+    margin-top: 40px !important;
+    margin-bottom: 90px !important;
+}
+
+.tubi_images_carousel_wrapper figcaption {
+	font-size:1.5rem;
+	font-style:normal;
+	color:#000;
+	line-height:1.5;
+	padding-top:9px;
+}
+#page {
+	padding-top:0;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item img, #content .tubi-service-list .wpb_wrapper .service-item img {
+	max-width:none;
+}
+#content .tubi-service-list-wrapper .tubi-service-list.small h5 {
+	line-height:1.1;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image {
+	padding:0 !important;
+	padding-bottom:22px !important;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-bottom > div {
+	top:80%;
+	left:unset;
+	padding:0;
+	-webkit-transform: none;
+-ms-transform: none;
+transform: none;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-middle > div {
+	top:45%;
+	left:unset;
+	padding:0;
+	-webkit-transform: none;
+-ms-transform: none;
+transform: none;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-top > div {
+	top:5%;
+	left:unset;
+	padding:0;
+	-webkit-transform: none;
+-ms-transform: none;
+transform: none;
+}
+#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image > div h5 {
+	color:#fff !important;
+}
+.b-close {
+	background-image: url('../images/cross2.png');
+	background-size:contain;
+	background-repeat: no-repeat;
+width: 30px;
+height: 30px;
+	right:5px;
+	top:5px;
+}
+.mega-model-popup img {
+	display:none;
+}
+.tubi-press.list #press-wrapper .file-item h6 {
+	padding-bottom:15px;
+}
+.page-id-50 .press-subheading {
+	display:none;
+}
+.model-popup-btn {
+	font-weight:bold;
+	-webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+	border: solid 1px rgba(64, 71, 76, 0.1);
+}
+.model-popup-container fieldset {
+	padding:30px;
+}
+.model-popup-container h2 {
+	border-bottom:none !important;
+}
+.model-popup-container textarea {
+	max-height:100px;
+}
+.model-popup-container .wpcf7-form fieldset .button-set {
+	-webkit-box-align: initial !important;
+-ms-flex-align: initial !important;
+align-items: initial !important;
+}
+.page-id-216 .modal-popup-box {
+	margin-top:-125px;
+	margin-bottom:175px;
+}
+.page-id-216 .tubi-text-banner a.btn {
+	display:none !important;
+}
+.page-id-216 .tubi-text-banner.small {
+	padding: 35px 40px 60px;
+}
+.page-id-41 .model-popup-btn {
+	background:transparent !important;
+	-webkit-box-shadow:none;
+box-shadow: none;
+border: none;
+	text-decoration:underline;
+	font-weight:normal;
+	padding:0 !important;
+}
+.anywhere {
+	max-width:900px;
+	height:auto;
+}
+.content-grid .grid-list li .tubi-quotes.quote-right .quote {
+	padding: 50px 0 0 50px;
+}
+.content-grid .grid-list li .tubi-quotes.quote-left .quote {
+	background-position: 0 0;
+}
+.post-thumbnail {
+	text-align:center;
+}
+.video-slider {
+	max-width:1000px;
+}
+.page-id-40 div.form-field .tubi-select > .select-selected {
+	/*margin-top:-2px;*/
+}
+.page-id-20 div.form-field .tubi-select > .select-selected.select-arrow-active, .page-id-50 div.form-field .tubi-select > .select-selected.select-arrow-active {
+	margin-bottom:1px;
+}
+p a {
+	text-decoration:underline;
+}
+.brand-assets .grid-list li {
+	padding-right:1%;
+}
+#disclaimer .btn {
+	display:none;
+}
+.container.tubi-text-banner {
+	max-width:1220px;
+}
+.tubi-brand-assets .file-item h6 > span > span.ext, .tubi-brand-assets .file-item h6 > span > span {
+color:#707C86;
+
+}
+.file-field label.slate-grey {
+	padding-bottom:0;
+}
+.tubi-check-list .wpb_wrapper .check-item {
+	padding:20px 0;
+}
+.tubi-check-list .wpb_wrapper .check-item > div h6 + p {
+	padding-top:0;
+}
+a:visited {
+	color:#26262d;
+}
+a.btn span {
+	color:#fff;
+}
+a.btn.white span {
+	color:#000;
+}
+@media screen and (max-width:768px) {
+	.model-popup-container fieldset {
+	padding:0px;
+} 
+	.page-id-216 .modal-popup-box {
+		margin-top:-125px;
+		margin-bottom:125px;
+	}
+	.content-grid .grid-list li .tubi-quotes.quote-right .quote {
+	padding: 50px 0 20px 0px;
+}
+	#content .tubi-service-list.b-border .wpb_wrapper .service-item:last-child:after {
+		content: "";
+display: block;
+position: absolute;
+width: calc(100% - 32px);
+height: 2px;
+left: 16px;
+bottom: -20px;
+border-radius: 2px;
+-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02);
+background-image: -webkit-gradient(linear, left top, right top, from(#bc067b), color-stop(69%, #fe322a), to(#ff501a);
+background-image: -o-linear-gradient(left, #bc067b, #fe322a 69%, #ff501a;
+background-image: linear-gradient(to right, #bc067b, #fe322a 69%, #ff501a;
+	}
+}
+#content .tubi-service-list .wpb_wrapper .service-item img {
+	max-width:200px;
+}
+.leadership .service-item img {
+	max-width:100% !important;
+}
+
+/*Press page bullets. Adding specificity to ensure it doesn't change the overall site */
+body.single article div.entry-content ul li {
+	list-style-position: outside !important;
+	font-weight: normal !important;
+	margin-left: 2%;
+	margin-bottom: 2rem;
+}

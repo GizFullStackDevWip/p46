@@ -477,7 +477,7 @@ body {
     background: linear-gradient(-90deg,#3b3c42 50%,rgba(59,60,66,.9) 60%,rgba(59,60,66,0))
 }
 
-.Carousel--no-mask .carouselContent {
+.carouselNoMask .carouselContent {
     overflow: hidden
 }
 
@@ -573,7 +573,7 @@ body {
     max-width: 100%
 }
 
-.Col--1-5 {
+.col-1-5 {
     flex: 0 0 20%;
     max-width: 20%
 }
@@ -1527,7 +1527,7 @@ body {
         max-width: 25%
     }
 
-    .Col--lg-4 {
+    .col-lg-4 {
         flex: 0 0 33.33333%;
         max-width: 33.33333%
     }
@@ -1552,7 +1552,7 @@ body {
         max-width: 66.66667%
     }
 
-    .Col--lg-9 {
+    .col-lg-9 {
         flex: 0 0 75%;
         max-width: 75%
     }
@@ -1587,7 +1587,7 @@ body {
         max-width: 60%
     }
 
-    .Col--lg-4-5 {
+    .col-lg-4-5 {
         flex: 0 0 80%;
         max-width: 80%
     }
@@ -3630,41 +3630,41 @@ html.is-ps5 {
     height: 24px
 }
 
-.headerMenu._1lGOj {
+.headerMenu.headerWhite {
     background: #fff;
     border-bottom: 1px solid rgba(38,38,45,.1)
 }
 
-.headerMenu._1lGOj .logosection .logoLink .brandLogo {
+.headerMenu.headerWhite .logosection .logoLink .brandLogo {
     color: #26262d
 }
 
-.headerMenu._1lGOj .searchBar {
+.headerMenu.headerWhite .searchBar {
     background-color: #f0f3f5;
     border: 1px solid rgba(32,32,38,.1)
 }
 
-.headerMenu._1lGOj .searchBar svg {
+.headerMenu.headerWhite .searchBar svg {
     color: #26262d!important
 }
 
-.headerMenu._1lGOj .searchBar input {
+.headerMenu.headerWhite .searchBar input {
     color: #26262d
 }
 
-.headerMenu._1lGOj .searchBar input::-moz-placeholder {
+.headerMenu.headerWhite .searchBar input::-moz-placeholder {
     color: #26262d
 }
 
-.headerMenu._1lGOj .searchBar input:-ms-input-placeholder {
+.headerMenu.headerWhite .searchBar input:-ms-input-placeholder {
     color: #26262d
 }
 
-.headerMenu._1lGOj .searchBar input::-ms-input-placeholder {
+.headerMenu.headerWhite .searchBar input::-ms-input-placeholder {
     color: #26262d
 }
 
-.headerMenu._1lGOj .searchBar input::placeholder {
+.headerMenu.headerWhite .searchBar input::placeholder {
     color: #26262d
 }
 
@@ -4637,6 +4637,21 @@ a.headerMenuItems:hover {
     color: #fff
 }
 
+.headerWhite .loginButtonContainer ul>li .headerSignInButton {
+    color: #202026
+}
+.headerWhite .menuIcon .hamburger,
+.headerWhite .menuIcon .hamburger:after, 
+.headerWhite .menuIcon .hamburger:before {
+    background-color: #000;
+}
+.headerWhite .buttonSecondary .buttonBg{
+   background: #26262d; 
+}
+.headerWhite .buttonSecondary{
+    color: #fff;
+}
+
 .loginButtonContainer ul>li a {
     width: 100%;
     text-align: center;
@@ -4793,9 +4808,11 @@ a.headerMenuItems:hover {
     }
 }
 
+/*
 .homepageWrapper {
     padding-top: 80px
 }
+*/
 
 .homepageWrapper ._2eOF9 {
     z-index: 1;
@@ -6731,7 +6748,7 @@ a.headerMenuItems:hover {
     z-index: 1;
     overflow: hidden;
     border-bottom: 1px solid rgba(211,215,219,.1);
-    height: 72vh;
+    height: 84vh;
     min-height: 375px;
     max-height: 600px;
     cursor: pointer
@@ -7297,14 +7314,14 @@ a.headerMenuItems:hover {
     border-bottom: none
 }
 
-.W7v7G {
+.seasonTileWrapper {
     position: relative;
     letter-spacing: .5px;
     color: #fff;
     font-size: 11px
 }
 
-.W7v7G ._3ZLmX {
+.seasonTileWrapper .seasonTileImgWrapper {
     position: relative;
     width: 100%;
     background-size: cover;
@@ -7312,7 +7329,7 @@ a.headerMenuItems:hover {
     padding: 28.125% 0
 }
 
-.W7v7G ._3ZLmX ._1tr10 {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTileImgExtra {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -7324,7 +7341,7 @@ a.headerMenuItems:hover {
     transition: opacity .3s
 }
 
-.W7v7G ._3ZLmX ._2zACE {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay {
     color: #fff;
     transition: color .2s ease-in,opacity .2s ease-in,transform .2s ease-in;
     opacity: 0;
@@ -7334,15 +7351,15 @@ a.headerMenuItems:hover {
     transform: scale(.8)
 }
 
-.W7v7G ._3ZLmX ._2zACE:hover {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay:hover {
     color: #ff501a
 }
 
-.kids-mode .W7v7G ._3ZLmX ._2zACE:hover {
+.kids-mode .seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay:hover {
     color: #fea534
 }
 
-.W7v7G ._3ZLmX ._2zACE ._2oeMy {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay .seasonTileSVG {
     width: 4rem;
     height: 4rem;
     font-size: 0;
@@ -7350,48 +7367,48 @@ a.headerMenuItems:hover {
     cursor: pointer
 }
 
-.W7v7G ._3ZLmX ._2zACE ._2oeMy circle {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay .seasonTileSVG circle {
     transition: r .2s ease-in-out
 }
 
-.W7v7G ._3ZLmX ._2zACE ._2oeMy:hover circle {
+.seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay .seasonTileSVG:hover circle {
     r: 28px
 }
 
 @media (min-width: 768px) {
-    .W7v7G ._3ZLmX ._2zACE {
+    .seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay {
         left:calc(50% - 2.5rem);
         top: calc(50% - 2.5rem)
     }
 
-    .W7v7G ._3ZLmX ._2zACE ._2oeMy {
+    .seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay .seasonTileSVG {
         width: 5rem;
         height: 5rem
     }
 }
 
-.W7v7G ._3ZLmX:hover ._1tr10 {
+.seasonTileWrapper .seasonTileImgWrapper:hover .seasonTileImgExtra {
     opacity: 1
 }
 
-.W7v7G ._3ZLmX:hover ._2zACE {
+.seasonTileWrapper .seasonTileImgWrapper:hover .seasonTilePlay {
     z-index: 1;
     opacity: 1;
     transform: scale(1)
 }
 
-.W7v7G ._1g4Iu {
+.seasonTileWrapper .seasonTileHeading {
     margin: 18px 0 13px;
     font-size: 1rem;
     color: #fff
 }
 
-.W7v7G:hover ._3ZLmX ._2oeMy {
+.seasonTileWrapper:hover .seasonTileImgWrapper .seasonTileSVG {
     display: block;
     opacity: 1
 }
 
-.W7v7G ._2GgQ0 {
+.seasonTileWrapper .seasonTilePara {
     color: #d7d7d7;
     line-height: 1.71;
     overflow: hidden;
@@ -7403,7 +7420,7 @@ a.headerMenuItems:hover {
     -webkit-line-clamp: 4
 }
 
-.W7v7G ._5RjDk {
+.seasonTileWrapper ._5RjDk {
     position: absolute;
     left: 5%;
     bottom: 4px;
@@ -7412,7 +7429,7 @@ a.headerMenuItems:hover {
 }
 
 @media (min-width: 768px) {
-    .W7v7G {
+    .seasonTileWrapper {
         font-size:14px
     }
 }
@@ -7574,8 +7591,7 @@ a.headerMenuItems:hover {
 .movieTile {
     font-size: 1rem;
     display: flex;
-    flex-direction: column;
-    padding: 10px;
+    flex-direction: column
 }
 
 .movieTile,.movieTile .movieTileImage {
@@ -9197,11 +9213,11 @@ a.headerMenuItems:hover {
     border-bottom: 1px solid rgba(211,215,219,.1)
 }
 
-.vpLeftButtonWrapper ._2gtRU {
+.vpLeftButtonWrapper .vpWatchSeason {
     margin-bottom: 8px
 }
 
-.vpLeftButtonWrapper ._2gtRU ._3WC_H {
+.vpLeftButtonWrapper .vpWatchSeason ._3WC_H {
     position: relative;
     bottom: 1px;
     margin-left: 7.5px;
@@ -9214,11 +9230,11 @@ a.headerMenuItems:hover {
     box-shadow: 0 2px 4px 0 rgba(255,80,26,.1)
 }
 
-.kids-mode .vpLeftButtonWrapper ._2gtRU ._3WC_H {
+.kids-mode .vpLeftButtonWrapper .vpWatchSeason ._3WC_H {
     color: #fea534
 }
 
-.vpLeftButtonWrapper ._2gtRU ._2W5Em {
+.vpLeftButtonWrapper .vpWatchSeason .vpWatchSeasonText {
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 5px
@@ -9475,7 +9491,7 @@ a.headerMenuItems:hover {
     opacity: .75
 }
 
-._3hqTw {
+.seasonTitle {
     font-size: 18px
 }
 
@@ -9496,19 +9512,19 @@ a.headerMenuItems:hover {
     color: hsla(0,0%,100%,.8)!important
 }
 
-._3siuT button {
+.seasonCarouselWrapper button {
     top: 0;
     margin-top: calc(0.5625*(100% - 3px)/2/2 - 12px)
 }
 
 @media (min-width: 768px) {
-    ._3siuT button {
+    .seasonCarouselWrapper button {
         margin-top:calc(0.5625*(100% - 10px)/2/2 - 12px)
     }
 }
 
 @media (min-width: 960px) {
-    ._3siuT button {
+    .seasonCarouselWrapper button {
         margin-top:calc(0.5625*(100% - 20px)/3/2 - 12px)
     }
 }
@@ -9698,14 +9714,14 @@ a.headerMenuItems:hover {
     }
 }
 
-._3TwCp {
+.moviePageWrapper {
     min-height: calc(100vh - 365px);
     color: #fff;
     overflow: hidden;
     margin-bottom: 5rem
 }
 
-._3TwCp ._22y1u {
+.moviePageWrapper .moviePageBG {
     position: absolute;
     width: 100%;
     padding-top: 56.25%;
@@ -9714,13 +9730,13 @@ a.headerMenuItems:hover {
     background-size: cover
 }
 
-._3TwCp ._1fCY8 {
+.moviePageWrapper .moviePageContainer {
     position: relative;
     padding-top: 212px
 }
 
 @media (min-width: 768px) {
-    ._3TwCp ._1fCY8 {
+    .moviePageWrapper .moviePageContainer {
         padding-top:220px
     }
 }
@@ -11406,7 +11422,7 @@ a.headerMenuItems:hover {
     }
 }
 
-._2YVDC {
+.twoTabSwitch {
     position: relative;
     top: 80px;
     display: flex;
@@ -11414,57 +11430,57 @@ a.headerMenuItems:hover {
     margin-bottom: 3rem
 }
 
-._2YVDC ._2IHBj {
+.twoTabSwitch .iconWrapper {
     background: #f0f3f5
 }
 
-._2YVDC ._2IHBj ._3eEcT,._2YVDC ._2IHBj ._12n5O,._2YVDC ._2IHBj .ATYo_ {
+.twoTabSwitch .iconWrapper .categoryIconSize,.twoTabSwitch .iconWrapper .categoryIconWidth75,.twoTabSwitch .iconWrapper .categoryIconWidth45 {
     font-size: 21px
 }
 
-._2YVDC ._2IHBj .ATYo_ {
+.twoTabSwitch .iconWrapper .categoryIconWidth45 {
     width: 45px
 }
 
-._2YVDC ._2IHBj ._12n5O {
+.twoTabSwitch .iconWrapper .categoryIconWidth75 {
     width: 75px
 }
 
-._2YVDC .MAkVM {
+.twoTabSwitch .devicesPosition {
     position: static;
     top: 0
 }
 
-._1UEcA {
+.selectedDeviceContainer {
     padding-top: 80px;
     background: #f0f3f5;
     max-width: none;
     min-height: 90vh
 }
 
-._1UEcA ._3eEcT,._1UEcA ._12n5O,._1UEcA .ATYo_ {
+.selectedDeviceContainer .categoryIconSize,.selectedDeviceContainer .categoryIconWidth75,.selectedDeviceContainer .categoryIconWidth45 {
     font-size: 4rem
 }
 
-._1UEcA .ATYo_ {
+.selectedDeviceContainer .categoryIconWidth45 {
     width: 90px
 }
 
-._1UEcA ._12n5O {
+.selectedDeviceContainer .categoryIconWidth75 {
     width: 120px
 }
 
-._1UEcA ._3RPnj {
+.selectedDeviceContainer .selectedDeviceRow {
     color: #26262d
 }
 
-._1UEcA ._2n985 {
+.selectedDeviceContainer ._2n985 {
     color: #fff;
     width: 135px;
     height: 40px
 }
 
-.VYtRe {
+.selectedDeviceMargin {
     margin: 0 auto
 }
 
@@ -11500,7 +11516,7 @@ a.headerMenuItems:hover {
     letter-spacing: .5px
 }
 
-._270Nn {
+.devicesFlexWrapper {
     color: #707c86;
     background: #fff;
     width: 100%;
@@ -11517,19 +11533,19 @@ a.headerMenuItems:hover {
     overflow: scroll
 }
 
-._270Nn::-webkit-scrollbar {
+.devicesFlexWrapper::-webkit-scrollbar {
     height: 0;
     background: transparent
 }
 
 @media (min-width: 540px) {
-    ._270Nn {
+    .devicesFlexWrapper {
         flex-wrap:wrap;
         justify-content: center
     }
 }
 
-._270Nn .RhgZR {
+.devicesFlexWrapper .devicesHeaderText {
     justify-content: center;
     margin: 0 14px;
     color: #707c86;
@@ -11546,15 +11562,15 @@ a.headerMenuItems:hover {
     text-align: center
 }
 
-._270Nn .RhgZR:hover {
+.devicesFlexWrapper .devicesHeaderText:hover {
     opacity: .75
 }
 
-._270Nn .RhgZR.P7Rba {
+.devicesFlexWrapper .devicesHeaderText.devicesHeaderTextActive {
     color: #ff501a
 }
 
-.kids-mode ._270Nn .RhgZR.P7Rba {
+.kids-mode .devicesFlexWrapper .devicesHeaderText.devicesHeaderTextActive {
     color: #fea534
 }
 
@@ -12012,14 +12028,14 @@ a.headerMenuItems:hover {
     transition: opacity .4s
 }
 
-._2INda {
+.selectedDeviceFlex {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     align-items: center
 }
 
-._2INda .-rUnI {
+.selectedDeviceFlex .selectedDeviceHeading {
     align-self: flex-start;
     font-size: 27px;
     font-weight: 700;
@@ -12027,7 +12043,7 @@ a.headerMenuItems:hover {
     letter-spacing: .5px
 }
 
-._2INda .fA_WZ {
+.selectedDeviceFlex .selectedDeviceContent {
     padding-top: 1rem;
     flex-direction: column;
     display: flex;
@@ -12037,16 +12053,16 @@ a.headerMenuItems:hover {
 }
 
 @media (min-width: 960px) {
-    ._2INda .fA_WZ {
+    .selectedDeviceFlex .selectedDeviceContent {
         width:100%
     }
 }
 
-._2INda .fA_WZ .st_jq {
+.selectedDeviceFlex .selectedDeviceContent .selectedDeviceImage {
     max-width: 80vw
 }
 
-._2INda .fA_WZ ._22DuX {
+.selectedDeviceFlex .selectedDeviceContent .selectedDeviceText {
     padding: 2.5rem 0;
     font-size: 18px;
     font-weight: 400;
@@ -12054,13 +12070,13 @@ a.headerMenuItems:hover {
     letter-spacing: .5px
 }
 
-._2INda .fA_WZ ._1KE9f {
+.selectedDeviceFlex .selectedDeviceContent .selectedDeviceButton {
     background: #26262d;
     margin-bottom: 3.5rem;
     border-radius: 6px
 }
 
-._2INda ._2VDLS {
+.selectedDeviceFlex .selectedDeviceNotes {
     font-size: 11px;
     font-weight: 400;
     line-height: 16px;
@@ -12072,7 +12088,7 @@ a.headerMenuItems:hover {
     padding-bottom: 3rem
 }
 
-._2INda ._2VDLS .pUnIC {
+.selectedDeviceFlex .selectedDeviceNotes .selectedDeviceHelpText {
     font-size: 11px;
     font-weight: 700;
     line-height: 16px;
@@ -13198,114 +13214,34 @@ a.headerMenuItems:hover {
     background: #26262d;
 }
 
-
-
-
-
-.homePageBanner {
-    margin-top: -80px;
-    width: 100%;
+/* HOMEPAGE BANNER SLIDER STYLE */
+.thumbnailImage.slick-slide:focus {
+    outline: none;
+}
+.carouselContent .slick-list {
+    overflow: visible; 
+}
+.hpbSliderNav.slick-slider {
+    position: absolute;
+    right: 20px;
+    bottom: 80px;
+    width: 325px;
+}
+.entireBanner {
     position: relative;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    z-index: 1;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(211,215,219,.1);
-    height: 72vh;
-    min-height: 375px;
-    max-height: 600px;
-    cursor: pointer;
 }
-.homePageBanner .hpbSlider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.hpbSliderNav .thumbnailImage {
+    margin: 0 5px;
 }
-.homePageBanner .wvPYB {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: linear-gradient(rgba(38, 38, 45, 0), rgb(38, 38, 45));
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 50%;
-}
-.homePageBanner .hpbSlider .hpbContent {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    color: #fff;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    height: 100%;
-    font-size: 30px;
-}
-
-
-
-
-
-
-.bannerThumbWrapper {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-}
-.hpbSliderNav {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+.hpbSliderNav .thumbnailImage img {
+    width: 55px;
     height: 80px;
-    overflow: hidden;
-}
-.hpbSliderNav .indThumbnail {
-    width: 10vw;
-}
-.hpbSliderNav .indThumbnail:nth-child(2), 
-.hpbSliderNav .indThumbnail.slick-active.slick-center {
-    width: 70vw;
-}
-.hpbSliderNav .indThumbnail img {
-    width: 55px;
-}
-
-
-
-
-/*
-.hpbSliderNav .slick-slide {
-    width: 10vw;
-}
-.hpbSliderNav .slick-slide.slick-active {
-    width: 70vw;
-}
-.hpbSliderNav .slick-slide img {
-    width: 55px;
-    height: 80px
-}
-.hpbSliderNav .slick-list {
-    width: 100vw;
-    overflow: hidden;
-}
-.bannerThumbWrapper {
-    bottom: 0;
-    position: absolute;
-}
-.hpbSliderNav .slick-slide {
-    display: none !important;
 }
 .hpbSliderNav .slick-slide.slick-active {
     display: block !important;
     position: relative;
 }
-.hpbSliderNav .slick-active .bannerThumbnailOverlay {
+.hpbSliderNav .slick-active .black-overlay {
     background-image: linear-gradient(to right bottom, rgba(38, 38, 45, 0.7), rgba(38, 38, 45, 0.7)); 
     cursor: pointer;
     width: 100%;
@@ -13314,68 +13250,23 @@ a.headerMenuItems:hover {
     top: 0;
     left: 0;
 }
-.hpbSliderNav .slick-active.slick-center .bannerThumbnailOverlay {
+.hpbSliderNav .slick-active.slick-center .black-overlay {
     background: transparent;
 }
-.currentSlideDetails {
-    display: none;
+._1nirg.slick-slide {
+    margin-top: 0;
+    height: 72vh;
+    min-height: 375px;
+    max-height: 600px;
 }
-.hpbSliderNav .slick-active.slick-center .currentSlideDetails {
-    display: block;
-}
-*/
 
-/*
-.homePageBanner .hpbSliderNav {
-    display: none;
+@media (max-width: 767px) {
+    .hpbSliderNav.slick-slider {
+        display: none;
+    }
 }
-.homePageBanner .hpbSliderNav {
-    width: 100%;
-    justify-content: space-between;
-    color: #fff;
-    z-index: 2;
-    max-width: 1920px;
-    margin: 32px 0 55px;
-}
-@media (min-width: 768px) {
-	.homePageBanner .hpbSliderNav {
-		margin: 32px 0 47px;
-		margin: 39px 0 79px;
-	}
-	.homePageBanner .hpbSliderNav {
-		display: flex;
-		align-items: baseline;
-	}
-}
-.bannerThumbWrapper {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 2;
-}
-.hpbSliderNav .slick-list {
-    overflow: hidden;
-    width: 100%;
-}
-.hpbSliderNav .slick-list.draggable {
-    overflow: hidden;
-    padding: 0 !important;
-}
-.hpbSliderNav .slick-slide[data-slick-index="-2"] {
-    display: none;
-}
-.hpbSliderNav img {
-    width: 55px;
-    height: 80px;
-}
-.hpbSliderNav .slick-slide {
-    width: 60px;
-    padding: 0;
-    margin: 0;
-}
-*/
 
 
-.wvPYB{
-    background-image:linear-gradient(rgba(38, 38, 45, 0), rgb(38, 38, 45)),url(../images/homepage/banner/kevin.png);
+.smartHeader, .mobileTabletHeader, .webDesktopHeader {
+    display: none;
 }

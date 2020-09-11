@@ -4,18 +4,13 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-
 const Show = ({ param }) => {
-    const [show, setShow] = useState([])
+    const [show, setShow] = useState(param)
     useEffect(() => {
-        service.getShowsByCategory(param).then(response => {
-            console.log(response.data, 'data')
-            setShow(response.data);
-        })
+
     }, []);
     const responsive = {
         superLargeDesktop: {
-            // the naming can be any, depends on you.
             breakpoint: { max: 4000, min: 3000 },
             items: 5
         },
@@ -38,17 +33,17 @@ const Show = ({ param }) => {
                 {
                     show.map((show, index) => {
                         return (
-                            <div className="movieTile" key={index} >
+                            <div className="movieTile" key={index}  style={{padding:'12px'}} >
                                 <div className="movieTileImage">
-
                                     <div className="movieTileIcon movieTileHover">
                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                         </svg>
                                     </div>
-                                    <Link to={{ pathname: '/components/getvideo', state: { categoryId: show.category_id } }}>
-                                        <div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }}>
+                                    <Link to={{ pathname: '/home/movies',search: encodeURI(`show_id=${show.show_id}`) }}>
+                                        <div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }} >
+                                        <div className="FeNml"></div>
                                         </div>
                                     </Link>
 
@@ -66,7 +61,7 @@ const Show = ({ param }) => {
                                 <section className="movieTextWrapper movieTextWrapperPadding">
                                     <div className="movieTextFlex">
                                         <h3>
-                                            <Link className="linkButton movieTextHeading" title="Cold Squad">{show.show_name}</Link></h3>
+                                            <div className="linkButton movieTextHeading" title="Cold Squad">{show.show_name}</div></h3>
                                         <div className="movieCatYear">
                                             <div>
                                                 <div className="movieYear">
@@ -77,7 +72,7 @@ const Show = ({ param }) => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="movieCensorBox moviecensorText">TV-14</div>
+                                                <div className="movieCensorBox moviecensorText">{show.rating}</div>
                                             </div>
                                         </div>
                                     </div>

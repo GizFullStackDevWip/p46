@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Show from './Show';
+import { Link } from 'react-router-dom'
 import { service } from '../../network/Home/service';
 
 const CategoryContainer = (param) => {
-    const [categoryDetails, setCategoryDetails] = useState([]);
-    const [display, setDisplay] = useState(false);
 
     useEffect(() => {
     }, []);
@@ -15,17 +14,19 @@ const CategoryContainer = (param) => {
             <div className="container categoryHeadWrapper">
                 <div className="categoryLinkWrapper">
                     <div className="categoryHeading">
-                        <a className="_2hvCx" href="/category/most_popular">
-                            <h2 className="_1mK3G">{param.param.categoryname}</h2>
-                        </a>
+                        <Link to={{ pathname: '/home/categorylist',search: encodeURI(`category_id=${param.param.category_id}`) }}>
+                            <div className="_2hvCx">
+                                <h2 className="_1mK3G">{param.param.category_name}</h2>
+                            </div>
+                        </Link>
                     </div>
-                    <a href="/category/most_popular">
+                    <Link to={{ pathname: '/home/categorylist',search: encodeURI(`category_id=${param.param.category_id}`) }}>
                         <div className="categoryDotsWrapper">
                             <div className="categoryDots"></div>
                         </div>
-                    </a>
+                    </Link>
                 </div>
-                    <Show param={param.param.categoryid} />
+                <Show param={param.param.shows} />
             </div>
         </section>
     );

@@ -18,14 +18,17 @@ import './css/style.5.4.2.css';
 import './css/style.css';
 import './css/style.min.5.4.2.css';
 import './css/style1.3.3.css';
-import './css/tubi-grid-content.css';
+import './css/tubi-grid-content.css'
 // import './css/tubi-header.css';
 // import './css/tubitv.css';
-import './css/plugin/slick.css';
-
+// import './css/plugin/slick.css';
 // import './js/plugin/jquery-3.5.1.min.js';
-// import './js/plugin/slick.min.js';
-// import './js/main.js';
+import './js/main.js';
+// import './js/moviePage.js';
+import './js/supportedDevice.js';
+// import './js/kidstv.js';
+// import './js/careers.js';
+// import './js/homepage.js';
 
 import registerServiceWorker from './registerServiceWorker';
 

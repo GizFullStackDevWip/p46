@@ -26,6 +26,33 @@ function authenticate() {
         });
 
 }
+function register() {
+    let uId = 74961;
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+        },
+        params:{
+            uid:uId
+        }
+    };
+    
+    return axios.get("https://staging.poppo.tv/platform/bk/registerWithEmail", customConfig)
+        .then((response) => {
+            localStorage.setItem('access-token', response.data.token);
+        })
+        .catch((error) => {
+            return [];
+        });
+
+}
+
 
 
 function getCookie(name) {
@@ -40,4 +67,5 @@ function getCookie(name) {
 }
 export const service = {
     authenticate,
+    register
 };
