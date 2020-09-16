@@ -7,6 +7,7 @@ import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
 import Series from '../components/Series/Series';
 import AboutUs from '../components/FooterComponents/AboutUs/AboutUs';
+import Search from '../components/Search/Search';
 const routes = () => (
     <Router>
         <Switch>
@@ -17,6 +18,7 @@ const routes = () => (
             <Route path="/register" exact component={Register} />
             <Route path="/home/series" exact component={Series} />
             <Route path="/aboutus" exact component={AboutUs} />
+            <Route path="/search" exact component={Search} />
 
         </Switch>
     </Router>

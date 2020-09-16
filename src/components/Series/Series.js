@@ -3,20 +3,26 @@ import Header from '../Basic/Header';
 import Footer from '../Basic/Footer';
 import FooterInfo from '../Basic/FooterInfo';
 import { service } from '../../network/Series/service';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import EpisodeSlider from './EpisodeSlider';
 import ShowThumbnail from './ShowThumbnail';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 const queryString = require('query-string');
+var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const Series = () => {
     var { search } = useLocation();
     const parsed = queryString.parse(search);
-    const [update, setUpdate] = useState(false)
+    const [showDetails, setShowDetails] = useState([]);
+    const [episodes, setEpisodes] = useState([]);
     console.log(parsed.show_id);
     useEffect(() => {
         service.getShowDetails(parsed.show_id).then(response => {
-            console.log(response, 'res show det');
+            console.log(response, 'details ');
+            setEpisodes(response.data);
+            setShowDetails(response.data[0]);
+
         })
     }, []);
     const responsive = {
@@ -44,24 +50,58 @@ const Series = () => {
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="moviePageWrapper">
                         <div className="moviePageBG"
-                            style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2)), url(./images/transylvania/video.jpg)' }}
-                        ></div>
+                            style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
+                        ></div> <div className="moviePageBG"
+                        style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
+                    ></div>
                         <div className="moviePageContainer">
                             <div className="vpContent">
                                 <div className="container vpContainer">
                                     <div className="row vp3Section">
-                                        <ShowThumbnail/>
+                                        <div className="col col-1-5">
+                                            <div className="vpLeftSection">
+                                                <div className="vpPoster"
+                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
+                                                ></div>
+                                                <div className="vpLeftButtonWrapper vpLeftButtonMargin">
+                                                    <button className="button buttonLarge buttonBlock vpWatchSeason">
+                                                        <div className="buttonBg"></div>
+                                                        <div className="buttonContent">
+                                                            <div className="vpWatchSeasonText">Watch</div>
+                                                        </div>
+                                                    </button>
+                                                    <div className="vpLeftButtons">
+                                                        <button className="button buttonSecondary buttonBlock vpAddButton">
+                                                            <div className="buttonBg"></div>
+                                                            <div className="buttonContent">Add to My List</div>
+                                                        </button>
+                                                        <div className="vpTwoButton">
+                                                            <button className="button buttonTransparent vpShareButton">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent"><span>Share</span></div>
+                                                            </button>
+                                                            <button className="button buttonTransparent vpReportButton">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">
+                                                                    <div className="vpReport"></div>
+                                                                </div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div className="col col-4-5">
                                             <div className="vpMiddleHeading">
-                                                <h1 className="vpMiddleh1">Transylvania TV</h1></div>
+                                                <h1 className="vpMiddleh1">{showDetails.show_name}</h1></div>
                                             <div className="vpMiddleInfoSection vpInfoPadding">
                                                 <div className="vpLengthCensor">
                                                     <div className="vpLengthYear">
-                                                        <div className="movieYearText">(2018)</div>
+                                                        <div className="movieYearText">{showDetails.year}</div>
                                                     </div>
                                                     <div className="vpCCwrapper">
                                                         <div>
-                                                            <div className="movieCensorBox">TV-14</div>
+                                                            <div className="movieCensorBox">{showDetails.rating}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -71,7 +111,7 @@ const Series = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="vpMiddleDesc">In this adult-skewing puppet show, a vampire and his monster minions run an obscure Transylvanian TV station with the improbable power to reanimate dead TV shows.</div>
+                                            <div className="vpMiddleDesc">{showDetails.video_description}</div>
                                             <div className="vpMiddleCastCrew">
                                                 <div className="vpIndCast">
                                                     <div className="vpCastHeading">
@@ -79,7 +119,7 @@ const Series = () => {
                                                     </div>
                                                     <div className="vpCastName">
                                                         <a className="linkButton" href="/search/%22Michael%20Heagle%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Michael Heagle</div>
+                                                            <div className="vpCastValue vpCastValueMargin">{showDetails.director}</div>
                                                         </a>
                                                     </div>
                                                     <br />
@@ -91,28 +131,38 @@ const Series = () => {
                                                     </div>
                                                     <div className="vpCastName">
                                                         <a className="linkButton" href="/search/%22Michael%20J.%20Heagle%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Michael J. Heagle</div>
-                                                        </a>
-                                                        <a className="linkButton" href="/search/%22Michael%20Huyck%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Michael Huyck</div>
-                                                        </a>
-                                                        <a className="linkButton" href="/search/%22Laszlo%20Nemesi%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Laszlo Nemesi</div>
-                                                        </a>
-                                                        <a className="linkButton" href="/search/%22Gordon%20Smuder%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Gordon Smuder</div>
-                                                        </a>
-                                                        <a className="linkButton" href="/search/%22Charles%20Hubbell%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Charles Hubbell</div>
-                                                        </a>
-                                                        <a className="linkButton" href="/search/%22Jeff%20Neppl%22">
-                                                            <div className="vpCastValue vpCastValueMargin">Jeff Neppl</div>
+                                                            <div className="vpCastValue vpCastValueMargin">{showDetails.show_cast}</div>
                                                         </a>
                                                     </div>
                                                     <br />
                                                 </div>
                                             </div>
-                                            <EpisodeSlider/>
+                                            <h3 className="seasonTitle">Season 1</h3>
+                                            <Carousel responsive={responsive}>
+                                                {
+                                                    episodes.map((episode, index) => {
+                                                        return (
+                                                            <div className="carousel carouselNoMask seasonCarouselWrapper">
+                                                                <div className="carouselContent"></div>
+                                                                <div className="row carouselRow" style={{ padding: '20px' }}>
+                                                                    <div className="seasonTileImgWrapper">
+                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}`) }}>
+                                                                            <img src={bannerSeriesUrl + episode.thumbnail} />
+                                                                        </Link>
+                                                                        <div className="seasonTileImgExtra"></div>
+                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}`) }}>
+                                                                            <div className="seasonTileHeading">{episode.video_title}</div>
+                                                                        </Link>
+                                                                        <div className="seasonTilePara">{episode.video_description}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        );
+                                                    })
+                                                }
+
+                                            </Carousel>
+
                                         </div>
                                     </div>
                                 </div>

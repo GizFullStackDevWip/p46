@@ -53,7 +53,61 @@ function register() {
 
 }
 
+function getshowsbyCategory(){
+    var token = localStorage.getItem('access-token');
+    var uId = 74961
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            user_id: uId
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 
+function getShows(key){
+    var token = localStorage.getItem('access-token');
+    // var uId = 74961
+    // let user_id = getCookie('userId');
+    // if (user_id) {
+    //     uId = user_id;
+    // }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            key: key
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/SearchshowsUpdated2', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 
 function getCookie(name) {
     var nameEQ = name + "=";
@@ -67,5 +121,7 @@ function getCookie(name) {
 }
 export const service = {
     authenticate,
-    register
+    register,
+    getshowsbyCategory,
+    getShows
 };

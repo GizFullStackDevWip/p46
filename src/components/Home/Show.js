@@ -4,6 +4,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
+var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 const Show = ({ param }) => {
     const [show, setShow] = useState(param)
     useEffect(() => {
@@ -33,7 +34,7 @@ const Show = ({ param }) => {
                 {
                     show.map((show, index) => {
                         return (
-                            <div className="movieTile" key={index}  style={{padding:'12px'}} >
+                            <div className="movieTile" key={index} style={{ padding: '12px' }} >
                                 <div className="movieTileImage">
                                     <div className="movieTileIcon movieTileHover">
                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
@@ -41,11 +42,19 @@ const Show = ({ param }) => {
                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                         </svg>
                                     </div>
-                                    <Link to={{ pathname: '/home/movies',search: encodeURI(`show_id=${show.show_id}`) }}>
-                                        <div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }} >
-                                        <div className="FeNml"></div>
-                                        </div>
-                                    </Link>
+                                    {
+                                        show.single_video == 1 ?
+                                            <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                <div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }} >
+                                                    <div className="FeNml"></div>
+                                                </div>
+                                            </Link> : <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                <div className="moviePoster" style={{ backgroundImage: `url(${bannerSeriesUrl + show.thumbnail})` }} >
+                                                    <div className="FeNml"></div>
+                                                </div>
+                                            </Link>
+                                    }
+
 
                                     <div className="wishlistPosition wishlistTranslate wishlistParentClose">
                                         <div className="wishlistButton">

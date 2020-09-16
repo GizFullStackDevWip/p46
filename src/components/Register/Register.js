@@ -60,7 +60,7 @@ const Register = () => {
 
 
         if (values.password.trim()) {
-            if (values.password.length > 6 && values.password.length < 30) {
+            if (values.password.length >= 6 && values.password.length <= 30) {
                 console.log(values.password.length);
                 if (values.password2.trim()) {
                     if (values.password.trim() == values.password2.trim()) {
@@ -90,26 +90,26 @@ const Register = () => {
 
 
         if (values.password2.trim()) {
-            if (values.password2.length > 6 && values.password2.length < 30) {
-                if (values.password.trim()) {
-                    if (values.password.trim() == values.password2.trim()) {
+            if (values.password.trim()) {
+                if (values.password.trim() == values.password2.trim()) {
+                    if (values.password2.length >= 6 && values.password2.length <= 30) {
                         errors.password = "Password"
                         setPassword('');
                         errors.password2 = "Confirm Password"
                         setPassword2('');
                     } else {
                         formIsValid = false
-                        setPassword(' Input--errored');
-                        errors.password2 = "Password do not match"
+                        setPassword2(' Input--errored');
+                        errors.password2 = "Length must be between 6 and 30"
                     }
                 } else {
-                    errors.password2 = "Confirm Password"
-                    setPassword2('');
+                    formIsValid = false
+                    setPassword(' Input--errored');
+                    errors.password2 = "Password do not match"
                 }
             } else {
-                formIsValid = false
-                setPassword2(' Input--errored');
-                errors.password2 = "Length must be between 6 and 30"
+                errors.password2 = "Confirm Password"
+                setPassword2('');
             }
         } else {
             formIsValid = false
@@ -124,8 +124,8 @@ const Register = () => {
         e.preventDefault();
         if (validation()) {
             console.log(values);
-            service.register(values).then(response=>{
-                console.log(response,'res');
+            service.register(values).then(response => {
+                console.log(response, 'res');
             })
         }
     }

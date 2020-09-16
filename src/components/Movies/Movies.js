@@ -5,6 +5,7 @@ import VideoDetails from './VideoDetails';
 import { useParams, useLocation } from 'react-router-dom';
 const queryString = require('query-string');
 
+
 const Movies = ({}) => {
     var { search } = useLocation();
     const parsed = queryString.parse(search);
@@ -19,7 +20,7 @@ const Movies = ({}) => {
             <div className="topContainer">
                 <Header />
                 <div className="menuCloseJS closeMenuWrapper">
-                    <div className="videoPage">
+                    <div className="videoPage" >
                         <VideoDetails categoryId={parsed.show_id} />
                         <div itemProp="video" itemScope="" itemType="//schema.org/VideoObject" style={{ display: 'none' }}>
                             <meta itemProp="name" property="media:title" content="Kids TV Cartoon Shows (2019)" />

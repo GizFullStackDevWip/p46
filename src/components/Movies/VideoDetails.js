@@ -4,7 +4,10 @@ import VideoPlayer from 'react-video-js-player';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import Hls from 'hls.js';
+import ReactHlsPlayer from 'react-hls-player';
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
+var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var details = []
 const VideoDetails = (categoryId) => {
     const [showDetails, setShowDetails] = useState([]);
@@ -19,6 +22,7 @@ const VideoDetails = (categoryId) => {
                 setSimilarShows(response.data);
             })
         })
+
     }, []);
     const responsive = {
         superLargeDesktop: {
@@ -63,7 +67,7 @@ const VideoDetails = (categoryId) => {
         })
     }
 
-    const functionOnclick =(showId)=>{
+    const functionOnclick = (showId) => {
         service.getShowDetails(showId).then(response => {
             console.log(response.data, 'this is the response of show details');
             setShowDetails(response.data[0]);
@@ -75,16 +79,31 @@ const VideoDetails = (categoryId) => {
         })
     }
     return (
-        <div className="videoPageContainer">
+        <div className="videoPageContainer" >
+            {
+                showDetails.single_video === 0 ?
+                    <div className="videoPageBGimg"
+                        style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
+                    ></div> : (
+                        showDetails.single_video === 1 ?
+                            <div className="videoPageBGimg"
+                                style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
+                            ></div>
+                            :
+                            null
+                    )
+            }
+            {/* <div className="videoPageBGimg"
+                style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
+            ></div> */}
             <div className="videoPageBGimg"
-            // style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
-            // style="background-image: linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2)), url(./images/kidstvBG.jpg);"
+                style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
             ></div>
-            <div className="_2xXnB">
+            <div className="_2xXnB" >
                 <div className="_2KWdL">
-                    <section className="_1dQ5J">
+                    <section>
                         <div className="_3tqpT" style={{ height: '100%' }}>
-                            <VideoPlayer
+                            {/* <VideoPlayer
                                 config={{
                                     file: {
                                         hlsOptions: {
@@ -93,18 +112,26 @@ const VideoDetails = (categoryId) => {
                                         },
                                     },
                                 }}
-                                // controls={true}
+                                controls={true}
                                 src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
-                                // poster={this.state.video.poster}
+                                poster={this.state.video.poster}
                                 width="1190"
                                 height="660"
-                            // onReady={onPlayerReady}
-                            // onPlay={onVideoPlay}
-                            // onPause={onVideoPause}
-                            // onTimeUpdate={this.onVideoTimeUpdate.bind(this)}
-                            // onSeeking={this.onVideoSeeking.bind(this)}
-                            // onSeeked={this.onVideoSeeked.bind(this)}
-                            // onEnd={onVideoEnd}
+                                onReady={onPlayerReady}
+                                onPlay={onVideoPlay}
+                                onPause={onVideoPause}
+                                onTimeUpdate={this.onVideoTimeUpdate.bind(this)}
+                                onSeeking={this.onVideoSeeking.bind(this)}
+                                onSeeked={this.onVideoSeeked.bind(this)}
+                                onEnd={onVideoEnd}
+                            /> */}
+                            <ReactHlsPlayer
+                                // url={showDetails.video_name}
+                                url='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
+                                autoplay={false}
+                                controls={true}
+                                width={1190}
+                                height={600}
                             />
                         </div>
                     </section>
@@ -117,8 +144,17 @@ const VideoDetails = (categoryId) => {
                         <div className="row vp3Section">
                             <div className="col col-1-5">
                                 <div className="vpLeftSection">
-                                    <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
-                                    ></div>
+                                    {
+                                        showDetails.single_video === 0 ?
+                                            <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
+                                            ></div> : (
+                                                showDetails.single_video === 1 ?
+                                                    <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
+                                                    ></div>
+                                                    :
+                                                    null
+                                            )
+                                    }
                                     <div className="vpLeftButtonWrapper vpLeftButtonMargin">
                                         <div className="vpLeftButtons">
                                             <button className="button buttonSecondary buttonBlock vpAddButton">
@@ -215,13 +251,24 @@ const VideoDetails = (categoryId) => {
                                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                                             </svg>
                                                                         </a>
-                                                                        {/* <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}> */}
-                                                                            <div className="moviePoster" onClick={()=>{functionOnclick(show.show_id)}}
-                                                                                style={{ backgroundImage: `url(${imageUrl + show.logo})` }}
-                                                                            >
-                                                                                <div className="FeNml"></div>
-                                                                            </div>
-                                                                        {/* </Link> */}
+                                                                        {
+                                                                            show.single_video === 0 ?
+                                                                                <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
+                                                                                    style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
+                                                                                    <div className="FeNml"></div>
+                                                                                </div> : (
+                                                                                    show.single_video === 1 ?
+                                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
+                                                                                            style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
+                                                                                            <div className="FeNml"></div>
+                                                                                        </div>
+                                                                                        :
+                                                                                        null)
+                                                                        }
+                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
+                                                                            style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
+                                                                            <div className="FeNml"></div>
+                                                                        </div>
                                                                         <div className="wishlistPosition wishlistTranslate wishlistParentClose">
                                                                             <div className="wishlistButton">
                                                                                 <div className="wlgradientPosition wlgradientTranslate wlgradientClose"

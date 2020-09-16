@@ -10,6 +10,7 @@
     "react-alice-carousel": "^1.19.3",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
+    "react-hls-player": "^1.1.0",
     "react-multi-carousel": "^2.5.5",
     "react-player": "^2.6.1",
     "react-router-dom": "^5.2.0",

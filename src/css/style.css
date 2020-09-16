@@ -8744,7 +8744,8 @@ a.headerMenuItems:hover {
     padding-top: 56.25%;
     background-position-x: 50%;
     background-repeat: no-repeat;
-    background-size: cover
+    background-size: cover;
+    background-image: linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2));
 }
 
 .videoPageContainer ._2xXnB {
@@ -13269,4 +13270,10 @@ a.headerMenuItems:hover {
 
 .smartHeader, .mobileTabletHeader, .webDesktopHeader {
     display: none;
+}
+.CCBty ._2hPOn ._18Y8d {
+    margin: 1rem 0;
+    color: #fff;
+    font-size: 1.46667rem;
+    font-weight: 700;
 }
