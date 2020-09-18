@@ -1,24 +1,21 @@
 import React, { useState, useEffect} from 'react';
-import Header from '../Basic/Header';
-import Footer from '../Basic/Footer';
 import VideoDetails from './VideoDetails';
 import { useParams, useLocation } from 'react-router-dom';
 const queryString = require('query-string');
 
 
 const Movies = ({}) => {
+    window.scrollTo(0, 0);
     var { search } = useLocation();
     const parsed = queryString.parse(search);
-    const [update,setUpdate] =useState(false)
     console.log(parsed.show_id);
     useEffect(() => {
-        setUpdate(true);
 
-    }, [update]);
+    }, []);
+
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="videoPage" >
                         <VideoDetails categoryId={parsed.show_id} />
@@ -32,7 +29,6 @@ const Movies = ({}) => {
                             </span>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </div>
         </div>

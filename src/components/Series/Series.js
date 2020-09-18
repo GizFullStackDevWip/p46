@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from '../Basic/Header';
-import Footer from '../Basic/Footer';
-import FooterInfo from '../Basic/FooterInfo';
 import { service } from '../../network/Series/service';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import EpisodeSlider from './EpisodeSlider';
-import ShowThumbnail from './ShowThumbnail';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 const queryString = require('query-string');
@@ -18,11 +13,11 @@ const Series = () => {
     const [episodes, setEpisodes] = useState([]);
     console.log(parsed.show_id);
     useEffect(() => {
+        window.scrollTo(0, 0);
         service.getShowDetails(parsed.show_id).then(response => {
             console.log(response, 'details ');
             setEpisodes(response.data);
             setShowDetails(response.data[0]);
-
         })
     }, []);
     const responsive = {
@@ -46,7 +41,6 @@ const Series = () => {
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="moviePageWrapper">
                         <div className="moviePageBG"
@@ -118,9 +112,9 @@ const Series = () => {
                                                         <div className="vpCasth1">DIRECTOR</div>
                                                     </div>
                                                     <div className="vpCastName">
-                                                        <a className="linkButton" href="/search/%22Michael%20Heagle%22">
+                                                        <div className="linkButton">
                                                             <div className="vpCastValue vpCastValueMargin">{showDetails.director}</div>
-                                                        </a>
+                                                        </div>
                                                     </div>
                                                     <br />
                                                 </div>
@@ -130,9 +124,9 @@ const Series = () => {
                                                         <div className="vpCasth1">STARRING</div>
                                                     </div>
                                                     <div className="vpCastName">
-                                                        <a className="linkButton" href="/search/%22Michael%20J.%20Heagle%22">
+                                                        <div className="linkButton">
                                                             <div className="vpCastValue vpCastValueMargin">{showDetails.show_cast}</div>
-                                                        </a>
+                                                        </div>
                                                     </div>
                                                     <br />
                                                 </div>
@@ -142,7 +136,7 @@ const Series = () => {
                                                 {
                                                     episodes.map((episode, index) => {
                                                         return (
-                                                            <div className="carousel carouselNoMask seasonCarouselWrapper">
+                                                            <div className="carousel carouselNoMask seasonCarouselWrapper" key={index}>
                                                                 <div className="carouselContent"></div>
                                                                 <div className="row carouselRow" style={{ padding: '20px' }}>
                                                                     <div className="seasonTileImgWrapper">
@@ -151,7 +145,7 @@ const Series = () => {
                                                                         </Link>
                                                                         <div className="seasonTileImgExtra"></div>
                                                                         <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}`) }}>
-                                                                            <div className="seasonTileHeading">{episode.video_title}</div>
+                                                                            <div className="seasonTileHeading" style={{color: 'white',fontSize: '1rem'}}>{episode.video_title}</div>
                                                                         </Link>
                                                                         <div className="seasonTilePara">{episode.video_description}</div>
                                                                     </div>
@@ -160,16 +154,13 @@ const Series = () => {
                                                         );
                                                     })
                                                 }
-
                                             </Carousel>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </div>
         </div>

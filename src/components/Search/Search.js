@@ -1,69 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import Footer from '../Basic/Footer';
-import Header from '../Basic/Header';
 import { Link, useHistory } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
-import { service } from '../../network/service';
 const queryString = require('query-string');
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-const Search = ({ }) => {
+var show  = []
+const Search = ({history}) => {
     var { search } = useLocation();
+    show = history.location.state.item
     const parsed = queryString.parse(search);
-    console.log(parsed);
-    const [warning, setWarning] = useState(false);
-    const [show, setShow] = useState([]);
+
     useEffect(() => {
-        service.getShows(parsed.input).then(response => {
-            console.log(response, 'response');
-            if (response.data.length > 0) {
-                setShow(response.data);
-            } else {
-                setWarning(true);
-            }
-        })
-        // service.getshowsbyCategory().then(response => {
-        //     setData(response.data);
-        //     var filteredArray = []
-        //     if (parsed) {
-        //         response.data.map((show, index) => {
-        //             var showList = show.shows;
-        //             var filteredData = showList.filter((i) => {
-        //                 return i.category_name.toLowerCase().match(parsed.input) ||
-        //                     i.year.toLowerCase().match(parsed.input) ||
-        //                     i.show_name.toLowerCase().match(parsed.input) ||
-        //                     i.director.toLowerCase().match(parsed.input) ||
-        //                     i.audio_language_name.toLowerCase().match(parsed.input);
-        //             })
-        //             filteredArray.push(filteredData);
-        //         })
-        //         var showList = []
-        //         filteredArray.map((item, index) => {
-        //             item.map((i, ind) => {
-        //                 showList.push(i);
-        //             })
-        //         })
-        //         setShow(showList);
-        //         // var uni = []
-        //         // let result = [...new Set(showList.map(item => item.video_id))];
-        //         // for (var i = 0; i < result.length; i++) {
-        //         //     var value = getUnique(showList, result[i]);
-        //         //     uni.push(value);
-        //         // }
-        //     }
-        // })
+
     }, []);
-    const getUnique = (showList, comp) => {
-        console.log(showList, comp);
-        const unique = showList.map(e => e[comp])
-            .map((e, i, final) => final.indexOf(e) === i && i)
-            .filter((e) => showList[e]).map(e => showList[e]);
-        return unique;
-    }
+
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
@@ -71,8 +24,9 @@ const Search = ({ }) => {
                             Results for
                             <h1 className="SearchResultText">{parsed.input}</h1>
                             {
-                                warning &&
-                                <h3 style={{ color: 'white' }}>No Matches</h3>
+                                show.length > 0 ?
+                                null
+                                :<h3 style={{ color: 'white' }}>No Matches</h3>
                             }
 
                         </div>
@@ -121,7 +75,19 @@ const Search = ({ }) => {
                                                     </div>
                                                     <section className="movieTextWrapper movieTextWrapperPadding">
                                                         <div className="movieTextFlex">
-                                                            <h3><a className="linkButton movieTextHeading" title="Adventures In Comedy" href="/series/300005083/adventures_of_sonic_the_hedgehog">{show.show_name}</a></h3>
+                                                            <h3>
+                                                                {
+                                                                    show.single_video == 0 ?
+                                                                        <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                            <div className="linkButton movieTextHeading" title="Adventures In Comedy">{show.show_name}</div>
+                                                                        </Link> : (
+                                                                            show.single_video == 1 ?
+                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                                    <div className="linkButton movieTextHeading" title="Adventures In Comedy">{show.show_name}</div>
+                                                                                </Link> : null
+                                                                        )
+                                                                }
+                                                            </h3>
                                                             <div className="movieCatYear">
                                                                 <div>
                                                                     <div className="movieYear">
@@ -146,7 +112,6 @@ const Search = ({ }) => {
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
         </div>
     );

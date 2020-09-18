@@ -5,10 +5,15 @@ import Layouts from './Layouts/routes';
 
 const App = () => {
   useEffect(() => {
-    service.authenticate().then(response => { })
+    var currentURL = new URL(window.location.href);
+    var key = currentURL.searchParams.get("key");
+    service.authenticate();
+    if (key) {
+      service.keyAuthenticate(key);
+    }
   }, []);
   return (
-    <Layouts/>
+    <Layouts />
   );
 }
 export default App;

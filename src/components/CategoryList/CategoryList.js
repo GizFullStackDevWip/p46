@@ -6,9 +6,10 @@ import { service } from '../../network/Home/service';
 import { Link } from 'react-router-dom';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-
 const queryString = require('query-string');
+
 const CategoryList = () => {
+    window.scrollTo(0, 0);
     var { search } = useLocation();
     const parsed = queryString.parse(search);
     console.log(parsed.category_id);
@@ -30,7 +31,6 @@ const CategoryList = () => {
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
@@ -106,7 +106,6 @@ const CategoryList = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </div>
         </div>

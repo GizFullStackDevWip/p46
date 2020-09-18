@@ -68,9 +68,8 @@ const BannerContainer = () => {
         centerMode: true,
         focusOnSelect: true,
     };
-    const handleOnDragStart = (e) => e.preventDefault()
     return (
-        < div className="entireBanner"  style={{height: '500px'}}>
+        < div className="entireBanner" style={{ height: '500px' }}>
             <div className="bannerSlider">
                 {
                     bannerSliderShows !== undefined && bannerSliderShows.length > 0 ?
@@ -84,7 +83,7 @@ const BannerContainer = () => {
                                                 <div className="_1nirg _2KNcl">
                                                     <div className="_1Y3Wa">
                                                         <div className="wvPYB"
-                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.banner})` }}
+                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.banner3})` }}
                                                         ></div>
                                                     </div>
                                                     <div className="container _3wxhi" style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0), rgb(38, 38, 45))' }}>
@@ -120,9 +119,22 @@ const BannerContainer = () => {
                                                         <div className="row mGIih">
                                                             <div className="col col-lg-4 _3YKic">
                                                                 <div className="_3t5Xl">
-                                                                    <div className="BZw9g"
-                                                                        style={{ backgroundImage: `url(${bannerShowUrl + show.banner})`, cursor: 'default' }}
-                                                                    ></div>
+                                                                    {
+                                                                        show.single_video === 0 ?
+                                                                            <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                                <div className="BZw9g"
+                                                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + show.thumbnail})`, cursor: 'default' }}
+                                                                                ></div>
+                                                                            </Link> :
+                                                                            (show.single_video === 1 ?
+                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                                    <div className="BZw9g"
+                                                                                        style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})`, cursor: 'default' }}
+                                                                                    ></div>
+                                                                                </Link>
+                                                                                : null
+                                                                            )
+                                                                    }
                                                                 </div>
                                                                 <div className="_3Xnk8">
                                                                     <div className="_1tLWN"></div>

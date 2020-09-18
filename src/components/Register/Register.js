@@ -132,7 +132,6 @@ const Register = () => {
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="regnPage menuCloseJS closeMenuWrapper">
                     <div className="container">
                         <div className="row regnWrapper">
@@ -237,7 +236,6 @@ const Register = () => {
                             </div>
                         </div>
                     </div>
-                    <Footer />
                 </div>
             </div>
         </div>

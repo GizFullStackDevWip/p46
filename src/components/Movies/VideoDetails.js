@@ -1,29 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/GetVideos/service';
-import VideoPlayer from 'react-video-js-player';
-import { Link } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Hls from 'hls.js';
 import ReactHlsPlayer from 'react-hls-player';
+import { Link, useHistory } from 'react-router-dom';
+
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var details = []
 const VideoDetails = (categoryId) => {
     const [showDetails, setShowDetails] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
+    const [update, setUpdate] = useState(false);
+    const [showTrailer, setShowTrailer] = useState(false);
+const [videoPlayer, setVideoPlayer] = useState();
+    const history = useHistory();
     useEffect(() => {
         service.getShowDetails(categoryId.categoryId).then(response => {
-            console.log(response.data, 'this is the response of show details');
             setShowDetails(response.data[0]);
             details = response.data[0]
             service.similarShow(response.data[0].video_id).then(response => {
-                console.log(response.data, 'response of similar shows');
                 setSimilarShows(response.data);
             })
+	    service.playerToken().then(tokenResponse => {
+                let arr = response.data[0].video_name.split('/');
+                let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=video';
+                setVideoPlayer(<ReactHlsPlayer
+                    id='singleVideo'
+                    url={newURL}
+                    autoplay={false}
+                    controls={true}
+                    width={'100%'}
+                    height={'100%'}
+                    onReady={onPlayerReady}
+                    onPlay={onVideoPlay(response.data[0].video_id)}
+                    onPause={onVideoPause}
+                    onEnd={onVideoEnd}
+                />)
+            })
         })
-
-    }, []);
+        setUpdate(false);
+    }, [update]);
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -42,41 +59,85 @@ const VideoDetails = (categoryId) => {
             items: 1
         }
     };
+
     const onPlayerReady = () => {
-        console.log(details, 'f');
         service.onVideoPlayFunction(details).then(response => {
-            console.log(response, 'onVideoPlayFunction');
-        })
-    }
-    const onVideoPlay = () => {
-        console.log(details, 'f');
-        service.onVideoPlayFunction(details).then(response => {
-            console.log(response, 'onVideoPlayFunction');
-        })
-    }
-    const onVideoPause = () => {
-        console.log(details, 'f');
-        service.onVideoPlayFunction(details).then(response => {
-            console.log(response, 'onVideoPlayFunction');
-        })
-    }
-    const onVideoEnd = () => {
-        console.log(details, 'f');
-        service.onVideoPlayFunction(details).then(response => {
-            console.log(response, 'onVideoPlayFunction');
         })
     }
 
-    const functionOnclick = (showId) => {
-        service.getShowDetails(showId).then(response => {
-            console.log(response.data, 'this is the response of show details');
-            setShowDetails(response.data[0]);
-            details = response.data[0]
-            service.similarShow(response.data[0].video_id).then(response => {
-                console.log(response.data, 'response of similar shows');
-                setSimilarShows(response.data);
-            })
+    const onVideoPlay = (videoId) => {
+
+        service.checkVideoSubscription(videoId).then(response => {
+            let videoDetails = response.data[0];
+
+            if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
+                service.checkUserSubscription().then(useResponse => {
+
+                    if (useResponse.data.length == 0) {
+                        window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
+                    }
+
+                    if (useResponse.forcibleLogout === true) {
+                        signOut()
+                    }
+                })
+            } else {
+                console.log('playing...')
+            }
+
         })
+
+        service.onVideoPlayFunction(details).then(response => {
+        })
+    }
+
+    const signOut = () => {
+        let ui = localStorage.getItem('userId')
+        setTimeout(function () {
+            eraseCookie('userName');
+            eraseCookie('userId');
+            eraseCookie('userEmail');
+            eraseCookie('subscriptionId');
+        }, 10);
+        setTimeout(function () {
+            window.location.href = "http://stagingweb.gethappi.tv/login?lo=1&ui=" + ui;
+        }, 100);
+    }
+
+    const eraseCookie = (name) => {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
+
+    const onVideoPause = () => {
+        service.onVideoPlayFunction(details).then(response => {
+        })
+    }
+    const onVideoEnd = () => {
+        service.onVideoPlayFunction(details).then(response => {
+        })
+    }
+
+    const functionOnclick = (show) => {
+        if (show.single_video == 1) {
+            history.push({
+                pathname: '/home/movies',
+                search: encodeURI(`show_id=${show.show_id}`)
+            });
+        } else if (show.single_video == 0) {
+            history.push({
+                pathname: '/home/series',
+                search: encodeURI(`show_id=${show.show_id}`)
+            });
+        }
+        setUpdate(true);
+    }
+
+    const playTrailerFunction = () => {
+        setShowTrailer(true);
+    }
+
+    const stopTrailerFunction = () => {
+        setShowTrailer(false);
     }
     return (
         <div className="videoPageContainer" >
@@ -93,9 +154,6 @@ const VideoDetails = (categoryId) => {
                             null
                     )
             }
-            {/* <div className="videoPageBGimg"
-                style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
-            ></div> */}
             <div className="videoPageBGimg"
                 style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
             ></div>
@@ -103,36 +161,7 @@ const VideoDetails = (categoryId) => {
                 <div className="_2KWdL">
                     <section>
                         <div className="_3tqpT" style={{ height: '100%' }}>
-                            {/* <VideoPlayer
-                                config={{
-                                    file: {
-                                        hlsOptions: {
-                                            forceHLS: true,
-                                            debug: false
-                                        },
-                                    },
-                                }}
-                                controls={true}
-                                src={'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4'}
-                                poster={this.state.video.poster}
-                                width="1190"
-                                height="660"
-                                onReady={onPlayerReady}
-                                onPlay={onVideoPlay}
-                                onPause={onVideoPause}
-                                onTimeUpdate={this.onVideoTimeUpdate.bind(this)}
-                                onSeeking={this.onVideoSeeking.bind(this)}
-                                onSeeked={this.onVideoSeeked.bind(this)}
-                                onEnd={onVideoEnd}
-                            /> */}
-                            <ReactHlsPlayer
-                                // url={showDetails.video_name}
-                                url='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
-                                autoplay={false}
-                                controls={true}
-                                width={1190}
-                                height={600}
-                            />
+                            {videoPlayer}
                         </div>
                     </section>
                 </div>
@@ -160,6 +189,10 @@ const VideoDetails = (categoryId) => {
                                             <button className="button buttonSecondary buttonBlock vpAddButton">
                                                 <div className="buttonBg"></div>
                                                 <div className="buttonContent">Add to My List</div>
+                                            </button>
+                                            <button className="button buttonSecondary buttonBlock vpAddButton" onClick={playTrailerFunction}>
+                                                <div className="buttonBg"></div>
+                                                <div className="buttonContent">Trailer</div>
                                             </button>
                                             <div className="vpTwoButton">
                                                 <button className="button buttonTransparent vpShareButton">
@@ -253,22 +286,18 @@ const VideoDetails = (categoryId) => {
                                                                         </a>
                                                                         {
                                                                             show.single_video === 0 ?
-                                                                                <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
-                                                                                    style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
+                                                                                <div className="moviePoster" onClick={() => { functionOnclick(show) }}
+                                                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
                                                                                     <div className="FeNml"></div>
                                                                                 </div> : (
                                                                                     show.single_video === 1 ?
-                                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
-                                                                                            style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
+                                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show) }}
+                                                                                            style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
                                                                                             <div className="FeNml"></div>
                                                                                         </div>
                                                                                         :
                                                                                         null)
                                                                         }
-                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show.show_id) }}
-                                                                            style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
-                                                                            <div className="FeNml"></div>
-                                                                        </div>
                                                                         <div className="wishlistPosition wishlistTranslate wishlistParentClose">
                                                                             <div className="wishlistButton">
                                                                                 <div className="wlgradientPosition wlgradientTranslate wlgradientClose"
@@ -320,6 +349,36 @@ const VideoDetails = (categoryId) => {
                     </div>
                 </div>
             </div>
+            {
+                showTrailer &&
+                <React.Fragment>
+                    <div className="modal-overlay" />
+                    <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog" onClick={stopTrailerFunction} >
+                        <div className="modal-header">
+                            <button type="button" className="modal-close-button" data-dismiss="modal" aria-label="Close" onClick={stopTrailerFunction} >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="_2xXnB" >
+                            <div className="_2KWdL">
+                                <section>
+                                    <div className="_3tqpT" style={{ height: '100%' }}>
+                                        <ReactHlsPlayer
+                                            // url={showDetails.video_name}
+                                            url='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
+                                            autoplay={false}
+                                            controls={true}
+                                            width="100%"
+                                            height="100%"
+                                        />
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </React.Fragment>
+            }
+
         </div>
     );
 }

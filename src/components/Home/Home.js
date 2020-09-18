@@ -9,6 +9,7 @@ const Home = () => {
     const [categoryOrgLength, setCategoryOrgLength] = useState([]);
     useEffect(() => {
         var singleObj = []
+        window.scrollTo(0, 0);
         service.getshowsbyCategory().then(response => {
             console.log(response.data, 'dara');
             setCategoryOrgLength(response.data.length);
@@ -33,7 +34,6 @@ const Home = () => {
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <Header />
                 <div className="homepageWrapper menuCloseJS closeMenuWrapper">
                     <BannerContainer />
                     <div className="allCategoryContainer">
@@ -61,7 +61,6 @@ const Home = () => {
                         }
 
                     </div>
-                    <Footer />
                 </div>
             </div>
         </div>

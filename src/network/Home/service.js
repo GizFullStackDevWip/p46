@@ -3,6 +3,10 @@ const axios = require('axios');
 function fetchHomeBannerDetails() {
     var token = localStorage.getItem('access-token');
     let uId = 74961;
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

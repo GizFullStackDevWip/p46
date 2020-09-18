@@ -32,6 +32,65 @@ function getShowDetails(categoryId) {
         });
 }
 
+function checkVideoSubscription(videoId) {
+    let uId = 74961;
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token
+        },
+        params: {
+            pubid: 50023,
+            vid: videoId,
+            user_id: uId
+        }
+    };
+
+    return axios.get('https://poppo.tv/platform/bk/api/GetSelectedVideoUpdated2', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+function checkUserSubscription() {
+    let uId = 74961;
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token
+        },
+        params: {
+            pubid: 50023,
+            uid: uId
+        }
+    };
+
+    return axios.get('https://poppo.tv/platform/bk/api/getUserSubscriptions', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
 function similarShow(videoId) {
     let uId = 74961;
     let user_id = getCookie('userId');
@@ -99,6 +158,28 @@ function onVideoPlayFunction(values) {
             return [];
         });
 }
+
+function playerToken() {
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': localStorage.getItem('access-token'),
+        }
+    };
+
+    return axios.get("https://poppo.tv/proxy/api/GenerateToken", customConfig)
+        .then((response) => {
+            return response
+        })
+        .catch((error) => {
+            return [];
+        });
+
+}
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -109,8 +190,12 @@ function getCookie(name) {
     }
     return null;
 }
+
 export const service = {
     getShowDetails,
     similarShow,
-    onVideoPlayFunction
+    onVideoPlayFunction,
+    playerToken,
+    checkVideoSubscription,
+    checkUserSubscription
 };

@@ -8,8 +8,11 @@ import Register from '../components/Register/Register';
 import Series from '../components/Series/Series';
 import AboutUs from '../components/FooterComponents/AboutUs/AboutUs';
 import Search from '../components/Search/Search';
+import Header from '../components/Basic/Header';
+import Footer from '../components/Basic/Footer';
 const routes = () => (
     <Router>
+        <Header/>
         <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/home/movies" exact component={Movies} />
@@ -19,8 +22,8 @@ const routes = () => (
             <Route path="/home/series" exact component={Series} />
             <Route path="/aboutus" exact component={AboutUs} />
             <Route path="/search" exact component={Search} />
-
         </Switch>
+        <Footer/>
     </Router>
 
 );
