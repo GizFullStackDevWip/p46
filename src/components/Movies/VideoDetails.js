@@ -113,10 +113,17 @@ const VideoDetails = (categoryId, episode) => {
     const onVideoPlay = (videoId) => {
         service.checkVideoSubscription(videoId).then(response => {
             let videoDetails = response.data[0];
+            console.log(videoDetails,'videoDetails====>');
             if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
                 service.checkUserSubscription().then(useResponse => {
                     if (useResponse.data.length == 0) {
-                        window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
+                        let isLoggedIn = localStorage.getItem('isLoggedIn');
+                        if (isLoggedIn == 'false') {
+                            history.push({
+                                pathname: '/signin'
+                            });
+                        }
+                        // window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
                     }
                     if (useResponse.forcibleLogout === true) {
                         signOut()
@@ -139,7 +146,10 @@ const VideoDetails = (categoryId, episode) => {
             eraseCookie('subscriptionId');
         }, 10);
         setTimeout(function () {
-            window.location.href = "http://stagingweb.gethappi.tv/login?lo=1&ui=" + ui;
+            // history.push({
+            //     pathname: '/signin'
+            // });
+            // window.location.href = "http://stagingweb.gethappi.tv/login?lo=1&ui=" + ui;
         }, 100);
     }
 

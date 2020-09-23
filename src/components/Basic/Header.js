@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/service';
 const queryString = require('query-string');
@@ -18,6 +18,8 @@ const Header = () => {
     const currentPath = location.pathname;
     const parsed = queryString.parse(search);
 
+    useEffect(() => {
+    }, []);
     useEffect(() => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         console.log(localStorage.getItem('userName'), 'userid');
@@ -67,14 +69,25 @@ const Header = () => {
             setLoginBlock('block')
             setUserBlock('none')
             setMouseHover(false);
+
+            eraseCookie('userName');
+            eraseCookie('userId');
+            eraseCookie('userEmail');
+            eraseCookie('subscriptionId');
+            history.push({
+                pathname: '/'
+            });
         }, 1000);
     }
 
+    const eraseCookie = (name) => {
+        document.cookie = name + '=; Max-Age=-99999999;';
+    }
     const submitSearch = (e) => {
         e.preventDefault();
     }
     return (
-        <header className={currentPath === '/register' || currentPath === '/signIn' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
+        <header className={currentPath === '/register' || currentPath === '/signin' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
             <div className="screenContainer">
                 <div className="blackScreen">
                 </div>
@@ -168,11 +181,11 @@ const Header = () => {
                                         <li><a className="headerSignInButton" style={{ cursor: 'pointer' }} onClick={() => {
                                             setInput('');
                                             history.push({
-                                                pathname: '/signIn'
+                                                pathname: '/signin'
                                             });
                                         }} >Sign In</a></li>
                                     </ul>
-                                ) : currentPath === '/signIn' ?
+                                ) : currentPath === '/signin' ?
                                     (
                                         <ul>
                                             <li>
@@ -204,7 +217,7 @@ const Header = () => {
                                                 <a className="headerSignInButton" style={{ cursor: 'pointer' }} onClick={() => {
                                                     setInput('');
                                                     history.push({
-                                                        pathname: '/signIn'
+                                                        pathname: '/signin'
                                                     });
                                                 }} >Sign In</a>
                                             </li>
@@ -216,9 +229,8 @@ const Header = () => {
                     </div>
                     <div className="loginButtonContainer" style={{ display: userBlock }}>
                         <ul>
-                            <li><a className="headerSignInButton username logoutMenu"
-                                onMouseOver={() => { setMouseHover(true), console.log('entered') }}
-                                href="#">Hi,{userName}</a>
+                            <li><div className="headerSignInButton username logoutMenu"
+                                onMouseOver={() => { setMouseHover(true) }}>Hi,{userName}</div>
                                 {
                                     mouseHover === true ?
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -236,20 +248,9 @@ const Header = () => {
             </div>
             {
                 mouseHover === true ?
-                    <div className="menuItemContainer menuClose" style={{ paddingLeft: '1040px' }}
-                        onMouseLeave={() => { setMouseHover(false), console.log('leaved') }}
-                    >
-                        <div className="menuWrapper username" style={{ width: '204px' }}>
-                            <div className="mobileSearch">
-                                <section className="searchContainer mobileSearchBG">
-                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
-                                        <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
-                                    </svg>
-                                    <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
-                                        <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
-                                    </svg>
-                                </section>
-                            </div>
+                    <div className="signpadding" 
+                        onMouseLeave={() => { setMouseHover(false) }}>
+                        <div className="signin">
                             <div>
                                 <div className="sign">
                                     <a className="linkButton headerMenuItems" href="#">Account Settings</a>

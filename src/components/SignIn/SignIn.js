@@ -181,7 +181,7 @@ const SignIn = () => {
                                 setTimeout(function () {
                                     $div2.hide();
                                 }, 5000);
-                                window.location.href = "/";
+                                history.goBack()
                             } else {
                                 var $div2 = $("#msgLogin");
                                 $div2.text("You are successfully logged in.");
@@ -189,7 +189,7 @@ const SignIn = () => {
                                 setTimeout(function () {
                                     $div2.hide();
                                 }, 5000);
-                                window.location.href = "/";
+                                history.goBack()
                             }
                             return false;
                         } else {
@@ -322,8 +322,8 @@ const SignIn = () => {
 
 
     return (
-        <div class="pageWrapper searchPageMain">
-            <div class="topContainer">
+        <div className="pageWrapper searchPageMain">
+            <div className="topContainer">
                 <div className="signPage menuCloseJS closeMenuWrapper">
                     <div className="container">
                         <div className="row signWrapper">

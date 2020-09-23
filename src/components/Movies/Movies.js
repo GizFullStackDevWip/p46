@@ -14,8 +14,8 @@ const Movies = ({ }) => {
     }, []);
 
     return (
-        <div class="pageWrapper searchPageMain">
-            <div class="topContainer">
+        <div className="pageWrapper searchPageMain">
+            <div className="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="videoPage" >
                         <VideoDetails categoryId={parsed} />
