@@ -48,7 +48,7 @@ class Footer extends React.Component {
                         <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 footerLine"></div>
                         <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 footerLine"></div>
                     </div>
-                    <div className="row footerMenu">
+                    <div className="row footerMenu" style={{lineHeight: '1.4rem'}}>
                         <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
                             <ul className="footerMenuContainer">
                                 <li className="footerMenuHead">COMPANY</li>

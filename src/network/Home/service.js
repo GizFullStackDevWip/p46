@@ -56,6 +56,29 @@ function getshowsbyCategory(){
         });
 }
 
+function getLiveChannels(){
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/Getallchannels', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -68,5 +91,6 @@ function getCookie(name) {
 }
 export const service = {
     fetchHomeBannerDetails,
-    getshowsbyCategory
+    getshowsbyCategory,
+    getLiveChannels
 };

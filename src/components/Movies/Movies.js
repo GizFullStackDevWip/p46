@@ -1,24 +1,24 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import VideoDetails from './VideoDetails';
 import { useParams, useLocation } from 'react-router-dom';
 const queryString = require('query-string');
 
 
-const Movies = ({}) => {
+const Movies = ({ }) => {
     window.scrollTo(0, 0);
     var { search } = useLocation();
     const parsed = queryString.parse(search);
-    console.log(parsed.show_id);
+    // console.log(parsed.show_id);
     useEffect(() => {
 
     }, []);
 
     return (
-        <div className="pageWrapper searchPageMain">
-            <div className="topContainer">
+        <div class="pageWrapper searchPageMain">
+            <div class="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="videoPage" >
-                        <VideoDetails categoryId={parsed.show_id} />
+                        <VideoDetails categoryId={parsed} />
                         <div itemProp="video" itemScope="" itemType="//schema.org/VideoObject" style={{ display: 'none' }}>
                             <meta itemProp="name" property="media:title" content="Kids TV Cartoon Shows (2019)" />
                             <span property="media:type" content="application/x-shockwave-flash">

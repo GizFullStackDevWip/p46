@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
-import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
+var time = ''
+
 const BannerContainer = () => {
     const [bannerShows, setBannerShows] = useState([]);
     const [bannerSliderShows, setBannerSliderShows] = useState([]);
+
     useEffect(() => {
         var singleObj = []
         service.fetchHomeBannerDetails().then(response => {
-            console.log('this is the bannertresponse', response.data);
+            console.log(response, 'banners')
             if (response.status == 100 && response.data.length > 0) {
                 var data = response.data;
                 setBannerSliderShows(data);
@@ -26,11 +28,11 @@ const BannerContainer = () => {
             }
         })
     }, []);
+
     const selectSliderImage = (show) => {
         console.log(show);
         var singleObj = []
         service.fetchHomeBannerDetails().then(response => {
-            console.log('this is the response', response.data);
             if (response.status == 100 && response.data.length > 0) {
                 var data = response.data;
                 setBannerSliderShows(data);
@@ -43,6 +45,7 @@ const BannerContainer = () => {
             }
         })
     }
+
     const settings = {
         arrows: false,
         dots: true,
@@ -55,6 +58,7 @@ const BannerContainer = () => {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
     const setting = {
         arrows: false,
         dots: false,
@@ -68,12 +72,27 @@ const BannerContainer = () => {
         centerMode: true,
         focusOnSelect: true,
     };
+
+    const convertTime = (d) => {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
+
+        time = hDisplay + mDisplay + sDisplay;
+
+        // return hDisplay + mDisplay + sDisplay; 
+    }
+
     return (
         < div className="entireBanner" style={{ height: '500px' }}>
             <div className="bannerSlider">
                 {
                     bannerSliderShows !== undefined && bannerSliderShows.length > 0 ?
-
                         (
                             <Slider {...settings}>
                                 {
@@ -88,7 +107,6 @@ const BannerContainer = () => {
                                                     </div>
                                                     <div className="container _3wxhi" style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0), rgb(38, 38, 45))' }}>
                                                         {
-
                                                             show.single_video === 0 ?
                                                                 (
                                                                     <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
@@ -140,9 +158,22 @@ const BannerContainer = () => {
                                                                     <div className="_1tLWN"></div>
                                                                     <div className="_1fjln">
                                                                         <div className="_1_mFM">{show.category_name[0]}</div>
-                                                                        <div className="_1MmGl">{show.year} · {show.video_duration}min</div>
+                                                                        {
+                                                                            convertTime(show.video_duration)
+                                                                        }
+                                                                        {
+                                                                            show.year ?
+                                                                                <div className="_1MmGl">({show.year}) . {time}</div>
+                                                                                :
+                                                                                <div className="_1MmGl">{time}</div>
+
+                                                                        }
                                                                     </div>
-                                                                    <div className="PoLdP">{show.rating}</div>
+                                                                    {
+                                                                        show.rating &&
+                                                                        <div className="PoLdP">{show.rating}</div>
+                                                                    }
+
                                                                 </div>
                                                             </div>
                                                             <div className="col col-lg-4 _3WSKT">
@@ -167,7 +198,6 @@ const BannerContainer = () => {
                                                                                 null
                                                                         )
                                                                 }
-
                                                             </div>
                                                             <div className="col col-lg-4 _3jpDM">
                                                             </div>
@@ -182,7 +212,6 @@ const BannerContainer = () => {
                         )
                         : null
                 }
-
             </div>
             {/* <div className="hpbSliderNav">
                 <Slider {...setting}>

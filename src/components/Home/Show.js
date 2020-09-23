@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { service } from '../../network/Home/service';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
+
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const Show = ({ param }) => {
     const [show, setShow] = useState(param)
     useEffect(() => {
 
     }, []);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -28,6 +30,7 @@ const Show = ({ param }) => {
             items: 1
         }
     };
+
     return (
         <div className="carouselContent">
             <Carousel responsive={responsive}>
@@ -81,7 +84,10 @@ const Show = ({ param }) => {
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                {
+                                                    show.rating &&
+                                                    <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                }
                                             </div>
                                         </div>
                                     </div>

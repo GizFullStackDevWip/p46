@@ -1,4 +1,5 @@
 const axios = require('axios');
+const qs = require('querystring');
 
 function authenticate() {
     let uId = 74961;
@@ -45,7 +46,7 @@ function keyAuthenticate(key) {
     return axios.get("https://poppo.tv/platform/bk/api/GetUserSubscriptionDetails", customConfig)
         .then((response) => {
             if (response.data.status == 100) {
-                console.log('keyAuth', response)
+                // console.log('keyAuth', response)
                 setCookie('userId', response.data.data[0].user_id, 7);
                 setCookie('userEmail', response.data.data[0].user_email, 7);
                 setCookie('userName', response.data.data[0].first_name, 7);
@@ -61,26 +62,30 @@ function keyAuthenticate(key) {
 
 }
 
-function register() {
-    let uId = 74961;
-    let user_id = getCookie('userId');
-    if (user_id) {
-        uId = user_id;
-    }
+function register(values) {
+    let device_id = localStorage.getItem('deviceId');
+    var token = localStorage.getItem('access-token');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Access-Control-Allow-Origin': true,
             crossorigin: true,
-        },
-        params: {
-            uid: uId
+            'access-token': token,
         }
     };
+    const data = {
+        'device_id': device_id,
+        'first_name': values.firstname,
+        'last_name': values.lastname,
+        'user_email': values.email,
+        'password': values.password,
+        'pubid': 50023,
+        'device_type': 'web'
+    }
 
-    return axios.get("https://staging.poppo.tv/platform/bk/registerWithEmail", customConfig)
+    return axios.post("https://poppo.tv/platform/bk/registerWithEmail", qs.stringify(data), customConfig)
         .then((response) => {
-            localStorage.setItem('access-token', response.data.token);
+            return response.data;
         })
         .catch((error) => {
             return [];
@@ -144,6 +149,129 @@ function getShows(key) {
         });
 }
 
+function verifyEmail(values, userRegisterId) {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            user_id: userRegisterId,
+            otp: values.verification_code
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/verifyOtpFromEmail', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+function login(values) {
+    var token = localStorage.getItem('access-token');
+    let device_id = localStorage.getItem('deviceId');
+    let ipaddress = localStorage.getItem('ipaddress');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            'user_email': values.email,
+            'password': values.password,
+            'device_id': device_id,
+            'ipaddress' : ipaddress
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/Loginnew', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+function userSubscription(userLoggedId) {
+    var token = localStorage.getItem('access-token');
+    let device_id = localStorage.getItem('deviceId');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            'uid': userLoggedId,
+            'country_code': 'cx',
+            'device_id': device_id,
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/getUserSubscriptions', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+function forgotEmail(values) {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            'user_email': values.forgot_email,
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/Forgotpassword', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+function logoutAll(user_id) {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            'user_id': user_id,
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/Logoutall', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -170,5 +298,10 @@ export const service = {
     keyAuthenticate,
     register,
     getshowsbyCategory,
-    getShows
+    getShows,
+    verifyEmail,
+    login,
+    userSubscription,
+    forgotEmail,
+    logoutAll
 };

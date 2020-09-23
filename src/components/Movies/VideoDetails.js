@@ -8,39 +8,84 @@ import { Link, useHistory } from 'react-router-dom';
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var details = []
-const VideoDetails = (categoryId) => {
+
+var time = ''
+
+const VideoDetails = (categoryId, episode) => {
+
     const [showDetails, setShowDetails] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
     const [update, setUpdate] = useState(false);
+    const [episodeList, setEpisodeList] = useState([]);
     const [showTrailer, setShowTrailer] = useState(false);
-const [videoPlayer, setVideoPlayer] = useState();
+    const [videoPlayer, setVideoPlayer] = useState();
+    const [trailerVideoPlayer, setTrailerVideoPlayer] = useState();
     const history = useHistory();
+
     useEffect(() => {
-        service.getShowDetails(categoryId.categoryId).then(response => {
-            setShowDetails(response.data[0]);
-            details = response.data[0]
-            service.similarShow(response.data[0].video_id).then(response => {
-                setSimilarShows(response.data);
-            })
-	    service.playerToken().then(tokenResponse => {
-                let arr = response.data[0].video_name.split('/');
-                let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=video';
-                setVideoPlayer(<ReactHlsPlayer
-                    id='singleVideo'
-                    url={newURL}
-                    autoplay={false}
-                    controls={true}
-                    width={'100%'}
-                    height={'100%'}
-                    onReady={onPlayerReady}
-                    onPlay={onVideoPlay(response.data[0].video_id)}
-                    onPause={onVideoPause}
-                    onEnd={onVideoEnd}
-                />)
-            })
+        service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+            var data = response.data;
+            if (data.length > 0) {
+                var videoDetail = ''
+                var episodes = []
+                if (categoryId.categoryId.video_id) {
+                    data.map((item, index) => {
+                        if (item.video_id == categoryId.categoryId.video_id) {
+                            setShowDetails(item);
+                            videoDetail = item
+                        }
+                        else {
+                            episodes.push(item);
+                        }
+                    })
+                    setEpisodeList(episodes);
+                } else {
+                    setShowDetails(data[0]);
+                    videoDetail = data[0];
+                }
+                service.playerToken().then(tokenResponse => {
+                    console.log(tokenResponse, 'tokenResponse');
+                    let arr = videoDetail.video_name.split('/');
+                    let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=video';
+                    setVideoPlayer(<ReactHlsPlayer
+                        id='singleVideo'
+                        url={newURL}
+                        autoplay={false}
+                        controls={true}
+                        width={'100%'}
+                        height={'100%'}
+                        onReady={onPlayerReady}
+                        onPlay={onVideoPlay(videoDetail.video_id)}
+                        onPause={onVideoPause}
+                        onEnd={onVideoEnd}
+                    />)
+                    let arrTrailer = videoDetail.video_name.split('/');
+                    console.log(videoDetail);
+                    let newTrailerURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arrTrailer[5] + '&token=' + tokenResponse.data.data + '&type=video';
+                    setTrailerVideoPlayer(<ReactHlsPlayer
+                        id='singleVideo'
+                        url={newTrailerURL}
+                        autoplay={false}
+                        controls={true}
+                        width={'100%'}
+                        height={'100%'}
+                        onReady={onPlayerReady}
+                        onPlay={onVideoPlay(videoDetail.video_id)}
+                        onPause={onVideoPause}
+                        onEnd={onVideoEnd}
+                    />)
+                })
+                details = videoDetail
+                service.similarShow(videoDetail.video_id).then(response => {
+                    if (response.status == 100 && response.data.length > 0) {
+                        setSimilarShows(response.data);
+                    }
+                })
+            }
         })
         setUpdate(false);
     }, [update]);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -66,17 +111,13 @@ const [videoPlayer, setVideoPlayer] = useState();
     }
 
     const onVideoPlay = (videoId) => {
-
         service.checkVideoSubscription(videoId).then(response => {
             let videoDetails = response.data[0];
-
             if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
                 service.checkUserSubscription().then(useResponse => {
-
                     if (useResponse.data.length == 0) {
                         window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
                     }
-
                     if (useResponse.forcibleLogout === true) {
                         signOut()
                     }
@@ -84,9 +125,7 @@ const [videoPlayer, setVideoPlayer] = useState();
             } else {
                 console.log('playing...')
             }
-
         })
-
         service.onVideoPlayFunction(details).then(response => {
         })
     }
@@ -131,6 +170,14 @@ const [videoPlayer, setVideoPlayer] = useState();
         }
         setUpdate(true);
     }
+    const watchEpisode = (show) => {
+        history.push({
+            pathname: '/home/movies',
+            search: encodeURI(`show_id=${show.show_id}&video_id=${show.video_id}`)
+        });
+        setUpdate(true);
+    }
+
 
     const playTrailerFunction = () => {
         setShowTrailer(true);
@@ -138,6 +185,22 @@ const [videoPlayer, setVideoPlayer] = useState();
 
     const stopTrailerFunction = () => {
         setShowTrailer(false);
+    }
+
+    const convertTime = (d) => {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+
+        var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+        var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
+        var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
+
+        console.log(hDisplay + mDisplay + sDisplay, 'jjjj');
+        time = hDisplay + mDisplay + sDisplay;
+
+        // return hDisplay + mDisplay + sDisplay; 
     }
     return (
         <div className="videoPageContainer" >
@@ -218,8 +281,17 @@ const [videoPlayer, setVideoPlayer] = useState();
                                 <div className="vpMiddleInfoSection vpInfoPadding">
                                     <div className="vpLengthCensor">
                                         <div className="vpLengthYear">
-                                            <div className="movieYearText">{showDetails.year}</div><span className="vpYearBreak">·</span>
-                                            <div className="movieLength">{showDetails.video_duration} min</div>
+                                            {
+                                                showDetails.year &&
+                                                <div className="movieYearText">{showDetails.year}
+                                                <span className="vpYearBreak">·</span>
+                                                </div>
+                                            }
+
+                                            {
+                                                convertTime(showDetails.video_duration)
+                                            }
+                                            <div className="movieLength">{time}</div>
                                         </div>
                                         <div className="vpCCwrapper">
                                             <svg className="svgIcon vpCCicon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 28 18" style={{ fill: 'currentcolor' }}>
@@ -229,7 +301,10 @@ const [videoPlayer, setVideoPlayer] = useState();
                                                 </g>
                                             </svg>
                                             <div>
-                                                <div className="movieCensorBox">{showDetails.rating}</div>
+                                                {
+                                                    showDetails.rating &&
+                                                    <div className="movieCensorBox">{showDetails.rating}</div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -267,6 +342,32 @@ const [videoPlayer, setVideoPlayer] = useState();
                                         <br />
                                     </div>
                                 </div>
+                                {
+                                    showDetails.single_video === 0 &&
+                                    <div>
+                                        <h3 className="seasonTitle">Season 1</h3>
+                                        <Carousel responsive={responsive}>
+                                            {
+                                                episodeList.map((episode, index) => {
+                                                    return (
+                                                        <div className="carousel carouselNoMask seasonCarouselWrapper" key={index}>
+                                                            <div className="carouselContent"></div>
+                                                            <div className="row carouselRow" style={{ padding: '12px' }}>
+                                                                <div className="seasonTileImgWrapper" onClick={() => { watchEpisode(episode) }} style={{ cursor: 'pointer' }}>
+                                                                    <img src={bannerSeriesUrl + episode.thumbnail} />
+                                                                    <div className="seasonTileImgExtra"></div>
+                                                                    <div className="seasonTileHeading" style={{ color: 'white', fontSize: '1rem' }}>{episode.video_title}</div>
+                                                                    <div className="seasonTilePara">{episode.video_description}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                            }
+                                        </Carousel>
+                                    </div>
+                                }
+
                                 <div>
                                     <h2>You May Also Like</h2>
                                     <div className="carousel carouselNoMask">
@@ -351,7 +452,7 @@ const [videoPlayer, setVideoPlayer] = useState();
             </div>
             {
                 showTrailer &&
-                <React.Fragment>
+                <div>
                     <div className="modal-overlay" />
                     <div className="modal-wrapper" aria-modal aria-hidden tabIndex={-1} role="dialog" onClick={stopTrailerFunction} >
                         <div className="modal-header">
@@ -363,23 +464,15 @@ const [videoPlayer, setVideoPlayer] = useState();
                             <div className="_2KWdL">
                                 <section>
                                     <div className="_3tqpT" style={{ height: '100%' }}>
-                                        <ReactHlsPlayer
-                                            // url={showDetails.video_name}
-                                            url='https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8'
-                                            autoplay={false}
-                                            controls={true}
-                                            width="100%"
-                                            height="100%"
-                                        />
+                                        {trailerVideoPlayer}
                                     </div>
                                 </section>
                             </div>
                         </div>
                     </div>
-                </React.Fragment>
+                </div>
             }
-
-        </div>
+        </div >
     );
 }
 export default VideoDetails;

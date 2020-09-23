@@ -19,6 +19,13 @@ $(document).ready(function(){
             $('.pageWrapper').removeClass('menuOpened');
         }
     });
+
+    $(".logoutMenu").hover(function(){
+      if($('.pageWrapper').hasClass('menuOpened')) {
+          $('.menuItemContainer').addClass('menuClose');
+          $('.pageWrapper').removeClass('menuOpened');
+      }
+  });
             
     // ACCORDION CLICK FUNCTION
     $(".faqIcon").click(function(){

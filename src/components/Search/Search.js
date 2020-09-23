@@ -4,8 +4,9 @@ import { useParams, useLocation } from 'react-router-dom';
 const queryString = require('query-string');
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-var show  = []
-const Search = ({history}) => {
+var show = []
+
+const Search = ({ history }) => {
     var { search } = useLocation();
     show = history.location.state.item
     const parsed = queryString.parse(search);
@@ -15,18 +16,18 @@ const Search = ({history}) => {
     }, []);
 
     return (
-        <div className="pageWrapper searchPageMain">
-            <div className="topContainer">
+        <div class="pageWrapper searchPageMain">
+            <div class="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
                             Results for
-                            <h1 className="SearchResultText">{parsed.input}</h1>
+                            <h1 className="SearchResultText">{parsed.input}</h1><br />
                             {
                                 show.length > 0 ?
-                                null
-                                :<h3 style={{ color: 'white' }}>No Matches</h3>
+                                    null
+                                    : <h3 style={{ color: 'white' }}>No Matches</h3>
                             }
 
                         </div>

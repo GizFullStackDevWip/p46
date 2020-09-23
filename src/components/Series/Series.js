@@ -16,10 +16,13 @@ const Series = () => {
         window.scrollTo(0, 0);
         service.getShowDetails(parsed.show_id).then(response => {
             console.log(response, 'details ');
-            setEpisodes(response.data);
-            setShowDetails(response.data[0]);
+            if (response.status == 100 && response.data.length > 0) {
+                setEpisodes(response.data);
+                setShowDetails(response.data[0]);
+            }
         })
     }, []);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -38,16 +41,17 @@ const Series = () => {
             items: 1
         }
     };
+
     return (
-        <div className="pageWrapper searchPageMain">
-            <div className="topContainer">
+        <div class="pageWrapper searchPageMain">
+            <div class="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="moviePageWrapper">
                         <div className="moviePageBG"
                             style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
                         ></div> <div className="moviePageBG"
-                        style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
-                    ></div>
+                            style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
+                        ></div>
                         <div className="moviePageContainer">
                             <div className="vpContent">
                                 <div className="container vpContainer">
@@ -140,12 +144,12 @@ const Series = () => {
                                                                 <div className="carouselContent"></div>
                                                                 <div className="row carouselRow" style={{ padding: '20px' }}>
                                                                     <div className="seasonTileImgWrapper">
-                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}`) }}>
+                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}&video_id=${episode.video_id}`) }}>
                                                                             <img src={bannerSeriesUrl + episode.thumbnail} />
                                                                         </Link>
                                                                         <div className="seasonTileImgExtra"></div>
-                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}`) }}>
-                                                                            <div className="seasonTileHeading" style={{color: 'white',fontSize: '1rem'}}>{episode.video_title}</div>
+                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${episode.show_id}&video_id=${episode.video_id}`) }}>
+                                                                            <div className="seasonTileHeading" style={{ color: 'white', fontSize: '1rem' }}>{episode.video_title}</div>
                                                                         </Link>
                                                                         <div className="seasonTilePara">{episode.video_description}</div>
                                                                     </div>

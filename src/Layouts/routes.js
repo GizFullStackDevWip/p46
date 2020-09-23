@@ -10,20 +10,24 @@ import AboutUs from '../components/FooterComponents/AboutUs/AboutUs';
 import Search from '../components/Search/Search';
 import Header from '../components/Basic/Header';
 import Footer from '../components/Basic/Footer';
+import Live from '../components/Live/Live';
 const routes = () => (
     <Router>
-        <Header/>
-        <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/home/movies" exact component={Movies} />
-            <Route path="/home/categorylist" exact component={CategoryList} />
-            <Route path="/signin" exact component={SignIn} />
-            <Route path="/register" exact component={Register} />
-            <Route path="/home/series" exact component={Series} />
-            <Route path="/aboutus" exact component={AboutUs} />
-            <Route path="/search" exact component={Search} />
-        </Switch>
-        <Footer/>
+        <Header />
+        <div className="closeMenuWrapper">
+            <Switch>
+                <Route path="/" exact component={Home} />
+                <Route path="/home/movies" exact component={Movies} />
+                <Route path="/home/categorylist" exact component={CategoryList} />
+                <Route path="/signin" exact component={SignIn} />
+                <Route path="/register" exact component={Register} />
+                <Route path="/home/series" exact component={Series} />
+                <Route path="/aboutus" exact component={AboutUs} />
+                <Route path="/search" exact component={Search} />
+                <Route path="/home/live" exact component={Live} />
+            </Switch>
+        </div>
+        <Footer />
     </Router>
 
 );

@@ -29,8 +29,8 @@ const CategoryList = () => {
         })
     }, []);
     return (
-        <div className="pageWrapper searchPageMain">
-            <div className="topContainer">
+        <div class="pageWrapper searchPageMain">
+            <div class="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>

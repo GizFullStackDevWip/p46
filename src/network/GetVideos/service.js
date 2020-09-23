@@ -123,8 +123,8 @@ function similarShow(videoId) {
 function onVideoPlayFunction(values) {
     var timestamp = Date.now().toString();
     var res = timestamp.slice(0, 10);
-    console.log(values);
-    console.log(res);
+    // console.log(values);
+    // console.log(res);
     const requestBody = {
         // session_id: window.session_id,
         // user_id: window.getCookie('userId'),
@@ -154,7 +154,7 @@ function onVideoPlayFunction(values) {
             return response.data;
         })
         .catch((error) => {
-            console.log(error);
+            // console.log(error);
             return [];
         });
 }
