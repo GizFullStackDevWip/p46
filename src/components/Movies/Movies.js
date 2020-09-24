@@ -8,7 +8,6 @@ const Movies = ({ }) => {
     window.scrollTo(0, 0);
     var { search } = useLocation();
     const parsed = queryString.parse(search);
-    // console.log(parsed.show_id);
     useEffect(() => {
 
     }, []);

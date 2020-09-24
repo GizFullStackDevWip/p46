@@ -3,9 +3,9 @@ import { service } from '../../network/Home/service';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
+
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-
 var time = ''
 
 const BannerContainer = () => {
@@ -15,7 +15,6 @@ const BannerContainer = () => {
     useEffect(() => {
         var singleObj = []
         service.fetchHomeBannerDetails().then(response => {
-            console.log(response, 'banners')
             if (response.status == 100 && response.data.length > 0) {
                 var data = response.data;
                 setBannerSliderShows(data);

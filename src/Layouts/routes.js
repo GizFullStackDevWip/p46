@@ -11,6 +11,7 @@ import Search from '../components/Search/Search';
 import Header from '../components/Basic/Header';
 import Footer from '../components/Basic/Footer';
 import Live from '../components/Live/Live';
+import SubscriptionList from '../components/SubscriptionList/SubscriptionList';
 const routes = () => (
     <Router>
         <Header />
@@ -25,6 +26,7 @@ const routes = () => (
                 <Route path="/aboutus" exact component={AboutUs} />
                 <Route path="/search" exact component={Search} />
                 <Route path="/home/live" exact component={Live} />
+                <Route path="/subscription" exact component={SubscriptionList} />
             </Switch>
         </div>
         <Footer />

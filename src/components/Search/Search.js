@@ -10,10 +10,17 @@ const Search = ({ history }) => {
     var { search } = useLocation();
     show = history.location.state.item
     const parsed = queryString.parse(search);
+    const [hover, setHover] = useState(false);
+    const [focusedId, setFocusedId] = useState(-1);
 
     useEffect(() => {
 
     }, []);
+
+    const hoverFunction = (flag, index) => {
+        setHover(flag);
+        setFocusedId(index);
+    }
 
     return (
         <div class="pageWrapper searchPageMain">
@@ -38,33 +45,35 @@ const Search = ({ history }) => {
                                         return (
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
                                                 <div className="movieTileMargin movieTile">
-                                                    <div className="movieTileImage">
-                                                        <a className="movieTileIcon movieTileHover" href="/series/300005083/adventures_of_sonic_the_hedgehog">
-                                                            <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
-                                                                <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
-                                                                <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
-                                                            </svg>
-                                                        </a>
+                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                        <div className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                            {hover === true && focusedId === index ?
+                                                                <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                    <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
+                                                                        <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
+                                                                        <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
+                                                                    </svg>
+                                                                </Link>
+                                                                : null}
+                                                        </div>
                                                         {
                                                             show.single_video == 0 ?
-                                                                <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
-                                                                    <div className="moviePoster"
-                                                                        style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
-                                                                        <div className="FeNml"></div>
-                                                                    </div>
-                                                                </Link> : (
+
+                                                                <div className="moviePoster"
+                                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
+                                                                    <div className="FeNml"></div>
+                                                                </div>
+                                                                : (
                                                                     show.single_video == 1 ?
-                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
-                                                                            <div className="moviePoster"
-                                                                                style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
-                                                                                <div className="FeNml"></div>
-                                                                            </div>
-                                                                        </Link> : null
+                                                                        <div className="moviePoster"
+                                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
+                                                                            <div className="FeNml"></div>
+                                                                        </div> : null
                                                                 )
                                                         }
-                                                        <div className="wishlistPosition wishlistTranslate wishlistParentClose">
+                                                        <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
-                                                                <div className="wlgradientPosition wlgradientTranslate wlgradientClose"
+                                                                <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
                                                                     style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5)), url(./images/adventures/adventures-04.jpg)', backgroundPosition: 'center bottom', backgroundSize: 'cover' }}>
                                                                 </div>
                                                                 <div className="wishlistTextWrapper">

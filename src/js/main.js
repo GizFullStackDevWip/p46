@@ -63,23 +63,23 @@ $(document).ready(function(){
     });
     
     // MOVIE TILE HOVER TOGGLE PLAY BUTTON
-    $(".movieTile").hover(
-       function () {
-           $(this).find('.wishlistPosition').removeClass('wishlistParentClose');
-           $(this).find('.wlgradientPosition').removeClass('wlgradientClose');
-           $(this).find('.movieTileImage').addClass('movieTileImageOpen');
-           $(this).find('.movieTileIcon').addClass('movieTileHoverOpened');
-           $(this).find('.wishlistPosition').addClass('wishlistParentOpen');
-           $(this).find('.wlgradientPosition').addClass('wlgradientOpen');
-       }, 
+    // $(".movieTile").hover(
+    //    function () {
+    //        $(this).find('.wishlistPosition').removeClass('wishlistParentClose');
+    //        $(this).find('.wlgradientPosition').removeClass('wlgradientClose');
+    //        $(this).find('.movieTileImage').addClass('movieTileImageOpen');
+    //        $(this).find('.movieTileIcon').addClass('movieTileHoverOpened');
+    //        $(this).find('.wishlistPosition').addClass('wishlistParentOpen');
+    //        $(this).find('.wlgradientPosition').addClass('wlgradientOpen');
+    //    }, 
 
-       function () {
-           $(this).find('.wishlistPosition').addClass('wishlistParentClose');
-           $(this).find('.wlgradientPosition').addClass('wlgradientClose');
-           $(this).find('.movieTileImage').removeClass('movieTileImageOpen');
-           $(this).find('.movieTileIcon').removeClass('movieTileHoverOpened');
-           $(this).find('.wishlistPosition').removeClass('wishlistParentOpen');
-           $(this).find('.wlgradientPosition').removeClass('wlgradientOpen');
-       }
-    );
+    //    function () {
+    //        $(this).find('.wishlistPosition').addClass('wishlistParentClose');
+    //        $(this).find('.wlgradientPosition').addClass('wlgradientClose');
+    //        $(this).find('.movieTileImage').removeClass('movieTileImageOpen');
+    //        $(this).find('.movieTileIcon').removeClass('movieTileHoverOpened');
+    //        $(this).find('.wishlistPosition').removeClass('wishlistParentOpen');
+    //        $(this).find('.wlgradientPosition').removeClass('wlgradientOpen');
+    //    }
+    // );
 });

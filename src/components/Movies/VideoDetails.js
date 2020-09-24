@@ -8,11 +8,13 @@ import { Link, useHistory } from 'react-router-dom';
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var details = []
-
 var time = ''
 
 const VideoDetails = (categoryId, episode) => {
 
+    const history = useHistory();
+    const [hover, setHover] = useState(false);
+    const [focusedId, setFocusedId] = useState(-1);
     const [showDetails, setShowDetails] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
     const [update, setUpdate] = useState(false);
@@ -20,7 +22,6 @@ const VideoDetails = (categoryId, episode) => {
     const [showTrailer, setShowTrailer] = useState(false);
     const [videoPlayer, setVideoPlayer] = useState();
     const [trailerVideoPlayer, setTrailerVideoPlayer] = useState();
-    const history = useHistory();
 
     useEffect(() => {
         service.getShowDetails(categoryId.categoryId.show_id).then(response => {
@@ -44,7 +45,6 @@ const VideoDetails = (categoryId, episode) => {
                     videoDetail = data[0];
                 }
                 service.playerToken().then(tokenResponse => {
-                    console.log(tokenResponse, 'tokenResponse');
                     let arr = videoDetail.video_name.split('/');
                     let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=video';
                     setVideoPlayer(<ReactHlsPlayer
@@ -60,7 +60,6 @@ const VideoDetails = (categoryId, episode) => {
                         onEnd={onVideoEnd}
                     />)
                     let arrTrailer = videoDetail.video_name.split('/');
-                    console.log(videoDetail);
                     let newTrailerURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arrTrailer[5] + '&token=' + tokenResponse.data.data + '&type=video';
                     setTrailerVideoPlayer(<ReactHlsPlayer
                         id='singleVideo'
@@ -113,7 +112,6 @@ const VideoDetails = (categoryId, episode) => {
     const onVideoPlay = (videoId) => {
         service.checkVideoSubscription(videoId).then(response => {
             let videoDetails = response.data[0];
-            console.log(videoDetails,'videoDetails====>');
             if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
                 service.checkUserSubscription().then(useResponse => {
                     if (useResponse.data.length == 0) {
@@ -126,7 +124,7 @@ const VideoDetails = (categoryId, episode) => {
                         // window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
                     }
                     if (useResponse.forcibleLogout === true) {
-                        signOut()
+                        // signOut()
                     }
                 })
             } else {
@@ -211,6 +209,10 @@ const VideoDetails = (categoryId, episode) => {
         time = hDisplay + mDisplay + sDisplay;
 
         // return hDisplay + mDisplay + sDisplay; 
+    }
+    const hoverFunction = (flag, index) => {
+        setHover(flag);
+        setFocusedId(index);
     }
     return (
         <div className="videoPageContainer" >
@@ -388,30 +390,32 @@ const VideoDetails = (categoryId, episode) => {
                                                         return (
                                                             <div className="col col-3" key={index}>
                                                                 <div className="movieTile">
-                                                                    <div className="movieTileImage">
-                                                                        <a className="movieTileIcon movieTileHover" href="/movies/321882/coloring_books_with_om_nom">
-                                                                            <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
+                                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                                        <div className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                                        {hover === true && focusedId === index ?
+                                                                            <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
                                                                                 <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                                             </svg>
-                                                                        </a>
+                                                                            :null}
+                                                                        </div>
                                                                         {
                                                                             show.single_video === 0 ?
-                                                                                <div className="moviePoster" onClick={() => { functionOnclick(show) }}
+                                                                                <div className="moviePoster" 
                                                                                     style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
                                                                                     <div className="FeNml"></div>
                                                                                 </div> : (
                                                                                     show.single_video === 1 ?
-                                                                                        <div className="moviePoster" onClick={() => { functionOnclick(show) }}
+                                                                                        <div className="moviePoster" 
                                                                                             style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
                                                                                             <div className="FeNml"></div>
                                                                                         </div>
                                                                                         :
                                                                                         null)
                                                                         }
-                                                                        <div className="wishlistPosition wishlistTranslate wishlistParentClose">
+                                                                        <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                                             <div className="wishlistButton">
-                                                                                <div className="wlgradientPosition wlgradientTranslate wlgradientClose"
+                                                                                <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
                                                                                     style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))', backgroundPosition: 'center bottom', backgroundSize: 'cover' }}
                                                                                 >
                                                                                 </div>
@@ -441,7 +445,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                     </div>
                                                                                 </div>
                                                                                 <div>
-                                                                                    <div className="movieCensorBox moviecensorText">TV-PG</div>
+                                                                                    <div className="movieCensorBox moviecensorText">{show.rating}</div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

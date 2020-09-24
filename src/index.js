@@ -34,6 +34,20 @@ import "slick-carousel/slick/slick-theme.css";
 import 'react-multi-carousel/lib/styles.css';
 
 import registerServiceWorker from './registerServiceWorker';
+import { createStore } from 'redux';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import reducer from './store/reducer';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const store = createStore(reducer);
+
+const app = (
+    <Provider store={store}>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </Provider>
+);
+
+ReactDOM.render(app, document.getElementById('root'));
 registerServiceWorker();

@@ -286,8 +286,8 @@ class FooterInfo extends React.Component {
                 </div >
                 <div className="footerCopyright">
                     <div className="footerCopyText">
-                        <div>Copyright &copy; 2020 Tubi, Inc.</div>
-                        <div>Tubi is a registered trademark of Tubi, Inc.
+                        <div>Copyright &copy; 2020 Happi, Inc.</div>
+                        <div>Happi is a registered trademark of Happi, Inc.
 						<br /> All rights reserved.</div>
                     </div>
                     <div className="XJ_r0">Device ID: 9da1fc58-2618-458b-9dd3-3f10d0bbe1e2</div>

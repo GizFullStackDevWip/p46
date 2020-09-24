@@ -154,7 +154,7 @@ const AboutUs =()=>{
                                                     <div className=" tubi-header">
                                                         <div id="main-bg" className="main-bg" style={{top: '0px'}}></div>
                                                         <div className="header-content">
-                                                            <h1>TV Reimagined<span>Tubi is the world’s largest ad-supported video on demand service with over 20,000 movies and television shows from nearly every major Hollywood studio. Tubi gives millions of viewers an easy way to discover new content, which is all available completely free.</span></h1> </div>
+                                                            <h1>TV Reimagined<span>Happi is the world’s largest ad-supported video on demand service with over 20,000 movies and television shows from nearly every major Hollywood studio. Tubi gives millions of viewers an easy way to discover new content, which is all available completely free.</span></h1> </div>
                                                     </div>
                                                 </div>
                                             </div>

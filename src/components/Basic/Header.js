@@ -1,35 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/service';
+import { useSelector, useDispatch } from 'react-redux';
+
 const queryString = require('query-string');
 const Header = () => {
-    const [input, setInput] = useState([]);
+
+    const dispatch = useDispatch();
     const history = useHistory();
+    var { search } = useLocation();
+    const parsed = queryString.parse(search);
+    const location = useLocation();
+    const currentPath = location.pathname;
+
+    const loginBlock = useSelector((state) => state.loginBlock);
+    const userBlock = useSelector((state) => state.userBlock);
+
+    const [input, setInput] = useState([]);
     const [timeOut, setTimeOut] = useState(0);
     const [category, setCategory] = useState([]);
-    const [loginBlock, setLoginBlock] = useState('block');
-    const [userBlock, setUserBlock] = useState('none');
     let userName = localStorage.getItem('userName');
     const [typing, setTyping] = useState(false);
     const [mouseHover, setMouseHover] = useState(false);
 
-    var { search } = useLocation();
-    const location = useLocation();
-    const currentPath = location.pathname;
-    const parsed = queryString.parse(search);
-
     useEffect(() => {
-    }, []);
-    useEffect(() => {
-        let isLoggedIn = localStorage.getItem('isLoggedIn');
-        console.log(localStorage.getItem('userName'), 'userid');
-        if (isLoggedIn == 'true') {
-            setLoginBlock('none')
-            setUserBlock('block')
-        }
         window.scrollTo(0, 0);
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn == 'true') {
+            dispatch({ type: "LOGIN" });
+        }
         service.getshowsbyCategory().then(response => {
-            console.log(response.data, 'dara');
             setCategory(response.data);
         })
     }, []);
@@ -42,7 +42,6 @@ const Header = () => {
         setTimeOut(setTimeout(() => {
             if (inputValue.length > 0) {
                 service.getShows(inputValue).then(response => {
-                    console.log(response, 'response');
                     setTyping(false);
                     history.push({
                         pathname: '/search',
@@ -65,11 +64,8 @@ const Header = () => {
             localStorage.removeItem("userName");
             localStorage.removeItem("userId");
             localStorage.setItem('isLoggedIn', 'false');
-
-            setLoginBlock('block')
-            setUserBlock('none')
+            dispatch({ type: "LOGOUT" });
             setMouseHover(false);
-
             eraseCookie('userName');
             eraseCookie('userId');
             eraseCookie('userEmail');
@@ -86,6 +82,7 @@ const Header = () => {
     const submitSearch = (e) => {
         e.preventDefault();
     }
+
     return (
         <header className={currentPath === '/register' || currentPath === '/signin' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
             <div className="screenContainer">
@@ -115,9 +112,7 @@ const Header = () => {
                                     </section>
                                 </div>
                                 <div className="menuRowItem">
-                                    <div className="menuWrapperHeight"
-                                    // style={{ height: '437px' }}
-                                    >
+                                    <div className="menuWrapperHeight">
                                         <div className="menuWidth20" style={{ width: '40%' }}>
                                             <div className="menuCol">
                                                 <div className="menuItemHead">Popular</div>
@@ -137,7 +132,9 @@ const Header = () => {
                                                         {
                                                             category.map((item, index) => {
                                                                 return (
-                                                                    <a key={index} className="linkButton headerMenuItems" href="#">{item.category_name}</a>
+                                                                    <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
+                                                                        <div key={index} className="linkButton headerMenuItems" href="#">{item.category_name}</div>
+                                                                    </Link>
                                                                 );
                                                             })
                                                         }
@@ -149,21 +146,21 @@ const Header = () => {
                                 </div>
                             </div>
                         </div>
+
                         <img src={require('../../images/logo.png')} style={{ cursor: 'pointer' }} onClick={() => {
                             setInput('');
                             history.push({
                                 pathname: '/'
                             });
                         }} width={60} />
+
                     </div>
                 </div>
                 <section className="searchContainer searchBar">
                     <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
                         <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                     </svg>
-                    <form
-                        onSubmit={submitSearch}
-                    >
+                    <form onSubmit={submitSearch}>
                         <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler}
                             value={parsed.show_id ? typing === true ? input : '' : input} />
                     </form>
@@ -177,7 +174,6 @@ const Header = () => {
                             currentPath === '/register' ?
                                 (
                                     <ul>
-                                        {/* <li><a className="headerSignInButton" href="http://stagingweb.gethappi.tv/login">Sign In</a></li> */}
                                         <li><a className="headerSignInButton" style={{ cursor: 'pointer' }} onClick={() => {
                                             setInput('');
                                             history.push({
@@ -248,7 +244,7 @@ const Header = () => {
             </div>
             {
                 mouseHover === true ?
-                    <div className="signpadding" 
+                    <div className="signpadding"
                         onMouseLeave={() => { setMouseHover(false) }}>
                         <div className="signin">
                             <div>

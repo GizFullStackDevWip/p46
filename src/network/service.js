@@ -190,7 +190,7 @@ function login(values) {
             'user_email': values.email,
             'password': values.password,
             'device_id': device_id,
-            'ipaddress' : ipaddress
+            'ipaddress': ipaddress
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Loginnew', customConfig).then(
@@ -272,6 +272,77 @@ function logoutAll(user_id) {
             return [];
         });
 }
+function publisherSubscription() {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50020,
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/GetpublisherSubscriptions', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+
+}
+
+function videoSubscription(selectedVideoId) {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50020,
+            video_id: selectedVideoId
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/GetvideoSubscriptions', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+function androidTokeDecode(antkn) {
+    var token = localStorage.getItem('access-token');
+
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50020,
+            key: antkn
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/GetUserSubscriptionDetails', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -303,5 +374,8 @@ export const service = {
     login,
     userSubscription,
     forgotEmail,
-    logoutAll
+    logoutAll,
+    publisherSubscription,
+    videoSubscription,
+    androidTokeDecode,
 };

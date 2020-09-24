@@ -9,20 +9,16 @@ const queryString = require('query-string');
 var liveThumbnailUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/images/';
 
 const Live = (history) => {
+    var { search } = useLocation();
+    const parsed = queryString.parse(search);
+
     const [videoPlayer, setVideoPlayer] = useState();
     const [channels, setChannels] = useState([]);
     const [hover, setHover] = useState('none');
 
-    var { search } = useLocation();
-    const parsed = queryString.parse(search);
-    console.log(parsed.live_link);
-
     useEffect(() => {
-        console.log(history.location.state.channel[0].live_link, 'history gggggggg');
         setVideoPlayer(history.location.state.channel[0].live_link);
-        console.log(history, 'history');
         service.getLiveChannels().then(response => {
-            console.log(response, 'res chanel')
             setChannels(response.data);
         })
 
@@ -51,7 +47,31 @@ const Live = (history) => {
                 <div className="homepageWrapper menuCloseJS closeMenuWrapper">
                     <div className="videoPageContainer" >
                         <div className="videoPageBGimg" onMouseLeave={() => { setHover('none') }}
-                            style={{ zIndex: '2', width: '30%',display:hover }}>
+                            style={{ zIndex: '2', width: '30%', display: hover }}>
+                            <Carousel responsive={responsive}>
+                                {
+                                    channels.map((item, index) => {
+                                        return (
+                                            <div className="movieTile" key={index} style={{ padding: '12px',backgroundColor:'white' }} >
+                                                <div className="movieTileImage">
+                                                    <div className="movieTileIcon movieTileHover">
+                                                        <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}>
+                                                            <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
+                                                            <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
+                                                        </svg>
+                                                    </div>
+                                                    <Link to={{ pathname: '/home/live', state: { channel: channels } }}>
+                                                        <img  src={liveThumbnailUrl + item.logo}/>
+                                                        {/* <div className="moviePoster" style={{ backgroundImage: `url(${liveThumbnailUrl + item.logo})` }} >
+                                                            <div className="FeNml"></div>
+                                                        </div> */}
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        );
+                                    })
+                                }
+                            </Carousel>
                         </div>
 
 

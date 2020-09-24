@@ -1,15 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import $ from 'jquery';
 import FacebookLogin from 'react-facebook-login';
 import { service } from '../../network/service';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 const SignIn = () => {
+
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verification_code, setVerification] = useState('');
     const [forgot_email, setForgotEmail] = useState('');
     const [userLoggedId, setUserLoggedId] = useState('');
+    const [isLogin, setIsLogin] = useState(true);
+    const [isVerify, setIsVeriy] = useState(false);
+    const [isForgot, setIsForgot] = useState(false);
+    const [isSuccessLoginMsg, setIsSuccessLoginMsg] = useState(false);
+    const [msgSuccessLogin, setMsgSucessLogin] = useState("");
+    const [isErrorLoginMsg, setIsErrorLoginMsg] = useState(false);
+    const [msgErrorLogin, setMsgErrorLogin] = useState("");
+    const [isSuccessVerifyMsg, setIsSuccessVerifyMsg] = useState(false);
+    const [msgSuccessVerify, setMsgSucessVerify] = useState("");
+    const [isErrorVerifyMsg, setIsErrorVerifyMsg] = useState(false);
+    const [msgErrorVerify, setMsgErrorVerify] = useState("");
+    const [isSuccessForgotMsg, setIsSuccessForgotMsg] = useState(false);
+    const [msgSuccessForgot, setMsgSucessForgot] = useState("");
+    const [isErrorForgotMsg, setIsErrorForgotMsg] = useState(false);
+    const [msgErrorForgot, setMsgErrorForgot] = useState("");
+    const [isSuccessLogoutMsg, setIsSuccessLogoutMsg] = useState(false);
+    const [isErrorLogoutMsg, setIsErrorLogoutMsg] = useState(false);
+    const [isErrorLogout, setIsErrorLogout] = useState(false);
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -30,10 +51,8 @@ const SignIn = () => {
     const [errorsForgot, setErrorsForgot] = useState({
         forgot_email: 'Email'
     });
-
     useEffect(() => {
     }, []);
-
     const validateEmail = email => {
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
             return (true);
@@ -166,65 +185,61 @@ const SignIn = () => {
         if (validation()) {
             service.login(values).then(response => {
                 if (response.status == 100) {
-                    console.log(response,'login response');
-                    localStorage.setItem('isLoggedIn',true);
-                    localStorage.setItem('userName',response.data[0].first_name);
                     setUserLoggedId(response.data[0].user_id);
+                    localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('userName', response.data[0].first_name);
                     service.userSubscription(response.data[0].user_id).then(response => {
                         if (response.forcibleLogout == false) {
                             //service.setCookie("userId", userLoggedId, 30);
                             var user_sub = response.data;
                             if (user_sub.length > 0) {
-                                var $div2 = $("#msgLogin");
-                                $div2.text("You are successfully logged in.");
-                                $div2.show();
+                                setMsgSucessLogin('You are successfully logged in.');
+                                setIsSuccessLoginMsg(true);
                                 setTimeout(function () {
-                                    $div2.hide();
-                                }, 5000);
-                                history.goBack()
+                                    setIsSuccessLoginMsg(false);
+                                }, 1000);
+
+                                history.goBack();
+                                dispatch({ type: "LOGIN" });
                             } else {
-                                var $div2 = $("#msgLogin");
-                                $div2.text("You are successfully logged in.");
-                                $div2.show();
+                                setMsgSucessLogin('You are successfully logged in.');
+                                setIsSuccessLoginMsg(true);
                                 setTimeout(function () {
-                                    $div2.hide();
+                                    setIsSuccessLoginMsg(false);
                                 }, 5000);
-                                history.goBack()
+                                history.goBack();
+                                dispatch({ type: "LOGIN" });
+
                             }
+
                             return false;
                         } else {
-                            var $div2 = $("#msgLogin1");
-                            $('#logoutBtn').show();
-                            $div2.css('color', '#f44336');
-                            $div2.show();
+                            setIsErrorLogoutMsg(true);
                             setTimeout(function () {
-                                $div2.hide();
+                                setIsErrorLogoutMsg(false);
                             }, 5000);
                         }
                     });
                 } else if (response.status == 102) {
-                    var $div2 = $("#msgLogin");
-                    $div2.css('color', '#f44336');
-                    $div2.text("Please enter a valid user email and password");
-                    $div2.show();
+                    setMsgErrorLogin('Please enter a valid user email and password');
+                    setIsErrorLoginMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
+                        setIsErrorLoginMsg(false);
                     }, 5000);
                 } else if (response.status == 103) {
-                    var $div2 = $("#msgLogin");
-                    $div2.css('color', '#f44336');
-                    $div2.text("Login limit exceed");
-                    $div2.show();
+                    setMsgErrorLogin('Login limit exceed');
+                    setIsErrorLoginMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
+                        setIsErrorLoginMsg(false);
                     }, 5000);
+
                 } else if (response.status == 101) {
-                    $("#loginId").hide();
-                    $("#verifyId").show();
-                    var $div2 = $("#msgVerifyId");
-                    $div2.show();
+                    setIsLogin(false);
+                    setIsVeriy(true);
+                    setMsgSucessVerify('OTP send to your Email, Please verfy..');
+                    setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
+                        setIsSuccessVerifyMsg(false);
                     }, 5000);
                 };
 
@@ -238,20 +253,19 @@ const SignIn = () => {
             let UserRegistered = localStorage.getItem('UserRegistered');
             service.verifyEmail(values, UserRegistered).then(response => {
                 if (response.status == 1) {
-                    var $div2 = $("#msgVerifyId");
-                    $div2.text("Your registration is complted");
-                    $div2.show();
+                    setMsgSucessVerify('Your registration is completed');
+                    setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
+                        setIsSuccessVerifyMsg(false);
                     }, 5000);
+                    window.location.href = "/";
                 } else if (response.status == 0) {
-                    var $div2 = $("#msgVerifyId");
-                    $div2.css('color', '#f44336');
-                    $div2.text("Invalid OTP");
-                    $div2.show();
+                    setMsgErrorVerify('Invalid OTP');
+                    setIsErrorVerifyMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
+                        setIsErrorVerifyMsg(false);
                     }, 5000);
+
                 }
 
             })
@@ -262,57 +276,47 @@ const SignIn = () => {
         if (validationForgot()) {
             service.forgotEmail(valuesForgot).then(response => {
                 if (response.status == 100) {
-                    var $div2 = $("#msgLogin");
-                    $div2.text("Reset Password Link send to your Email Id");
-                    $div2.show();
+                    setMsgSucessForgot('Reset Password Link send to your Email Id');
+                    setIsSuccessForgotMsg(true);
                     setTimeout(function () {
-                        $div2.hide();
-                    }, 5000);
-                    $("#forgotId").hide();
-                    $("#loginId").show();
-                } else if (response.status == 101) {
-                    var $div2 = $("#msgForgotId");
-                    $div2.css('color', '#f44336');
-                    $div2.text("Email id does't exist.");
-                    $div2.show();
-                    setTimeout(function () {
-                        $div2.hide();
-                    }, 5000);
-                } else {
-                    var $div2 = $("#msgForgotId");
-                    $div2.css('color', '#f44336');
-                    $div2.text("Failed please try again.");
-                    $div2.show();
-                    setTimeout(function () {
-                        $div2.hide();
+                        setIsSuccessForgotMsg(false);
                     }, 5000);
 
+                    setIsLogin(true);
+                    setIsForgot(false);
+                } else if (response.status == 101) {
+                    setMsgErrorForgot('Email id does\'t exist.');
+                    setIsErrorForgotMsg(true);
+                    setTimeout(function () {
+                        setIsErrorForgotMsg(false);
+                    }, 5000);
+
+                } else {
+                    setMsgErrorForgot('Failed please try again.');
+                    setIsErrorForgotMsg(true);
+                    setTimeout(function () {
+                        setIsErrorForgotMsg(false);
+                    }, 5000);
                 }
 
             })
         }
     }
     const onClickForgot = () => {
-        $("#loginId").hide();
-        $("#forgotId").show();
+        setIsLogin(false);
+        setIsForgot(true);
     }
     const onLogout = () => {
         service.logoutAll(userLoggedId).then(response => {
             if (response.status == 100) {
-                var $div2 = $("#msgLogin");
-                $div2.text("You are successfully logout from all devices.");
-                $div2.show();
+                setIsSuccessLogoutMsg(true);
                 setTimeout(function () {
-                    $div2.hide();
+                    setIsSuccessLogoutMsg(false);
                 }, 5000);
-
             } else {
-                var $div2 = $("#msgLogin");
-                $div2.css('color', '#f44336');
-                $div2.text("Something went wrong. Please Try Again");
-                $div2.show();
+                setIsErrorLogout(true)
                 setTimeout(function () {
-                    $div2.hide();
+                    setIsErrorLogout(false);
                 }, 5000);
             }
         });
@@ -320,9 +324,8 @@ const SignIn = () => {
 
 
 
-
     return (
-        <div className="pageWrapper searchPageMain">
+        <div className="pageWrapper">
             <div className="topContainer">
                 <div className="signPage menuCloseJS closeMenuWrapper">
                     <div className="container">
@@ -335,7 +338,7 @@ const SignIn = () => {
                                             <div className="buttonBg"></div>
                                             <FacebookLogin
                                                 appId="774951003076865"
-                                                autoLoad={true}
+                                                // autoLoad={true}
                                                 fields="name,email,picture"
                                                 callback={responseFacebook}
                                                 cssClass="button buttonLarge buttonBlock registerFacebook"
@@ -350,84 +353,145 @@ const SignIn = () => {
                                         </div>
                                         <div className="orDivider"></div>
                                     </div>
-                                    <div className="d-none" id="forgotId">
-                                        <h5 className="H5 signFormHeading">Forgot Password</h5>
-                                        <form className="signFormWrapper" noValidate onSubmit={onForgotHandler}>
-                                            <p className="_3nmo_success" id="msgForgotId"></p>
-                                            <div className={"input" + forgot_email}>
-                                                <input className="inputText" name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot} />
-                                                <span className="inputLabel">{errorsForgot.forgot_email}</span>
+                                    {
+                                        isForgot && (
+                                            <div id="forgotId">
+                                                <h5 className="H5 signFormHeading">Forgot Password</h5>
+                                                <form className="signFormWrapper" noValidate onSubmit={onForgotHandler}>
+                                                    {
+                                                        isSuccessForgotMsg && (
+                                                            <p className="_3nmo_success" >{msgSuccessForgot}</p>
+                                                        )
+                                                    }
+                                                    {
+                                                        isErrorForgotMsg && (
+                                                            <p className="_3nmo_">{msgErrorForgot}</p>
+                                                        )
+                                                    }
+                                                    <div className={"input" + forgot_email}>
+                                                        <input className="inputText" name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot} />
+                                                        <span className="inputLabel">{errorsForgot.forgot_email}</span>
 
+                                                    </div>
+                                                    <div className="row signSubmitWrapper">
+                                                        <div className="col col-sm-6 col-sm-offset-6">
+                                                            <button className="button buttonLarge buttonBlock" type="submit">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">Submit</div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="signAgree">
+                                                        <p> <span>·
+                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+                                                        </p>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div className="row signSubmitWrapper">
-                                                <div className="col col-sm-6 col-sm-offset-6">
-                                                    <button className="button buttonLarge buttonBlock" type="submit">
-                                                        <div className="buttonBg"></div>
-                                                        <div className="buttonContent">Submit</div>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="signAgree">
-                                                <p> <span>·
-                                                </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
-                                                </p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div className="d-none" id="verifyId">
-                                        <h5 className="H5 signFormHeading">Email Verification</h5>
-                                        <form className="signFormWrapper" noValidate onSubmit={onVerifyHandler}>
-                                            <p className="_3nmo_success" id="msgVerifyId"></p>
-                                            <div className={"input" + verification_code}>
-                                                <input className="inputText" name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
-                                                <span className="inputLabel">{errorsVerify.verification_code}</span>
-                                            </div>
+                                        )
+                                    }
 
-                                            <div className="row signSubmitWrapper">
-                                                <div className="col col-sm-6 col-sm-offset-6">
-                                                    <button className="button buttonLarge buttonBlock" type="submit">
-                                                        <div className="buttonBg"></div>
-                                                        <div className="buttonContent">Verify</div>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="signAgree">
-                                                <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
-                                                </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
-                                                </p>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div id="loginId">
-                                        <h5 className="H5 signFormHeading">Sign In via Email</h5>
+                                    {
+                                        isVerify && (
+                                            <div id="verifyId">
+                                                <h5 className="H5 signFormHeading">Email Verification</h5>
+                                                <form className="signFormWrapper" noValidate onSubmit={onVerifyHandler}>
+                                                    {
+                                                        isSuccessVerifyMsg && (
+                                                            <p className="_3nmo_success" >{msgSuccessVerify}</p>
+                                                        )
+                                                    }
+                                                    {
+                                                        isErrorVerifyMsg && (
+                                                            <p className="_3nmo_">{msgErrorVerify}</p>
+                                                        )
+                                                    }
+                                                    <div className={"input" + verification_code}>
+                                                        <input className="inputText" name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
+                                                        <span className="inputLabel">{errorsVerify.verification_code}</span>
+                                                    </div>
 
-                                        <form className="signFormWrapper" noValidate onSubmit={onLoginHandler}>
-                                            <p className="_3nmo_success" id="msgLogin"></p>
-                                            <p className="_3nmo_success d-none" id="msgLogin1">Login limit exceed&nbsp;&nbsp;
-                                            <button id="logoutBtn" className="linkButton" onClick={onLogout}>Logout All</button></p>
-                                            <div className={"input" + email}>
-                                                <input className="inputText" name="email" type="email" value={values.email} onChange={onChangeHandler} />
-                                                <span className="inputLabel">{errors.email}</span>
+                                                    <div className="row signSubmitWrapper">
+                                                        <div className="col col-sm-6 col-sm-offset-6">
+                                                            <button className="button buttonLarge buttonBlock" type="submit">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">Verify</div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="signAgree">
+                                                        <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
+                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+                                                        </p>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div className={"input" + password}>
-                                                <input className="inputText" name="password" type="password" value={values.password} onChange={onChangeHandler} />
-                                                <span className="inputLabel">{errors.password}</span>
+                                        )
+                                    }
+
+                                    {
+                                        isLogin && (
+                                            <div id="loginId">
+                                                <h5 className="H5 signFormHeading">Sign In via Email</h5>
+
+                                                <form className="signFormWrapper" noValidate onSubmit={onLoginHandler}>
+                                                    {
+                                                        isSuccessLoginMsg && (
+                                                            <p className="_3nmo_success" >{msgSuccessLogin}</p>
+                                                        )
+                                                    }
+                                                    {
+                                                        isErrorLoginMsg && (
+                                                            <p className="_3nmo_">{msgErrorLogin}</p>
+
+                                                        )
+                                                    }
+                                                    {
+                                                        isSuccessLogoutMsg && (
+                                                            <p className="_3nmo_success">You are successfully logout from all devices</p>
+                                                        )
+                                                    }
+                                                    {
+                                                        isErrorLogoutMsg && (
+                                                            <p className="_3nmo_" >Login limit exceed&nbsp;&nbsp;<button id="logoutBtn" className="linkButton" onClick={onLogout}>
+                                                                Logout All</button></p>
+                                                        )
+                                                    }
+                                                    {
+                                                        isErrorLogout && (
+                                                            <p className="_3nmo_" >Something went wrong. Please Try Again</p>
+                                                        )
+                                                    }
+
+
+                                                    <div className={"input" + email}>
+                                                        <input className="inputText" name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <span className="inputLabel">{errors.email}</span>
+
+                                                    </div>
+                                                    <div className={"input" + password}>
+                                                        <input className="inputText" name="password" type="password" value={values.password} onChange={onChangeHandler} />
+                                                        <span className="inputLabel">{errors.password}</span>
+
+                                                    </div>
+                                                    <div className="row signSubmitWrapper">
+                                                        <div className="col col-sm-6 col-sm-offset-6">
+                                                            <button className="button buttonLarge buttonBlock" type="submit">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">Sign In</div>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="signAgree">
+                                                        <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
+                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+                                                        </p>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div className="row signSubmitWrapper">
-                                                <div className="col col-sm-6 col-sm-offset-6">
-                                                    <button className="button buttonLarge buttonBlock" type="submit">
-                                                        <div className="buttonBg"></div>
-                                                        <div className="buttonContent">Sign In</div>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div className="signAgree">
-                                                <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
-                                                </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
-                                                </p>
-                                            </div>
-                                        </form>
-                                    </div>
+                                        )
+                                    }
+
                                 </div>
                             </div>
                         </div>

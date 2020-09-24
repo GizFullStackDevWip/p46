@@ -13437,3 +13437,42 @@ button {
         width: 20px;
     }
 }
+text-head {
+    text-align: center;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 90px;
+}
+/* 24th sept */
+.subscribe-btn{
+    background:none;
+color:#f2110f;
+border:1px solid #f2110f;
+width:170px;
+height:50px;
+outline: none;
+margin-top:35px;
+font-size: 17px;
+border-radius: 25px;
+transition-duration: 1s;
+margin-left: 25px;
+}
+.subscribe-btn:hover{
+background:#f2110f!important;
+color:#fff!important;
+}
+.mytitle {
+    padding: 12px;
+    width: 250px;
+    box-shadow: 0 10px 24px 0 rgba(238, 241, 250, .2);
+    margin-bottom: 10px;
+    border: 1px solid hsla(0,0%,100%,.5);
+    margin-right: 10px;
+}
+.subscribe-box {
+border: 1px solid hsla(0,0%,100%,.1);
+padding: 15px;
+margin-bottom: 10px;
+box-shadow: 0 10px 24px 0 rgba(82, 91, 115, .12)
+}

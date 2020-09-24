@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Show from './Show';
 import { Link } from 'react-router-dom'
-import { service } from '../../network/Home/service';
 
 const CategoryContainer = (param) => {
     useEffect(() => {
