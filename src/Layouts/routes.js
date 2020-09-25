@@ -11,13 +11,15 @@ import Search from '../components/Search/Search';
 import Header from '../components/Basic/Header';
 import Footer from '../components/Basic/Footer';
 import Live from '../components/Live/Live';
-import SubscriptionList from '../components/SubscriptionList/SubscriptionList';
+// import SubscriptionList from '../components/SubscriptionList/SubscriptionList';
+import Landing from '../components/Landing/Landing';
 const routes = () => (
     <Router>
         <Header />
         <div className="closeMenuWrapper">
             <Switch>
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={Landing} />
+                <Route path="/home" exact component={Home} />
                 <Route path="/home/movies" exact component={Movies} />
                 <Route path="/home/categorylist" exact component={CategoryList} />
                 <Route path="/signin" exact component={SignIn} />
@@ -26,7 +28,7 @@ const routes = () => (
                 <Route path="/aboutus" exact component={AboutUs} />
                 <Route path="/search" exact component={Search} />
                 <Route path="/home/live" exact component={Live} />
-                <Route path="/subscription" exact component={SubscriptionList} />
+                {/* <Route path="/subscription" exact component={SubscriptionList} /> */}
             </Switch>
         </div>
         <Footer />

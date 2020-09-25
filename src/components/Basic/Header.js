@@ -132,8 +132,8 @@ const Header = () => {
                                                         {
                                                             category.map((item, index) => {
                                                                 return (
-                                                                    <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
-                                                                        <div key={index} className="linkButton headerMenuItems" href="#">{item.category_name}</div>
+                                                                    <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }} key={index}>
+                                                                        <div className="linkButton headerMenuItems" href="#">{item.category_name}</div>
                                                                     </Link>
                                                                 );
                                                             })

@@ -25,6 +25,7 @@ const VideoDetails = (categoryId, episode) => {
 
     useEffect(() => {
         service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+            console.log('response of shows',response.data)
             var data = response.data;
             if (data.length > 0) {
                 var videoDetail = ''
@@ -77,6 +78,7 @@ const VideoDetails = (categoryId, episode) => {
                 details = videoDetail
                 service.similarShow(videoDetail.video_id).then(response => {
                     if (response.status == 100 && response.data.length > 0) {
+                        console.log('resposne of related videos',response.data);
                         setSimilarShows(response.data);
                     }
                 })
@@ -205,7 +207,6 @@ const VideoDetails = (categoryId, episode) => {
         var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
         var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
 
-        console.log(hDisplay + mDisplay + sDisplay, 'jjjj');
         time = hDisplay + mDisplay + sDisplay;
 
         // return hDisplay + mDisplay + sDisplay; 
