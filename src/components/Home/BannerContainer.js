@@ -3,6 +3,7 @@ import { service } from '../../network/Home/service';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Slider from "react-slick";
 import { Link } from 'react-router-dom';
+import { convertTime } from '../../Utils/utils';
 
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
@@ -11,11 +12,15 @@ var time = ''
 const BannerContainer = () => {
     const [bannerShows, setBannerShows] = useState([]);
     const [bannerSliderShows, setBannerSliderShows] = useState([]);
+    const [channels, setChannels] = useState([]);
+    const [videoPlayer, setVideoPlayer] = useState();
+
 
     useEffect(() => {
         var singleObj = []
         service.fetchHomeBannerDetails().then(response => {
             if (response.status == 100 && response.data.length > 0) {
+                console.log('response of the banner',response);
                 var data = response.data;
                 setBannerSliderShows(data);
                 data.map((item, index) => {
@@ -26,6 +31,16 @@ const BannerContainer = () => {
                 setBannerShows(singleObj);
             }
         })
+        service.getLiveChannels().then(response => {
+            console.log('live channel', response.data)
+            setChannels(response.data);
+            console.log(response.data[0].channel_id);
+            setVideoPlayer(response.data[0].live_link);
+            service.getChannelDetails(response.data[0].channel_id).then(response => {
+                console.log('response', response);
+            })
+        })
+
     }, []);
 
     const selectSliderImage = (show) => {
@@ -58,20 +73,6 @@ const BannerContainer = () => {
         slidesToScroll: 1
     };
 
-    const setting = {
-        arrows: false,
-        dots: false,
-        speed: 500,
-        autoplay: true,
-        variableWidth: true,
-        cssEase: 'linear',
-        autoplaySpeed: 5000,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        centerMode: true,
-        focusOnSelect: true,
-    };
-
     const convertTime = (d) => {
         d = Number(d);
         var h = Math.floor(d / 3600);
@@ -84,11 +85,10 @@ const BannerContainer = () => {
 
         time = hDisplay + mDisplay + sDisplay;
 
-        // return hDisplay + mDisplay + sDisplay; 
     }
 
     return (
-        < div className="entireBanner" style={{ height: '500px' }}>
+        <div className="entireBanner" style={{ height: '500px' }}>
             <div className="bannerSlider">
                 {
                     bannerSliderShows !== undefined && bannerSliderShows.length > 0 ?
@@ -108,7 +108,7 @@ const BannerContainer = () => {
                                                         {
                                                             show.single_video === 0 ?
                                                                 (
-                                                                    <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                    <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                         <div className="row _2XGPu">
                                                                             <div className="col col-12 col-md-6 _29Ovi">
                                                                                 <div className="_2c2HY">
@@ -120,7 +120,7 @@ const BannerContainer = () => {
                                                                 ) :
                                                                 (
                                                                     show.single_video === 1 ?
-                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                        <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                             <div className="row _2XGPu">
                                                                                 <div className="col col-12 col-md-6 _29Ovi">
                                                                                     <div className="_2c2HY">
@@ -138,13 +138,13 @@ const BannerContainer = () => {
                                                                 <div className="_3t5Xl">
                                                                     {
                                                                         show.single_video === 0 ?
-                                                                            <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                            <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                                 <div className="BZw9g"
                                                                                     style={{ backgroundImage: `url(${bannerSeriesUrl + show.thumbnail})`, cursor: 'default' }}
                                                                                 ></div>
                                                                             </Link> :
                                                                             (show.single_video === 1 ?
-                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                                     <div className="BZw9g"
                                                                                         style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})`, cursor: 'default' }}
                                                                                     ></div>
@@ -158,13 +158,10 @@ const BannerContainer = () => {
                                                                     <div className="_1fjln">
                                                                         <div className="_1_mFM">{show.category_name[0]}</div>
                                                                         {
-                                                                            convertTime(show.video_duration)
-                                                                        }
-                                                                        {
                                                                             show.year ?
-                                                                                <div className="_1MmGl">({show.year}) . {time}</div>
+                                                                                <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
                                                                                 :
-                                                                                <div className="_1MmGl">{time}</div>
+                                                                                <div className="_1MmGl">{convertTime(show.video_duration)}}</div>
 
                                                                         }
                                                                     </div>
@@ -179,7 +176,7 @@ const BannerContainer = () => {
                                                                 {
                                                                     show.single_video === 0 ?
                                                                         (
-                                                                            <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                            <Link to={{ pathname: '/home/series', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                                 <button className="button buttonLarge _2SyTX">
                                                                                     <div className="buttonBg"></div>
                                                                                     <div className="buttonContent">Watch Now <span className="_2Vow3">FREE</span></div>
@@ -187,7 +184,7 @@ const BannerContainer = () => {
                                                                             </Link>
                                                                         ) : (
                                                                             show.single_video === 1 ?
-                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }}>
+                                                                                <Link to={{ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }} style={{textDecoration: 'none'}}>
                                                                                     <button className="button buttonLarge _2SyTX">
                                                                                         <div className="buttonBg"></div>
                                                                                         <div className="buttonContent">Watch Now <span className="_2Vow3">FREE</span></div>
@@ -212,20 +209,6 @@ const BannerContainer = () => {
                         : null
                 }
             </div>
-            {/* <div className="hpbSliderNav">
-                <Slider {...setting}>
-                    {
-                        bannerSliderShows.map((show, index) => {
-                            return (
-                                <div className="thumbnailImage">
-                                    <img src={bannerShowUrl + show.banner} alt="" />
-                                    <div className="black-overlay"></div>
-                                </div>
-                            );
-                        })
-                    }
-                </Slider>
-            </div> */}
         </div >
     );
 }

@@ -2,6 +2,38 @@ const axios = require('axios');
 const qs = require('querystring');
 
 
+function contact(values) {
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token
+        }
+    };
+    const data = {
+        'name': values.firstname,
+        'email': values.email,
+        'pubid': 50023,
+        'state': values.state,
+        'country': values.country,
+        'title': values.movie,
+        'platform': values.platform,
+        'topic': values.topic,
+        'message': values.message,
+    }
+
+    return axios.post('https://staging.poppo.tv/sendSupport', qs.stringify(data), customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -13,4 +45,5 @@ function getCookie(name) {
     return null;
 }
 export const service = {
+    contact
 };

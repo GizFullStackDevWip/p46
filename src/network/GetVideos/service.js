@@ -92,12 +92,17 @@ function checkUserSubscription() {
 }
 
 function similarShow(videoId) {
-    let uId = 74961;
-    let user_id = getCookie('userId');
-    if (user_id) {
-        uId = user_id;
-    }
     var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    if(userId){
+        uId = userId
+    }else{
+        var uId = 74961
+        let user_id = getCookie('userId');
+        if (user_id) {
+            uId = user_id;
+        }
+    }
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -179,6 +184,31 @@ function playerToken() {
         });
 
 }
+function addToMyPlayList(id,flag){
+    var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid:50023,
+            show_id:id,
+            uid:userId,
+            watchlistflag:flag
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/WatchlistShows', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 
 function getCookie(name) {
     var nameEQ = name + "=";
@@ -197,5 +227,6 @@ export const service = {
     onVideoPlayFunction,
     playerToken,
     checkVideoSubscription,
-    checkUserSubscription
+    checkUserSubscription,
+    addToMyPlayList
 };

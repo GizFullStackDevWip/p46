@@ -15,6 +15,7 @@ const Series = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         service.getShowDetails(parsed.show_id).then(response => {
+            console.log(response, 'details ');
             if (response.status == 100 && response.data.length > 0) {
                 setEpisodes(response.data);
                 setShowDetails(response.data[0]);
@@ -42,8 +43,8 @@ const Series = () => {
     };
 
     return (
-        <div class="pageWrapper searchPageMain">
-            <div class="topContainer">
+        <div className="pageWrapper searchPageMain">
+            <div className="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="moviePageWrapper">
                         <div className="moviePageBG"

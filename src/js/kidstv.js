@@ -1,23 +1,15 @@
-
-import $ from 'jquery';
+import $ from "jquery";
 $(document).ready(function(){
-    // SEASON EPISODES CAROUSEL
-    $('.carouselRow').slick({
-      infinite: false,
-      prevArrow: $('.carouselPrev'),
-      nextArrow: $('.carouselNext'),
-      speed: 300,
-      dots: false,
-      slidesToShow: 4,
-      slidesToScroll: 4,
-      responsive: [
-        {
-            breakpoint: 1169,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-            }
-        }
-      ]
-    });
+  $( window ).scroll(function() {
+      var leftSectionHeight = $(".vp3Section.movieInfo").height();
+      var windowScroll = $(window).scrollTop();
+      if(windowScroll >= leftSectionHeight - 100) {
+         $(".videoPageContainer ._2xXnB").css('position','absolute');
+         $(".videoPageContainer ._2xXnB").css('top', leftSectionHeight + 'px');
+      }
+      else if(windowScroll < leftSectionHeight - 100) {
+         $(".videoPageContainer ._2xXnB").css('position','fixed');
+         $(".videoPageContainer ._2xXnB").css('top', '100px');
+      }
+  });
 });

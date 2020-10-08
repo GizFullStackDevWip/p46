@@ -56,6 +56,35 @@ function getshowsbyCategory(){
         });
 }
 
+function getshowsbyPartner(partner_id){
+    var token = localStorage.getItem('access-token');
+    var uId = 74961
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            user_id: uId,
+            partner_id: partner_id
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/partnerVideos', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
 function getLiveChannels(){
     var token = localStorage.getItem('access-token');
     const customConfig = {
@@ -78,7 +107,153 @@ function getLiveChannels(){
         });
 }
 
+function getPartners(){
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/partnerList', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 
+function getChannelDetails(id){
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            channelid: id
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/liveSchedule', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+function getLiveSchedule(id){
+    var token = localStorage.getItem('access-token');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            channelid: id
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/liveSchedule', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+function addToMyPlayList(id,flag){
+    var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid:50023,
+            show_id:id,
+            uid:userId,
+            watchlistflag:flag
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/WatchlistShows', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+
+function playList(){
+    var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid:50023,
+            uid:userId
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/GetWatchlistUpdated', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
+function getShows(key) {
+    var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    if(userId){
+        uId = userId
+    }else{
+        var uId = 74961
+        let user_id = getCookie('userId');
+        if (user_id) {
+            uId = user_id;
+        }
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid: 50023,
+            key: key,
+            uid:uId
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/searchShows', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -92,5 +267,12 @@ function getCookie(name) {
 export const service = {
     fetchHomeBannerDetails,
     getshowsbyCategory,
-    getLiveChannels
+    getshowsbyPartner,
+    getLiveChannels,
+    getChannelDetails,
+    getLiveSchedule,
+    addToMyPlayList,
+    playList,
+    getShows,
+    getPartners
 };

@@ -3,8 +3,11 @@ import { service } from './network/service';
 import './App.css';
 import Layouts from './Layouts/routes';
 import Fingerprint2 from 'fingerprintjs2';
+import { useSelector, useDispatch } from 'react-redux';
+
 
 const App = () => {
+  const dispatch = useDispatch();
   if (window.requestIdleCallback) {
     requestIdleCallback(function () {
       Fingerprint2.get(function (components) {

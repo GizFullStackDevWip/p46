@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import FacebookLogin from 'react-facebook-login';
 import { service } from '../../network/service';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Link, useHistory, useLocation, Redirect } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useSelector, useDispatch } from 'react-redux';
 const SignIn = () => {
+    let isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn === 'true') {
+        return (<Redirect to='/home' />);
+    }
 
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const showId = useSelector((state) => state.showId);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -31,6 +41,12 @@ const SignIn = () => {
     const [isSuccessLogoutMsg, setIsSuccessLogoutMsg] = useState(false);
     const [isErrorLogoutMsg, setIsErrorLogoutMsg] = useState(false);
     const [isErrorLogout, setIsErrorLogout] = useState(false);
+    const [isGetIP, setIsGetIP] = useState(true);
+    const [facebookData, setFacebookData] = useState('');
+    const [accessTokenFB, setAccessTokenFB] = useState('');
+    const [facebookId, setFacebookId] = useState('');
+    const [facebookEmail, setFacebookEmail] = useState('');
+    const [isEmailExistMsg, setIsEmailExistMsg] = useState(false);
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -51,7 +67,23 @@ const SignIn = () => {
     const [errorsForgot, setErrorsForgot] = useState({
         forgot_email: 'Email'
     });
+    let FBData = null;
+    const [passwordShown1, setPasswordShown1] = useState(false);
+    const [eye1, setEye1] = useState(<FontAwesomeIcon icon={faEye} />);
+    const [isEye1, setIsEye1] = useState(false);
+    const togglePasswordVisiblity1 = () => {
+        setPasswordShown1(passwordShown1 ? false : true);
+        setEye1(passwordShown1 ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />);
+    };
     useEffect(() => {
+        document.getElementById('signInLink').style.display = 'none';
+        if (isGetIP) {
+            fetch('https://geolocation-db.com/json/')
+            .then(res => res.json())
+            .then(json => localStorage.setItem('ipaddress', json.IPv4));
+            setIsGetIP(false);
+        }
+        console.log(showId, 'showId');
     }, []);
     const validateEmail = email => {
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
@@ -87,6 +119,13 @@ const SignIn = () => {
             ...values,
             [name]: value
         })
+        if(name == 'password') {
+            if(value.length > 0) {
+                setIsEye1(true)
+            }else {
+              setIsEye1(false)
+            }
+          }
     }
     const validationForgot = () => {
         let errorsForgot = {}
@@ -173,24 +212,166 @@ const SignIn = () => {
         return formIsValid;
     }
     const responseFacebook = (response) => {
-        console.log(response, 'e');
-    }
-    fetch('https://geolocation-db.com/json/')
-        .then(res => res.json())
-        .then(json => localStorage.setItem('ipaddress', json.IPv4));
+        setFacebookData(response);
+        FBData = response;
+        setFacebookId(FBData.id);
+        setFacebookEmail(FBData.email);
+        setAccessTokenFB(response.accessToken);
+        service.facebokLogin(response.id, response.email).then(response => {
+            if (response.status == 100) {
+                let loginFBData = response.data[0];
+                service.userSubscription(response.data[0].user_id).then(response => {
+                    setUserLoggedId(loginFBData.user_id);
+                    if (response.forcibleLogout == false) {
+                        localStorage.setItem('isLoggedIn', true);
+                        localStorage.setItem('userName', loginFBData.first_name);
+                        service.setCookie("userId", userLoggedId, 30);
+                        service.setCookie("isLoggedIn", "true", 30);
+                        var user_sub = response.data;
+                        if (user_sub.length > 0) {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 1000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
 
+                            // history.push({
+                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                            // });
+
+                        } else {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 5000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
+                            // history.push({
+                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                            // });
+
+                        }
+
+                    } else {
+                        setIsErrorLogoutMsg(true);
+                        setTimeout(function () {
+                            setIsErrorLogoutMsg(false);
+                        }, 5000);
+                    }
+                });
+            } else if (response.status == 102) {
+                setMsgErrorLogin('Please enter a valid user email and password');
+                setIsErrorLoginMsg(true);
+                setTimeout(function () {
+                    setIsErrorLoginMsg(false);
+                }, 5000);
+            } else if (response.status == 103) {
+                history.push({
+                    pathname: '/register',
+                    state : {facebookData : FBData}
+                });
+            } else if (response.status == 101) {
+                setUserLoggedId(response.data[0].user_id);
+                setIsLogin(false);
+                setIsVeriy(true);
+                setMsgSucessVerify('OTP send to your Email, Please verfy..');
+                setIsSuccessVerifyMsg(true);
+                setTimeout(function () {
+                    setIsSuccessVerifyMsg(false);
+                }, 5000);
+            } else if (response.status == 104) {
+                confirmAlert({
+                    closeOnEscape: false,
+                    closeOnClickOutside: false,
+                    message: 'Do you want to link your Facebook account?',
+                    buttons: [
+                       {
+                          label: 'Yes',
+                          onClick: () => onFBLink()
+                       },
+                       {
+                          label: 'No',
+                          onClick: () => onFBNoLink()
+                       }
+                    ]
+                 })
+            } ;;
+        });
+    }
+    
+    const onFBLink = () => {
+
+       service.facebokLink(FBData.id, FBData.email).then(response => {
+        let loginFBData = response.data[0];
+                service.userSubscription(response.data[0].user_id).then(response => {
+                    setUserLoggedId(loginFBData.user_id);
+                    if (response.forcibleLogout == false) {
+                        localStorage.setItem('isLoggedIn', true);
+                        localStorage.setItem('userName', loginFBData.first_name);
+                        service.setCookie("userId", userLoggedId, 30);
+                        service.setCookie("isLoggedIn", "true", 30);
+                        var user_sub = response.data;
+                        if (user_sub.length > 0) {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 1000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
+
+                            // history.push({
+                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                            // });
+
+                        } else {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 5000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
+                            // history.push({
+                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                            // });
+
+                        }
+
+                    } else {
+                        setIsErrorLogoutMsg(true);
+                        setTimeout(function () {
+                            setIsErrorLogoutMsg(false);
+                        }, 5000);
+                    }
+                });
+
+        });
+    }
+    const onFBNoLink = () => {
+        setIsEmailExistMsg(true);
+            setTimeout(function () {
+                setIsEmailExistMsg(false);
+            }, 5000);
+    }
 
     const onLoginHandler = (e) => {
         e.preventDefault();
         if (validation()) {
             service.login(values).then(response => {
                 if (response.status == 100) {
-                    setUserLoggedId(response.data[0].user_id);
-                    localStorage.setItem('isLoggedIn', true);
-                    localStorage.setItem('userName', response.data[0].first_name);
+                    let loginData = response.data[0];
                     service.userSubscription(response.data[0].user_id).then(response => {
+                        setUserLoggedId(loginData.user_id);
                         if (response.forcibleLogout == false) {
-                            //service.setCookie("userId", userLoggedId, 30);
+                            localStorage.setItem('isLoggedIn', true);
+                            localStorage.setItem('userName', loginData.first_name);
+                            localStorage.setItem('userId', loginData.user_id);
+                            service.setCookie("userId", loginData.user_id, 30);
+                            service.setCookie("isLoggedIn", "true", 30);
                             var user_sub = response.data;
                             if (user_sub.length > 0) {
                                 setMsgSucessLogin('You are successfully logged in.');
@@ -198,21 +379,27 @@ const SignIn = () => {
                                 setTimeout(function () {
                                     setIsSuccessLoginMsg(false);
                                 }, 1000);
-
+                                dispatch({ type: "LOGIN", payload: true });
                                 history.goBack();
-                                dispatch({ type: "LOGIN" });
+
+                                // history.push({
+                                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                                // });
+
                             } else {
                                 setMsgSucessLogin('You are successfully logged in.');
                                 setIsSuccessLoginMsg(true);
                                 setTimeout(function () {
                                     setIsSuccessLoginMsg(false);
                                 }, 5000);
+                                dispatch({ type: "LOGIN", payload: true });
                                 history.goBack();
-                                dispatch({ type: "LOGIN" });
+                                // history.push({
+                                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                                // });
 
                             }
 
-                            return false;
                         } else {
                             setIsErrorLogoutMsg(true);
                             setTimeout(function () {
@@ -234,6 +421,7 @@ const SignIn = () => {
                     }, 5000);
 
                 } else if (response.status == 101) {
+                    setUserLoggedId(response.data[0].user_id);
                     setIsLogin(false);
                     setIsVeriy(true);
                     setMsgSucessVerify('OTP send to your Email, Please verfy..');
@@ -250,9 +438,12 @@ const SignIn = () => {
     const onVerifyHandler = (e) => {
         e.preventDefault();
         if (validationVerify()) {
-            let UserRegistered = localStorage.getItem('UserRegistered');
-            service.verifyEmail(values, UserRegistered).then(response => {
+            service.verifyEmail(valuesVerify, userLoggedId).then(response => {
+                console.log('response of the email varification in sign in page',response);
                 if (response.status == 1) {
+                    localStorage.setItem('isLoggedIn', true);
+                    service.setCookie("userId", userLoggedId, 30);
+                    service.setCookie("isLoggedIn", "true", 30);
                     setMsgSucessVerify('Your registration is completed');
                     setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
@@ -280,10 +471,10 @@ const SignIn = () => {
                     setIsSuccessForgotMsg(true);
                     setTimeout(function () {
                         setIsSuccessForgotMsg(false);
+                        setIsLogin(true);
+                        setIsForgot(false);
                     }, 5000);
 
-                    setIsLogin(true);
-                    setIsForgot(false);
                 } else if (response.status == 101) {
                     setMsgErrorForgot('Email id does\'t exist.');
                     setIsErrorForgotMsg(true);
@@ -303,6 +494,7 @@ const SignIn = () => {
         }
     }
     const onClickForgot = () => {
+        document.getElementById('signInLink').style = {'display': 'block', 'padding-top': '6px'}
         setIsLogin(false);
         setIsForgot(true);
     }
@@ -322,6 +514,12 @@ const SignIn = () => {
         });
     }
 
+    window.signInTrigger = () => {
+        setIsLogin(true); 
+        setIsForgot(false);
+        document.getElementById('signInLink').style.display = 'none';
+    }
+
 
 
     return (
@@ -337,12 +535,12 @@ const SignIn = () => {
                                         <button className="button buttonLarge buttonBlock registerFacebook">
                                             <div className="buttonBg"></div>
                                             <FacebookLogin
-                                                appId="774951003076865"
+                                                appId="642916756425595"
                                                 // autoLoad={true}
-                                                fields="name,email,picture"
+                                                fields="name,email,picture,first_name,last_name"
                                                 callback={responseFacebook}
                                                 cssClass="button buttonLarge buttonBlock registerFacebook"
-                                                icon="fa-facebook"
+                                                textButton="Login via Facebook"
                                             />
                                         </button>
                                     </div>
@@ -382,8 +580,9 @@ const SignIn = () => {
                                                         </div>
                                                     </div>
                                                     <div className="signAgree">
-                                                        <p> <span>·
-                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+        
+                                                        <p> <span>Already have an account? <span className="linkButton" onClick={() => {setIsLogin(true); setIsForgot(false); document.getElementById('signInLink').style.display = 'none' }}>Sign In</span></span><span>·
+                                                    </span> Don't have an account? <Link className="linkButton" to="/register">Register</Link>
                                                         </p>
                                                     </div>
                                                 </form>
@@ -420,8 +619,8 @@ const SignIn = () => {
                                                         </div>
                                                     </div>
                                                     <div className="signAgree">
-                                                        <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
-                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+                                                        <p><span>Already have an account? <a className="linkButton" href="/signin">Sign In</a></span> <span>·
+                                                    </span> Don't have an account? <Link className="linkButton" to="/register">Register</Link>
                                                         </p>
                                                     </div>
                                                 </form>
@@ -453,8 +652,8 @@ const SignIn = () => {
                                                     }
                                                     {
                                                         isErrorLogoutMsg && (
-                                                            <p className="_3nmo_" >Login limit exceed&nbsp;&nbsp;<button id="logoutBtn" className="linkButton" onClick={onLogout}>
-                                                                Logout All</button></p>
+                                                            <p className="_3nmo_" >Login limit exceed&nbsp;&nbsp;<button id="logoutBtn" onClick={onLogout} className="linkButton button buttonSmall"><div className="buttonBg"></div><div className="buttonContent">Logout All</div></button></p>
+
                                                         )
                                                     }
                                                     {
@@ -462,7 +661,12 @@ const SignIn = () => {
                                                             <p className="_3nmo_" >Something went wrong. Please Try Again</p>
                                                         )
                                                     }
+                                                    {
+                                                        isEmailExistMsg && (
+                                                            <p className="_3nmo_" >{facebookEmail} already exist, Please sign in&nbsp;&nbsp;</p>
 
+                                                        )
+                                                    }
 
                                                     <div className={"input" + email}>
                                                         <input className="inputText" name="email" type="email" value={values.email} onChange={onChangeHandler} />
@@ -470,9 +674,14 @@ const SignIn = () => {
 
                                                     </div>
                                                     <div className={"input" + password}>
-                                                        <input className="inputText" name="password" type="password" value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText" name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        {
+                                                            isEye1 && (
+                                                                <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
+                                                            )
+                                                        }
                                                         <span className="inputLabel">{errors.password}</span>
-
+                                                       
                                                     </div>
                                                     <div className="row signSubmitWrapper">
                                                         <div className="col col-sm-6 col-sm-offset-6">
@@ -484,7 +693,7 @@ const SignIn = () => {
                                                     </div>
                                                     <div className="signAgree">
                                                         <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
-                                                    </span> Don't have an account? <a className="linkButton" href="/register">Register</a>
+                                                    </span> Don't have an account? <Link className="linkButton" to="/register">Register</Link>
                                                         </p>
                                                     </div>
                                                 </form>
