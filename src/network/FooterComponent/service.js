@@ -17,6 +17,7 @@ function contact(values) {
         'email': values.email,
         'pubid': 50023,
         'state': values.state,
+        'reason':values.issues,
         'country': values.country,
         'title': values.movie,
         'platform': values.platform,

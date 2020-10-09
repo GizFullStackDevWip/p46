@@ -10,6 +10,7 @@ const VideoPlayer = (history) => {
     const historys = useHistory();
     const login = useSelector((state) => state.login);
     useEffect(() => {
+        window.scrollTo(0, 0);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             console.log(history.location.state.show_details, 'history');
@@ -86,9 +87,9 @@ const VideoPlayer = (history) => {
     }
     return (
         <div className="pageWrapper searchPageMain">
-            <div className="topContainer" style={{marginTop: '84px'}}>
+            <div className="topContainer" style={{ marginTop: '84px' }}>
                 <div className="videoContainer">
-                    {
+                    {/* {
                         autoPlay === false ?
                             (
                                 <div className="playerOverlay">
@@ -99,11 +100,10 @@ const VideoPlayer = (history) => {
                                 </div>
                             ) :
                             null
-                    }
+                    } */}
+                    <div className="_3tqpT videoPlayerContainer" style={{ maxHeight: '600px' }}>
+                        {/* <span className="mainPlayerBackButton" onClick={closeVideo}>X</span> */}
 
-                    <div className="_3tqpT videoPlayerContainer" style={{maxHeight:'600px'}}>
-                    <span className="mainPlayerBackButton" onClick={closeVideo}>X</span>
-                    
                         {videoPlayer}
                     </div>
                 </div>

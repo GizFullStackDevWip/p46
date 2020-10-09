@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { service } from '../../network/Home/service';
 import { Link, useHistory } from 'react-router-dom';
-
+import { convertTime } from '../../Utils/utils';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 const queryString = require('query-string');
@@ -18,6 +18,7 @@ const RecentlyAdded = () => {
     const [focusedId, setFocusedId] = useState(-1);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         service.getRecentlyAddedShows().then(response => {
             var data = response.data;
             console.log('getRecentlyAddedShowsData', data)
@@ -71,7 +72,8 @@ const RecentlyAdded = () => {
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
                                                 <div className="movieTileMargin movieTile">
                                                     <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
-                                                        <div className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                        <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
+                                                         className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                             {/* <Link to={{ pathname: '/videoplayer', state: { show_details: show } }}> */}
                                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
                                                                 onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>
@@ -97,9 +99,9 @@ const RecentlyAdded = () => {
                                                                 )
                                                         } */}
                                                         <div className="moviePoster"
-                                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
-                                                                            <div className="FeNml"></div>
-                                                                        </div>
+                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
+                                                            <div className="FeNml"></div>
+                                                        </div>
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -133,10 +135,27 @@ const RecentlyAdded = () => {
                                                             <div className="movieCatYear">
                                                                 <div>
                                                                     <div className="movieYear">
-                                                                        <div className="movieYearText">{show.year}</div>
+                                                                        {
+                                                                            show.year ?
+                                                                                <div className="_1MmGl">({show.year}) . {convertTime(show.teaser_duration)}</div>
+                                                                                :
+                                                                                <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
+                                                                        }
                                                                     </div>
-                                                                    <div className="movieCategory mcMargin">
-                                                                        <div>{show.category_name}</div>
+                                                                    <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                        {
+                                                                            show.category_name.map((item, index) => {
+                                                                                if (index === show.category_name.length - 1) {
+                                                                                    return (
+                                                                                        <div key={index}>{item}</div>
+                                                                                    );
+                                                                                } else {
+                                                                                    return (
+                                                                                        <div key={index}>{item}{","}&nbsp;</div>
+                                                                                    );
+                                                                                }
+                                                                            })
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 <div>

@@ -5,11 +5,10 @@ const queryString = require('query-string');
 
 
 const Movies = ({ }) => {
-    window.scrollTo(0, 0);
     var { search } = useLocation();
     const parsed = queryString.parse(search);
     useEffect(() => {
-
+        window.scrollTo(0, 0);
     }, []);
 
     return (

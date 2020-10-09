@@ -72,7 +72,7 @@ const LiveContainer = () => {
                                                             <h3 style={{ 
                                                                 bottom: '-40px',
                                                                 position: 'absolute', }}>
-                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '14px', textAlign: 'left', padding: '5px' }} >{item.description.slice(0, 110) + '...'}</div>
+                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '14px', textAlign: 'left', padding: '5px' }} >{item.description.slice(0, 90) + '...'}</div>
                                                             </h3>
                                                             {/* <h3 style={{paddingBottom: '0px', marginBottom: '0px'}}>
                                                             <div className="linkButton movieTextHeading" style={{fontSize: '14px', textAlign: 'center'}} >{item.name}</div>

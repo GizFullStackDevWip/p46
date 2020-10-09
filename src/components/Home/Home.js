@@ -15,6 +15,7 @@ const Home = () => {
 
     useEffect(() => {
         var singleObj = []
+        window.scrollTo(0, 0);
         service.getshowsbyCategory().then(response => {
             console.log(response.data,'resssss');
             if (response.status == 100 && response.data.length > 0) {
@@ -45,7 +46,7 @@ const Home = () => {
             <div className="topContainer">
                 <div className="homepageWrapper menuCloseJS closeMenuWrapper">
                     <LiveContainer />
-                    <LiveSchedule />
+                    {/* <LiveSchedule /> */}
                     <PartnerContainer />
                    
                     <div className="allCategoryContainer">

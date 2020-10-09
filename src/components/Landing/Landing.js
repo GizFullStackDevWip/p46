@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import Slider from "react-slick";
 import SupportedDeviceSection from './SupportedDeviceSection';
@@ -12,7 +12,7 @@ import image3 from '../../images/landing/3.jpg';
 var landingImages = [image, image2, image3]
 
 const Landing = () => {
-
+    const history = useHistory();
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -24,7 +24,7 @@ const Landing = () => {
         speed: 500,
         fade: true,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 5000,
         slidesToShow: 3,
         slidesToScroll: 1,
     };
@@ -86,12 +86,16 @@ const Landing = () => {
                                     <div className="col col-12 col-md-6 lpFlexCenter">
                                         <h2>Get an account today</h2>
                                         <div className="lpSectionFont gacTextColor lpSectionTextCenter">Access free content on all of your devices, sync your list and continue watching anywhere.</div>
-                                        <Link to="/register">
-                                            <button className="button buttonLarge buttonSecondary">
-                                                <div className="buttonBg"></div>
-                                                <div className="buttonContent">Register Free</div>
-                                            </button>
-                                        </Link>
+                                        {/* <Link to="/register"> */}
+                                        <button className="button buttonLarge buttonSecondary" onClick={() => {
+                                            history.push(
+                                                { pathname: '/register' }
+                                            )
+                                        }}>
+                                            <div className="buttonBg"></div>
+                                            <div className="buttonContent">Register Free</div>
+                                        </button>
+                                        {/* </Link> */}
                                     </div>
                                 </div>
                             </div>

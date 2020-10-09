@@ -12,7 +12,8 @@ const ContactSupport = () => {
         country: '',
         platform: '',
         topic: '',
-        message: ''
+        message: '',
+        issues: ''
     });
     const [values, setValues] = useState({
         firstname: '',
@@ -22,23 +23,25 @@ const ContactSupport = () => {
         movie: '',
         platform: '',
         topic: '',
-        message: ''
+        message: '',
+        issues: ''
     });
     const [errors, setErrors] = useState({
         firstname: 'Name',
         email: 'Email',
-        state: 'State/Province',
-        country: 'Select Country',
+        state: '',
+        country: '',
         platform: 'Platform',
         topic: 'Topic',
-        message: 'Message'
+        message: 'Message',
+        issues: ''
     });
     const [country, setCountry] = useState([]);
     const [button, setButton] = useState(false);
     const [disableblock, setDisableblock] = useState(false);
     const [state, setState] = useState([]);
     useEffect(() => {
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
         let country = csc.getAllCountries();
         console.log('COUNTRY', country);
         setCountry(country);
@@ -57,6 +60,8 @@ const ContactSupport = () => {
         if (name === 'issues') {
             if (value === 'Technical Issue') {
                 setDisableblock(true);
+            } else {
+                setDisableblock(false);
             }
         }
         setValues({
@@ -113,24 +118,32 @@ const ContactSupport = () => {
             classValues.country = ' Input--errored'
             errors.country = 'Required Field'
         }
-
-        if (values.platform.trim()) {
-            classValues.platform = ''
-            errors.platform = 'Platform'
+        if (values.issues.trim()) {
+            classValues.issues = ''
+            errors.issues = 'Reason'
         } else {
             formIsValid = false;
-            classValues.platform = ' Input--errored'
-            errors.platform = 'Required Field'
+            classValues.issues = ' Input--errored'
+            errors.issues = 'Required Field'
         }
 
-        if (values.topic.trim()) {
-            classValues.topic = ''
-            errors.topic = 'Topic'
-        } else {
-            formIsValid = false;
-            classValues.topic = ' Input--errored'
-            errors.topic = 'Required Field'
-        }
+        // if (values.platform.trim()) {
+        //     classValues.platform = ''
+        //     errors.platform = 'Platform'
+        // } else {
+        //     formIsValid = false;
+        //     classValues.platform = ' Input--errored'
+        //     errors.platform = 'Required Field'
+        // }
+
+        // if (values.topic.trim()) {
+        //     classValues.topic = ''
+        //     errors.topic = 'Topic'
+        // } else {
+        //     formIsValid = false;
+        //     classValues.topic = ' Input--errored'
+        //     errors.topic = 'Required Field'
+        // }
 
         if (values.message.trim()) {
             console.log(values.message.length)
@@ -147,6 +160,7 @@ const ContactSupport = () => {
             classValues.message = ' Input--errored'
             errors.message = 'Required Field'
         }
+        console.log('errors', errors);
         setClassValues(classValues);
         setErrors(errors);
         return formIsValid;
@@ -191,7 +205,7 @@ const ContactSupport = () => {
                         <div className="csFormInputWrapper">
                             <div className={classValues.country} style={{ backgroundColor: '#fff' }}>
                                 <select name="country" onChange={onChangeFunction} >
-                                    <option>{errors.country}</option>
+                                    <option>Select Country</option>
                                     {
                                         country.map((item, index) => {
                                             return (
@@ -205,7 +219,7 @@ const ContactSupport = () => {
                         <div className="csFormInputWrapper">
                             <div className={classValues.state} style={{ backgroundColor: '#fff' }}>
                                 <select name="state" onChange={onChangeFunction} >
-                                    <option>{errors.state}</option>
+                                    <option>Select State</option>
                                     {
                                         state.map((item, index) => {
                                             return (
@@ -238,11 +252,11 @@ const ContactSupport = () => {
                             <div className="csFormInputWrapper">
                                 <div className={classValues.platform} style={{ backgroundColor: '#fff' }}>
                                     <select name="platform" onChange={onChangeFunction} >
-                                        <option>{errors.platform}</option>
-                                        <option>Roku</option>
-                                        <option>Android</option>
-                                        <option>Ios</option>
-                                        <option>Tv4</option>
+                                        <option>Select Platform</option>
+                                        <option value="Roku">Roku</option>
+                                        <option value="Android">Android</option>
+                                        <option value="Ios">Ios</option>
+                                        <option value="Tv4">Tv4</option>
                                     </select>
                                 </div>
                             </div>
@@ -252,16 +266,16 @@ const ContactSupport = () => {
                             <div className="csFormInputWrapper" style={{ display: { disableblock } }}>
                                 <div className={classValues.topic} style={{ backgroundColor: '#fff' }}>
                                     <select name="topic" onChange={onChangeFunction} >
-                                        <option>{errors.topic}</option>
-                                        <option>Account</option>
-                                        <option>Audio</option>
-                                        <option>Content</option>
-                                        <option>Content Request</option>
-                                        <option>Registration</option>
-                                        <option>Sign-In</option>
-                                        <option>Subtitle - Caption</option>
-                                        <option>Video Playlist</option>
-                                        <option>Other</option>
+                                        <option value="Select Topic">Select Topic</option>
+                                        <option value="Account">Account</option>
+                                        <option value="Audio">Audio</option>
+                                        <option value="Content">Content</option>
+                                        <option value="Content Request">Content Request</option>
+                                        <option value="Registration">Registration</option>
+                                        <option value="Sign-In">Sign-In</option>
+                                        <option value="Subtitle">Subtitle - Caption</option>
+                                        <option value="Video Playlist">Video Playlist</option>
+                                        <option value="Other">Other</option>
                                     </select>
                                 </div>
                             </div>

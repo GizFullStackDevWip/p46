@@ -282,6 +282,29 @@ function getShows(key) {
             return [];
         });
 }
+function showsByCategory(id){
+    var token = localStorage.getItem('access-token');
+    var userId = localStorage.getItem('userId');
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        },
+        params: {
+            pubid:50023,
+            genre_id:id
+        }
+    };
+    return axios.get('https://poppo.tv/platform/bk/api/GetshowsByCategoryUpdated2', customConfig).then(
+        response => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+}
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -303,5 +326,6 @@ export const service = {
     playList,
     getShows,
     getPartners,
-    getRecentlyAddedShows
+    getRecentlyAddedShows,
+    showsByCategory
 };

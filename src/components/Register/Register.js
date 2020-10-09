@@ -74,6 +74,7 @@ const Register = (state) => {
     };
     let FBData = null;
     useEffect(() => {
+        window.scrollTo(0, 0);
         if (state.location.state) {
             let FBData = state.location.state.facebookData
             setIsFbAcive(false);
@@ -165,14 +166,14 @@ const Register = (state) => {
     const validation = () => {
         let errors = {}
         let formIsValid = true;
-        if (values.age) {
-            errors.age = 'Age Group'
-            setAge('');
-        } else {
-            formIsValid = false
-            errors.age = "Select age group"
-            setAge(' Input--errored');
-        }
+        // if (values.age) {
+        //     errors.age = 'Age Group'
+        //     setAge('');
+        // } else {
+        //     formIsValid = false
+        //     errors.age = "Select age group"
+        //     setAge(' Input--errored');
+        // }
 
         if (values.firstname.trim()) {
             var errorMsg = validateName(values.firstname);
@@ -209,17 +210,17 @@ const Register = (state) => {
         if (values.password.trim()) {
             if (values.password.length >= 6 && values.password.length <= 30) {
                 console.log(values.password.length);
-                if (values.password2.trim()) {
-                    if (values.password.trim() == values.password2.trim()) {
+                if (values.password.trim()) {
+                    // if (values.password.trim() == values.password2.trim()) {
                         errors.password = "Password"
                         setPassword('');
                         errors.password2 = "Confirm Password"
                         setPassword2('');
-                    } else {
-                        formIsValid = false
-                        setPassword(' Input--errored');
-                        errors.password = "Password do not match"
-                    }
+                    // } else {
+                    //     formIsValid = false
+                    //     setPassword(' Input--errored');
+                    //     errors.password = "Password do not match"
+                    // }
                 } else {
                     errors.password = "Password"
                     setPassword('');
@@ -236,33 +237,33 @@ const Register = (state) => {
         }
 
 
-        if (values.password2.trim()) {
-            if (values.password.trim()) {
-                if (values.password.trim() == values.password2.trim()) {
-                    if (values.password2.length >= 6 && values.password2.length <= 30) {
-                        errors.password = "Password"
-                        setPassword('');
-                        errors.password2 = "Confirm Password"
-                        setPassword2('');
-                    } else {
-                        formIsValid = false
-                        setPassword2(' Input--errored');
-                        errors.password2 = "Length must be between 6 and 30"
-                    }
-                } else {
-                    formIsValid = false
-                    setPassword2(' Input--errored');
-                    errors.password2 = "Password do not match"
-                }
-            } else {
-                errors.password2 = "Confirm Password"
-                setPassword2('');
-            }
-        } else {
-            formIsValid = false
-            setPassword2(' Input--errored');
-            errors.password2 = "Required Confirm Password Field"
-        }
+        // if (values.password2.trim()) {
+        //     if (values.password.trim()) {
+        //         if (values.password.trim() == values.password2.trim()) {
+        //             if (values.password2.length >= 6 && values.password2.length <= 30) {
+        //                 errors.password = "Password"
+        //                 setPassword('');
+        //                 errors.password2 = "Confirm Password"
+        //                 setPassword2('');
+        //             } else {
+        //                 formIsValid = false
+        //                 setPassword2(' Input--errored');
+        //                 errors.password2 = "Length must be between 6 and 30"
+        //             }
+        //         } else {
+        //             formIsValid = false
+        //             setPassword2(' Input--errored');
+        //             errors.password2 = "Password do not match"
+        //         }
+        //     } else {
+        //         errors.password2 = "Confirm Password"
+        //         setPassword2('');
+        //     }
+        // } else {
+        //     formIsValid = false
+        //     setPassword2(' Input--errored');
+        //     errors.password2 = "Required Confirm Password Field"
+        // }
 
         setErrors(errors);
         return formIsValid;
@@ -274,7 +275,7 @@ const Register = (state) => {
                 if (response.status == 1) {
                     setUserRegisterId(response.data.user_id);
                     setIsRegister(false);
-                    setMsgSucess('OTP send to your Email Id (NB:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
+                    setMsgSucess('OTP sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
                     setIsSuccessMsg(true);
                     setTimeout(function () {
                         setIsSuccessMsg(false);
@@ -305,6 +306,8 @@ const Register = (state) => {
             service.verifyEmail(valuesVerify, userRegisterId).then(response => {
                 console.log(response, 'res');
                 if (response.status == 1) {
+                    localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('userName', response.data[0].first_name);
                     service.setCookie("isLoggedIn", "true", 30);
                     setMsgSucess('You are successfully registered');
                     setIsSuccessMsg(true);
@@ -390,7 +393,7 @@ const Register = (state) => {
             } else if (response.status == 101) {
                 setUserRegisterId(response.data[0].user_id);
                 setIsRegister(false);
-                setMsgSucess('OTP send to your Email Id (NB:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
+                setMsgSucess('OTP sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
                 setIsSuccessMsg(true);
                 setTimeout(function () {
                     setIsSuccessMsg(false);
@@ -467,23 +470,23 @@ const Register = (state) => {
     //  const onAgeHandler =() => {
     //      setIsAgeList(true);
     //  }
-     const myAge =(e) => {
-            setValues({
-                ...values,
-                ['age']: e.value,
-            })
-     }
-     const options = [
-        { value: '4-13', label: '4-13 age', className: 'Select__listItem'  },
+    const myAge = (e) => {
+        setValues({
+            ...values,
+            ['age']: e.value,
+        })
+    }
+    const options = [
+        { value: '4-13', label: '4-13 age', className: 'Select__listItem' },
         { value: '13-18', label: '13-18 age', className: 'Select__listItem' },
         { value: '18+', label: '18+ age', className: 'Select__listItem' },
-       
-      ];
-      
+
+    ];
+
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
-                <div className= {`menuCloseJS closeMenuWrapper ${isRegister ? "regnPage" : "regnPage1"}`}>
+                <div className={`menuCloseJS closeMenuWrapper ${isRegister ? "regnPage" : "regnPage1"}`}>
                     <div className="container">
                         <div className="row regnWrapper">
                             <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
@@ -533,10 +536,10 @@ const Register = (state) => {
                                                         )
                                                     }
                                                     <div className={"input" + firstname} style={{ marginTop: '18px' }}>
-                                                        <input className="inputText" name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.firstname}</span></div>
                                                     <div className={"input" + email} style={{ marginTop: '22px' }}>
-                                                        <input className="inputText" name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
                                                         {
                                                             !values.email &&
@@ -545,7 +548,7 @@ const Register = (state) => {
 
                                                     </div>
                                                     <div className={"input" + password} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
@@ -560,8 +563,8 @@ const Register = (state) => {
 
                                                     </div>
                                                     {/* <span class="eyeicon" onClick={() => { onEyeHandler()}}><img src={eyeIcon} width='20'></img></span> */}
-                                                    <div className={"input" + password2} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" name="password2" type={passwordShown2 ? "text" : "password"} onPaste={(e) => { e.preventDefault() }} value={values.password2} onChange={onChangeHandler} />
+                                                    {/* <div className={"input" + password2} style={{ marginTop: '20px' }}>
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password2" type={passwordShown2 ? "text" : "password"} onPaste={(e) => { e.preventDefault() }} value={values.password2} onChange={onChangeHandler} />
                                                         {
                                                             isEye2 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity2}>{eye2}</i>
@@ -575,42 +578,35 @@ const Register = (state) => {
                                                         }
 
                                                     </div>
-                                                    <div  role="option" className={"input"+ age} aria-selected="" value={values.age}style={{ width: '32%',marginTop: '20px',padding: '0px' }}>
-                                                      
-                                                       
-                                                        {/* {
-                                                            isAgeList && (
-                                                                <div>
-                                                                <ul className="Select__list">
-                                                                    <li className="Select__listItem"   onClick={(e) => myAge({"name":"child", "value":"4-13"})}>4-13 age</li>
-                                                                    <li className="Select__listItem"   onClick={(e) => myAge({"name":"teen", "value":"13-18"})}>13-18 age</li>
-                                                                    <li className="Select__listItem"   onClick={(e) => myAge({"name":"adult", "value":"18+"})}>18+ age</li>
-                                                                </ul>
-                                                                </div>
-                                                            )
-                                                        } */}
-                                                        <Dropdown  options={options}  onChange={myAge} placeholderClassName="dropLabel"  placeholder=""/>
-                                                        <span className="inputLabel">{errors.age}</span>
-                                                    </div>
+                                                    <div role="option" className={"input" + age} aria-selected="" value={values.age} style={{ width: '32%', marginTop: '20px', padding: '0px' }}>
 
-                                                    <div className="regnSubmitWrapper" style={{marginTop: "-48px", padding: "0px"}}>
+                                                        <Dropdown options={options} onChange={myAge} placeholderClassName="dropLabel" placeholder="" />
+                                                        <span className="inputLabel">{errors.age}</span>
+                                                    </div> */}
+
+                                                    <div className="regnSubmitWrapper" >
                                                         <button className="button buttonLarge regnSubmit" type="submit">
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent">Register</div>
                                                         </button>
                                                     </div>
                                                     <div className="regnAgreeContent">
-                                                        <p>By registering, you agree to HappiTv <div className="linkButton" href="#">Term of Use</div> and
-                                                <div className="linkButton" >Privacy Policy</div>
+                                                        <p>By registering, you agree to HappiTv
+                                                             <Link to="/termsofuse">
+                                                                <div className="linkButton">&nbsp;Term of Use</div>
+                                                            </Link>&nbsp; and
+                                                            <Link to="/privacypolicy">
+                                                                <div className="linkButton" href="#">&nbsp;Privacy Policy</div>
+                                                            </Link>
                                                         </p>
                                                         <p>Already have an account?
-                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">Sign In</span></Link></p>
+                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
                                                     </div>
                                                 </form>
                                             </div>
                                         ) : (
                                                 <div id="verifyId">
-                                                    <h5 className="H5 regnFormHeading" style={{marginTop:'0px', marginBottom:'25px'}}>Email Verification</h5>
+                                                    <h5 className="H5 regnFormHeading" style={{ marginTop: '0px', marginBottom: '25px' }}>Email Verification</h5>
                                                     <form className="regnformContainer" noValidate onSubmit={onVerifyHandler}>
                                                         {
                                                             isSuccessMsg && (
@@ -623,7 +619,7 @@ const Register = (state) => {
                                                             )
                                                         }
                                                         <div className={"input" + verification_code}>
-                                                            <input className="inputText" name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
+                                                            <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
                                                             <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                         </div>
                                                         <div className="regnSubmitWrapper">
@@ -634,11 +630,16 @@ const Register = (state) => {
                                                         </div>
                                                     </form>
                                                     <div className="regnAgreeContent">
-                                                        <p>By registering, you agree to HappiTv <a className="linkButton" href="#">Term of Use</a> and
-                                                        <a className="linkButton" href="#">Privacy Policy</a>
+                                                        <p>By registering, you agree to HappiTv
+                                                            <Link to="/termsofuse">
+                                                                <div className="linkButton"> &nbsp;Term of Use</div>
+                                                            </Link>&nbsp; and
+                                                            <Link to="/privacypolicy">
+                                                                <div className="linkButton" href="#"> &nbsp;Privacy Policy</div>
+                                                            </Link>
                                                         </p>
                                                         <p>Already have an account?
-                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">Sign In</span></Link></p>
+                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
                                                     </div>
                                                 </div>
                                             )

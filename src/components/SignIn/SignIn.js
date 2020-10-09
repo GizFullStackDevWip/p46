@@ -76,6 +76,7 @@ const SignIn = () => {
         setEye1(passwordShown1 ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />);
     };
     useEffect(() => {
+        window.scrollTo(0, 0);
         document.getElementById('signInLink').style.display = 'none';
         if (isGetIP) {
             fetch('https://geolocation-db.com/json/')
@@ -567,7 +568,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + forgot_email}>
-                                                        <input className="inputText" name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot}  />
                                                         <span className="inputLabel">{errorsForgot.forgot_email}</span>
 
                                                     </div>
@@ -594,7 +595,7 @@ const SignIn = () => {
                                         isVerify && (
                                             <div id="verifyId">
                                                 <h5 className="H5 signFormHeading">Email Verification</h5>
-                                                <form className="signFormWrapper" noValidate onSubmit={onVerifyHandler}>
+                                                <form className="signFormWrapper" noValidate onSubmit={onVerifyHandler} autocomplete="off">
                                                     {
                                                         isSuccessVerifyMsg && (
                                                             <p className="_3nmo_success" >{msgSuccessVerify}</p>
@@ -606,7 +607,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + verification_code}>
-                                                        <input className="inputText" name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
                                                         <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                     </div>
 
@@ -669,12 +670,12 @@ const SignIn = () => {
                                                     }
 
                                                     <div className={"input" + email}>
-                                                        <input className="inputText" name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
 
                                                     </div>
                                                     <div className={"input" + password}>
-                                                        <input className="inputText" name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>

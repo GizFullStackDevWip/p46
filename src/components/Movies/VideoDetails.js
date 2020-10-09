@@ -17,6 +17,8 @@ const VideoDetails = (categoryId, episode) => {
     const history = useHistory();
     const login = useSelector((state) => state.login);
     const [hover, setHover] = useState(false);
+    const [share, setShare] = useState(false);
+    const [other, setOther] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const [showDetails, setShowDetails] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
@@ -227,7 +229,6 @@ const VideoDetails = (categoryId, episode) => {
                             <section className="_1dQ5J">
                                 <div className="_3tqpT">
                                     {videoPlayer}
-                                    <span className="playerBackButton" onClick={closeVideo}>X</span>
                                 </div>
                             </section>
                         </div>
@@ -243,10 +244,10 @@ const VideoDetails = (categoryId, episode) => {
                                         <div className="vpLeftSection">
                                             {
                                                 showDetails.single_video === 0 ?
-                                                    <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})`, marginLeft: '3px' }}
+                                                    <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
                                                     ></div> : (
                                                         showDetails.single_video === 1 ?
-                                                            <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})`, marginLeft: '3px' }}
+                                                            <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
                                                             ></div>
                                                             :
                                                             null
@@ -281,17 +282,49 @@ const VideoDetails = (categoryId, episode) => {
                                                                 ) : null
                                                     }
                                                     <div className="vpTwoButton">
-                                                        <button className="button buttonTransparent vpShareButton">
+                                                        <button className="button buttonTransparent vpShareButton" onClick={() => { setShare(!share) }}>
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent"><span>Share</span></div>
                                                         </button>
-                                                        <button className="button buttonTransparent vpReportButton">
+                                                        <button className="button buttonTransparent vpReportButton" onClick={() => { setOther(!other) }}>
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent">
                                                                 <div className="vpReport"></div>
                                                             </div>
                                                         </button>
-                                                        <div></div>
+                                                        {
+                                                            share === true ?
+                                                                <div>
+                                                                    <div class="_1TcfH _1Dgjh" style={{ left: '7px' }}>
+                                                                        <a href="https://www.facebook.com/GetHappiTV" rel="noopener" target="_blank" class="ATag _1H0lX _135ID _3Dyhl">
+                                                                            <svg className="svgIcon facebookIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
+                                                                                <path fill="currentColor" fillRule="evenodd" d="M2 0C.938 0 0 1.063 0 1.97v16.093C0 19.03 1.063 20 2 20h9v-8H8V9h3V7c-.318-2.573 1.26-3.98 4-4 .668.02 1.617.103 2 0v3h-2c-.957-.16-1.2.436-1 1v2h3l-1 3h-2v8h3.938c1.03 0 2.062-.938 2.062-1.938V1.97C20 1.03 18.937 0 17.937 0H2z"></path>
+                                                                            </svg><span class="_3SXQW">Facebook</span></a>
+                                                                        <a href="https://www.instagram.com/gethappitv/?fbclid=IwAR0kCEbOZR5ZinmfFLEhTP41ru-e13CymopaHsb4De3WQqyM40wgGpmvu9s" rel="noopener" target="_blank" class="ATag _1H0lX _135ID _3Dyhl">
+                                                                            <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
+                                                                                <g fill="currentColor" fillRule="evenodd">
+                                                                                    <path d="M10 0C7.284 0 6.944.012 5.877.06 4.813.11 4.087.278 3.45.525c-.658.256-1.216.598-1.772 1.153C1.123 2.234.78 2.792.525 3.45.278 4.086.11 4.812.06 5.877.012 6.944 0 7.284 0 10s.012 3.057.06 4.123c.05 1.065.218 1.79.465 2.428.256.658.598 1.216 1.153 1.77.556.558 1.114.9 1.772 1.155.636.248 1.363.417 2.427.464 1.067.048 1.407.06 4.123.06s3.057-.012 4.123-.06c1.064-.048 1.79-.217 2.428-.465.658-.255 1.216-.597 1.77-1.154.558-.554.9-1.112 1.155-1.77.248-.636.417-1.362.464-2.427.048-1.066.06-1.407.06-4.123s-.012-3.056-.06-4.123c-.048-1.065-.217-1.79-.465-2.427-.255-.658-.597-1.216-1.154-1.772-.554-.555-1.112-.897-1.77-1.153C15.915.278 15.188.11 14.124.06 13.057.012 12.716 0 10 0m0 2c2.606 0 2.914.01 3.943.057.952.044 1.468.202 1.812.336.455.177.78.39 1.123.73.34.34.552.667.73 1.12.133.346.292.862.335 1.814C17.99 7.087 18 7.394 18 10s-.01 2.914-.057 3.943c-.043.952-.202 1.468-.335 1.812-.178.455-.39.78-.73 1.123-.343.34-.668.552-1.123.73-.344.133-.86.292-1.812.335-1.03.047-1.337.057-3.943.057s-2.914-.01-3.943-.057c-.952-.043-1.468-.202-1.813-.335-.454-.178-.78-.39-1.12-.73-.342-.343-.554-.668-.73-1.123-.135-.344-.293-.86-.337-1.812C2.01 12.913 2 12.606 2 10s.01-2.914.057-3.943c.044-.952.202-1.468.336-1.813.177-.454.39-.78.73-1.12.34-.342.667-.554 1.12-.73.346-.135.862-.293 1.814-.337C7.087 2.01 7.394 2 10 2"></path>
+                                                                                    <path d="M10 13c-1.657 0-3-1.343-3-3 0-1.656 1.343-3 3-3s3 1.344 3 3c0 1.657-1.343 3-3 3m0-8c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5m6 0c0 .553-.447 1-1 1-.553 0-1-.447-1-1 0-.553.447-1 1-1 .553 0 1 .447 1 1"></path>
+                                                                                </g>
+                                                                            </svg><span class="_3SXQW">Instagram</span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                : null
+                                                        }
+                                                        {
+                                                            other === true ?
+                                                                <div>
+                                                                    <div class="_9gMn_ R8UiN">
+                                                                        <div onClick={() => {
+                                                                            history.push(
+                                                                                { pathname: '/contactsupport' }
+                                                                            )
+                                                                        }} class="ATag _3kieO" rel="nofollow" style={{cursor:'pointer'}} >Report a problem</div>
+                                                                    </div>
+                                                                </div> : null
+                                                        }
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,7 +370,7 @@ const VideoDetails = (categoryId, episode) => {
                                 <div className="row vp3Section youMayLike">
                                     <div className="col">
                                         <div>
-                                            <h2>You May Also Like</h2>
+                                            <div className="heading">You May Also Like</div>
                                             <div className="carousel carouselNoMask">
                                                 <div className="carouselContent">
                                                     <Carousel className="row carouselRow" responsive={responsive}>
@@ -347,7 +380,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                     <div className="col col-3" index={index}>
                                                                         <div className="movieTile">
                                                                             <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
-                                                                                <div className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                                                <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                     {hover === true && focusedId === index ?
                                                                                         // <Link to={{ pathname: '/videoplayer', state: { show_details: show } }}>
                                                                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
@@ -397,25 +430,27 @@ const VideoDetails = (categoryId, episode) => {
                                                                                 <div className="movieTextFlex">
                                                                                     <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.show_name}</a></h3>
                                                                                     <div className="movieCatYear">
-                                                                                        <div style={{ marginRight: '2px' }}>
-                                                                                            {
-                                                                                                show.video_duration &&
-                                                                                                <div className="movieYear">
-                                                                                                    <div className="movieLength">{convertTime(show.video_duration)}</div>
-                                                                                                </div>
-                                                                                            }
-                                                                                            <div className="movieCategory mcMargin" style={{ display: 'flex', marginRight: '2px' }}>
-
+                                                                                        <div>
+                                                                                            <div className="movieYear">
+                                                                                                {
+                                                                                                    show.year ?
+                                                                                                        <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
+                                                                                                        :
+                                                                                                        <div className="_1MmGl">{convertTime(show.video_duration)}</div>
+                                                                                                }
+                                                                                            </div>
+                                                                                            <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
                                                                                                 {
                                                                                                     show.category_name.map((item, index) => {
                                                                                                         if (index === show.category_name.length - 1) {
-                                                                                                            return (<div key={index}>{item}</div>);
+                                                                                                            return (
+                                                                                                                <div key={index}>{item}</div>
+                                                                                                            );
                                                                                                         } else {
                                                                                                             return (
-                                                                                                                < div key={index} > {item}{"  "},</div>
+                                                                                                                <div key={index}>{item}{","}&nbsp;</div>
                                                                                                             );
                                                                                                         }
-
                                                                                                     })
                                                                                                 }
                                                                                             </div>
