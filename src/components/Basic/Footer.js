@@ -79,7 +79,7 @@ const Footer = () => {
                             <li className="footerMenuHead">PARTNERS</li>
                             <li><div style={{ color: '#fff' }} rel="noopener" target="_self"
                                 onClick={() => { functionOnclick('/advertisewithus') }} className="linkButton">Advertise with Us</div></li>
-                            <li ><Link to="/home#partnerSection"><a className="linkButton"  >Partner with Us</a></Link></li>
+                            <li ><Link to="/home"><a className="linkButton"  >Partner with Us</a></Link></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
