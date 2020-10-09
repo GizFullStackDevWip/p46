@@ -102,8 +102,8 @@ const Header = () => {
                 <div className="logosection">
                     <div className="logoContain">
                         <div className="menuIcon" rel="nofollow"><span className="hamburger"></span></div>
-                        <div className="menuItemContainer menuClose" style={{ maxWidth: '630px' }}>
-                            <div className="menuWrapper" style={{ width: '629px' }}>
+                        <div className="menuItemContainer menuClose" >
+                            <div className="menuWrapper" >
                                 <div className="mobileSearch">
                                     <section className="searchContainer mobileSearchBG">
                                         <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
@@ -120,9 +120,14 @@ const Header = () => {
                                 </div>
                                 <div className="menuRowItem">
                                     <div className="menuWrapperHeight">
-                                        <div className="menuWidth20" style={{ width: '40%' }}>
+                                        <div className="menuWidth20" >
                                             <div className="menuCol">
                                                 <div className="menuItemHead">Popular</div>
+                                                <div className="menuListItems">
+                                                    <div className="menuInnerCol">
+                                                        <Link to={{ pathname: '/home' }}><div className="linkButton headerMenuItems">Live TV</div></Link>
+                                                    </div>
+                                                </div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
                                                         {
@@ -132,29 +137,14 @@ const Header = () => {
                                                                 </Link>)
                                                                 : null
                                                         }
-
-                                                        <div className="linkButton headerMenuItems">Recently Added</div>
                                                     </div>
                                                 </div>
-                                                <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
-                                                        {
-                                                            category.map((item, index) => {
-                                                                if (category.length / 3 - 1 > index) {
-                                                                    return (
-                                                                        <div key={index}>
-                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
-                                                                                <div className="linkButton headerMenuItems">{item.category_name}</div>
-                                                                            </Link>
-                                                                        </div>
-                                                                    );
-                                                                }
-
-                                                            })
-                                                        }
+                                                        <Link to={{ pathname: '/home/recentlyadded' }}><div className="linkButton headerMenuItems">Recently Added</div></Link>
                                                     </div>
                                                 </div>
+
                                                 <div className="menuItemHead">Main Links</div>
                                                 <div className="menuListItems">
                                                     <Link to={{ pathname: '/aboutus' }}>
@@ -168,16 +158,35 @@ const Header = () => {
                                                     </Link>
 
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div className="menuWidth20 menuBGcolor menuWidth40" style={{ width: '60%' }}>
-                                            <div className="menuCol">
-                                                <div className="menuItemHead">Recomended Categories</div>
+                                                <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
                                                         {
                                                             category.map((item, index) => {
-                                                                if (category.length / 3 - 1 < index) {
+                                                                if (category.length / 3 - 2 > index) {
+                                                                    return (
+                                                                        <div key={index}>
+                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
+                                                                                <div className="linkButton headerMenuItems">{item.category_name}</div>
+                                                                            </Link>
+                                                                        </div>
+                                                                    );
+                                                                }
+
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="menuWidth20 menuBGcolor menuWidth40" >
+                                            <div className="menuCol">
+                                                <div className="menuItemHead">More Categories</div>
+                                                <div className="menuListItems">
+                                                    <div className="menuInnerCol">
+                                                        {
+                                                            category.map((item, index) => {
+                                                                if (category.length / 3 - 2 < index) {
                                                                     return (
                                                                         <div key={index}>
                                                                             <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
@@ -264,7 +273,7 @@ const Header = () => {
                                         ) : currentPath === '/signin' ?
                                             (
                                                 <ul>
-                                                    <li style={{marginRight: '20px'}}>
+                                                    <li style={{ marginRight: '20px' }}>
                                                         <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
                                                             setInput('');
                                                             history.push({
@@ -272,7 +281,7 @@ const Header = () => {
                                                             });
                                                         }} >Register</div>
                                                     </li>
-                                                    <li id="signInLink" style={{display: 'block'}}>
+                                                    <li id="signInLink" style={{ display: 'block' }}>
                                                         <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
                                                             setInput('');
                                                             window.signInTrigger();
@@ -286,7 +295,7 @@ const Header = () => {
                                             ) :
                                             (
                                                 <ul>
-                                                    <li style={{marginRight: '20px'}}   >
+                                                    <li style={{ marginRight: '20px' }}   >
                                                         <div onClick={() => {
                                                             setInput('');
                                                             history.push({

@@ -37,7 +37,7 @@ const LiveContainer = () => {
         }
     };
     return (
-        <section className="categoryWrapper">
+        <section id="partnerSection" className="categoryWrapper">
             {
                 partner.length > 0 &&
                 <div className="container categoryHeadWrapper">

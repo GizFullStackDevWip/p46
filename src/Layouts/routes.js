@@ -4,6 +4,7 @@ import Home from '../components/Home/Home';
 import Movies from '../components/Movies/Movies';
 import CategoryList from '../components/CategoryList/CategoryList';
 import PartnerShows from '../components/PartnerShows/PartnerShows';
+import RecentlyAdded from '../components/RecentlyAdded/RecentlyAdded';
 import SignIn from '../components/SignIn/SignIn';
 import Register from '../components/Register/Register';
 import Series from '../components/Series/Series';
@@ -34,6 +35,7 @@ const routes = () => (
                 <Route path="/home/movies" exact component={Movies} />
                 <Route path="/home/categorylist" exact component={CategoryList} />
                 <Route path="/home/partnershows" exact component={PartnerShows} />
+                <Route path="/home/recentlyadded" exact component={RecentlyAdded} />
                 <Route path="/signin" exact component={SignIn} />
                 <Route path="/register" exact component={Register} />
                 <Route path="/home/series" exact component={Series} />

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 const AdvertiseWithUs = () => {
     useEffect(() => {
-    }, []);
+		window.scrollTo(0, 0);
+	}, []);
     return (
         <div className="menuCloseJS closeMenuWrapper">
             <div id="content" className="site-content">

@@ -15,8 +15,7 @@ import './css/layout.css';
 // import './css/style.5.2.css';
 import './css/style.5.4.2.1.css';
 import './css/style.5.4.2.css';
-import './css/style.css';
-import './css/newstyles.css';
+
 import './css/style.min.5.4.2.css';
 import './css/style1.3.3.css';
 import './css/tubi-grid-content.css'
@@ -33,6 +32,8 @@ import './js/kidstv.js';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-multi-carousel/lib/styles.css';
+import './css/style.css';
+import './css/newstyles.css';
 // import './js/landingRevry';
 
 import registerServiceWorker from './registerServiceWorker';
