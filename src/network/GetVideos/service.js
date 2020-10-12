@@ -153,7 +153,7 @@ function onVideoPlayFunction(values) {
         },
     };
     return axios
-        .post('https://us-central1-gizmeon-222018.cloudfunctions.net/poppo-analytics-api/event', qs.stringify(requestBody), customConfig)
+        .post('https://analytics.poppo.tv/event', qs.stringify(requestBody), customConfig)
         .then((response) => {
             // console.log(response,'device action response');
             return response.data;

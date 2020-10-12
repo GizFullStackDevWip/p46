@@ -86,7 +86,6 @@ const Landing = () => {
                                     <div className="col col-12 col-md-6 lpFlexCenter">
                                         <h2>Get an account today</h2>
                                         <div className="lpSectionFont gacTextColor lpSectionTextCenter">Access free content on all of your devices, sync your list and continue watching anywhere.</div>
-                                        {/* <Link to="/register"> */}
                                         <button className="button buttonLarge buttonSecondary" onClick={() => {
                                             history.push(
                                                 { pathname: '/register' }
@@ -95,7 +94,6 @@ const Landing = () => {
                                             <div className="buttonBg"></div>
                                             <div className="buttonContent">Register Free</div>
                                         </button>
-                                        {/* </Link> */}
                                     </div>
                                 </div>
                             </div>

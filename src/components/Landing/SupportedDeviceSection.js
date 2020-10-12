@@ -67,7 +67,7 @@ const SupportedDeviceSection = () => {
                         </div> */}
                     </div>
                     <div className="lpFlexWrapper">
-                        <Link to="/">
+                        <Link to="/supportdevice">
                             <button className="button buttonLarge buttonSecondary buttonInverse">
                                 <div className="buttonBg"></div>
                                 <div className="buttonContent">Supported Devices</div>

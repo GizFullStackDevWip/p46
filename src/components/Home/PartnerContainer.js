@@ -50,29 +50,25 @@ const LiveContainer = () => {
                         </div>
                     </section>
                     <div className="liveTvGuide">
-                        <div className="vpRightWrapper">
+                        <div className="vpRightWrapper partnerWrapper">
                             <Carousel responsive={responsive}>
                                 {
                                     partner.map((item, index) => {
                                         return (
-                                            <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${item.partner_id}&partner_name=${item.name}`) }}>
+                                            <Link key={index} to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${item.partner_id}&partner_name=${item.name}`) }}>
 
-                                                <div className="vpRelatedImage">
+                                                <div className="vpRelatedImage partnerItem">
                                                     <img className="hiIconScreen" alt={item.name} src={bannerShowUrl + item.image} width="100%" style={{ borderRadius: '1.5px', cursor: 'pointer' }} />
-                                                    <section className="movieTextWrapper movieTextWrapperPadding" style={{ background: '#0000000f', padding: '5px', marginTop: '-63px' }}>
+                                                    <section className="movieTextWrapper movieTextWrapperPadding" style={{ paddingBottom: '44px' }}>
                                                         <div className="movieTextFlex">
                                                             <h3 style={{
-                                                                background: '#0000004d',
-                                                                bottom: '85%',
-                                                                position: 'absolute',
-                                                                padding: '4px'
+                                                                padding: '4px',
+                                                                bottom: '5px'
                                                             }}>
-                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '17px', textAlign: 'left' }} >{item.name}</div>
+                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '16px', textAlign: 'left' }} >{item.name}</div>
                                                             </h3>
-                                                            <h3 style={{ 
-                                                                bottom: '-40px',
-                                                                position: 'absolute', }}>
-                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '14px', textAlign: 'left', padding: '5px' }} >{item.description.slice(0, 90) + '...'}</div>
+                                                            <h3>
+                                                                <div className="linkButton movieTextHeading" style={{ fontSize: '12px', textAlign: 'left', padding: '5px' }} >{item.description.slice(0, 90) + '...'}</div>
                                                             </h3>
                                                             {/* <h3 style={{paddingBottom: '0px', marginBottom: '0px'}}>
                                                             <div className="linkButton movieTextHeading" style={{fontSize: '14px', textAlign: 'center'}} >{item.name}</div>

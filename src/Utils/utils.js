@@ -1,4 +1,5 @@
 import moment from 'moment';
+
 export const convertTimeToLocal = (date) => {
     return moment(date).format('LT');
 }
@@ -40,5 +41,47 @@ export const getDateStatus = (d) => {
         return false;
     } else {
         return false;
+    }
+}
+export const getDeviceType = () => {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return "tablet";
+    }
+    if (
+        /Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+            ua
+        )
+    ) {
+        return "mobile";
+    }
+    return "desktop";
+};
+export const getBrowserType = () => {
+    var isFirefox = typeof InstallTrigger !== 'undefined';
+    if (isFirefox === true) {
+        return 'Firefox';
+    }
+    var isSafari = /constructor/i.test(window.HTMLElement) ||
+        (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })
+            (!window['safari'] || (typeof window['safari'] !== 'undefined' && window['safari'].pushNotification));
+    if (isSafari === true) {
+        return 'Safari';
+    }
+    var isIE = false || !!document.documentMode;
+    if (isIE === true) {
+        return 'IE';
+    }
+    var isEdge = !isIE && !!window.StyleMedia;
+    if (isEdge === true) {
+        return 'Edge';
+    }
+    var isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+    if (isChrome === true) {
+        return 'Chrome';
+    }
+    var isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+    if (isEdgeChromium === true) {
+        return 'EdgeChromium';
     }
 }

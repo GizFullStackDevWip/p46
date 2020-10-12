@@ -536,7 +536,7 @@ const Register = (state) => {
                                                         )
                                                     }
                                                     <div className={"input" + firstname} style={{ marginTop: '18px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px', marginTop: '5px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.firstname}</span></div>
                                                     <div className={"input" + email} style={{ marginTop: '22px' }}>
                                                         <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
@@ -595,7 +595,7 @@ const Register = (state) => {
                                                              <Link to="/termsofuse">
                                                                 <div className="linkButton">&nbsp;Term of Use</div>
                                                             </Link>&nbsp; and
-                                                            <Link to="/privacypolicy">
+                                                            <Link to="/policydarkmode">
                                                                 <div className="linkButton" href="#">&nbsp;Privacy Policy</div>
                                                             </Link>
                                                         </p>
@@ -634,7 +634,7 @@ const Register = (state) => {
                                                             <Link to="/termsofuse">
                                                                 <div className="linkButton"> &nbsp;Term of Use</div>
                                                             </Link>&nbsp; and
-                                                            <Link to="/privacypolicy">
+                                                            <Link to="/policydarkmode">
                                                                 <div className="linkButton" href="#"> &nbsp;Privacy Policy</div>
                                                             </Link>
                                                         </p>

@@ -200,7 +200,7 @@ const Register = () => {
                 if (response.status == 1) {
                     setUserRegisterId(response.data.user_id);
                     setIsRegister(false);
-                    setMsgSucess('OTP send to your Email Id');
+                    setMsgSucess('OTP sent to your Email Id');
                     setIsSuccessMsg(true);
                     setTimeout(function () {
                         setIsSuccessMsg(false);

@@ -31,6 +31,7 @@ const VideoDetails = (categoryId, episode) => {
     useEffect(() => {
         service.getShowDetails(categoryId.categoryId.show_id).then(response => {
             console.log('RESPONSE OF SHOWS', response.data);
+            setEpisodeList(response.data);
             var data = response.data;
             if (data.length > 0) {
                 dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
@@ -46,7 +47,7 @@ const VideoDetails = (categoryId, episode) => {
                             episodes.push(item);
                         }
                     })
-                    setEpisodeList(episodes);
+                    // setEpisodeList(episodes);
                 } else {
                     setCategories(data[0].category_name);
                     setShowDetails(data[0]);
@@ -59,7 +60,7 @@ const VideoDetails = (categoryId, episode) => {
                         setVideoPlayer(<ReactHlsPlayer
                             id='singleVideo'
                             url={newURL}
-                            autoplay={true}
+                            autoplay={false}
                             controls={true}
                             width={'100%'}
                             height={'100%'}
@@ -163,17 +164,10 @@ const VideoDetails = (categoryId, episode) => {
     }
 
     const functionOnclick = (show) => {
-        if (show.single_video == 1) {
-            history.push({
-                pathname: '/home/movies',
-                search: encodeURI(`show_id=${show.show_id}`)
-            });
-        } else if (show.single_video == 0) {
-            history.push({
-                pathname: '/home/series',
-                search: encodeURI(`show_id=${show.show_id}`)
-            });
-        }
+        history.push({
+            pathname: '/home/movies',
+            search: encodeURI(`show_id=${show.show_id}`)
+        });
         setUpdate(true);
     }
     const hoverFunction = (flag, index) => {
@@ -200,9 +194,6 @@ const VideoDetails = (categoryId, episode) => {
             console.log('RESPONSE OF REMOVE MYPLAYLIST', response);
         })
     }
-    const closeVideo = () => {
-        history.goBack();
-    }
     return (
 
         <div className="menuCloseJS closeMenuWrapper">
@@ -211,7 +202,7 @@ const VideoDetails = (categoryId, episode) => {
                     {
                         showDetails.single_video === 0 ?
                             <div className="videoPageBGimg"
-                                style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})` }}
+                                style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.logo})` }}
                             ></div> : (
                                 showDetails.single_video === 1 ?
                                     <div className="videoPageBGimg"
@@ -244,7 +235,7 @@ const VideoDetails = (categoryId, episode) => {
                                         <div className="vpLeftSection">
                                             {
                                                 showDetails.single_video === 0 ?
-                                                    <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
+                                                    <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.logo})`, marginLeft: '7px' }}
                                                     ></div> : (
                                                         showDetails.single_video === 1 ?
                                                             <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
@@ -255,16 +246,20 @@ const VideoDetails = (categoryId, episode) => {
                                             }
                                             <div className="vpLeftButtonWrapper vpLeftButtonMargin" style={{ marginTop: '7px' }}>
                                                 <div className="vpLeftButtons">
-                                                    <button className="button buttonLarge buttonBlock vpWatchSeason" style={{ height: '41px' }} onClick={() => {
-                                                        history.push(
-                                                            { pathname: '/videoplayer', state: { show_details: showDetails } }
-                                                        )
-                                                    }}>
-                                                        <div className="buttonBg"></div>
-                                                        <div className="buttonContent">
-                                                            <div className="vpWatchSeasonText">Watch Now</div>
-                                                        </div>
-                                                    </button>
+                                                    {
+                                                        showDetails.single_video === 1 ?
+                                                            (<button className="button buttonLarge buttonBlock vpWatchSeason" style={{ height: '41px' }} onClick={() => {
+                                                                history.push(
+                                                                    { pathname: '/videoplayer', state: { show_details: showDetails } }
+                                                                )
+                                                            }}>
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">
+                                                                    <div className="vpWatchSeasonText">Watch Now</div>
+                                                                </div>
+                                                            </button>) : null
+                                                    }
+
                                                     {
                                                         showDetails.watchlist_flag === 1 ?
                                                             (
@@ -320,7 +315,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                             history.push(
                                                                                 { pathname: '/contactsupport' }
                                                                             )
-                                                                        }} class="ATag _3kieO" rel="nofollow" style={{cursor:'pointer'}} >Report a problem</div>
+                                                                        }} class="ATag _3kieO" rel="nofollow" style={{ cursor: 'pointer' }} >Report a problem</div>
                                                                     </div>
                                                                 </div> : null
                                                         }
@@ -364,13 +359,130 @@ const VideoDetails = (categoryId, episode) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="vpMiddleDesc">{showDetails.video_description}</div>
+                                        <div className="vpMiddleDesc">{showDetails.video_title}</div>
                                     </div>
                                 </div>
+                                {
+                                    showDetails.single_video === 0 ?
+                                        (
+                                            <div className="row vp3Section youMayLike">
+                                                <div className="col">
+                                                    <div>
+                                                        <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>Season 1</div>
+                                                        <div className="carousel carouselNoMask">
+                                                            <div className="carouselContent">
+                                                                <Carousel className="row carouselRow" responsive={responsive}>
+                                                                    {
+                                                                        episodeList.map((show, index) => {
+                                                                            return (
+                                                                                <div className="col col-3" index={index}>
+                                                                                    <div className="movieTile">
+                                                                                        <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                                                                            onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                                                            <div onClick={() => {
+                                                                                                history.push(
+                                                                                                    { pathname: '/videoplayer', state: { show_details: showDetails } }
+                                                                                                )
+                                                                                            }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                                                                {hover === true && focusedId === index ?
+                                                                                                    <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
+                                                                                                        <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
+                                                                                                        <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
+                                                                                                    </svg>
+                                                                                                    : null}
+                                                                                            </div>
+                                                                                            {
+                                                                                                show.single_video === 0 ?
+                                                                                                    <div className="moviePoster"
+                                                                                                        style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
+                                                                                                        <div className="FeNml"></div>
+                                                                                                    </div> : (
+                                                                                                        show.single_video === 1 ?
+                                                                                                            <div className="moviePoster"
+                                                                                                                style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
+                                                                                                                <div className="FeNml"></div>
+                                                                                                            </div>
+                                                                                                            :
+                                                                                                            null)
+                                                                                            }
+                                                                                            <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
+                                                                                                <div className="wishlistButton">
+                                                                                                    <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
+                                                                                                        style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))', backgroundPosition: 'center bottom', backgroundSize: 'cover' }}
+                                                                                                    ></div>
+                                                                                                    {
+                                                                                                        show.watchlist_flag === 1 ?
+                                                                                                            (
+                                                                                                                <div className="wishlistTextWrapper">
+                                                                                                                    <div className="wishlistText" onClick={() => { removeFromMylistFunction(show) }}>Remove from My List </div>
+                                                                                                                </div>
+                                                                                                            ) :
+                                                                                                            (show.watchlist_flag === null || show.watchlist_flag === 0) ?
+                                                                                                                (
+                                                                                                                    <div className="wishlistTextWrapper">
+                                                                                                                        <div className="wishlistText" onClick={() => { addtoMylistFunction(show) }}>Add to My List</div>
+                                                                                                                    </div>
+                                                                                                                ) : null
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <section className="movieTextWrapper movieTextWrapperPadding">
+                                                                                            <div className="movieTextFlex">
+                                                                                                <h3><a className="linkButton movieTextHeading" onClick={() => {
+                                                                                                    history.push(
+                                                                                                        { pathname: '/videoplayer', state: { show_details: showDetails } }
+                                                                                                    )
+                                                                                                }}>{show.show_name}</a></h3>
+                                                                                                <div className="movieCatYear">
+                                                                                                    <div>
+                                                                                                        <div className="movieYear">
+                                                                                                            {
+                                                                                                                show.year ?
+                                                                                                                    <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
+                                                                                                                    :
+                                                                                                                    <div className="_1MmGl">{convertTime(show.video_duration)}</div>
+                                                                                                            }
+                                                                                                        </div>
+                                                                                                        <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                                                            {
+                                                                                                                show.category_name.map((item, index) => {
+                                                                                                                    if (index === show.category_name.length - 1) {
+                                                                                                                        return (
+                                                                                                                            <div key={index}>{item}</div>
+                                                                                                                        );
+                                                                                                                    } else {
+                                                                                                                        return (
+                                                                                                                            <div key={index}>{item}{","}&nbsp;</div>
+                                                                                                                        );
+                                                                                                                    }
+                                                                                                                })
+                                                                                                            }
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div>
+                                                                                                        {show.rating && <div className="movieCensorBox moviecensorText">{show.rating}</div>}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </section>
+                                                                                    </div>
+                                                                                </div>
+                                                                            );
+                                                                        })
+                                                                    }
+                                                                </Carousel>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : null
+                                }
                                 <div className="row vp3Section youMayLike">
                                     <div className="col">
                                         <div>
-                                            <div className="heading">You May Also Like</div>
+                                            <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>You May Also Like</div>
                                             <div className="carousel carouselNoMask">
                                                 <div className="carouselContent">
                                                     <Carousel className="row carouselRow" responsive={responsive}>
@@ -382,12 +494,10 @@ const VideoDetails = (categoryId, episode) => {
                                                                             <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                 <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                     {hover === true && focusedId === index ?
-                                                                                        // <Link to={{ pathname: '/videoplayer', state: { show_details: show } }}>
                                                                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
                                                                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                                                         </svg>
-                                                                                        // </Link>
                                                                                         : null}
                                                                                 </div>
                                                                                 {

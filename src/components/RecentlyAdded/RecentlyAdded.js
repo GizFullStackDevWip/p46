@@ -71,16 +71,18 @@ const RecentlyAdded = () => {
                                         return (
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
                                                 <div className="movieTileMargin movieTile">
-                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                                        onMouseOver={() => { hoverFunction(true, index) }}
+                                                        onMouseLeave={() => { hoverFunction(false, index) }}>
                                                         <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
-                                                         className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
-                                                            {/* <Link to={{ pathname: '/videoplayer', state: { show_details: show } }}> */}
+                                                            className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+
                                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
                                                                 onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>
                                                                 <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
-                                                            {/* </Link> */}
+                                                            
                                                         </div>
                                                         {/* {
                                                             show.single_video == 0 ?

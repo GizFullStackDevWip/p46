@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
 import Carousel from 'react-multi-carousel';
-import { convertTimeToLocal } from '../../Utils/utils';
+import { convertTimeToLocal, getDateStatus } from '../../Utils/utils';
 
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 
@@ -63,16 +63,20 @@ const LiveContainer = () => {
                                                 </div>
                                                 <div className="movieTextFlex">
                                                     <div className="movieCatYear">
+                                                        {
+                                                            index === 0 ?
+                                                                (<div className="linkButton movieTextHeading" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>Now Playing</div>) :
+                                                                index === 1 ?
+                                                                    (<div className="linkButton movieTextHeading" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>Upcoming</div>) :
+                                                                    <div className="linkButton movieTextHeading" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>{getDateStatus(item.starttime)}</div>
+                                                        }
                                                         <div>
                                                             <div className="movieCategory mcMargin">
                                                                 <div>{item.starttime && convertTimeToLocal(item.starttime)} - {item.endtime && convertTimeToLocal(item.endtime)}</div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h3>
-                                                        {
-                                                            item.video_title && <div className="linkButton movieTextHeading" title={item.video_title}>{item.video_title}</div>
-                                                        }
+                                                    <h3>{item.video_title && <div className="linkButton movieTextHeading" title={item.video_title}>{item.video_title}</div>}
                                                     </h3>
                                                 </div>
                                             </section>

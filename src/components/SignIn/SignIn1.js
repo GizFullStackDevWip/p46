@@ -237,7 +237,7 @@ const SignIn = () => {
                 } else if (response.status == 101) {
                     setIsLogin(false);
                     setIsVeriy(true);
-                    setMsgSucessVerify('OTP send to your Email, Please verfy..');
+                    setMsgSucessVerify('OTP sent to your Email, Please verfy..');
                     setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
                         setIsSuccessVerifyMsg(false);
@@ -277,7 +277,7 @@ const SignIn = () => {
         if (validationForgot()) {
             service.forgotEmail(valuesForgot).then(response => {
                 if (response.status == 100) {
-                    setMsgSucessForgot('Reset Password Link send to your Email Id');
+                    setMsgSucessForgot('Reset Password Link sent to your Email Id');
                     setIsSuccessForgotMsg(true);
                     setTimeout(function () {
                         setIsSuccessForgotMsg(false);

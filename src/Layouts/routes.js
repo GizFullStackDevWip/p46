@@ -25,6 +25,7 @@ import PressRelease from '../components/FooterComponents/PressRelease/PressRelea
 import AdvertiseWithUs from '../components/FooterComponents/AdvertiseWithUs/AdvertiseWithUs';
 import Contact from '../components/FooterComponents/Contact/Contact';
 import ContactSupport from '../components/FooterComponents/ContactSupport/ContactSupport';
+import SupportedDevices from '../components/FooterComponents/SupportedDevices/SupportedDevices';
 const routes = () => (
     <Router>
         <Header />
@@ -48,11 +49,12 @@ const routes = () => (
                 <Route path="/payment" exact component={Payment} />
                 <Route path="/videoplayer" exact component={VideoPlayer} />
                 <Route path="/termsofuse" exact component={TermsOfUse} />
-                <Route path="/privacypolicy" exact component={PrivacyPolicy} />
+                <Route path="/policydarkmode" exact component={PrivacyPolicy} />
                 <Route path="/pressrelease" exact component={PressRelease} />
                 <Route path="/advertisewithus" exact component={AdvertiseWithUs} />
                 <Route path="/contactus" exact component={Contact} />
                 <Route path="/contactsupport" exact component={ContactSupport} />
+                <Route path="/supportdevice" exact component={SupportedDevices} />
             </Switch>
         </div>
         <Footer />

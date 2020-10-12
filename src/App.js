@@ -6,6 +6,7 @@ import Fingerprint2 from 'fingerprintjs2';
 import { useSelector, useDispatch } from 'react-redux';
 
 
+
 const App = () => {
   const dispatch = useDispatch();
   if (window.requestIdleCallback) {
@@ -25,6 +26,26 @@ const App = () => {
       })
     }, 500)
   }
+  async function fetchData() {
+    await service.getLocation().then(response => {
+      let currentLocation = {}
+      currentLocation['country_name'] = response.data.country_name
+      currentLocation['city'] = response.data.city
+      currentLocation['latitude'] = response.data.latitude
+      currentLocation['longitude'] = response.data.longitude
+      currentLocation['IPv4'] = response.data.IPv4
+      currentLocation['state'] = response.data.state
+      localStorage.setItem('currentLocation', JSON.stringify(currentLocation));
+      service.analytics().then(response => {
+        console.log('response api--->', response);
+      })
+    }).catch((error) => {
+      service.analytics().then(response => {
+        console.log('response api--->', response);
+      })
+    });
+
+  }
   useEffect(() => {
     var currentURL = new URL(window.location.href);
     var key = currentURL.searchParams.get("key");
@@ -32,6 +53,8 @@ const App = () => {
     if (key) {
       service.keyAuthenticate(key);
     }
+    fetchData();
+
   }, []);
   return (
     <Layouts />

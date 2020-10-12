@@ -103,7 +103,7 @@ const Footer = () => {
                         <ul className="footerMenuContainer">
                             <li className="footerMenuHead">LEGAL</li>
                             <li><div style={{ color: '#fff' }}
-                                onClick={() => { functionOnclick('/privacypolicy') }} className="linkButton" >Privacy Policy (Updated)</div></li>
+                                onClick={() => { functionOnclick('/policydarkmode') }} className="linkButton" >Privacy Policy (Updated)</div></li>
                             <li><div style={{ color: '#fff' }}
                                 onClick={() => { functionOnclick('/termsofuse') }} className="linkButton" >Terms of Use (Updated)</div></li>
                             {/* <li><a className="linkButton" >Do Not Sell My Personal Information</a></li> */}

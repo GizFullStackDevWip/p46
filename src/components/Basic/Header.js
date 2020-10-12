@@ -91,8 +91,9 @@ const Header = () => {
             currentPath === '/advertisewithus' ||
             currentPath === '/contactus' ||
             currentPath === '/contactsupport' ||
-            currentPath === '/privacypolicy' ||
-            currentPath === '/termsofuse' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
+            currentPath === '/policydarkmode' ||
+            currentPath === '/termsofuse' ||
+            currentPath === '/supportdevice' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
 
             <div className="screenContainer">
                 <div className="blackScreen">

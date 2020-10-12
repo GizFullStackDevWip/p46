@@ -278,7 +278,7 @@ const SignIn = () => {
                 setUserLoggedId(response.data[0].user_id);
                 setIsLogin(false);
                 setIsVeriy(true);
-                setMsgSucessVerify('OTP send to your Email, Please verfy..');
+                setMsgSucessVerify('OTP sent to your Email (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
                 setIsSuccessVerifyMsg(true);
                 setTimeout(function () {
                     setIsSuccessVerifyMsg(false);
@@ -425,7 +425,7 @@ const SignIn = () => {
                     setUserLoggedId(response.data[0].user_id);
                     setIsLogin(false);
                     setIsVeriy(true);
-                    setMsgSucessVerify('OTP send to your Email, Please verfy..');
+                    setMsgSucessVerify('OTP sent to your Email (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
                     setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
                         setIsSuccessVerifyMsg(false);
@@ -468,7 +468,7 @@ const SignIn = () => {
         if (validationForgot()) {
             service.forgotEmail(valuesForgot).then(response => {
                 if (response.status == 100) {
-                    setMsgSucessForgot('Reset Password Link send to your Email Id');
+                    setMsgSucessForgot('Reset Password Link sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)');
                     setIsSuccessForgotMsg(true);
                     setTimeout(function () {
                         setIsSuccessForgotMsg(false);

@@ -7,7 +7,6 @@ import LiveSchedule from './LiveSchedule';
 import PartnerContainer from './PartnerContainer';
 import partnerThumb from '../../images/Layer-7.png';
 
-
 const Home = () => {
     const [category, setCategory] = useState([]);
     const addToMyList = useSelector((state) => state.addToMyList);
@@ -46,9 +45,8 @@ const Home = () => {
             <div className="topContainer">
                 <div className="homepageWrapper menuCloseJS closeMenuWrapper">
                     <LiveContainer />
-                    {/* <LiveSchedule /> */}
+                    <LiveSchedule />
                     <PartnerContainer />
-                   
                     <div className="allCategoryContainer">
                         {
                             category.map((category, index) => {
