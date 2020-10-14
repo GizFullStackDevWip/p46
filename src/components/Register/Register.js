@@ -503,7 +503,7 @@ const Register = (state) => {
                                                         fields="name,email,picture,first_name"
                                                         callback={responseFacebook}
                                                         cssClass="button buttonLarge buttonBlock registerFacebook"
-
+                                                        isMobile={false}
                                                         textButton="Register via Facebook"
                                                     />
                                                 </button>
@@ -536,10 +536,10 @@ const Register = (state) => {
                                                         )
                                                     }
                                                     <div className={"input" + firstname} style={{ marginTop: '18px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px', marginTop: '5px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.firstname}</span></div>
                                                     <div className={"input" + email} style={{ marginTop: '22px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
                                                         {
                                                             !values.email &&
@@ -548,7 +548,7 @@ const Register = (state) => {
 
                                                     </div>
                                                     <div className={"input" + password} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
@@ -564,7 +564,7 @@ const Register = (state) => {
                                                     </div>
                                                     {/* <span class="eyeicon" onClick={() => { onEyeHandler()}}><img src={eyeIcon} width='20'></img></span> */}
                                                     {/* <div className={"input" + password2} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password2" type={passwordShown2 ? "text" : "password"} onPaste={(e) => { e.preventDefault() }} value={values.password2} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password2" type={passwordShown2 ? "text" : "password"} onPaste={(e) => { e.preventDefault() }} value={values.password2} onChange={onChangeHandler} />
                                                         {
                                                             isEye2 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity2}>{eye2}</i>
@@ -619,7 +619,7 @@ const Register = (state) => {
                                                             )
                                                         }
                                                         <div className={"input" + verification_code}>
-                                                            <input className="inputText" style={{border: 'none', padding: '0px', margin: '-5px'}}  name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
+                                                            <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
                                                             <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                         </div>
                                                         <div className="regnSubmitWrapper">

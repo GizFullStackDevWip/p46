@@ -101,7 +101,7 @@ function getRecentlyAddedShows(){
         },
         params: {
             pubid: 50023,
-            user_id: uId
+            uid: uId
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/NewArrivalsUpdated2', customConfig).then(
@@ -202,7 +202,11 @@ function getLiveSchedule(id){
 
 function addToMyPlayList(id,flag){
     var token = localStorage.getItem('access-token');
-    var userId = localStorage.getItem('userId');
+    var uId = 74961
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -213,7 +217,7 @@ function addToMyPlayList(id,flag){
         params: {
             pubid:50023,
             show_id:id,
-            uid:userId,
+            uid:uId,
             watchlistflag:flag
         }
     };
@@ -228,7 +232,11 @@ function addToMyPlayList(id,flag){
 
 function playList(){
     var token = localStorage.getItem('access-token');
-    var userId = localStorage.getItem('userId');
+    var uId = 74961
+    let user_id = getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -238,7 +246,7 @@ function playList(){
         },
         params: {
             pubid:50023,
-            uid:userId
+            uid:uId
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetWatchlistUpdated', customConfig).then(
@@ -284,7 +292,11 @@ function getShows(key) {
 }
 function showsByCategory(id){
     var token = localStorage.getItem('access-token');
-    var userId = localStorage.getItem('userId');
+    var uId = 74961
+        let user_id = getCookie('userId');
+        if (user_id) {
+            uId = user_id;
+        }
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -294,7 +306,8 @@ function showsByCategory(id){
         },
         params: {
             pubid:50023,
-            genre_id:id
+            genre_id:id,
+            uid:uId
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetshowsByCategoryUpdated2', customConfig).then(

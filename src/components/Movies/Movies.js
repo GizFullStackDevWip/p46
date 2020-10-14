@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import VideoDetails from './VideoDetails';
 import { useParams, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import Notification from '../../common/Notification';
 const queryString = require('query-string');
 
 
 const Movies = ({ }) => {
     var { search } = useLocation();
     const parsed = queryString.parse(search);
+    const signInBlock = useSelector((state) => state.signInBlock);
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -15,6 +18,11 @@ const Movies = ({ }) => {
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
+                    {
+                        signInBlock === true ? (
+                            <Notification />)
+                            : null
+                    }
                     <div className="videoPage" >
                         <VideoDetails categoryId={parsed} />
                         <div itemProp="video" itemScope="" itemType="//schema.org/VideoObject" style={{ display: 'none' }}>

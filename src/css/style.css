@@ -1755,9 +1755,13 @@ body {
     .Col--lg-offset-11 {
         margin-left: 91.66667%
     }
+    
 }
 
 @media (min-width: 1170px) {
+    .liveScheduleItem {
+        width: 20vw !important;
+    }
     .Col--xl {
         flex-basis:0;
         flex-grow: 1;
@@ -6586,7 +6590,7 @@ a.headerMenuItems:hover {
 }
 
 .searchResult {
-    margin: 86px 0 68px;
+    margin: 86px 0 0;
     color: #e0559c;
     font-weight: 700
 }
@@ -8478,6 +8482,9 @@ div {
     border: 1px solid rgba(32,32,38,.1);
     color: #26262d;
 }
+.partnerDetailLeftSection {
+    width: 20vw !important;
+}
 /* 
     ::-webkit-scrollbar {
         width: 6px;
@@ -8512,6 +8519,32 @@ div {
         .partnerItem {
             width: 150px !important
         }
+        .partnerMiddleDesc {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: .5px;
+            position: initial !important;
+        }
+        .partnerDetailLeftSection {
+            width: 50vw !important;
+            margin-top: -15vh;
+            padding-bottom: 20px;
+        }
+        .partnerDetailProfilePic {
+            width: 100% !important;
+            padding-top: 142.7%;
+            background-position-x: 50%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+        }
+        .regnformContainer .input {
+            height: 70px;
+        }
+        .signFormWrapper .input {
+            height: 70px;
         }
 
 
@@ -8535,10 +8568,6 @@ div {
         }
         .ATag, body {
             font-weight: 400;
-        }
-        body {
-            font-family: Vaud,Helvetica Neue,sans-serif;
-            font-size: 12px;
         }
         @media (min-width: 1170px){
         html {
@@ -8587,6 +8616,24 @@ div {
         max-width: 40px;
         min-width: 40px/480;
         padding: 10px;
+    }
+    .KBrro .TRD_Q._1ONUA ._2X1sA .FaixP {
+        width: 20px;
+        max-width: 20px;
+        height: auto;
+    }
+    ._2rWrR {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        fill: "currentcolor";
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        transition: fill;
+        transition-duration: .3s;
     }
     .KBrro .TRD_Q._1ONUA ._2ID76 {
         flex: 1 1 320px;

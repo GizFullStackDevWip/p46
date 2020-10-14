@@ -78,26 +78,26 @@ const Footer = () => {
                         <ul className="footerMenuContainer">
                             <li className="footerMenuHead">PARTNERS</li>
                             <li><div style={{ color: '#fff' }} rel="noopener" target="_self"
-                                onClick={() => { functionOnclick('/advertisewithus') }} className="linkButton">Advertise with Us</div></li>
+                                onClick={() => { functionOnclick('/contactsupport') }} className="linkButton">Advertise with Us</div></li>
                             <li ><Link to="/home"><a className="linkButton"  >Partner with Us</a></Link></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
                         <ul className="footerMenuContainer">
                             <li className="footerMenuHead">GET THE APPS</li>
-                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://www.apple.com/app-store/') }} rel="noopener" target="_self" className="linkButton">iOS</div></li>
+                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://apps.apple.com/in/app/happitv/id1535463535') }} rel="noopener" target="_self" className="linkButton">iOS</div></li>
                             <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://play.google.com/store') }} rel="noopener" target="_self" className="linkButton">Android</div></li>
                             <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv') }} rel="noopener" target="_self" className="linkButton">Roku</div></li>
-                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv') }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li>
+                            <li><div style={{ color: '#fff' }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
                         <ul className="footerMenuContainer">
                             <li className="footerMenuHead">PRESS</li>
                             <li><div style={{ color: '#fff' }} rel="noopener" target="_self"
-                                onClick={() => { functionOnclick('/pressrelease') }} className="linkButton">Press Releases</div></li>
+                                 className="linkButton">Press Releases</div></li>
                             <li><div style={{ color: '#fff' }} rel="noopener" target="_self" 
-                            onClick={() => { functionOnclick('/pressrelease') }} className="linkButton">HappiTV in the News</div></li>
+                             className="linkButton">HappiTV in the News</div></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">

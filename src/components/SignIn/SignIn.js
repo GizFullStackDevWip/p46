@@ -537,6 +537,7 @@ const SignIn = () => {
                                             <div className="buttonBg"></div>
                                             <FacebookLogin
                                                 appId="642916756425595"
+                                                isMobile={false}
                                                 // autoLoad={true}
                                                 fields="name,email,picture,first_name,last_name"
                                                 callback={responseFacebook}
@@ -568,7 +569,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + forgot_email}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot}  />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot}  />
                                                         <span className="inputLabel">{errorsForgot.forgot_email}</span>
 
                                                     </div>
@@ -607,7 +608,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + verification_code}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
                                                         <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                     </div>
 
@@ -670,18 +671,26 @@ const SignIn = () => {
                                                     }
 
                                                     <div className={"input" + email}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
+                                                        {
+                                                            !values.email &&
+                                                            <span className="inputHint">We never share this</span>
+                                                        }
 
                                                     </div>
                                                     <div className={"input" + password}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', margin: '-5px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
                                                             )
                                                         }
                                                         <span className="inputLabel">{errors.password}</span>
+                                                        {
+                                                            !values.password &&
+                                                            <span className="inputHint">Pick something you can remember</span>
+                                                        }
                                                        
                                                     </div>
                                                     <div className="row signSubmitWrapper">

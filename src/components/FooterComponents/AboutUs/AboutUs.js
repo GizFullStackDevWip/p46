@@ -62,9 +62,8 @@ const AboutUs = () => {
 														<div className="wpb_wrapper">
 															<div className="tubi-service-list-wrapper ">
 																<div className="wpb_text_column wpb_content_element  small w_870 b-border  container tubi-service-list">
-																	{/* <div className="wpb_wrapper"> */}
-																	<img src={require('../../../images/value.jpg')} alt="" style={{ width: '100%' }} />
-																	{/* <div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
+																	<div className="wpb_wrapper">
+																	<div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Team First</h5>
 																				<p style={{ color: '#707c86' }}>At HappiTV, our biggest success' have come when we work together.</p>
@@ -93,8 +92,8 @@ const AboutUs = () => {
 																				<h5 style={{ color: '#26262d' }}>Own It</h5>
 																				<p style={{ color: '#707c86' }}>Owners do what is right for the team, help empower others and trust their teammates to do the same.</p>
 																			</div>
-																		</div> */}
-																	{/* </div> */}
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>

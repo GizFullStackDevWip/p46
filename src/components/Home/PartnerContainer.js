@@ -51,7 +51,8 @@ const LiveContainer = () => {
                     </section>
                     <div className="liveTvGuide">
                         <div className="vpRightWrapper partnerWrapper">
-                            <Carousel responsive={responsive}>
+                            <Carousel responsive={responsive} autoPlay={true} infinite={true}
+                                autoPlaySpeed={3000} >
                                 {
                                     partner.map((item, index) => {
                                         return (

@@ -6,6 +6,9 @@ import ReactHlsPlayer from 'react-hls-player';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { convertTime, deviceDetect } from '../../Utils/utils';
+import {
+    FacebookShareButton, TwitterShareButton
+} from "react-share";
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
@@ -27,7 +30,7 @@ const VideoDetails = (categoryId, episode) => {
     const [categories, setCategories] = useState([]);
     const [isDesktop, setIsDesktop] = useState(deviceDetect());
     const dispatch = useDispatch();
-    
+
 
     useEffect(() => {
         service.getShowDetails(categoryId.categoryId.show_id).then(response => {
@@ -181,6 +184,7 @@ const VideoDetails = (categoryId, episode) => {
             console.log('RESPONSE OF REMOVE MYPLAYLIST', response);
         })
     }
+
     return (
 
         <div className="menuCloseJS closeMenuWrapper">
@@ -203,29 +207,29 @@ const VideoDetails = (categoryId, episode) => {
                         style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}>
                     </div>
                     {(isDesktop === true) ?
-                    
-                    <div className="_2xXnB forLargeDevice" >
-                        <div className="_2KWdL">
-                            <section className="_1dQ5J">
-                                <div className="_3tqpT">
-                                    {videoPlayer}
-                                </div>
-                            </section>
+
+                        <div className="_2xXnB forLargeDevice" >
+                            <div className="_2KWdL">
+                                <section className="_1dQ5J">
+                                    <div className="_3tqpT">
+                                        {videoPlayer}
+                                    </div>
+                                </section>
+                            </div>
+                        </div> :
+                        <div className="forSmallDevice" >
+                            <div className="_2KWdL">
+                                <section className="_1dQ5J">
+                                    <div className="_3tqpT">
+                                        {videoPlayer}
+                                    </div>
+                                </section>
+                            </div>
                         </div>
-                    </div> :
-                    <div className="forSmallDevice" >
-                        <div className="_2KWdL">
-                            <section className="_1dQ5J">
-                                <div className="_3tqpT">
-                                    {videoPlayer}
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                    
-                }
-                    
-                    
+
+                    }
+
+
                     <div className="videoPageContentWrapper videoPageContentPadding">
                         <div className="vpContent">
                             <div className="container vpContainer vpDesktopContainer">
@@ -275,10 +279,11 @@ const VideoDetails = (categoryId, episode) => {
                                                                 ) : null
                                                     }
                                                     <div className="vpTwoButton">
-                                                        <button className="button buttonTransparent vpShareButton" onClick={() => { setShare(!share) }}>
+                                                        <button className="button buttonTransparent vpShareButton" onClick={() => { setShare(!share) }} >
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent"><span>Share</span></div>
                                                         </button>
+
                                                         <button className="button buttonTransparent vpReportButton" onClick={() => { setOther(!other) }}>
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent">
@@ -289,18 +294,28 @@ const VideoDetails = (categoryId, episode) => {
                                                             share === true ?
                                                                 <div>
                                                                     <div className="_1TcfH _1Dgjh" style={{ left: '7px' }}>
-                                                                        <a href="https://www.facebook.com/GetHappiTV" rel="noopener" target="_blank" className="ATag _1H0lX _135ID _3Dyhl">
-                                                                            <svg className="svgIcon facebookIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
-                                                                                <path fill="currentColor" fillRule="evenodd" d="M2 0C.938 0 0 1.063 0 1.97v16.093C0 19.03 1.063 20 2 20h9v-8H8V9h3V7c-.318-2.573 1.26-3.98 4-4 .668.02 1.617.103 2 0v3h-2c-.957-.16-1.2.436-1 1v2h3l-1 3h-2v8h3.938c1.03 0 2.062-.938 2.062-1.938V1.97C20 1.03 18.937 0 17.937 0H2z"></path>
-                                                                            </svg><span className="_3SXQW">Facebook</span></a>
-                                                                        <a href="https://www.instagram.com/gethappitv/?fbclid=IwAR0kCEbOZR5ZinmfFLEhTP41ru-e13CymopaHsb4De3WQqyM40wgGpmvu9s" rel="noopener" target="_blank" className="ATag _1H0lX _135ID _3Dyhl">
-                                                                            <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
-                                                                                <g fill="currentColor" fillRule="evenodd">
-                                                                                    <path d="M10 0C7.284 0 6.944.012 5.877.06 4.813.11 4.087.278 3.45.525c-.658.256-1.216.598-1.772 1.153C1.123 2.234.78 2.792.525 3.45.278 4.086.11 4.812.06 5.877.012 6.944 0 7.284 0 10s.012 3.057.06 4.123c.05 1.065.218 1.79.465 2.428.256.658.598 1.216 1.153 1.77.556.558 1.114.9 1.772 1.155.636.248 1.363.417 2.427.464 1.067.048 1.407.06 4.123.06s3.057-.012 4.123-.06c1.064-.048 1.79-.217 2.428-.465.658-.255 1.216-.597 1.77-1.154.558-.554.9-1.112 1.155-1.77.248-.636.417-1.362.464-2.427.048-1.066.06-1.407.06-4.123s-.012-3.056-.06-4.123c-.048-1.065-.217-1.79-.465-2.427-.255-.658-.597-1.216-1.154-1.772-.554-.555-1.112-.897-1.77-1.153C15.915.278 15.188.11 14.124.06 13.057.012 12.716 0 10 0m0 2c2.606 0 2.914.01 3.943.057.952.044 1.468.202 1.812.336.455.177.78.39 1.123.73.34.34.552.667.73 1.12.133.346.292.862.335 1.814C17.99 7.087 18 7.394 18 10s-.01 2.914-.057 3.943c-.043.952-.202 1.468-.335 1.812-.178.455-.39.78-.73 1.123-.343.34-.668.552-1.123.73-.344.133-.86.292-1.812.335-1.03.047-1.337.057-3.943.057s-2.914-.01-3.943-.057c-.952-.043-1.468-.202-1.813-.335-.454-.178-.78-.39-1.12-.73-.342-.343-.554-.668-.73-1.123-.135-.344-.293-.86-.337-1.812C2.01 12.913 2 12.606 2 10s.01-2.914.057-3.943c.044-.952.202-1.468.336-1.813.177-.454.39-.78.73-1.12.34-.342.667-.554 1.12-.73.346-.135.862-.293 1.814-.337C7.087 2.01 7.394 2 10 2"></path>
-                                                                                    <path d="M10 13c-1.657 0-3-1.343-3-3 0-1.656 1.343-3 3-3s3 1.344 3 3c0 1.657-1.343 3-3 3m0-8c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5m6 0c0 .553-.447 1-1 1-.553 0-1-.447-1-1 0-.553.447-1 1-1 .553 0 1 .447 1 1"></path>
-                                                                                </g>
-                                                                            </svg><span className="_3SXQW">Instagram</span>
-                                                                        </a>
+                                                                        <FacebookShareButton url={'https://staging.gethappi.tv/home/movies?show_id='+showDetails.video_id} quote={showDetails.video_title+' || '+showDetails.video_description} className="share" style={{
+                                                                            display: 'flex',
+                                                                            flexDirection: 'column'
+                                                                        }}>
+
+                                                                            <span className="ATag _1H0lX _135ID _3Dyhl">
+                                                                                <svg className="svgIcon facebookIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
+                                                                                    <path fill="currentColor" fillRule="evenodd" d="M2 0C.938 0 0 1.063 0 1.97v16.093C0 19.03 1.063 20 2 20h9v-8H8V9h3V7c-.318-2.573 1.26-3.98 4-4 .668.02 1.617.103 2 0v3h-2c-.957-.16-1.2.436-1 1v2h3l-1 3h-2v8h3.938c1.03 0 2.062-.938 2.062-1.938V1.97C20 1.03 18.937 0 17.937 0H2z"></path>
+                                                                                </svg><span className="_3SXQW">Facebook</span></span>
+                                                                        </FacebookShareButton>
+
+                                                                        <TwitterShareButton url={'https://staging.gethappi.tv/home/movies?show_id='+showDetails.video_id} title={showDetails.video_title} description={showDetails.video_description} style={{
+                                                                            display: 'flex',
+                                                                            flexDirection: 'column'
+                                                                        }}>
+                                                                            <span className="ATag _1H0lX _135ID _3Dyhl">
+                                                                            <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 17" style={{ fill: 'currentcolor' }}>
+                                        <path d="M6 17c7.837 0 11.965-6.156 12-11-.035-.67-.035-.844 0-1 .756-.59 1.45-1.297 2-2-.75.218-1.543.433-2 1 .5-.978 1.14-1.77 1-3-.358.763-1.24 1.095-2 1C15.29.647 12.69.568 11 2c-1.03 1.084-1.48 2.555-1 4-3.45-.204-6.524-1.74-9-4C.303 3.584.86 5.945 3 7c-.99.11-1.63-.062-2 0-.2 1.6 1.178 3.255 3 4-.512-.202-1.146-.178-2 0 .777 1.35 2.318 2.478 4 3-1.38.635-3.175 1.246-5 1-.35.244-.675.223-1 0 1.877 1.37 4.06 2 6 2" fill="currentColor" fillRule="evenodd"></path>
+                                    </svg>
+                                                                                <span className="_3SXQW">Twitter</span>
+                                                                            </span>
+                                                                        </TwitterShareButton>
                                                                     </div>
                                                                 </div>
                                                                 : null
@@ -446,7 +461,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                                     <div className="_1MmGl">{convertTime(show.video_duration)}</div>
                                                                                                             }
                                                                                                         </div>
-                                                                                                        <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                                                        <div className="movieCategory mcMargin">
                                                                                                             {
                                                                                                                 show.category_name.map((item, index) => {
                                                                                                                     if (index === show.category_name.length - 1) {
@@ -551,7 +566,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                         <div className="_1MmGl">{convertTime(show.video_duration)}</div>
                                                                                                 }
                                                                                             </div>
-                                                                                            <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                                            <div className="movieCategory mcMargin" >
                                                                                                 {
                                                                                                     show.category_name.map((item, index) => {
                                                                                                         if (index === show.category_name.length - 1) {

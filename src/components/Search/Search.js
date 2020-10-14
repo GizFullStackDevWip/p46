@@ -3,7 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
 import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
-
+import { useSelector, useDispatch } from 'react-redux';
+import Notification from '../../common/Notification';
 const queryString = require('query-string');
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
@@ -11,11 +12,13 @@ var show = []
 
 const Search = ({ history }) => {
     var { search } = useLocation();
-
+    const dispatch = useDispatch();
     show = history.location.state.item;
     const parsed = queryString.parse(search);
     const [hover, setHover] = useState(false);
+    const [update, setUpdate] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
+    const signInBlock = useSelector((state) => state.signInBlock);
     useEffect(() => {
         window.scrollTo(0, 0);
         service.getShows(parsed).then(response => {
@@ -28,23 +31,43 @@ const Search = ({ history }) => {
     }
 
     const addtoMylistFunction = (show) => {
-        service.addToMyPlayList(show.show_id, 1).then(response => {
-            if (response.status === 100) {
-            }
-        })
+        setUpdate(false);
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            service.addToMyPlayList(show.show_id, 1).then(response => {
+                console.log('response of addto m');
+                if (response.status === 100) {
+                    setUpdate(true);
+                }
+            })
+        } else {
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
     }
 
     const removeFromMylistFunction = (show) => {
-        service.addToMyPlayList(show.show_id, 0).then(response => {
-            if (response.status === 100) {
-            }
-        })
+        setUpdate(false);
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            service.addToMyPlayList(show.show_id, 0).then(response => {
+                if (response.status === 100) {
+                    setUpdate(true);
+                }
+            })
+        } else {
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
     }
 
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
                 <div className="menuCloseJS closeMenuWrapper">
+                    {
+                        signInBlock === true ? (
+                            <Notification />)
+                            : null
+                    }
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
@@ -53,7 +76,7 @@ const Search = ({ history }) => {
                             {
                                 show.length > 0 ?
                                     null
-                                    : <h3 style={{ color: 'white' ,fontSize: '2.3rem'}}>No Matches</h3>
+                                    : <h3 style={{ color: 'white', fontSize: '2.3rem' }}>No Matches</h3>
                             }
 
                         </div>
@@ -129,7 +152,7 @@ const Search = ({ history }) => {
                                                                                 <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
                                                                         }
                                                                     </div>
-                                                                    <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                    <div className="movieCategory mcMargin">
                                                                         {
                                                                             show.category_name.map((item, index) => {
                                                                                 if (index === show.category_name.length - 1) {

@@ -125,7 +125,7 @@ const AdvertiseWithUs = () => {
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  test-class1 test-class2 container tubi-content" id="test_id">
                                                     <div className="wpb_wrapper">
                                                         <h2>Advertise Anywhere</h2>
-                                                        <p>Advertising with HappiTV is available on Android, iOS, Roku, Apple TV, Amazon Fire TV, Xbox, Samsung Smart TVs, Sony Smart TVs, PlayStation, Comcast X1, Cox Contour and the web.</p>
+                                                        <p>Advertising with HappiTV is available on Android, iOS, Roku, Amazon Fire TV and the web.</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,22 +145,22 @@ const AdvertiseWithUs = () => {
                                                                         <img src={require('../../../images/advertise/icon-android.svg')}  className="attachment-full" alt="" /></a>
                                                                 </li>
                                                                 <li className="">
-                                                                    <a className="prettyphoto" href="./images/advertise/icon-roku.svg" data-rel="prettyPhoto[rel-27-1201345469]">
+                                                                    <a className="prettyphoto" href="https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-roku.svg')}  className="attachment-full" alt="" /></a>
                                                                 </li>
                                                                 <li className="">
-                                                                    <a className="prettyphoto" href="./images/advertise/icon-iOS.svg" data-rel="prettyPhoto[rel-27-1201345469]">
+                                                                    <a className="prettyphoto" href="https://apps.apple.com/in/app/happitv/id1535463535" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-iOS.svg')}  className="attachment-full" alt="" /></a>
                                                                 </li>
-                                                                <li className="">
+                                                                {/* <li className="">
                                                                     <a className="prettyphoto" href="./images/advertise/icon-apple-tv.svg" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-apple-tv.svg')}  className="attachment-full" alt="" /></a>
-                                                                </li>
+                                                                </li> */}
                                                                 <li className="">
                                                                     <a className="prettyphoto" href="./images/advertise/icon-amazon-fire.svg" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-amazon-fire.svg')}  className="attachment-full" alt="" /></a>
                                                                 </li>
-                                                                <li className="">
+                                                                {/* <li className="">
                                                                     <a className="prettyphoto" href="./images/advertise/icon-xbox.svg" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-xbox.svg')}  className="attachment-full" alt="" /></a>
                                                                 </li>
@@ -187,7 +187,7 @@ const AdvertiseWithUs = () => {
                                                                 <li className="">
                                                                     <a className="prettyphoto" href="./images/advertise/icon-vizio.svg" data-rel="prettyPhoto[rel-27-1201345469]">
                                                                         <img src={require('../../../images/advertise/icon-vizio.svg')} className="attachment-full" alt="" /></a>
-                                                                </li>
+                                                                </li> */}
                                                             </ul>
                                                         </div>
                                                     </div>
