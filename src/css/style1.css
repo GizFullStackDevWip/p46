@@ -13282,13 +13282,13 @@ a.headerMenuItems:hover {
 
 
 @media (max-width: 959px) {
-    .vpDesktopContainer .col.col-1-5, 
+    /* .vpDesktopContainer .col.col-1-5, 
     .vpDesktopContainer .vpMiddleHeading, 
     .vpDesktopContainer .vpMiddleInfoSection, 
     .vpDesktopContainer .vpMiddleDesc, 
     .vpDesktopContainer .vpMiddleCastCrew {
         display: none;
-    }
+    } */
     .vpDesktopContainer .col.col-4-5 {
         max-width: 100%;
         flex: 0 0 100%;

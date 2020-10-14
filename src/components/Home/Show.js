@@ -4,11 +4,14 @@ import 'react-multi-carousel/lib/styles.css';
 import { Link, useHistory } from 'react-router-dom';
 import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
+import { useSelector, useDispatch } from 'react-redux';
+
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 const Show = ({ param }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const [shows, setShows] = useState(param);
     const [hover, setHover] = useState(false);
@@ -39,14 +42,30 @@ const Show = ({ param }) => {
         setFocusedId(index);
     }
     const addtoMylistFunction = (show) => {
-        service.addToMyPlayList(show.show_id, 1).then(response => {
-            console.log('ADD TO MYPLAY LIST RESPONSE', response);
-        })
+        console.log('show',show);
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if(isLoggedIn === 'true'){
+            service.addToMyPlayList(show.show_id, 1).then(response => {
+                // dispatch({ type: "ADD_TO_MY_LIST" });
+                console.log('ADD TO MYPLAY LIST RESPONSE', response);
+            })
+        }else{
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
+        
     }
     const removeFromMylistFunction = (show) => {
-        service.addToMyPlayList(show.show_id, 0).then(response => {
-            console.log('REMOVE FROM MY PLAYLIST RESPONSE', response);
-        })
+        console.log('show',show);
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if(isLoggedIn === 'true'){
+            service.addToMyPlayList(show.show_id, 0).then(response => {
+                // dispatch({ type: "ADD_TO_MY_LIST"});
+                console.log('REMOVE FROM MY PLAYLIST RESPONSE', response);
+            })
+        }else{
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
+       
     }
     return (
         <div className="carouselContent">

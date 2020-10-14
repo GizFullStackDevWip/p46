@@ -3,7 +3,8 @@ import * as actionTypes from '../action/actions';
 const initial_state = {
     login: false,
     showId: '',
-    addToMyList :false
+    addToMyList: false,
+    signInBlock: false
 };
 
 const reducer = (state = initial_state, action) => {
@@ -27,6 +28,11 @@ const reducer = (state = initial_state, action) => {
             return {
                 ...state,
                 addToMyList: !state.addToMyList
+            }
+        case actionTypes.SIGN_IN_BLOCK:
+            return {
+                ...state,
+                signInBlock: !state.signInBlock
             }
         default:
             return state;

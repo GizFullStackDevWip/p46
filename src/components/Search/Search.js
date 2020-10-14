@@ -53,7 +53,7 @@ const Search = ({ history }) => {
                             {
                                 show.length > 0 ?
                                     null
-                                    : <h3 style={{ color: 'white' }}>No Matches</h3>
+                                    : <h3 style={{ color: 'white' ,fontSize: '2.3rem'}}>No Matches</h3>
                             }
 
                         </div>

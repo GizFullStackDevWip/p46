@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Show from './Show';
 import { Link, useHistory } from 'react-router-dom'
-
+import { useSelector, useDispatch } from 'react-redux';
 const CategoryContainer = (param) => {
     const history = useHistory();
     useEffect(() => {

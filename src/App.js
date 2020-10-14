@@ -53,7 +53,10 @@ const App = () => {
     if (key) {
       service.keyAuthenticate(key);
     }
-    fetchData();
+    let analyticsVal = service.getCookie('device_analytics');
+    if (analyticsVal !== 'true') {
+      fetchData();
+    }
 
   }, []);
   return (

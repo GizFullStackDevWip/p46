@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 const AboutUs = () => {
+	window.scrollTo(0, 0);
 	useEffect(() => {
-		window.scrollTo(0, 0);
 	}, []);
 	return (
 		<div>
@@ -20,7 +20,7 @@ const AboutUs = () => {
 															<div className=" tubi-header">
 																<div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
 																<div className="header-content">
-																	<h1>What Is happi?<span>A Digital Platform For All LGBTQ+ Audiences Courting Millennials, Gen Xers and Centennials alike, Happi brings the whole community together with empowering voices that bring the best offering in Queer fiction worldwide, Reality TV that matters and a safe haven for the ideas that are changing the world. Whether you come for a laugh, a cathartic cry, information or simple escapism, Happi offers the special content that matters to one of the most coveted demographics in the nation and abroad: The discerning, educated and ready to influence LGBTQ+ audience.</span></h1> </div>
+																	<h1>HappiTV<span>A Digital Platform For All LGBTQ+ Audiences Courting Millennials, Gen Xers and Centennials alike, HappiTV brings the whole community together with empowering voices that bring the best offering in Queer fiction worldwide, Reality TV that matters and a safe haven for the ideas that are changing the world. Whether you come for a laugh, a cathartic cry, information or simple escapism, Happi offers the special content that matters to one of the most coveted demographics in the nation and abroad: The discerning, educated and ready to influence LGBTQ+ audience.</span></h1> </div>
 															</div>
 														</div>
 													</div>
@@ -33,7 +33,7 @@ const AboutUs = () => {
 															<div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1581433887497 container tubi-content">
 																<div className="wpb_wrapper">
 																	<h3 style={{ textAlign: 'center' }}>Our Values</h3>
-																	<p><span lang="EN">We care deeply about our culture. The five values below serve as the guiding principles for everything we do.</span></p>
+																	{/* <p><span lang="EN">We care deeply about our culture. The five values below serve as the guiding principles for everything we do.</span></p> */}
 																</div>
 															</div>
 														</div>
@@ -62,11 +62,12 @@ const AboutUs = () => {
 														<div className="wpb_wrapper">
 															<div className="tubi-service-list-wrapper ">
 																<div className="wpb_text_column wpb_content_element  small w_870 b-border  container tubi-service-list">
-																	<div className="wpb_wrapper">
-																		<div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
+																	{/* <div className="wpb_wrapper"> */}
+																	<img src={require('../../../images/value.jpg')} alt="" style={{ width: '100%' }} />
+																	{/* <div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Team First</h5>
-																				<p style={{ color: '#707c86' }}>At HappiTv, our biggest success' have come when we work together.</p>
+																				<p style={{ color: '#707c86' }}>At HappiTV, our biggest success' have come when we work together.</p>
 																			</div>
 																		</div>
 																		<div className="service-item "> <img src={require("../../../images/aboutus/act-with-integrity.png")} alt="" style={{ width: '100%' }} />
@@ -92,8 +93,8 @@ const AboutUs = () => {
 																				<h5 style={{ color: '#26262d' }}>Own It</h5>
 																				<p style={{ color: '#707c86' }}>Owners do what is right for the team, help empower others and trust their teammates to do the same.</p>
 																			</div>
-																		</div>
-																	</div>
+																		</div> */}
+																	{/* </div> */}
 																</div>
 															</div>
 														</div>
@@ -117,27 +118,28 @@ const AboutUs = () => {
 													</div>
 												</div>
 											</div>
-											<div className="vc_row wpb_row vc_row-fluid">
+											{/* <div className="vc_row wpb_row vc_row-fluid">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
 															<div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1586980076062 container tubi-content">
 																<div className="wpb_wrapper">
 																	<h3 style={{ textAlign: 'center' }}>Coverage</h3>
-																	<p>Headquartered in San Francisco, HappiTv is available in the US, Canada, Australia and New Zealand and can be accessed on over 25 devices – the most of any AVOD service.</p>
+																	<p>Headquartered in San Francisco, HappiTV is available in the US, Canada, Australia and New Zealand and can be accessed on over 25 devices – the most of any AVOD service.</p>
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> */}
 											<div className="vc_row wpb_row vc_row-fluid">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
 															<div className="wpb_single_image wpb_content_element vc_align_center container">
 																<figure className="wpb_wrapper vc_figure ">
-																	<div className="vc_single_image-wrapper   vc_box_border_grey"><img width="640" height="316" src="./images/aboutus/map3-1.png" className="vc_single_image-img attachment-large" alt="" /></div>
+																	<div className="vc_single_image-wrapper   vc_box_border_grey">
+																		<img width="640" height="316" src="./images/aboutus/map3-1.png" className="vc_single_image-img attachment-large" alt="" /></div>
 																</figure>
 															</div>
 														</div>
@@ -177,22 +179,25 @@ const AboutUs = () => {
 															<div className="tubi-service-list-wrapper ">
 																<div className="wpb_text_column wpb_content_element  small w_870 b-border  leadership container tubi-service-list">
 																	<div className="wpb_wrapper">
-																		<div className="service-item "> <img src={require("../../../images/aboutus/farhad.png")} alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require("../../../images/aboutus/new.jpg")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Daniel Bort</h5>
-																				<p style={{ color: '#707c86' }}>Acquisitions</p>
+																				<span style={{ color: '#707c86' }}>Acquisitions</span><br />
+																				<span>+1(323)301-2792 <br />Daniel@gethappi.tv</span>
 																			</div>
 																		</div>
-																		<div className="service-item "> <img src={require("../../../images/aboutus/marios.png")} alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require("../../../images/aboutus/new.jpg")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Daniel Berilla</h5>
-																				<p style={{ color: '#707c86' }}>Marketing</p>
+																				<span style={{ color: '#707c86' }}>Marketing</span><br />
+																				<span>+1(310)497-5062 <br />Daniel.berilla@gethappi.tv</span>
 																			</div>
 																		</div>
-																		<div className="service-item "> <img src={require("../../../images/aboutus/michael.png")} alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require("../../../images/aboutus/new.jpg")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Rafael Gavioli</h5>
-																				<p style={{ color: '#707c86' }}>Operations</p>
+																				<span style={{ color: '#707c86' }}>Operations</span><br />
+																				<span>+1(323)540-9267 <br />Rafael@gethappi.tv</span>
 																			</div>
 																		</div>
 																	</div>

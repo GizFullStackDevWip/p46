@@ -18,7 +18,7 @@ const AdvertiseWithUs = () => {
                                                 <div className="tubi-header">
                                                     <div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
                                                     <div className="header-content">
-                                                        <h1>Let your Brand Stand Out with HappiTv<span>
+                                                        <h1>Let your Brand Stand Out with HappiTV<span>
                                                             The Future of TV is Free. Align your brand with the millions of highly engaged viewers discovering free streaming.</span></h1>
                                                     </div>
                                                 </div>
@@ -32,7 +32,7 @@ const AdvertiseWithUs = () => {
                                             <div className="wpb_wrapper">
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  wpb_animate_when_almost_visible wpb_slideInUp slideInUp test-class1 test-class2 container tubi-content wpb_start_animation animated" id="test_id">
                                                     <div className="wpb_wrapper">
-                                                        <h2>Why HappiTv</h2>
+                                                        <h2>Why HappiTV</h2>
                                                         <p><span style={{ fontWeight: '400' }}>
                                                             Our mission is to provide viewers with access to the largest library of premium movies and TV shows, all for free. We believe that personalized viewing experiences across quality, curated content helps brands amplify their message in front of the consumers who matter most as they stream what they love.</span></p>
                                                     </div>
@@ -125,7 +125,7 @@ const AdvertiseWithUs = () => {
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  test-class1 test-class2 container tubi-content" id="test_id">
                                                     <div className="wpb_wrapper">
                                                         <h2>Advertise Anywhere</h2>
-                                                        <p>Advertising with HappiTv is available on Android, iOS, Roku, Apple TV, Amazon Fire TV, Xbox, Samsung Smart TVs, Sony Smart TVs, PlayStation, Comcast X1, Cox Contour and the web.</p>
+                                                        <p>Advertising with HappiTV is available on Android, iOS, Roku, Apple TV, Amazon Fire TV, Xbox, Samsung Smart TVs, Sony Smart TVs, PlayStation, Comcast X1, Cox Contour and the web.</p>
                                                     </div>
                                                 </div>
                                             </div>

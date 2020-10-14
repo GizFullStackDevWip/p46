@@ -110,7 +110,7 @@ const Contact = () => {
                                                 <div className="wpb_text_column wpb_content_element  small_14 normal  container tubi-content">
                                                     <div className="wpb_wrapper">
                                                         <h6 style={{ textAlign: 'center' }}>Visit Our Careers Page</h6>
-                                                        <p style={{ textAlign: 'center' }}>Looking for a job at HappiTv?
+                                                        <p style={{ textAlign: 'center' }}>Looking for a job at HappiTV?
                                                                 <br /> <a className="contact-us-touch-link" title="Career" href="careers.html">Click here.</a></p>
                                                     </div>
                                                 </div>
@@ -161,7 +161,7 @@ const Contact = () => {
                                                 <div className="wpb_text_column wpb_content_element  b-color-border white small  vc_custom_1596100857685 container tubi-text-banner">
                                                     <div className="wpb_wrapper">
                                                         <h4>Need additional help?</h4>
-                                                        <p>Contact our support team for any other HappiTv questions.</p>
+                                                        <p>Contact our support team for any other HappiTV questions.</p>
                                                         <a className="btn support-link"
                                                             onClick={() => {
                                                                 history.push(

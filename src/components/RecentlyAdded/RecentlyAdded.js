@@ -34,18 +34,15 @@ const RecentlyAdded = () => {
     }
 
     const addtoMylistFunction = (show) => {
-        console.log('showsss', show);
         setUpdate(false);
         service.addToMyPlayList(show.show_id, 1).then(response => {
             if (response.status === 100) {
                 setUpdate(true);
             }
-            console.log('addto my list reponse', response);
         })
     }
 
     const removeFromMylistFunction = (show) => {
-        console.log('showsss', show);
         setUpdate(false);
         service.addToMyPlayList(show.show_id, 0).then(response => {
             console.log('addto my list reponse', response);
@@ -84,7 +81,7 @@ const RecentlyAdded = () => {
                                                             </svg>
                                                             
                                                         </div>
-                                                        {/* {
+                                                        {
                                                             show.single_video == 0 ?
 
                                                                 <div className="moviePoster"
@@ -99,11 +96,11 @@ const RecentlyAdded = () => {
                                                                         </div>
                                                                         : null
                                                                 )
-                                                        } */}
-                                                        <div className="moviePoster"
+                                                        }
+                                                        {/* <div className="moviePoster"
                                                             style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
                                                             <div className="FeNml"></div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -144,7 +141,7 @@ const RecentlyAdded = () => {
                                                                                 <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
                                                                         }
                                                                     </div>
-                                                                    <div className="movieCategory mcMargin" style={{ display: 'flex' }}>
+                                                                    <div className="movieCategory mcMargin">
                                                                         {
                                                                             show.category_name.map((item, index) => {
                                                                                 if (index === show.category_name.length - 1) {

@@ -63,7 +63,7 @@ const Landing = () => {
 
                                                             <Link to="/home">
                                                                 <button className="button buttonLarge watchBottom" >
-                                                                    <div className="buttonBg"></div>
+                                                                    <div className="buttonBg" style={{background: '#e0559ca1'}}></div>
                                                                     <div className="buttonContent">Start Watching</div>
                                                                 </button>
                                                             </Link>

@@ -18,7 +18,7 @@ const CategoryList = () => {
     const [focusedId, setFocusedId] = useState(-1);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
         if (parsed.category_id === 'playlist') {
             let isLoggedIn = localStorage.getItem('isLoggedIn');
             if (isLoggedIn === 'true') {
@@ -120,10 +120,6 @@ const CategoryList = () => {
                                                                                 </div>
                                                                             ) : null
                                                                 }
-                                                                {/* <div className="wishlistTextWrapper">
-                                                                    <div className="wishlistText">Add to My List</div>
-                                                                    <noscript></noscript>
-                                                                </div> */}
                                                             </div>
                                                         </div>
                                                     </div>

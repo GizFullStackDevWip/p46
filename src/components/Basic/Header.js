@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/service';
 import { useSelector, useDispatch } from 'react-redux';
+import {capitalize} from '../../Utils/utils';
 const queryString = require('query-string');
 const Header = () => {
 
@@ -55,7 +56,7 @@ const Header = () => {
 
             } else {
                 history.push({
-                    pathname: '/'
+                    pathname: '/home'
                 });
             }
         }, 500))
@@ -243,8 +244,8 @@ const Header = () => {
                         login === true ?
                             <div className="loginButtonContainer">
                                 <ul>
-                                    <li><div className="headerSignInButton username logoutMenu"
-                                        onMouseOver={() => { setMouseHover(true) }}>Hi,<span>&nbsp;</span>{userName}</div>
+                                    <li><div className="headerSignInButton username logoutMenu" style={{fontSize: '1.2rem'}}
+                                        onMouseOver={() => { setMouseHover(true) }}>Hi,<span>&nbsp;</span>{capitalize(userName)}</div>
                                         {
                                             mouseHover === true ?
                                                 <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

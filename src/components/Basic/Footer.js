@@ -85,10 +85,10 @@ const Footer = () => {
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
                         <ul className="footerMenuContainer">
                             <li className="footerMenuHead">GET THE APPS</li>
-                            <li><a rel="noopener" target="_self" className="linkButton">iOS</a></li>
-                            <li><a rel="noopener" target="_self" className="linkButton">Android</a></li>
-                            <li><a rel="noopener" target="_self" className="linkButton">Roku</a></li>
-                            <li><a rel="noopener" target="_self" className="linkButton">Amazon Fire</a></li>
+                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://www.apple.com/app-store/') }} rel="noopener" target="_self" className="linkButton">iOS</div></li>
+                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://play.google.com/store') }} rel="noopener" target="_self" className="linkButton">Android</div></li>
+                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv') }} rel="noopener" target="_self" className="linkButton">Roku</div></li>
+                            <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv') }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
@@ -96,7 +96,8 @@ const Footer = () => {
                             <li className="footerMenuHead">PRESS</li>
                             <li><div style={{ color: '#fff' }} rel="noopener" target="_self"
                                 onClick={() => { functionOnclick('/pressrelease') }} className="linkButton">Press Releases</div></li>
-                            <li><a rel="noopener" target="_self" className="linkButton">Happi in the News</a></li>
+                            <li><div style={{ color: '#fff' }} rel="noopener" target="_self" 
+                            onClick={() => { functionOnclick('/pressrelease') }} className="linkButton">HappiTV in the News</div></li>
                         </ul>
                     </div>
                     <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">

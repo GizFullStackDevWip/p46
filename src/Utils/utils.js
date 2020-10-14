@@ -1,7 +1,18 @@
 import moment from 'moment';
 
+export const deviceDetect = () => {
+    var isTouchDevice = function () { return 'ontouchstart' in window || 'onmsgesturechange' in window; };
+    return window.screenX != 0 && !isTouchDevice() ? true : false;
+}
+export const capitalize = (s) => {
+    if (typeof s !== 'string') return ''
+    return s.charAt(0).toUpperCase() + s.slice(1)
+}
 export const convertTimeToLocal = (date) => {
-    return moment(date).format('LT');
+    let tempDate = moment.utc(date);
+    let localDate = moment(tempDate).local();
+    let timeData = localDate.format('hh:mm A');
+    return timeData;
 }
 export const convertTime = (duration) => {
     var hours = Math.floor(duration / 60);
@@ -32,10 +43,12 @@ export const getDateStatus = (d) => {
         if (date.getDate() == newDate.getDate() &&
             date.getMonth() == newDate.getMonth() &&
             date.getFullYear() == newDate.getFullYear()) {
-            return "Today"
+            return '';
         } else {
-            return "Tomorrow";
-
+            let tempDate = moment.utc(d);
+            let localDate = moment(tempDate).local();
+            let timeData = localDate.format('DD-MM-YYYY');
+            return timeData;
         }
     } else if (newDate > date) {
         return false;

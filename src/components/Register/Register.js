@@ -591,7 +591,7 @@ const Register = (state) => {
                                                         </button>
                                                     </div>
                                                     <div className="regnAgreeContent">
-                                                        <p>By registering, you agree to HappiTv
+                                                        <p>By registering, you agree to HappiTV
                                                              <Link to="/termsofuse">
                                                                 <div className="linkButton">&nbsp;Term of Use</div>
                                                             </Link>&nbsp; and
@@ -630,7 +630,7 @@ const Register = (state) => {
                                                         </div>
                                                     </form>
                                                     <div className="regnAgreeContent">
-                                                        <p>By registering, you agree to HappiTv
+                                                        <p>By registering, you agree to HappiTV
                                                             <Link to="/termsofuse">
                                                                 <div className="linkButton"> &nbsp;Term of Use</div>
                                                             </Link>&nbsp; and
