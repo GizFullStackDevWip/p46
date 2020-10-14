@@ -1,8 +1,8 @@
 import moment from 'moment';
 
 export const deviceDetect = () => {
-    var isTouchDevice = function () { return 'ontouchstart' in window || 'onmsgesturechange' in window; };
-    return window.screenX != 0 && !isTouchDevice() ? true : false;
+    let screenWidth = (window.innerWidth > 0) ? window.innerWidth : window.screen.width;
+    return (screenWidth > 959) ? true : false;
 }
 export const capitalize = (s) => {
     if (typeof s !== 'string') return ''
