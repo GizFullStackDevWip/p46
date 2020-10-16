@@ -5,14 +5,25 @@ import 'react-multi-carousel/lib/styles.css';
 import ReactHlsPlayer from 'react-hls-player';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
-import { convertTime, deviceDetect } from '../../Utils/utils';
-import {
-    FacebookShareButton, TwitterShareButton
-} from "react-share";
+import { convertTime, deviceDetect, playerController, convertSecondsToMin } from '../../Utils/utils';
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import videothumbnail from '../../images/videothumbnail.png';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
+var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+var videoImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var details = []
+
+const handleScroll = () => {
+    let playerId = 'singleVideo';
+    if (deviceDetect() === true) {
+        playerController(600, playerId);
+    } else {
+        playerController(150, playerId);
+    }
+}
 
 const VideoDetails = (categoryId, episode) => {
 
@@ -23,6 +34,7 @@ const VideoDetails = (categoryId, episode) => {
     const [other, setOther] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const [showDetails, setShowDetails] = useState([]);
+    const [episodeLength, setEpisodeLength] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
     const [update, setUpdate] = useState(false);
     const [episodeList, setEpisodeList] = useState([]);
@@ -33,9 +45,10 @@ const VideoDetails = (categoryId, episode) => {
 
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         service.getShowDetails(categoryId.categoryId.show_id).then(response => {
-            console.log('RESPONSE OF SHOWS---->', response.data);
             var data = response.data;
+            setEpisodeLength(response.data.length);
             if (data.length > 0) {
                 var videoDetail = '';
                 dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
@@ -44,34 +57,38 @@ const VideoDetails = (categoryId, episode) => {
                 setEpisodeList(response.data);
                 videoDetail = response.data[0];
                 service.playerToken().then(tokenResponse => {
+                    let newURL = ''
                     if (videoDetail.teaser) {
                         let arr = videoDetail.teaser.split('/');
-                        let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=trailer';
-                        setVideoPlayer(<ReactHlsPlayer
-                            id='singleVideo'
-                            url={newURL}
-                            autoplay={true}
-                            controls={true}
-                            width={'100%'}
-                            height={'100%'}
-                            onReady={onPlayerReady}
-                            onPlay={onVideoPlay(videoDetail.video_id)}
-                            onPause={onVideoPause}
-                            onEnd={onVideoEnd}
-                        />)
+                        newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[5] + '&token=' + tokenResponse.data.data + '&type=trailer';
+                    } else {
+                        newURL = '';
                     }
+                    setVideoPlayer(<ReactHlsPlayer
+                        id='singleVideo'
+                        url={newURL}
+                        autoplay={true}
+                        controls={true}
+                        width={'100%'}
+                        poster={videothumbnail}
+                        height={'100%'}
+                        onReady={onPlayerReady}
+                        onPlay={onVideoPlay(videoDetail.video_id)}
+                        onPause={onVideoPause}
+                        onEnd={onVideoEnd}
+                    />)
                 })
                 details = videoDetail;
                 service.similarShow(videoDetail.video_id).then(response => {
                     if (response.status == 100 && response.data.length > 0) {
-                        console.log('resposne of related videos', response.data);
                         setSimilarShows(response.data);
                     }
                 })
             }
         })
         setUpdate(false);
-    }, [update, login, update]);
+        window.addEventListener('scroll', handleScroll)
+    }, [update, login]);
 
     const responsive = {
         superLargeDesktop: {
@@ -112,9 +129,9 @@ const VideoDetails = (categoryId, episode) => {
                         }
                         // window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
                     }
-                    if (useResponse.forcibleLogout === true) {
-                        // signOut()
-                    }
+                    // if (useResponse.forcibleLogout === true) {
+                    //     // signOut()
+                    // }
                 })
             } else {
                 console.log('playing...')
@@ -160,29 +177,67 @@ const VideoDetails = (categoryId, episode) => {
         });
         setUpdate(true);
     }
+
     const hoverFunction = (flag, index) => {
         setHover(flag);
         setFocusedId(index);
     }
+
     const addtoMylistFunction = (show) => {
-        console.log('SHOWS', show);
-        setUpdate(true);
-        service.addToMyPlayList(show.show_id, 1).then(response => {
-            console.log('RESPONSE OF ADDMYPLAYLIST', response);
-            if (response.status === 100) {
-                setUpdate(false);
-            }
-        })
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            service.addToMyPlayList(show.show_id, 1).then(response => {
+                if (response.status === 100) {
+                    service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+                        var data = response.data;
+                        if (data.length > 0) {
+                            var videoDetail = '';
+                            dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
+                            setShowDetails(response.data[0]);
+                            setCategories(response.data[0].category_name);
+                            setEpisodeList(response.data);
+                            videoDetail = response.data[0];
+                            details = videoDetail;
+                            service.similarShow(videoDetail.video_id).then(response => {
+                                if (response.status == 100 && response.data.length > 0) {
+                                    setSimilarShows(response.data);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        } else {
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
     }
     const removeFromMylistFunction = (show) => {
-        console.log('SHOWS', show);
-        setUpdate(true);
-        service.addToMyPlayList(show.show_id, 0).then(response => {
-            if (response.status === 100) {
-                setUpdate(false);
-            }
-            console.log('RESPONSE OF REMOVE MYPLAYLIST', response);
-        })
+        let isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn === 'true') {
+            service.addToMyPlayList(show.show_id, 0).then(response => {
+                if (response.status === 100) {
+                    service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+                        var data = response.data;
+                        if (data.length > 0) {
+                            var videoDetail = '';
+                            dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
+                            setShowDetails(response.data[0]);
+                            setCategories(response.data[0].category_name);
+                            setEpisodeList(response.data);
+                            videoDetail = response.data[0];
+                            details = videoDetail;
+                            service.similarShow(videoDetail.video_id).then(response => {
+                                if (response.status == 100 && response.data.length > 0) {
+                                    setSimilarShows(response.data);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        } else {
+            dispatch({ type: "SIGN_IN_BLOCK" });
+        }
     }
 
     return (
@@ -193,11 +248,11 @@ const VideoDetails = (categoryId, episode) => {
                     {
                         showDetails.single_video === 0 ?
                             <div className="videoPageBGimg"
-                                style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.logo})` }}
+                                style={{ backgroundImage: `url(${showsImageUrl + showDetails.logo})` }}
                             ></div> : (
                                 showDetails.single_video === 1 ?
                                     <div className="videoPageBGimg"
-                                        style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})` }}
+                                        style={{ backgroundImage: `url(${showsImageUrl + showDetails.thumbnail})` }}
                                     ></div>
                                     :
                                     null
@@ -226,10 +281,7 @@ const VideoDetails = (categoryId, episode) => {
                                 </section>
                             </div>
                         </div>
-
                     }
-
-
                     <div className="videoPageContentWrapper videoPageContentPadding">
                         <div className="vpContent">
                             <div className="container vpContainer vpDesktopContainer">
@@ -241,10 +293,10 @@ const VideoDetails = (categoryId, episode) => {
                                         <div className="vpLeftSection">
                                             {
                                                 showDetails.single_video === 0 ?
-                                                    <div className="vpPoster" style={{ backgroundImage: `url(${bannerSeriesUrl + showDetails.logo})`, marginLeft: '7px' }}
+                                                    <div className="vpPoster" style={{ backgroundImage: `url(${showsImageUrl + showDetails.logo})`, marginLeft: '7px' }}
                                                     ></div> : (
                                                         showDetails.single_video === 1 ?
-                                                            <div className="vpPoster" style={{ backgroundImage: `url(${imageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
+                                                            <div className="vpPoster" style={{ backgroundImage: `url(${showsImageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
                                                             ></div>
                                                             :
                                                             null
@@ -258,7 +310,11 @@ const VideoDetails = (categoryId, episode) => {
                                                 }}>
                                                     <div className="buttonBg"></div>
                                                     <div className="buttonContent">
-                                                        <div className="vpWatchSeasonText">Watch Now</div>
+                                                        {
+                                                            showDetails.single_video === 0 ?
+                                                                (<div className="vpWatchSeasonText">Watch S01:E01</div>)
+                                                                : showDetails.single_video === 1 ? (<div className="vpWatchSeasonText">Watch Now</div>) : null
+                                                        }
                                                     </div>
                                                 </button>
 
@@ -294,7 +350,7 @@ const VideoDetails = (categoryId, episode) => {
                                                             share === true ?
                                                                 <div>
                                                                     <div className="_1TcfH _1Dgjh" style={{ left: '7px' }}>
-                                                                        <FacebookShareButton url={'https://staging.gethappi.tv/home/movies?show_id='+showDetails.video_id} quote={showDetails.video_title+' || '+showDetails.video_description} className="share" style={{
+                                                                        <FacebookShareButton url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id} quote={showDetails.video_title + ' || ' + showDetails.video_description} className="share" style={{
                                                                             display: 'flex',
                                                                             flexDirection: 'column'
                                                                         }}>
@@ -305,14 +361,14 @@ const VideoDetails = (categoryId, episode) => {
                                                                                 </svg><span className="_3SXQW">Facebook</span></span>
                                                                         </FacebookShareButton>
 
-                                                                        <TwitterShareButton url={'https://staging.gethappi.tv/home/movies?show_id='+showDetails.video_id} title={showDetails.video_title} description={showDetails.video_description} style={{
+                                                                        <TwitterShareButton url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id} title={showDetails.video_title} description={showDetails.video_description} style={{
                                                                             display: 'flex',
                                                                             flexDirection: 'column'
                                                                         }}>
                                                                             <span className="ATag _1H0lX _135ID _3Dyhl">
-                                                                            <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 17" style={{ fill: 'currentcolor' }}>
-                                        <path d="M6 17c7.837 0 11.965-6.156 12-11-.035-.67-.035-.844 0-1 .756-.59 1.45-1.297 2-2-.75.218-1.543.433-2 1 .5-.978 1.14-1.77 1-3-.358.763-1.24 1.095-2 1C15.29.647 12.69.568 11 2c-1.03 1.084-1.48 2.555-1 4-3.45-.204-6.524-1.74-9-4C.303 3.584.86 5.945 3 7c-.99.11-1.63-.062-2 0-.2 1.6 1.178 3.255 3 4-.512-.202-1.146-.178-2 0 .777 1.35 2.318 2.478 4 3-1.38.635-3.175 1.246-5 1-.35.244-.675.223-1 0 1.877 1.37 4.06 2 6 2" fill="currentColor" fillRule="evenodd"></path>
-                                    </svg>
+                                                                                <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 17" style={{ fill: 'currentcolor' }}>
+                                                                                    <path d="M6 17c7.837 0 11.965-6.156 12-11-.035-.67-.035-.844 0-1 .756-.59 1.45-1.297 2-2-.75.218-1.543.433-2 1 .5-.978 1.14-1.77 1-3-.358.763-1.24 1.095-2 1C15.29.647 12.69.568 11 2c-1.03 1.084-1.48 2.555-1 4-3.45-.204-6.524-1.74-9-4C.303 3.584.86 5.945 3 7c-.99.11-1.63-.062-2 0-.2 1.6 1.178 3.255 3 4-.512-.202-1.146-.178-2 0 .777 1.35 2.318 2.478 4 3-1.38.635-3.175 1.246-5 1-.35.244-.675.223-1 0 1.877 1.37 4.06 2 6 2" fill="currentColor" fillRule="evenodd"></path>
+                                                                                </svg>
                                                                                 <span className="_3SXQW">Twitter</span>
                                                                             </span>
                                                                         </TwitterShareButton>
@@ -348,7 +404,10 @@ const VideoDetails = (categoryId, episode) => {
                                                             <span className="vpYearBreak">·</span>
                                                         </div>
                                                     }
+
+
                                                     <div className="movieLength">{showDetails.video_duration && convertTime(showDetails.video_duration)}</div>
+
                                                 </div>
                                                 <div className="vpCCwrapper">
                                                     <svg className="svgIcon vpCCicon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 28 18" style={{ fill: 'currentcolor' }}>
@@ -373,12 +432,22 @@ const VideoDetails = (categoryId, episode) => {
                                             </div>
                                         </div>
                                         {
-                                            showDetails.single_video === 0 || isDesktop === false ?
-                                                (<div className="vpMiddleDesc">{showDetails.video_title}</div>
-                                                ) : <div className="vpMiddleDesc">{showDetails.video_description}</div>
+                                            isDesktop === true ?
+                                                showDetails.single_video === 0 ?
+                                                    (<div className="vpMiddleDesc">Episodes : { episodeLength}<br/>{showDetails.synopsis}</div>
+                                                    ) : <div className="vpMiddleDesc">{showDetails.video_description}</div>
+                                                : null
                                         }
                                     </div>
+                                    
                                 </div>
+                                {
+                                        isDesktop === false ?
+                                            showDetails.single_video === 0 ?
+                                                (<div className="">Episodes : { episodeLength}<br/>{showDetails.synopsis}</div>
+                                                ) : <div className="">{showDetails.video_description}</div>
+                                            : null
+                                    }
                                 {
                                     showDetails.single_video === 0 ?
                                         (
@@ -408,7 +477,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                     </svg>
                                                                                                     : null}
                                                                                             </div>
-                                                                                            {
+                                                                                            {/* {
                                                                                                 show.single_video === 0 ?
                                                                                                     <div className="moviePoster"
                                                                                                         style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
@@ -421,7 +490,11 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                             </div>
                                                                                                             :
                                                                                                             null)
-                                                                                            }
+                                                                                            } */}
+                                                                                            <div className="moviePoster"
+                                                                                                style={{ backgroundImage: `url(${videoImageUrl + show.thumbnail})` }}>
+                                                                                                <div className="FeNml"></div>
+                                                                                            </div>
                                                                                             <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                                                                 <div className="wishlistButton">
                                                                                                     <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -456,9 +529,9 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                         <div className="movieYear">
                                                                                                             {
                                                                                                                 show.year ?
-                                                                                                                    <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
+                                                                                                                    <div className="_1MmGl">({show.year}) . {convertSecondsToMin(show.video_duration)}</div>
                                                                                                                     :
-                                                                                                                    <div className="_1MmGl">{convertTime(show.video_duration)}</div>
+                                                                                                                    <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
                                                                                                             }
                                                                                                         </div>
                                                                                                         <div className="movieCategory mcMargin">
@@ -517,7 +590,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                         </svg>
                                                                                         : null}
                                                                                 </div>
-                                                                                {
+                                                                                {/* {
                                                                                     show.single_video === 0 ?
                                                                                         <div className="moviePoster"
                                                                                             style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
@@ -530,7 +603,12 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                 </div>
                                                                                                 :
                                                                                                 null)
-                                                                                }
+                                                                                } */}
+
+                                                                                <div className="moviePoster"
+                                                                                    style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                                                    <div className="FeNml"></div>
+                                                                                </div>
                                                                                 <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                                                     <div className="wishlistButton">
                                                                                         <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}

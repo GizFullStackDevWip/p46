@@ -14,7 +14,6 @@ const LiveContainer = () => {
 
     useEffect(() => {
         service.getPartners().then(response => {
-            console.log('RESPOSNE OF PARTNER API', response.data);
             setPartner(response.data);
         })
     }, []);

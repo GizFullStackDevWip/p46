@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
+var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const queryString = require('query-string');
 
 const CategoryList = () => {
@@ -17,29 +20,34 @@ const CategoryList = () => {
     const [showList, setShowList] = useState([]);
     const [showName, setShowName] = useState('');
     const [hover, setHover] = useState(false);
-    const [update, setUpdate] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const signInBlock = useSelector((state) => state.signInBlock);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        updateUseEffect();
+
+    }, [search]);
+
+    const updateUseEffect = () => {
         if (parsed.category_id === 'playlist') {
             let isLoggedIn = localStorage.getItem('isLoggedIn');
             if (isLoggedIn === 'true') {
                 service.playList().then(response => {
                     if (response.data) {
                         setShowList(response.data);
+                        setShowName(parsed.category_name);
                     }
                 })
             }
         } else {
             service.showsByCategory(parsed.category_id).then(response => {
-                setShowName(response.data[0].category_name);
+                console.log(response.data);
+                setShowName(parsed.category_name);
                 setShowList(response.data);
             })
         }
-
-    }, [search, update]);
+    }
 
     const hoverFunction = (flag, index) => {
         setHover(flag);
@@ -47,13 +55,11 @@ const CategoryList = () => {
     }
 
     const addtoMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 if (response.status === 100) {
-                    console.log('response----->', response);
-                    setUpdate(true);
+                    updateUseEffect();
                 }
             })
         } else {
@@ -62,14 +68,12 @@ const CategoryList = () => {
     }
 
     const removeFromMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 if (response.status === 100) {
-                    setUpdate(true);
+                    updateUseEffect();
                 }
-
             })
         } else {
             dispatch({ type: "SIGN_IN_BLOCK" });
@@ -96,7 +100,9 @@ const CategoryList = () => {
                                         return (
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
                                                 <div className="movieTileMargin movieTile">
-                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                    <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                                        onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+
                                                         <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
                                                             className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
@@ -105,7 +111,8 @@ const CategoryList = () => {
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
                                                         </div>
-                                                        {
+
+                                                        {/* {
                                                             show.single_video == 0 ?
 
                                                                 <div className="moviePoster"
@@ -120,7 +127,11 @@ const CategoryList = () => {
                                                                         </div>
                                                                         : null
                                                                 )
-                                                        }
+                                                        } */}
+                                                        <div className="moviePoster"
+                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                            <div className="FeNml"></div>
+                                                        </div>
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}

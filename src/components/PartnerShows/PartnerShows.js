@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { service } from '../../network/Partner/service';
 import PartnerCategoryContainer from './PartnerCategoryContainer';
+var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 const queryString = require('query-string');
 
@@ -15,7 +16,7 @@ const PartnerShows = () => {
         window.scrollTo(0, 0);
         service.getPartnerShows(parsed.partner_id).then(response => {
             setPartnerDetails(response.data);
-            setPartnerCategory(response.data.categories);
+            setPartnerCategory(response.data.shows);
         })
 
     }, []);
@@ -26,7 +27,7 @@ const PartnerShows = () => {
                 <div className="menuCloseJS closeMenuWrapper">
                     <div className="moviePageWrapper">
                         <div className="moviePageBG"
-                            style={{ backgroundImage: `url(${bannerShowUrl + partnerDetails.partner_image})` }}
+                            style={{ backgroundImage: `url(${imageUrl + partnerDetails.partner_image})` }}
                         ></div> <div className="moviePageBG"
                             style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}
                         ></div>
@@ -34,17 +35,10 @@ const PartnerShows = () => {
                             <div className="vpContent">
                                 <div className="container vpContainer">
                                     <div className="row vp3Section">
-                                        {/* <div className="col col-1-5">
-                                            <div className="vpLeftSection">
-                                                <div className="vpPoster"
-                                                    style={{ backgroundImage: `url(${bannerShowUrl + partnerDetails.partner_image})` }}
-                                                ></div>
-                                            </div>
-                                        </div> */}
                                         <div className="col col-5-5">
                                         <div className="vpLeftSection partnerDetailLeftSection">
                                                 <div className="vpPoster partnerDetailProfilePic"
-                                                    style={{ backgroundImage: `url(${bannerShowUrl + partnerDetails.partner_image})` }}
+                                                    style={{ backgroundImage: `url(${imageUrl + partnerDetails.partner_image})` }}
                                                 ></div>
                                             </div>
                                             <div className="vpMiddleHeading">
@@ -57,7 +51,7 @@ const PartnerShows = () => {
                                                         <div className="row vp3Section youMayLike">
                                                             <div className="col">
                                                                 <div>
-                                                                    <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.category_name}</div>
+                                                                    <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.show_name}</div>
                                                                     <div className="carousel carouselNoMask">
                                                                         <div className="carouselContent">
                                                                             <PartnerCategoryContainer param={item.videos} />

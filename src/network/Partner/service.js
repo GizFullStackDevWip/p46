@@ -23,7 +23,7 @@ function getPartnerShows(partnerId) {
         }
     };
 
-    return axios.get('https://poppo.tv/platform/bk/api/partnerVideos', customConfig).then(
+    return axios.get('https://poppo.tv/platform/bk/api/partnerVideosByShows', customConfig).then(
         response => {
             return response.data;
         })

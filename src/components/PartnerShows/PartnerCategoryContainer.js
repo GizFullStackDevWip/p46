@@ -3,12 +3,12 @@ import { Link, useHistory } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import { service } from '../../network/Partner/service';
 import { useSelector, useDispatch } from 'react-redux';
-import { convertTime } from '../../Utils/utils';
+import { convertTime ,convertSecondsToMin } from '../../Utils/utils';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 const PartnerCategoryContainer = ({ param }) => {
-    const [similarShows,setSetimilarShows] = useState(param);
+    const [similarShows, setSetimilarShows] = useState(param);
     const history = useHistory();
     const [hover, setHover] = useState(false);
     const [update, setUpdate] = useState(false);
@@ -36,11 +36,9 @@ const PartnerCategoryContainer = ({ param }) => {
         }
     };
     const functionOnclick = (show) => {
-        history.push({
-            pathname: '/home/movies',
-            search: encodeURI(`show_id=${show.show_id}`)
-        });
-        setUpdate(true);
+        history.push(
+            { pathname: '/videoplayer', state: { show_details: show } }
+        )
     }
     const hoverFunction = (flag, index) => {
         setHover(flag);
@@ -73,7 +71,7 @@ const PartnerCategoryContainer = ({ param }) => {
                 }
                 console.log('RESPONSE OF REMOVE MYPLAYLIST', response);
             })
-        }else{
+        } else {
             dispatch({ type: "SIGN_IN_BLOCK" });
         }
     }
@@ -93,73 +91,42 @@ const PartnerCategoryContainer = ({ param }) => {
                                             </svg>
                                             : null}
                                     </div>
-                                    {
+                                    {/* {
                                         show.single_video === 0 ?
                                             <div className="moviePoster"
-                                                style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
+                                                style={{ backgroundImage: `url(${bannerSeriesUrl + show.thumbnail})` }}>
                                                 <div className="FeNml"></div>
                                             </div> : (
                                                 show.single_video === 1 ?
                                                     <div className="moviePoster"
-                                                        style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
+                                                        style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
                                                         <div className="FeNml"></div>
                                                     </div>
                                                     :
                                                     null)
-                                    }
+                                    } */}
+                                    <div className="moviePoster"
+                                        style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
+                                        <div className="FeNml"></div>
+                                    </div>
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                         <div className="wishlistButton">
                                             <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
                                                 style={{ backgroundImage: 'linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))', backgroundPosition: 'center bottom', backgroundSize: 'cover' }}
                                             ></div>
-                                            {
-                                                show.watchlist_flag === 1 ?
-                                                    (
-                                                        <div className="wishlistTextWrapper">
-                                                            <div className="wishlistText" onClick={() => { removeFromMylistFunction(show) }}>Remove from My List </div>
-                                                        </div>
-                                                    ) :
-                                                    (show.watchlist_flag === null || show.watchlist_flag === 0) ?
-                                                        (
-                                                            <div className="wishlistTextWrapper">
-                                                                <div className="wishlistText" onClick={() => { addtoMylistFunction(show) }}>Add to My List</div>
-                                                            </div>
-                                                        ) : null
-                                            }
                                         </div>
                                     </div>
                                 </div>
                                 <section className="movieTextWrapper movieTextWrapperPadding">
                                     <div className="movieTextFlex">
-                                        <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.show_name}</a></h3>
+                                        <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.video_title}</a></h3>
                                         <div className="movieCatYear">
                                             <div>
                                                 <div className="movieYear">
-                                                    {
-                                                        show.year ?
-                                                            <div className="_1MmGl">({show.year}) . {convertTime(show.teaser_duration)}</div>
-                                                            :
-                                                            <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
-                                                    }
+                                                    <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
                                                 </div>
                                                 <div className="movieCategory mcMargin" >
-                                                    {
-                                                        show.category_name.map((item, index) => {
-                                                            if (index === show.category_name.length - 1) {
-                                                                return (
-                                                                    <div key={index}>{item}</div>
-                                                                );
-                                                            } else {
-                                                                return (
-                                                                    <div key={index}>{item}{","}&nbsp;</div>
-                                                                );
-                                                            }
-                                                        })
-                                                    }
                                                 </div>
-                                            </div>
-                                            <div>
-                                                {show.rating && <div className="movieCensorBox moviecensorText">{show.rating}</div>}
                                             </div>
                                         </div>
                                     </div>

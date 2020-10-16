@@ -20,7 +20,13 @@ const AboutUs = () => {
 															<div className=" tubi-header">
 																<div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
 																<div className="header-content">
-																	<h1>HappiTV<span>A Digital Platform For All LGBTQ+ Audiences Courting Millennials, Gen Xers and Centennials alike, HappiTV brings the whole community together with empowering voices that bring the best offering in Queer fiction worldwide, Reality TV that matters and a safe haven for the ideas that are changing the world. Whether you come for a laugh, a cathartic cry, information or simple escapism, Happi offers the special content that matters to one of the most coveted demographics in the nation and abroad: The discerning, educated and ready to influence LGBTQ+ audience.</span></h1> </div>
+																	<h1>HappiTV<span>
+																		HappiTV is a new entertainment app dedicated to streaming content of interest to the LGBTQ+ community. Featuring Feature films, TV series, Non-fiction or short form videos,  HappiTV serves as an anchor for positive role models and powerful messages for the queer population. Unlike any other, HappiTV is a place where the community can find powerful entertainment and resources that will better their lives.
+
+																		We are a 100% minority owned and operated enterprise (LGBTQ+ and Latino) in the United Stated of America.
+
+																		Please patronize our sponsors and enjoy the work of our partners and creatives. Together, we can bring smiles and big grins around the world. That's what we are all about. We are HappiTV.
+																		</span></h1> </div>
 															</div>
 														</div>
 													</div>
@@ -63,7 +69,7 @@ const AboutUs = () => {
 															<div className="tubi-service-list-wrapper ">
 																<div className="wpb_text_column wpb_content_element  small w_870 b-border  container tubi-service-list">
 																	<div className="wpb_wrapper">
-																	<div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require('../../../images/aboutus/team-first.png')} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Team First</h5>
 																				<p style={{ color: '#707c86' }}>At HappiTV, our biggest success' have come when we work together.</p>
@@ -81,13 +87,13 @@ const AboutUs = () => {
 																				<p style={{ color: '#707c86' }}>Today's version of you should be a slight improved version of yesterday's.</p>
 																			</div>
 																		</div>
-																		<div className="service-item "> <img src={require("../../../images/aboutus/deliver-delight.png")}  alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require("../../../images/aboutus/deliver-delight.png")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Deliver Delight</h5>
 																				<p style={{ color: '#707c86' }}>In all we do, Tubies deliver delight passionately – whether that's in content, technology, customer experience or onboarding.</p>
 																			</div>
 																		</div>
-																		<div className="service-item "> <img src={require("../../../images/aboutus/own-it.png")}  alt="" style={{ width: '100%' }} />
+																		<div className="service-item "> <img src={require("../../../images/aboutus/own-it.png")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Own It</h5>
 																				<p style={{ color: '#707c86' }}>Owners do what is right for the team, help empower others and trust their teammates to do the same.</p>
@@ -182,21 +188,21 @@ const AboutUs = () => {
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Daniel Bort</h5>
 																				<span style={{ color: '#707c86' }}>Acquisitions</span><br />
-																				<span>+1(323)301-2792 <br />Daniel@gethappi.tv</span>
+																				<span>Daniel@gethappi.tv</span>
 																			</div>
 																		</div>
 																		<div className="service-item "> <img src={require("../../../images/aboutus/new.jpg")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Daniel Berilla</h5>
 																				<span style={{ color: '#707c86' }}>Marketing</span><br />
-																				<span>+1(310)497-5062 <br />Daniel.berilla@gethappi.tv</span>
+																				<span>Daniel.berilla@gethappi.tv</span>
 																			</div>
 																		</div>
 																		<div className="service-item "> <img src={require("../../../images/aboutus/new.jpg")} alt="" style={{ width: '100%' }} />
 																			<div>
 																				<h5 style={{ color: '#26262d' }}>Rafael Gavioli</h5>
 																				<span style={{ color: '#707c86' }}>Operations</span><br />
-																				<span>+1(323)540-9267 <br />Rafael@gethappi.tv</span>
+																				<span>Rafael@gethappi.tv</span>
 																			</div>
 																		</div>
 																	</div>

@@ -113,7 +113,7 @@ function similarShow(videoId) {
         params: {
             pubid: 50023,
             vid: videoId,
-            user_id: uId
+            uid: uId
         }
     };
 

@@ -338,7 +338,7 @@ const Register = (state) => {
                 localStorage.setItem('userName', response.data[0].first_name);
                 service.setCookie("userId", response.data[0].user_id, 30);
                 service.userSubscription(response.data[0].user_id).then(response => {
-                    if (response.forcibleLogout == false) {
+                    // if (response.forcibleLogout == false) {
                         service.setCookie("isLoggedIn", "true", 30);
                         var user_sub = response.data;
                         if (user_sub.length > 0) {
@@ -367,8 +367,8 @@ const Register = (state) => {
 
                         }
 
-                        return false;
-                    }
+                    //     return false;
+                    // }
                 });
             } else if (response.status == 102) {
                 setMsgError('There was an error during registration');
@@ -424,7 +424,7 @@ const Register = (state) => {
             localStorage.setItem('userName', response.data[0].first_name);
             service.setCookie("userId", response.data[0].user_id, 30);
             service.userSubscription(response.data[0].user_id).then(response => {
-                if (response.forcibleLogout == false) {
+                // if (response.forcibleLogout == false) {
                     service.setCookie("isLoggedIn", "true", 30);
                     var user_sub = response.data;
                     if (user_sub.length > 0) {
@@ -453,8 +453,8 @@ const Register = (state) => {
 
                     }
 
-                    return false;
-                }
+                //     return false;
+                // }
             });
         });
     }

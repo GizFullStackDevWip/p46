@@ -1,5 +1,21 @@
 import moment from 'moment';
 
+export const playerController = (position, playerId) => {
+    let screenPosition = document.documentElement.scrollTop;
+    let playerStream = document.getElementById(playerId);
+    if (playerStream !== null && playerStream !== 'undefined') {
+        if (screenPosition > position) {
+            playerStream.pause();
+        } else if (screenPosition < position) {
+            if (playerStream != null) {
+                if (playerStream.paused) {
+                    playerStream.play();
+                }
+            }
+
+        }
+    }
+}
 export const deviceDetect = () => {
     let screenWidth = (window.innerWidth > 0) ? window.innerWidth : window.screen.width;
     return (screenWidth > 959) ? true : false;
@@ -23,6 +39,17 @@ export const convertTime = (duration) => {
     } else {
         return hours + 'hr, ' + min + 'min';
     }
+}
+export const convertSecondsToMin = (d) => {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
+    return hDisplay + mDisplay; 
 }
 export const validateName = (stringValue) => {
     if (/^[A-Za-z]+$/.test(stringValue.trim())) {

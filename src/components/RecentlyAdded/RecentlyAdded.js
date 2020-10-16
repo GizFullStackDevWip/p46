@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
+var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const queryString = require('query-string');
 
 const RecentlyAdded = () => {
@@ -18,20 +21,22 @@ const RecentlyAdded = () => {
     const [showList, setShowList] = useState([]);
     const [showName, setShowName] = useState('');
     const [hover, setHover] = useState(false);
-    const [update, setUpdate] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const signInBlock = useSelector((state) => state.signInBlock);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        updateUseEffect();
+
+    }, [search]);
+
+    const updateUseEffect = () => {
         service.getRecentlyAddedShows().then(response => {
             var data = response.data;
-            console.log('getRecentlyAddedShowsData', data)
             setShowName(parsed.partner_name);
             setShowList(data);
         })
-
-    }, [search, update]);
+    }
 
     const hoverFunction = (flag, index) => {
         setHover(flag);
@@ -39,13 +44,11 @@ const RecentlyAdded = () => {
     }
 
     const addtoMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                console.log('res[onse', response);
                 if (response.status === 100) {
-                    setUpdate(true);
+                    updateUseEffect();
                 }
             })
         } else {
@@ -54,13 +57,11 @@ const RecentlyAdded = () => {
     }
 
     const removeFromMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                console.log('res[onse', response);
                 if (response.status === 100) {
-                    setUpdate(true);
+                    updateUseEffect();
                 }
 
             })
@@ -102,7 +103,7 @@ const RecentlyAdded = () => {
                                                             </svg>
 
                                                         </div>
-                                                        {
+                                                        {/* {
                                                             show.single_video == 0 ?
 
                                                                 <div className="moviePoster"
@@ -117,7 +118,12 @@ const RecentlyAdded = () => {
                                                                         </div>
                                                                         : null
                                                                 )
-                                                        }
+                                                        } */}
+
+                                                        <div className="moviePoster"
+                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                            <div className="FeNml"></div>
+                                                        </div>
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}

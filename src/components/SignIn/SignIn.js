@@ -80,8 +80,8 @@ const SignIn = () => {
         document.getElementById('signInLink').style.display = 'none';
         if (isGetIP) {
             fetch('https://geolocation-db.com/json/')
-            .then(res => res.json())
-            .then(json => localStorage.setItem('ipaddress', json.IPv4));
+                .then(res => res.json())
+                .then(json => localStorage.setItem('ipaddress', json.IPv4));
             setIsGetIP(false);
         }
         console.log(showId, 'showId');
@@ -120,13 +120,13 @@ const SignIn = () => {
             ...values,
             [name]: value
         })
-        if(name == 'password') {
-            if(value.length > 0) {
+        if (name == 'password') {
+            if (value.length > 0) {
                 setIsEye1(true)
-            }else {
-              setIsEye1(false)
+            } else {
+                setIsEye1(false)
             }
-          }
+        }
     }
     const validationForgot = () => {
         let errorsForgot = {}
@@ -223,7 +223,7 @@ const SignIn = () => {
                 let loginFBData = response.data[0];
                 service.userSubscription(response.data[0].user_id).then(response => {
                     setUserLoggedId(loginFBData.user_id);
-                    if (response.forcibleLogout == false) {
+                    // if (response.forcibleLogout == false) {
                         localStorage.setItem('isLoggedIn', true);
                         localStorage.setItem('userName', loginFBData.first_name);
                         service.setCookie("userId", userLoggedId, 30);
@@ -256,12 +256,12 @@ const SignIn = () => {
 
                         }
 
-                    } else {
-                        setIsErrorLogoutMsg(true);
-                        setTimeout(function () {
-                            setIsErrorLogoutMsg(false);
-                        }, 5000);
-                    }
+                    // } else {
+                    //     setIsErrorLogoutMsg(true);
+                    //     setTimeout(function () {
+                    //         setIsErrorLogoutMsg(false);
+                    //     }, 5000);
+                    // }
                 });
             } else if (response.status == 102) {
                 setMsgErrorLogin('Please enter a valid user email and password');
@@ -272,7 +272,7 @@ const SignIn = () => {
             } else if (response.status == 103) {
                 history.push({
                     pathname: '/register',
-                    state : {facebookData : FBData}
+                    state: { facebookData: FBData }
                 });
             } else if (response.status == 101) {
                 setUserLoggedId(response.data[0].user_id);
@@ -289,74 +289,74 @@ const SignIn = () => {
                     closeOnClickOutside: false,
                     message: 'Do you want to link your Facebook account?',
                     buttons: [
-                       {
-                          label: 'Yes',
-                          onClick: () => onFBLink()
-                       },
-                       {
-                          label: 'No',
-                          onClick: () => onFBNoLink()
-                       }
+                        {
+                            label: 'Yes',
+                            onClick: () => onFBLink()
+                        },
+                        {
+                            label: 'No',
+                            onClick: () => onFBNoLink()
+                        }
                     ]
-                 })
-            } ;;
+                })
+            };;
         });
     }
-    
+
     const onFBLink = () => {
 
-       service.facebokLink(FBData.id, FBData.email).then(response => {
-        let loginFBData = response.data[0];
-                service.userSubscription(response.data[0].user_id).then(response => {
-                    setUserLoggedId(loginFBData.user_id);
-                    if (response.forcibleLogout == false) {
-                        localStorage.setItem('isLoggedIn', true);
-                        localStorage.setItem('userName', loginFBData.first_name);
-                        service.setCookie("userId", userLoggedId, 30);
-                        service.setCookie("isLoggedIn", "true", 30);
-                        var user_sub = response.data;
-                        if (user_sub.length > 0) {
-                            setMsgSucessLogin('You are successfully logged in.');
-                            setIsSuccessLoginMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessLoginMsg(false);
-                            }, 1000);
-                            dispatch({ type: "LOGIN", payload: true });
-                            history.goBack();
+        service.facebokLink(FBData.id, FBData.email).then(response => {
+            let loginFBData = response.data[0];
+            service.userSubscription(response.data[0].user_id).then(response => {
+                setUserLoggedId(loginFBData.user_id);
+                // if (response.forcibleLogout == false) {
+                    localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('userName', loginFBData.first_name);
+                    service.setCookie("userId", userLoggedId, 30);
+                    service.setCookie("isLoggedIn", "true", 30);
+                    var user_sub = response.data;
+                    if (user_sub.length > 0) {
+                        setMsgSucessLogin('You are successfully logged in.');
+                        setIsSuccessLoginMsg(true);
+                        setTimeout(function () {
+                            setIsSuccessLoginMsg(false);
+                        }, 1000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.goBack();
 
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
-
-                        } else {
-                            setMsgSucessLogin('You are successfully logged in.');
-                            setIsSuccessLoginMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessLoginMsg(false);
-                            }, 5000);
-                            dispatch({ type: "LOGIN", payload: true });
-                            history.goBack();
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
-
-                        }
+                        // history.push({
+                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                        // });
 
                     } else {
-                        setIsErrorLogoutMsg(true);
+                        setMsgSucessLogin('You are successfully logged in.');
+                        setIsSuccessLoginMsg(true);
                         setTimeout(function () {
-                            setIsErrorLogoutMsg(false);
+                            setIsSuccessLoginMsg(false);
                         }, 5000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.goBack();
+                        // history.push({
+                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                        // });
+
                     }
-                });
+
+                // } else {
+                //     setIsErrorLogoutMsg(true);
+                //     setTimeout(function () {
+                //         setIsErrorLogoutMsg(false);
+                //     }, 5000);
+                // }
+            });
 
         });
     }
     const onFBNoLink = () => {
         setIsEmailExistMsg(true);
-            setTimeout(function () {
-                setIsEmailExistMsg(false);
-            }, 5000);
+        setTimeout(function () {
+            setIsEmailExistMsg(false);
+        }, 5000);
     }
 
     const onLoginHandler = (e) => {
@@ -367,7 +367,7 @@ const SignIn = () => {
                     let loginData = response.data[0];
                     service.userSubscription(response.data[0].user_id).then(response => {
                         setUserLoggedId(loginData.user_id);
-                        if (response.forcibleLogout == false) {
+                        // if (response.forcibleLogout == false) {
                             localStorage.setItem('isLoggedIn', true);
                             localStorage.setItem('userName', loginData.first_name);
                             localStorage.setItem('userId', loginData.user_id);
@@ -401,12 +401,12 @@ const SignIn = () => {
 
                             }
 
-                        } else {
-                            setIsErrorLogoutMsg(true);
-                            setTimeout(function () {
-                                setIsErrorLogoutMsg(false);
-                            }, 5000);
-                        }
+                        // } else {
+                        //     setIsErrorLogoutMsg(true);
+                        //     setTimeout(function () {
+                        //         setIsErrorLogoutMsg(false);
+                        //     }, 5000);
+                        // }
                     });
                 } else if (response.status == 102) {
                     setMsgErrorLogin('Please enter a valid user email and password');
@@ -440,7 +440,7 @@ const SignIn = () => {
         e.preventDefault();
         if (validationVerify()) {
             service.verifyEmail(valuesVerify, userLoggedId).then(response => {
-                console.log('response of the email varification in sign in page',response);
+                console.log('response of the email varification in sign in page', response);
                 if (response.status == 1) {
                     localStorage.setItem('isLoggedIn', true);
                     service.setCookie("userId", userLoggedId, 30);
@@ -495,7 +495,7 @@ const SignIn = () => {
         }
     }
     const onClickForgot = () => {
-        document.getElementById('signInLink').style = {'display': 'block', 'padding-top': '6px'}
+        document.getElementById('signInLink').style = { 'display': 'block', 'padding-top': '6px' }
         setIsLogin(false);
         setIsForgot(true);
     }
@@ -516,7 +516,7 @@ const SignIn = () => {
     }
 
     window.signInTrigger = () => {
-        setIsLogin(true); 
+        setIsLogin(true);
         setIsForgot(false);
         document.getElementById('signInLink').style.display = 'none';
     }
@@ -569,7 +569,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + forgot_email}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot}  />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="forgot_email" type="email" value={valuesForgot.forgot_email} onChange={onChangeHandlerForgot} />
                                                         <span className="inputLabel">{errorsForgot.forgot_email}</span>
 
                                                     </div>
@@ -582,8 +582,8 @@ const SignIn = () => {
                                                         </div>
                                                     </div>
                                                     <div className="signAgree">
-        
-                                                        <p> <span>Already have an account? <span className="linkButton" onClick={() => {setIsLogin(true); setIsForgot(false); document.getElementById('signInLink').style.display = 'none' }}>Sign In</span></span><span>·
+
+                                                        <p> <span>Already have an account? <span className="linkButton" onClick={() => { setIsLogin(true); setIsForgot(false); document.getElementById('signInLink').style.display = 'none' }}>Sign In</span></span><span>·
                                                     </span> Don't have an account? <Link className="linkButton" to="/register">Register</Link>
                                                         </p>
                                                     </div>
@@ -608,7 +608,7 @@ const SignIn = () => {
                                                         )
                                                     }
                                                     <div className={"input" + verification_code}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="verification_code" type="text" maxLength="60" value={values.verification_code} onChange={onChangeHandlerVerify} />
                                                         <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                     </div>
 
@@ -654,7 +654,11 @@ const SignIn = () => {
                                                     }
                                                     {
                                                         isErrorLogoutMsg && (
-                                                            <p className="_3nmo_" >Login limit exceed&nbsp;&nbsp;<button id="logoutBtn" onClick={onLogout} className="linkButton button buttonSmall"><div className="buttonBg"></div><div className="buttonContent">Logout All</div></button></p>
+                                                            <p className="_3nmo_" >Login limit exceed&nbsp;&nbsp;<button id="logoutBtn" onClick={onLogout} className="linkButton button buttonSmall">
+                                                                <div className="buttonBg"></div>
+                                                                <div className="buttonContent">Logout All</div>
+                                                            </button>
+                                                            </p>
 
                                                         )
                                                     }
@@ -671,7 +675,7 @@ const SignIn = () => {
                                                     }
 
                                                     <div className={"input" + email}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
                                                         {
                                                             !values.email &&
@@ -680,7 +684,7 @@ const SignIn = () => {
 
                                                     </div>
                                                     <div className={"input" + password}>
-                                                        <input className="inputText"  style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
@@ -691,7 +695,7 @@ const SignIn = () => {
                                                             !values.password &&
                                                             <span className="inputHint">Pick something you can remember</span>
                                                         }
-                                                       
+
                                                     </div>
                                                     <div className="row signSubmitWrapper">
                                                         <div className="col col-sm-6 col-sm-offset-6">

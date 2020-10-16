@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { useParams, useLocation } from 'react-router-dom';
 import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
@@ -8,22 +7,28 @@ import Notification from '../../common/Notification';
 const queryString = require('query-string');
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-var show = []
+
+var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 const Search = ({ history }) => {
     var { search } = useLocation();
     const dispatch = useDispatch();
-    show = history.location.state.item;
+    const [show, setShow] = useState(history.location.state.item);
     const parsed = queryString.parse(search);
     const [hover, setHover] = useState(false);
-    const [update, setUpdate] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const signInBlock = useSelector((state) => state.signInBlock);
+
     useEffect(() => {
         window.scrollTo(0, 0);
-        service.getShows(parsed).then(response => {
+        updateUseEffect();
+    }, [parsed.input]);
+
+    const updateUseEffect = () => {
+        service.getShows(parsed.input).then(response => {
+            setShow(response.data);
         })
-    }, []);
+    }
 
     const hoverFunction = (flag, index) => {
         setHover(flag);
@@ -31,13 +36,12 @@ const Search = ({ history }) => {
     }
 
     const addtoMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                console.log('response of addto m');
+                console.log(response);
                 if (response.status === 100) {
-                    setUpdate(true);
+                    updateUseEffect();
                 }
             })
         } else {
@@ -46,12 +50,12 @@ const Search = ({ history }) => {
     }
 
     const removeFromMylistFunction = (show) => {
-        setUpdate(false);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
+                console.log(response);
                 if (response.status === 100) {
-                    setUpdate(true);
+                    updateUseEffect();
                 }
             })
         } else {
@@ -78,7 +82,6 @@ const Search = ({ history }) => {
                                     null
                                     : <h3 style={{ color: 'white', fontSize: '2.3rem' }}>No Matches</h3>
                             }
-
                         </div>
                         <div className="searchResultMargin">
                             <div className="row">
@@ -100,7 +103,7 @@ const Search = ({ history }) => {
                                                             </svg>
 
                                                         </div>
-                                                        {
+                                                        {/* {
                                                             show.single_video == 0 ?
 
                                                                 <div className="moviePoster"
@@ -114,7 +117,11 @@ const Search = ({ history }) => {
                                                                             <div className="FeNml"></div>
                                                                         </div> : null
                                                                 )
-                                                        }
+                                                        } */}
+                                                        <div className="moviePoster"
+                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                            <div className="FeNml"></div>
+                                                        </div>
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -140,7 +147,8 @@ const Search = ({ history }) => {
                                                     <section className="movieTextWrapper movieTextWrapperPadding">
                                                         <div className="movieTextFlex">
                                                             <h3>
-                                                                <div className="linkButton movieTextHeading" onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}</div>
+                                                                <div className="linkButton movieTextHeading"
+                                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}</div>
                                                             </h3>
                                                             <div className="movieCatYear">
                                                                 <div style={{ width: '130px' }}>

@@ -7,17 +7,20 @@ import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
-const Show = ({ param }) => {
+const Show = ({ param,update }) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [shows, setShows] = useState(param);
+    const [shows, setShows] = useState([]);
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     useEffect(() => {
-    }, [param]);
+        if(param !== undefined){
+            setShows(param);
+        }
+    }, [param,update]);
 
     const responsive = {
         superLargeDesktop: {
@@ -42,30 +45,30 @@ const Show = ({ param }) => {
         setFocusedId(index);
     }
     const addtoMylistFunction = (show) => {
-        console.log('show',show);
+        console.log('show', show);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if(isLoggedIn === 'true'){
+        if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                // dispatch({ type: "ADD_TO_MY_LIST" });
                 console.log('ADD TO MYPLAY LIST RESPONSE', response);
+                update.clickHandler();
             })
-        }else{
+        } else {
             dispatch({ type: "SIGN_IN_BLOCK" });
         }
-        
+
     }
     const removeFromMylistFunction = (show) => {
-        console.log('show',show);
+        console.log('show', show);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if(isLoggedIn === 'true'){
+        if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                // dispatch({ type: "ADD_TO_MY_LIST"});
                 console.log('REMOVE FROM MY PLAYLIST RESPONSE', response);
+                update.clickHandler();
             })
-        }else{
+        } else {
             dispatch({ type: "SIGN_IN_BLOCK" });
         }
-       
+
     }
     return (
         <div className="carouselContent">
@@ -87,7 +90,7 @@ const Show = ({ param }) => {
                                         </svg>
 
                                     </div>
-                                    {
+                                    {/* {
                                         show.single_video === 1 ?
 
                                             (<div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }} >
@@ -96,7 +99,10 @@ const Show = ({ param }) => {
                                             : <div className="moviePoster" style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }} >
                                                 <div className="FeNml"></div>
                                             </div>
-                                    }
+                                    } */}
+                                    <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
+                                                <div className="FeNml"></div>
+                                            </div>
                                 }
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                         <div className="wishlistButton">
@@ -139,8 +145,23 @@ const Show = ({ param }) => {
                                                             <div className="_1MmGl">{convertTime(show.video_duration)}</div>
                                                     }
                                                 </div>
-                                                <div className="movieCategory ">
-                                                    {show.category_name && <div>{show.category_name}</div>}
+                                                {/* <div className="movieCategory mcMargin">
+                                                    {
+                                                        show.category_name.map((item, index) => {
+                                                            if (index === show.category_name.length - 1) {
+                                                                return (
+                                                                    <div key={index}>{item}</div>
+                                                                );
+                                                            } else {
+                                                                return (
+                                                                    <div key={index}>{item}{","}&nbsp;</div>
+                                                                );
+                                                            }
+                                                        })
+                                                    }
+                                                </div> */}
+                                                <div className="movieCategory mcMargin">
+                                                <div >{show.category_name}</div>
                                                 </div>
                                             </div>
                                             <div>

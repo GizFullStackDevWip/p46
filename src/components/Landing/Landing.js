@@ -7,9 +7,10 @@ import QuestionAswerSection from './QuestionAswerSection';
 import image from '../../images/landing/1.jpg';
 import image2 from '../../images/landing/2.jpg';
 import image3 from '../../images/landing/3.jpg';
+import image4 from '../../images/landing/4.jpg';
 
 // import image4 from '../../images/landing/new4.jpg';
-var landingImages = [image, image2, image3]
+var landingImages = [image, image2, image3, image4]
 
 const Landing = () => {
     const history = useHistory();
@@ -61,7 +62,7 @@ const Landing = () => {
                                                                     </div>
                                                             } */}
 
-                                                            <Link to="/home">
+                                                            <Link to="/register">
                                                                 <button className="button buttonLarge watchBottom" >
                                                                     <div className="buttonBg" style={{background: '#e0559ca1'}}></div>
                                                                     <div className="buttonContent">Start Watching</div>

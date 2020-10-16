@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/service';
 import { useSelector, useDispatch } from 'react-redux';
-import {capitalize} from '../../Utils/utils';
+import { capitalize } from '../../Utils/utils';
 const queryString = require('query-string');
+var currentPathStrings = '';
 const Header = () => {
 
     const dispatch = useDispatch();
@@ -20,13 +21,24 @@ const Header = () => {
     const [category, setCategory] = useState([]);
     let userName = localStorage.getItem('userName');
     const [typing, setTyping] = useState(false);
+    const [background, setBackground] = useState(false);
     const [mouseHover, setMouseHover] = useState(false);
+
+    currentPathStrings = (currentPath === '/register' ||
+        currentPath === '/signin' ||
+        currentPath === '/aboutus' ||
+        currentPath === '/pressrelease' ||
+        currentPath === '/advertisewithus' ||
+        currentPath === '/contactus' ||
+        currentPath === '/contactsupport' ||
+        currentPath === '/policydarkmode' ||
+        currentPath === '/termsofuse' ||
+        currentPath === '/supportdevice');
 
     useEffect(() => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             dispatch({ type: "LOGIN" });
-            console.log('login', login);
         }
         service.getshowsbyCategory().then(response => {
             if (response.message == 'invalid token') {
@@ -65,6 +77,7 @@ const Header = () => {
 
     const functionLogout = () => {
         setTimeout(() => {
+            window.location.reload(false);
             localStorage.removeItem("userName");
             localStorage.removeItem("userId");
             localStorage.setItem('isLoggedIn', 'false');
@@ -72,6 +85,7 @@ const Header = () => {
             setMouseHover(false);
             eraseCookie('userName');
             eraseCookie('userId');
+            document.cookie = 'userId' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             eraseCookie('userEmail');
             eraseCookie('subscriptionId');
         }, 1000);
@@ -83,27 +97,20 @@ const Header = () => {
     const submitSearch = (e) => {
         e.preventDefault();
     }
-
     return (
-        <header className={currentPath === '/register' ||
-            currentPath === '/signin' ||
-            currentPath === '/aboutus' ||
-            currentPath === '/pressrelease' ||
-            currentPath === '/advertisewithus' ||
-            currentPath === '/contactus' ||
-            currentPath === '/contactsupport' ||
-            currentPath === '/policydarkmode' ||
-            currentPath === '/termsofuse' ||
-            currentPath === '/supportdevice' ? "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
-
+        <header className={currentPathStrings ?
+            "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}>
             <div className="screenContainer">
-                <div className="blackScreen">
+                <div className={background === true ? "blackScreen1" : ''}
+                    onMouseEnter={() => { setMouseHover(false), setBackground(false) }}>
                 </div>
             </div>
             <div className="container headerWrapper">
                 <div className="logosection">
                     <div className="logoContain">
-                        <div className="menuIcon" rel="nofollow"><span className="hamburger"></span></div>
+                        <div className="menuIcon" rel="nofollow">
+                            <span className="hamburger"></span>
+                        </div>
                         <div className="menuItemContainer menuClose" >
                             <div className="menuWrapper" >
                                 <div className="mobileSearch">
@@ -127,14 +134,16 @@ const Header = () => {
                                                 <div className="menuItemHead">Popular</div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
-                                                        <Link to={{ pathname: '/home' }}><div className="linkButton headerMenuItems">Live TV</div></Link>
+                                                        <Link to={{ pathname: '/home' }}>
+                                                            <div className="linkButton headerMenuItems">Live TV</div>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
                                                         {
                                                             login === true ?
-                                                                (<Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${'playlist'}`) }}>
+                                                                (<Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${'playlist'}&category_name=${'My Playlist'}`) }}>
                                                                     <div className="linkButton headerMenuItems">My Playlist</div>
                                                                 </Link>)
                                                                 : null
@@ -143,7 +152,9 @@ const Header = () => {
                                                 </div>
                                                 <div className="menuListItems">
                                                     <div className="menuInnerCol">
-                                                        <Link to={{ pathname: '/home/recentlyadded' }}><div className="linkButton headerMenuItems">Recently Added</div></Link>
+                                                        <Link to={{ pathname: '/home/recentlyadded' }}>
+                                                            <div className="linkButton headerMenuItems">Recently Added </div>
+                                                        </Link>
                                                     </div>
                                                 </div>
 
@@ -168,7 +179,7 @@ const Header = () => {
                                                                 if (category.length / 3 - 2 > index) {
                                                                     return (
                                                                         <div key={index}>
-                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
+                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
                                                                                 <div className="linkButton headerMenuItems">{item.category_name}</div>
                                                                             </Link>
                                                                         </div>
@@ -191,7 +202,7 @@ const Header = () => {
                                                                 if (category.length / 3 - 2 < index) {
                                                                     return (
                                                                         <div key={index}>
-                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}`) }}>
+                                                                            <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
                                                                                 <div className="linkButton headerMenuItems">{item.category_name}</div>
                                                                             </Link>
                                                                         </div>
@@ -216,11 +227,7 @@ const Header = () => {
                     </div>
                 </div>
                 {
-                    currentPath === '/aboutus' ||
-                        currentPath === '/pressrelease' ||
-                        currentPath === '/advertisewithus' ||
-                        currentPath === '/contactus' ||
-                        currentPath === '/contactsupport' ?
+                    currentPathStrings ?
                         (<section className="searchContainer searchBar" style={{ border: 'none' }}>
                         </section>) :
                         (
@@ -242,56 +249,69 @@ const Header = () => {
                 <div className="headerButton">
                     {
                         login === true ?
-                            <div className="loginButtonContainer">
-                                <ul>
-                                    <li><div className="headerSignInButton username logoutMenu" style={{fontSize: '1.2rem'}}
-                                        onMouseOver={() => { setMouseHover(true) }}>Hi,<span>&nbsp;</span>{capitalize(userName)}</div>
-                                        {
-                                            mouseHover === true ?
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-caret-down-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-                                                </svg>
-                                                :
-                                                <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-caret-up-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M7.247 4.86l-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
-                                                </svg>
-                                        }
-                                    </li>
-                                </ul>
+                            <div className="_1-UPh">
+                                <div className={mouseHover === true ? "y_hxB _2Gq2l _1glLO IgZc0" : "y_hxB _2Gq2l"}>
+                                    {
+                                        currentPathStrings ?
+                                            <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }} style={{ color: 'black' }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
+                                            </div> :
+                                            <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
+                                            </div>
+                                    }
+                                    {
+                                        mouseHover === true ?
+                                            <div onMouseLeave={() => {
+                                                setMouseHover(false),
+                                                    setBackground(false)
+                                            }}>
+                                                <div className="_30s-L _13opw">
+                                                    <a className="ATag activeOnWhite" href="/account">Account Settings</a>
+                                                    <a href="/contactsupport" rel="noopener" target="_blank" className="ATag">Help Center</a>
+                                                    {/* <a className="ATag" href="/activate">Activate Your Device</a> */}
+                                                    <span className="_1xPbF"></span><div className="ATag signout" onClick={functionLogout}>Sign Out</div>
+                                                </div>
+                                            </div>
+                                            : null}
+                                </div>
                             </div> :
                             <div className="loginButtonContainer" >
                                 {
                                     currentPath === '/register' ?
                                         (
                                             <ul>
-                                                <li><div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
-                                                    setInput('');
-                                                    localStorage.setItem('currentUrl', window.location.pathname);
-                                                    history.push({
-                                                        pathname: '/signin'
-                                                    });
-                                                }} >Sign In</div></li>
+                                                <li>
+                                                    <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
+                                                        onClick={() => {
+                                                            setInput('');
+                                                            localStorage.setItem('currentUrl', window.location.pathname);
+                                                            history.push({
+                                                                pathname: '/signin'
+                                                            });
+                                                        }} >Sign In</div>
+                                                </li>
                                             </ul>
                                         ) : currentPath === '/signin' ?
                                             (
                                                 <ul>
                                                     <li style={{ marginRight: '20px' }}>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
-                                                            setInput('');
-                                                            history.push({
-                                                                pathname: '/register'
-                                                            });
-                                                        }} >Register</div>
+                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
+                                                            onClick={() => {
+                                                                setInput('');
+                                                                history.push({
+                                                                    pathname: '/register'
+                                                                });
+                                                            }} >Register</div>
                                                     </li>
                                                     <li id="signInLink" style={{ display: 'block' }}>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
-                                                            setInput('');
-                                                            window.signInTrigger();
-                                                            history.push({
-                                                                pathname: '/signin'
-                                                            });
+                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
+                                                            onClick={() => {
+                                                                setInput('');
+                                                                window.signInTrigger();
+                                                                history.push({
+                                                                    pathname: '/signin'
+                                                                });
 
-                                                        }} >Sign In</div>
+                                                            }} >Sign In</div>
                                                     </li>
                                                 </ul>
                                             ) :
@@ -311,43 +331,23 @@ const Header = () => {
                                                         </div>
                                                     </li>
                                                     <li>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }} onClick={() => {
-                                                            setInput('');
-                                                            localStorage.setItem('currentUrl', window.location.pathname);
+                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
+                                                            onClick={() => {
+                                                                setInput('');
+                                                                localStorage.setItem('currentUrl', window.location.pathname);
 
-                                                            history.push({
-                                                                pathname: '/signin'
-                                                            });
-                                                        }} >Sign In</div>
+                                                                history.push({
+                                                                    pathname: '/signin'
+                                                                });
+                                                            }} >Sign In</div>
                                                     </li>
                                                 </ul>
                                             )
-
                                 }
-
                             </div>
                     }
                 </div>
             </div>
-            {
-                mouseHover === true ?
-                    <div className="signpadding"
-                        onMouseLeave={() => { setMouseHover(false) }}>
-                        <div className="signin">
-                            <div>
-                                <div className="sign">
-                                    <div className="linkButton headerMenuItems" href="#">Account Settings</div>
-                                    <div className="linkButton headerMenuItems" href="#">Help Center</div>
-                                    <div className="linkButton headerMenuItems" href="#">Activate Your Device</div>
-                                    <span className="_1xPbF"></span>
-                                    <div className="linkButton headerMenuItems" onClick={functionLogout}>
-                                        <span className="signout">Sign Out</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    : null}
         </header>
     );
 }

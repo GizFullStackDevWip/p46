@@ -4,24 +4,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import { service } from '../../network/Home/service';
 import LiveContainer from './LiveContainer';
 import LiveSchedule from './LiveSchedule';
-import { Link, useHistory } from 'react-router-dom';
 import PartnerContainer from './PartnerContainer';
-import partnerThumb from '../../images/Layer-7.png';
 import Notification from '../../common/Notification';
 
 const Home = () => {
-    const history = useHistory();
     const [category, setCategory] = useState([]);
+    const [loadMore, setLoadMore] = useState(false);
     const [categoryOrgLength, setCategoryOrgLength] = useState([]);
-    const dispatch = useDispatch();
-    const addToMyList = useSelector((state) => state.addToMyList);
     const signInBlock = useSelector((state) => state.signInBlock);
     const login = useSelector((state) => state.login);
     useEffect(() => {
         window.scrollTo(0, 0);
         var singleObj = []
         service.getshowsbyCategory().then(response => {
-            console.log(response.data, 'resssss');
             if (response.status === 100 && response.data.length > 0) {
                 setCategoryOrgLength(response.data.length);
                 var data = response.data;
@@ -36,6 +31,7 @@ const Home = () => {
     }, [login]);
 
     const loadMoreCategory = () => {
+        setLoadMore(true);
         service.getshowsbyCategory().then(response => {
             if (response.status == 100 && response.data.length > 0) {
                 setCategoryOrgLength(0);
@@ -43,6 +39,32 @@ const Home = () => {
                 setCategory(data);
             }
         })
+    }
+    const updateFuction = () => {
+        if (loadMore === true) {
+            service.getshowsbyCategory().then(response => {
+                if (response.status == 100 && response.data.length > 0) {
+                    setCategoryOrgLength(0);
+                    var data = response.data;
+                    setCategory(data);
+                }
+            })
+        } else {
+            var singleObj = []
+            service.getshowsbyCategory().then(response => {
+                if (response.status === 100 && response.data.length > 0) {
+                    setCategoryOrgLength(response.data.length);
+                    var data = response.data;
+                    data.map((item, index) => {
+                        if (index < 4) {
+                            singleObj.push(item);
+                        }
+                    })
+                    setCategory(singleObj);
+                }
+            })
+        }
+
     }
 
     return (
@@ -63,7 +85,9 @@ const Home = () => {
                                 if (category.show_count !== '0') {
                                     return (
                                         <div key={index}>
-                                            <CategoryContainer param={category} />
+                                            <CategoryContainer param={category}
+                                                clickHandler={updateFuction}
+                                            />
                                         </div>
                                     );
                                 }

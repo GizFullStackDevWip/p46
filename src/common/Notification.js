@@ -4,8 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 const Notification = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-
-    const signInBlock = useSelector((state) => state.signInBlock);
     useEffect(() => {
     }, []);
     return (

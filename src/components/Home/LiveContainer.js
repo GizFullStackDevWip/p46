@@ -2,8 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
 import ReactHlsPlayer from 'react-hls-player';
 import 'react-multi-carousel/lib/styles.css';
-import { convertTimeToLocal } from '../../Utils/utils';
+import { convertTimeToLocal, deviceDetect, playerController } from '../../Utils/utils';
+import videothumbnail from '../../images/videothumbnail.png';
 var liveThumbnailUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/images/';
+
+const handleScroll = () => {
+    let playerId = 'singleVideo';
+    if (deviceDetect() === true) {
+        playerController(600, playerId);
+    } else {
+        playerController(150, playerId);
+    }
+}
 
 const LiveContainer = () => {
     const [channels, setChannels] = useState([]);
@@ -11,7 +21,7 @@ const LiveContainer = () => {
     const [videoPlayer, setVideoPlayer] = useState();
     useEffect(() => {
         service.getLiveChannels().then(response => {
-            console.log('response of channel', response.data);
+            console.log(response.data);
             setLogo(response.data[0].logo);
             setChannels(response.data[0]);
             if (response.data[0].live_link) {
@@ -19,12 +29,14 @@ const LiveContainer = () => {
                     id='singleVideo'
                     url={response.data[0].live_link}
                     autoplay={true}
+                    poster={videothumbnail}
                     controls={true}
                     width={'100%'}
                     height={'100%'}
                 />)
             }
         })
+        window.addEventListener('scroll', handleScroll)
     }, []);
     return (
         <div className="entireBanner">

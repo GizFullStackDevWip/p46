@@ -20,6 +20,14 @@ $(document).ready(function(){
         // }
     // });
   });
+
+  $('.menuIcon').on('click', ()=>{
+    if($('.menuItemContainer').hasClass('menuClose')) {
+      $('.menuItemContainer').removeClass('menuClose');
+    } else {
+      $('.menuItemContainer').addClass('menuClose');
+    }
+  })
             
     // ACCORDION CLICK FUNCTION
     $(".faqIcon").click(function(){
@@ -45,13 +53,23 @@ $(document).ready(function(){
         nav.addClass('hideHeader');
         nav.removeClass('headerGradient');
       } 
-      else if(scrollTop < prev && nav.hasClass('hideHeader')) {
-        nav.removeClass('hideHeader');    
-      }
+      // else if(scrollTop < prev && nav.hasClass('hideHeader')) {
+      //   nav.removeClass('hideHeader');    
+      // }
       else if(scrollTop == 0 && nav.hasClass('gradientCheck')) {
         nav.addClass('headerGradient');
       } 
+      if (scrollTop < 50) {
+        nav.removeClass('hideHeader'); 
+        nav.addClass('headerGradient');  
+      }
+      // else if(scrollTop < 1000) {
+      //   nav.removeClass('hideHeader');
+      //   nav.addClass('headerGradient');
+      // }
       prev = scrollTop;
+      console.log('scrollTop', scrollTop);
+
     });
         
     // INPUT FOCUS BLUR FUNCTION

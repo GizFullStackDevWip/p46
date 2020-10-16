@@ -3,6 +3,9 @@ import ReactHlsPlayer from 'react-hls-player';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/Video/service';
 import { useSelector, useDispatch } from 'react-redux';
+import videothumbnail from '../../images/videothumbnail.png';
+var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
+var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 const VideoPlayer = (history) => {
     const [videoPlayer, setVideoPlayer] = useState();
     const [autoPlay, setAutoplay] = useState(false);
@@ -22,9 +25,10 @@ const VideoPlayer = (history) => {
                 setVideoPlayer(<ReactHlsPlayer
                     id='singleVideo'
                     url={newURL}
-                    autoplay={autoPlay}
+                    autoplay={true}
                     controls={true}
                     width={'100%'}
+                    poster={videothumbnail}
                     height={'100%'}
                     onReady={onPlayerReady}
                     onPlay={onVideoPlay(show_details.video_id)}
@@ -58,9 +62,9 @@ const VideoPlayer = (history) => {
                         }
                         // window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
                     }
-                    if (useResponse.forcibleLogout === true) {
-                        // signOut()
-                    }
+                    // if (useResponse.forcibleLogout === true) {
+                    //     // signOut()
+                    // }
                 })
             } else {
                 console.log('playing...')
