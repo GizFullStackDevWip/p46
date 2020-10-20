@@ -4165,7 +4165,16 @@ a.headerMenuItems:hover {
     font-weight: 600;
     line-height: 1.45;
     letter-spacing: .5px;
-    transition: color .3s
+    transition: color .3s;
+    padding-bottom: 0px;
+}
+.videoPlayerBackBtn {
+    color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        position: initial;
+        margin-left: 5px;
+        cursor: pointer
 }
 
 @media (min-width: 768px) {
@@ -5532,7 +5541,20 @@ a.headerMenuItems:hover {
         padding: 16px 0;
         border-bottom: 1px solid rgba(211,215,219,.5);
         margin-bottom: 30px;
+        margin-left: 20vw;
+        width: 76%;
+    }
+    .videoPageContentWrapper .vpContent .vpContainer .vpMiddleHeading {
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(211,215,219,.5);
+        margin-bottom: 30px;
+        margin-left: 0;
         width: 100%;
+    }
+    .partnerMiddleDesc {
+        margin-left: 20vw;
+        margin-bottom: 0px !important;
+        min-height: 180px;
     }
     .vpContent .vpContainer .vp3Section.youMayLike {
         margin-top: 70px;
@@ -8508,6 +8530,7 @@ div {
 }
 .partnerDetailLeftSection {
     width: 20vw !important;
+    position: absolute;
 }
 /* 
     ::-webkit-scrollbar {
@@ -8554,6 +8577,7 @@ div {
             width: 50vw !important;
             margin-top: -15vh;
             padding-bottom: 20px;
+            position: initial;
         }
         .partnerDetailProfilePic {
             width: 100% !important;

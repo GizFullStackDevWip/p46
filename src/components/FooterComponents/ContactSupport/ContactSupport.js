@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { validateName, validateEmail } from '../../../Utils/utils';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { service } from '../../../network/FooterComponent/service';
+import { ToastContainer, toast } from 'react-toastify';
 import csc from 'country-state-city';
 const ContactSupport = () => {
     const history = useHistory();
@@ -174,18 +175,22 @@ const ContactSupport = () => {
             console.log(countryArray[0].name, 'country name');
             values.country = countryArray[0].name;
             service.contact(values).then(response => {
+                toast.success("Thanks. We will get back to you shortly");
                 console.log('RESPONSE-SESND EMAIL->', response);
                 if (response.status === 100) {
-                    setButton(true);
-                    history.push(
-                        { pathname: '/contactus' }
-                    )
+                    setTimeout(function () {
+                        setButton(true);
+                        history.push(
+                            { pathname: '/contactus' }
+                        )
+                    }, 3000);
                 }
             })
         }
     }
     return (
         <div className="menuCloseJS closeMenuWrapper">
+            <ToastContainer />
             <div className="csWrapper csWrapperColor">
                 <div className="csContainer">
                     <h1 className="csPageHeading">Support</h1>

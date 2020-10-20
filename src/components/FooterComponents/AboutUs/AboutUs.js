@@ -32,14 +32,14 @@ const AboutUs = () => {
 													</div>
 												</div>
 											</div>
-											<div className="vc_row wpb_row vc_row-fluid">
+											{/* <div className="vc_row wpb_row vc_row-fluid">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
 															<div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1581433887497 container tubi-content">
 																<div className="wpb_wrapper">
 																	<h3 style={{ textAlign: 'center' }}>Our Values</h3>
-																	{/* <p><span lang="EN">We care deeply about our culture. The five values below serve as the guiding principles for everything we do.</span></p> */}
+																	<p><span lang="EN">We care deeply about our culture. The five values below serve as the guiding principles for everything we do.</span></p>
 																</div>
 															</div>
 														</div>
@@ -61,8 +61,8 @@ const AboutUs = () => {
 														</div>
 													</div>
 												</div>
-											</div>
-											<div className="vc_row wpb_row vc_row-fluid">
+											</div> */}
+											{/* <div className="vc_row wpb_row vc_row-fluid">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
@@ -105,7 +105,7 @@ const AboutUs = () => {
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> */}
 											<div className="vc_row wpb_row vc_row-fluid w_780 vc_custom_1581604732503 bb_custom_1581604732504">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">

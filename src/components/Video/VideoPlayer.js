@@ -92,6 +92,7 @@ const VideoPlayer = (history) => {
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer" style={{ marginTop: '84px' }}>
+            <span className="videoPlayerBackBtn" onClick={closeVideo}>Back</span>
                 <div className="videoContainer">
                     {/* {
                         autoPlay === false ?

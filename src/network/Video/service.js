@@ -22,6 +22,7 @@ function playerToken() {
 
 }
 function onVideoPlayFunction(values) {
+    let countryCode = getCookie('country_code');
     var timestamp = Date.now().toString();
     var res = timestamp.slice(0, 10);
     // console.log(values);
@@ -60,6 +61,7 @@ function onVideoPlayFunction(values) {
         });
 }
 function checkVideoSubscription(videoId) {
+    let countryCode = getCookie('country_code');
     let uId = 74961;
     let user_id = getCookie('userId');
     if (user_id) {
@@ -76,7 +78,8 @@ function checkVideoSubscription(videoId) {
         params: {
             pubid: 50023,
             vid: videoId,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
 
@@ -90,6 +93,7 @@ function checkVideoSubscription(videoId) {
 }
 
 function checkUserSubscription() {
+    let countryCode = getCookie('country_code');
     let uId = 74961;
     let user_id = getCookie('userId');
     if (user_id) {
@@ -105,7 +109,8 @@ function checkUserSubscription() {
         },
         params: {
             pubid: 50023,
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
 

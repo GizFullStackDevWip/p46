@@ -3,10 +3,12 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 
 const Contact = () => {
     const history = useHistory();
-    window.scrollTo(0, 0);
-
     useEffect(() => {
+        window.scrollTo(0, 0);
     }, []);
+    const functionOnclick =()=>{
+        window.scrollTo(0, 0);
+    }
     return (
         <div className="menuCloseJS closeMenuWrapper">
             <div id="content" className="site-content page-id-41">
@@ -60,7 +62,7 @@ const Contact = () => {
                                                             <div className="drag-container" style={{ height: '40px', width: '980px', left: '-55px' }}>
                                                                 <div className="drag ui-draggable ui-draggable-handle" style={{ left: '55px' }}><span style={{ width: '188px', left: '0px' }}></span>
                                                                     <ul className="tab-list">
-                                                                        <li><a  className="on">Los Angeles</a></li>
+                                                                        <li><a className="on">Los Angeles</a></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -74,13 +76,13 @@ const Contact = () => {
                                                                             <img width="1772" height="944" src={require('../../../images/contact/tubi-san-francisco.png')} className="vc_single_image-img attachment-full" alt="" /></a>
                                                                     </figure>
                                                                 </div>
-                                                                <div className="wpb_text_column wpb_content_element  normal normal  container tubi-content">
+                                                                {/* <div className="wpb_text_column wpb_content_element  normal normal  container tubi-content">
                                                                     <div className="wpb_wrapper">
                                                                         <p>Address 7155 Hawthorn Ave apt 5,
                                                                                 <br />  Los Angeles,
                                                                                 <br /> CA - 90046</p>
                                                                     </div>
-                                                                </div>
+                                                                </div> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -130,7 +132,8 @@ const Contact = () => {
                                                 <div className="wpb_text_column wpb_content_element  small_14 normal  container tubi-content">
                                                     <div className="wpb_wrapper">
                                                         <h6 style={{ textAlign: 'center' }}>Submit Your Content</h6>
-                                                        <p style={{ textAlign: 'center' }}>Follow the instructions <a className="contact-us-touch-link" title="Content Submission" href="#">here</a>.</p>
+                                                        <p style={{ textAlign: 'center' }}>Follow the instructions &nbsp;
+                                                        <a onClick={functionOnclick} className="contact-us-touch-link" title="Content Submission">here</a>.</p>
                                                         <div id="gtx-trans" style={{ position: 'absolute', left: '361px', top: '39.9375px' }}>
                                                             <div className="gtx-trans-icon"></div>
                                                         </div>
@@ -141,7 +144,11 @@ const Contact = () => {
                                                         <h6 style={{ textAlign: 'center' }}>Advertise With Us</h6> </div>
                                                 </div>
                                                 <div className="modal-popup-box" data-bodybg="rgba(0,0,0,0.39)" style={{ textAlign: 'center' }}>
-                                                    <button className="model-popup-btn popup-176" data-id="popup-176" style={{ color: '#26262d', borderRadius: '2px', fontSize: '14px', padding: '14px 61px}' }}>
+                                                    <button className="model-popup-btn popup-176" data-id="popup-176" onClick={() => {
+                                                                history.push(
+                                                                    { pathname: '/contactsupport' }
+                                                                )
+                                                            }} style={{ color: '#26262d', borderRadius: '2px', fontSize: '14px', padding: '14px 61px}' }}>
                                                         <i style={{ paddingRight: '5px' }} className="fa " aria-hidden="true"> </i> Get in Touch With a Sales Rep </button>
                                                 </div>
                                                 {/* <style>

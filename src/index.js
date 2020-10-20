@@ -32,6 +32,7 @@ import './js/kidstv.js';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-multi-carousel/lib/styles.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './css/style.css';
 import './css/newstyles.css';
 // import './js/landingRevry';

@@ -6,10 +6,9 @@ import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 
-var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
-const Show = ({ param,update }) => {
+const Show = ({ param, update }) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -17,10 +16,10 @@ const Show = ({ param,update }) => {
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     useEffect(() => {
-        if(param !== undefined){
+        if (param !== undefined) {
             setShows(param);
         }
-    }, [param,update]);
+    }, [param, update]);
 
     const responsive = {
         superLargeDesktop: {
@@ -45,7 +44,6 @@ const Show = ({ param,update }) => {
         setFocusedId(index);
     }
     const addtoMylistFunction = (show) => {
-        console.log('show', show);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
@@ -58,7 +56,6 @@ const Show = ({ param,update }) => {
 
     }
     const removeFromMylistFunction = (show) => {
-        console.log('show', show);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
@@ -90,20 +87,9 @@ const Show = ({ param,update }) => {
                                         </svg>
 
                                     </div>
-                                    {/* {
-                                        show.single_video === 1 ?
-
-                                            (<div className="moviePoster" style={{ backgroundImage: `url(${bannerShowUrl + show.thumbnail})` }} >
-                                                <div className="FeNml"></div>
-                                            </div>)
-                                            : <div className="moviePoster" style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }} >
-                                                <div className="FeNml"></div>
-                                            </div>
-                                    } */}
                                     <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
-                                                <div className="FeNml"></div>
-                                            </div>
-                                }
+                                        <div className="FeNml"></div>
+                                    </div>
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                         <div className="wishlistButton">
                                             <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -161,7 +147,7 @@ const Show = ({ param,update }) => {
                                                     }
                                                 </div> */}
                                                 <div className="movieCategory mcMargin">
-                                                <div >{show.category_name}</div>
+                                                    <div >{show.category_name}</div>
                                                 </div>
                                             </div>
                                             <div>

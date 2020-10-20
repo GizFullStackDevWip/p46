@@ -5,6 +5,7 @@ const qs = require('querystring');
 function getShowDetails(categoryId) {
     let uId = 74961;
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -19,7 +20,8 @@ function getShowDetails(categoryId) {
         params: {
             pubid: 50023,
             show_id: categoryId,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
 
@@ -35,6 +37,7 @@ function getShowDetails(categoryId) {
 function checkVideoSubscription(videoId) {
     let uId = 74961;
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -49,7 +52,8 @@ function checkVideoSubscription(videoId) {
         params: {
             pubid: 50023,
             vid: videoId,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
 
@@ -65,6 +69,7 @@ function checkVideoSubscription(videoId) {
 function checkUserSubscription() {
     let uId = 74961;
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -78,7 +83,8 @@ function checkUserSubscription() {
         },
         params: {
             pubid: 50023,
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
 
@@ -94,6 +100,7 @@ function checkUserSubscription() {
 function similarShow(videoId) {
     var token = localStorage.getItem('access-token');
     var userId = localStorage.getItem('userId');
+    let countryCode = getCookie('country_code');
     if(userId){
         uId = userId
     }else{
@@ -113,7 +120,8 @@ function similarShow(videoId) {
         params: {
             pubid: 50023,
             vid: videoId,
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
 
@@ -126,6 +134,7 @@ function similarShow(videoId) {
         });
 }
 function onVideoPlayFunction(values) {
+    let countryCode = getCookie('country_code');
     var timestamp = Date.now().toString();
     var res = timestamp.slice(0, 10);
     // console.log(values);
@@ -187,6 +196,7 @@ function playerToken() {
 function addToMyPlayList(id,flag){
     var token = localStorage.getItem('access-token');
     var userId = localStorage.getItem('userId');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -198,7 +208,8 @@ function addToMyPlayList(id,flag){
             pubid:50023,
             show_id:id,
             uid:userId,
-            watchlistflag:flag
+            watchlistflag:flag,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/WatchlistShows', customConfig).then(

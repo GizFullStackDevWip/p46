@@ -9,9 +9,6 @@ import { convertTime, deviceDetect, playerController, convertSecondsToMin } from
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import videothumbnail from '../../images/videothumbnail.png';
 
-var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
-
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var videoImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 var details = []
@@ -417,6 +414,7 @@ const VideoDetails = (categoryId, episode) => {
                                                         </g>
                                                     </svg>
                                                     {showDetails.rating && <div className="movieCensorBox">{showDetails.rating}</div>}
+                                                    <br />
                                                 </div>
                                             </div>
                                             <div className="vpMovieCategory">
@@ -467,7 +465,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                             onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                             <div onClick={() => {
                                                                                                 history.push(
-                                                                                                    { pathname: '/videoplayer', state: { show_details: showDetails } }
+                                                                                                    { pathname: '/videoplayer', state: { show_details: show } }
                                                                                                 )
                                                                                             }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                                 {hover === true && focusedId === index ?
@@ -477,20 +475,6 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                     </svg>
                                                                                                     : null}
                                                                                             </div>
-                                                                                            {/* {
-                                                                                                show.single_video === 0 ?
-                                                                                                    <div className="moviePoster"
-                                                                                                        style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
-                                                                                                        <div className="FeNml"></div>
-                                                                                                    </div> : (
-                                                                                                        show.single_video === 1 ?
-                                                                                                            <div className="moviePoster"
-                                                                                                                style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
-                                                                                                                <div className="FeNml"></div>
-                                                                                                            </div>
-                                                                                                            :
-                                                                                                            null)
-                                                                                            } */}
                                                                                             <div className="moviePoster"
                                                                                                 style={{ backgroundImage: `url(${videoImageUrl + show.thumbnail})` }}>
                                                                                                 <div className="FeNml"></div>
@@ -521,7 +505,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                             <div className="movieTextFlex">
                                                                                                 <h3><a className="linkButton movieTextHeading" onClick={() => {
                                                                                                     history.push(
-                                                                                                        { pathname: '/videoplayer', state: { show_details: showDetails } }
+                                                                                                        { pathname: '/videoplayer', state: { show_details: show } }
                                                                                                     )
                                                                                                 }}>{show.video_title}</a></h3>
                                                                                                 <div className="movieCatYear">
@@ -590,20 +574,6 @@ const VideoDetails = (categoryId, episode) => {
                                                                                         </svg>
                                                                                         : null}
                                                                                 </div>
-                                                                                {/* {
-                                                                                    show.single_video === 0 ?
-                                                                                        <div className="moviePoster"
-                                                                                            style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
-                                                                                            <div className="FeNml"></div>
-                                                                                        </div> : (
-                                                                                            show.single_video === 1 ?
-                                                                                                <div className="moviePoster"
-                                                                                                    style={{ backgroundImage: `url(${imageUrl + show.logo})` }}>
-                                                                                                    <div className="FeNml"></div>
-                                                                                                </div>
-                                                                                                :
-                                                                                                null)
-                                                                                } */}
 
                                                                                 <div className="moviePoster"
                                                                                     style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>

@@ -3,10 +3,10 @@ import { Link, useHistory } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
 import { service } from '../../network/Partner/service';
 import { useSelector, useDispatch } from 'react-redux';
-import { convertTime ,convertSecondsToMin } from '../../Utils/utils';
+import { convertTime, convertSecondsToMin } from '../../Utils/utils';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const PartnerCategoryContainer = ({ param }) => {
     const [similarShows, setSetimilarShows] = useState(param);
     const history = useHistory();
@@ -91,20 +91,6 @@ const PartnerCategoryContainer = ({ param }) => {
                                             </svg>
                                             : null}
                                     </div>
-                                    {/* {
-                                        show.single_video === 0 ?
-                                            <div className="moviePoster"
-                                                style={{ backgroundImage: `url(${bannerSeriesUrl + show.thumbnail})` }}>
-                                                <div className="FeNml"></div>
-                                            </div> : (
-                                                show.single_video === 1 ?
-                                                    <div className="moviePoster"
-                                                        style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
-                                                        <div className="FeNml"></div>
-                                                    </div>
-                                                    :
-                                                    null)
-                                    } */}
                                     <div className="moviePoster"
                                         style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
                                         <div className="FeNml"></div>
@@ -125,8 +111,13 @@ const PartnerCategoryContainer = ({ param }) => {
                                                 <div className="movieYear">
                                                     <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
                                                 </div>
-                                                <div className="movieCategory mcMargin" >
-                                                </div>
+                                                {
+                                                    show.video_description &&
+                                                    <div className="movieCategory mcMargin" >
+                                                        {show.video_description.slice(0, 90) + '...'}
+                                                    </div>
+                                                }
+
                                             </div>
                                         </div>
                                     </div>

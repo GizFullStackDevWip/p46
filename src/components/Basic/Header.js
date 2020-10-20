@@ -13,7 +13,6 @@ const Header = () => {
     const parsed = queryString.parse(search);
     const location = useLocation();
     const currentPath = location.pathname;
-
     const login = useSelector((state) => state.login);
 
     const [input, setInput] = useState([]);
@@ -85,7 +84,7 @@ const Header = () => {
             setMouseHover(false);
             eraseCookie('userName');
             eraseCookie('userId');
-            document.cookie = 'userId' +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = 'userId' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             eraseCookie('userEmail');
             eraseCookie('subscriptionId');
         }, 1000);
@@ -246,106 +245,95 @@ const Header = () => {
                         )
                 }
 
-                <div className="headerButton">
-                    {
-                        login === true ?
-                            <div className="_1-UPh">
-                                <div className={mouseHover === true ? "y_hxB _2Gq2l _1glLO IgZc0" : "y_hxB _2Gq2l"}>
-                                    {
-                                        currentPathStrings ?
-                                            <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }} style={{ color: 'black' }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
-                                            </div> :
-                                            <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
-                                            </div>
-                                    }
-                                    {
-                                        mouseHover === true ?
-                                            <div onMouseLeave={() => {
-                                                setMouseHover(false),
-                                                    setBackground(false)
-                                            }}>
-                                                <div className="_30s-L _13opw">
-                                                    <a className="ATag activeOnWhite" href="/account">Account Settings</a>
-                                                    <a href="/contactsupport" rel="noopener" target="_blank" className="ATag">Help Center</a>
-                                                    {/* <a className="ATag" href="/activate">Activate Your Device</a> */}
-                                                    <span className="_1xPbF"></span><div className="ATag signout" onClick={functionLogout}>Sign Out</div>
+                <div class="headerButton">
+                    <div class="loginButtonContainer">
+                        {
+                            login === true ?
+                                <div className="_1-UPh">
+                                    <div className={mouseHover === true ? "y_hxB _2Gq2l _1glLO IgZc0" : "y_hxB _2Gq2l"}>
+                                        {
+                                            currentPathStrings ?
+                                                <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }} style={{ color: 'black' }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
+                                                </div> :
+                                                <div className="_3tRfC" onMouseOver={() => { setMouseHover(true), setBackground(true) }}>Hi, <span className="_4wVtj">{capitalize(userName)}</span>
                                                 </div>
-                                            </div>
-                                            : null}
-                                </div>
-                            </div> :
-                            <div className="loginButtonContainer" >
-                                {
+                                        }
+                                        {
+                                            mouseHover === true ?
+                                                <div onMouseLeave={() => {
+                                                    setMouseHover(false),
+                                                        setBackground(false)
+                                                }}>
+                                                    <div className="_30s-L _13opw">
+                                                        <a className="ATag activeOnWhite" href="/account">Account Settings</a>
+                                                        <a href="http://helpcenter.tubitv.com/web" rel="noopener" target="_blank" className="ATag">Help Center</a>
+                                                        <a className="ATag" href="/activate">Activate Your Device</a>
+                                                        <span className="_1xPbF"></span><div className="ATag signout" onClick={functionLogout}>Sign Out</div>
+                                                    </div>
+                                                </div>
+                                                : null}
+                                    </div>
+                                </div> : (
                                     currentPath === '/register' ?
-                                        (
+                                        <ul>
+                                            <li><a onClick={() => {
+                                                setInput('');
+                                                localStorage.setItem('currentUrl', window.location.pathname);
+                                                history.push({
+                                                    pathname: '/signin'
+                                                });
+                                            }} class="headerSignInButton" >Sign In</a></li>
+                                        </ul>
+                                        : (currentPath === '/signin' ?
+
                                             <ul>
                                                 <li>
-                                                    <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
-                                                        onClick={() => {
-                                                            setInput('');
-                                                            localStorage.setItem('currentUrl', window.location.pathname);
-                                                            history.push({
-                                                                pathname: '/signin'
-                                                            });
-                                                        }} >Sign In</div>
+                                                    <a class="" onClick={() => {
+                                                        setInput('');
+                                                        history.push({
+                                                            pathname: '/register'
+                                                        });
+                                                    }}>
+                                                        <button class="button buttonSecondary buttonBlock" tabindex="-1">
+                                                            <div class="buttonBg"></div>
+                                                            <div class="buttonContent">Register</div>
+                                                        </button>
+                                                    </a>
                                                 </li>
+                                                <li id="signInLink" style={{ display: 'block' }}>
+                                                    <a class="headerSignInButton" onClick={() => {
+                                                        setInput('');
+                                                        history.push({
+                                                            pathname: '/signin'
+                                                        });
+                                                    }}>Sign In</a></li>
                                             </ul>
-                                        ) : currentPath === '/signin' ?
-                                            (
-                                                <ul>
-                                                    <li style={{ marginRight: '20px' }}>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
-                                                            onClick={() => {
-                                                                setInput('');
-                                                                history.push({
-                                                                    pathname: '/register'
-                                                                });
-                                                            }} >Register</div>
-                                                    </li>
-                                                    <li id="signInLink" style={{ display: 'block' }}>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
-                                                            onClick={() => {
-                                                                setInput('');
-                                                                window.signInTrigger();
-                                                                history.push({
-                                                                    pathname: '/signin'
-                                                                });
-
-                                                            }} >Sign In</div>
-                                                    </li>
-                                                </ul>
-                                            ) :
-                                            (
-                                                <ul>
-                                                    <li style={{ marginRight: '20px' }}   >
-                                                        <div onClick={() => {
-                                                            setInput('');
-                                                            history.push({
-                                                                pathname: '/register'
-                                                            });
-                                                        }}>
-                                                            <button className="button buttonSecondary" tabIndex="-1">
-                                                                <div className="buttonBg"></div>
-                                                                <div className="buttonContent">Register</div>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div className="headerSignInButton" style={{ cursor: 'pointer', fontWeight: '700' }}
-                                                            onClick={() => {
-                                                                setInput('');
-                                                                localStorage.setItem('currentUrl', window.location.pathname);
-
-                                                                history.push({
-                                                                    pathname: '/signin'
-                                                                });
-                                                            }} >Sign In</div>
-                                                    </li>
-                                                </ul>
-                                            )
-                                }
-                            </div>
-                    }
+                                            :
+                                            <ul>
+                                                <li>
+                                                    <a class="" onClick={() => {
+                                                        setInput('');
+                                                        history.push({
+                                                            pathname: '/register'
+                                                        });
+                                                    }}>
+                                                        <button class="button buttonSecondary buttonBlock" tabindex="-1">
+                                                            <div class="buttonBg"></div>
+                                                            <div class="buttonContent">Register</div>
+                                                        </button>
+                                                    </a>
+                                                </li>
+                                                <li><a class="headerSignInButton" onClick={() => {
+                                                    setInput('');
+                                                    history.push({
+                                                        pathname: '/signin'
+                                                    });
+                                                }}>Sign In</a></li>
+                                            </ul>
+                                        )
+                                )
+                        }
+                    </div>
                 </div>
             </div>
         </header>

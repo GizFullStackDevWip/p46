@@ -36,7 +36,7 @@ const PartnerShows = () => {
                                 <div className="container vpContainer">
                                     <div className="row vp3Section">
                                         <div className="col col-5-5">
-                                        <div className="vpLeftSection partnerDetailLeftSection">
+                                        <div className="vpLeftSection partnerDetailLeftSection" >
                                                 <div className="vpPoster partnerDetailProfilePic"
                                                     style={{ backgroundImage: `url(${imageUrl + partnerDetails.partner_image})` }}
                                                 ></div>
@@ -44,7 +44,7 @@ const PartnerShows = () => {
                                             <div className="vpMiddleHeading">
                                                 <h1 className="vpMiddleh1" style={{ paddingBottom: '12px' }}>{partnerDetails.partner_name}</h1>
                                             </div>
-                                            <div className="vpMiddleDesc partnerMiddleDesc">{partnerDetails.partner_description}</div>
+                                            <div className="vpMiddleDesc partnerMiddleDesc" >{partnerDetails.partner_description}</div>
                                             {
                                                 partnerCategory.map((item, index) => {
                                                     return (

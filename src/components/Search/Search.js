@@ -5,8 +5,6 @@ import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
 const queryString = require('query-string');
-var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
@@ -63,6 +61,14 @@ const Search = ({ history }) => {
         }
     }
 
+    const functionOnClick = (show) => {
+        if(show.video_id){
+            history.push({ pathname: '/videoplayer', state: { show_details: show } })
+        }else{
+            history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) })
+        }
+    }
+
     return (
         <div className="pageWrapper searchPageMain">
             <div className="topContainer">
@@ -93,31 +99,15 @@ const Search = ({ history }) => {
                                                     <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                                         onMouseOver={() => { hoverFunction(true, index) }}
                                                         onMouseLeave={() => { hoverFunction(false, index) }}>
-                                                        <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
+                                                        <div onClick={() => { functionOnClick(show) }}
                                                             className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
 
                                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
-                                                                onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>
+                                                                onClick={() => { functionOnClick(show) }} >
                                                                 <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
-
                                                         </div>
-                                                        {/* {
-                                                            show.single_video == 0 ?
-
-                                                                <div className="moviePoster"
-                                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
-                                                                    <div className="FeNml"></div>
-                                                                </div>
-                                                                : (
-                                                                    show.single_video == 1 ?
-                                                                        <div className="moviePoster"
-                                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
-                                                                            <div className="FeNml"></div>
-                                                                        </div> : null
-                                                                )
-                                                        } */}
                                                         <div className="moviePoster"
                                                             style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
                                                             <div className="FeNml"></div>
@@ -148,7 +138,7 @@ const Search = ({ history }) => {
                                                         <div className="movieTextFlex">
                                                             <h3>
                                                                 <div className="linkButton movieTextHeading"
-                                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}</div>
+                                                                    onClick={() => { functionOnClick(show) }} >{show.show_name}</div>
                                                             </h3>
                                                             <div className="movieCatYear">
                                                                 <div style={{ width: '130px' }}>

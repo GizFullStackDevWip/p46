@@ -3,6 +3,7 @@ const qs = require('querystring');
 
 function getshowsbyCategory(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -17,7 +18,8 @@ function getshowsbyCategory(){
         },
         params: {
             pubid: 50023,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
@@ -30,6 +32,7 @@ function getshowsbyCategory(){
 }
 function getLiveChannels(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,7 +41,8 @@ function getLiveChannels(){
             'access-token': token,
         },
         params: {
-            pubid: 50023
+            pubid: 50023,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/Getallchannels', customConfig).then(

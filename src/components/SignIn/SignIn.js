@@ -382,11 +382,6 @@ const SignIn = () => {
                                 }, 1000);
                                 dispatch({ type: "LOGIN", payload: true });
                                 history.goBack();
-
-                                // history.push({
-                                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                                // });
-
                             } else {
                                 setMsgSucessLogin('You are successfully logged in.');
                                 setIsSuccessLoginMsg(true);
@@ -395,10 +390,6 @@ const SignIn = () => {
                                 }, 5000);
                                 dispatch({ type: "LOGIN", payload: true });
                                 history.goBack();
-                                // history.push({
-                                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                                // });
-
                             }
 
                         // } else {

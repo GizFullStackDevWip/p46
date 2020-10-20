@@ -334,7 +334,7 @@ const Register = () => {
                                                         </button>
                                                     </div>
                                                     <div className="regnAgreeContent">
-                                                        <span>By registering, you agree to  Happi's <div className="linkButton" >Term of Use</div> and
+                                                        <span>By registering, you agree to  Happi's <div className="linkButton" >Terms of Use</div> and
                                                 <div className="linkButton" >Privacy Policy</div>
                                                         </span>
                                                         <span>Already have an account? <Link className="linkButton" to="/signin">Sign In</Link></span>
@@ -367,7 +367,7 @@ const Register = () => {
                                                         </div>
                                                     </form>
                                                     <div className="regnAgreeContent">
-                                                        <span>By registering, you agree to  Happi's <div className="linkButton" >Term of Use</div> and
+                                                        <span>By registering, you agree to  Happi's <div className="linkButton" >Terms of Use</div> and
                                                             <div className="linkButton" >Privacy Policy</div>
                                                         </span>
                                                         <span>Already have an account? <Link className="linkButton" to="/signin">Sign In</Link> </span>

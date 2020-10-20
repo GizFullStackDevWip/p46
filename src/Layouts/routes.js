@@ -26,6 +26,7 @@ import AdvertiseWithUs from '../components/FooterComponents/AdvertiseWithUs/Adve
 import Contact from '../components/FooterComponents/Contact/Contact';
 import ContactSupport from '../components/FooterComponents/ContactSupport/ContactSupport';
 import SupportedDevices from '../components/FooterComponents/SupportedDevices/SupportedDevices';
+import PartnerList from '../components/PartnerList/PartnerList';
 const routes = () => (
     <Router>
         <Header />
@@ -55,6 +56,7 @@ const routes = () => (
                 <Route path="/contactus" exact component={Contact} />
                 <Route path="/contactsupport" exact component={ContactSupport} />
                 <Route path="/supportdevice" exact component={SupportedDevices} />
+                <Route path="/partnerList" exact component={PartnerList} />
             </Switch>
         </div>
         <Footer />

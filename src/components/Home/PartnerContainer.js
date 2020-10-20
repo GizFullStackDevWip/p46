@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
 import Carousel from 'react-multi-carousel';
-import { convertTimeToLocal } from '../../Utils/utils';
-import partnerThumb from '../../images/Layer-7.png';
 import { Link } from 'react-router-dom';
 
-
-
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-
 const LiveContainer = () => {
     const [partner, setPartner] = useState([]);
-
     useEffect(() => {
         service.getPartners().then(response => {
             setPartner(response.data);
@@ -43,8 +37,10 @@ const LiveContainer = () => {
                     <section className="categoryWrapper">
                         <div className="categoryLinkWrapper">
                             <div className="categoryHeading">
-                                <div className="_2hvCx"><h2 className="_1mK3G">Partners</h2>
-                                </div>
+                                <Link to="/partnerList">
+                                    <div className="_2hvCx"><h2 className="_1mK3G">Partners</h2>
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </section>

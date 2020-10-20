@@ -5,6 +5,7 @@ const qs = require('querystring');
 function getShowDetails(categoryId) {
     let uId = 74961;
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -19,7 +20,8 @@ function getShowDetails(categoryId) {
         params: {
             pubid: 50023,
             show_id: categoryId,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
 

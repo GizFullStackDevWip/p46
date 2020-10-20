@@ -3,6 +3,7 @@ const axios = require('axios');
 const qs = require('querystring');
 function authenticate() {
     let uId = 74961;
+    let countryCode = getCookie('country_code');
     let user_id = getCookie('userId');
     if (user_id) {
         uId = user_id;
@@ -14,7 +15,8 @@ function authenticate() {
             crossorigin: true,
         },
         params: {
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
 
@@ -29,6 +31,7 @@ function authenticate() {
 }
 
 function keyAuthenticate(key) {
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -38,7 +41,8 @@ function keyAuthenticate(key) {
         },
         params: {
             pubid: 50023,
-            key: key
+            key: key,
+            country_code:countryCode
         }
     };
 
@@ -62,6 +66,7 @@ function keyAuthenticate(key) {
 }
 
 function register(values, facebookId) {
+    let countryCode = getCookie('country_code');
     let device_id = localStorage.getItem('deviceId');
     var token = localStorage.getItem('access-token');
     const customConfig = {
@@ -80,7 +85,8 @@ function register(values, facebookId) {
         'password': values.password,
         'pubid': 50023,
         'device_type': 'web',
-        'facebook_id': facebookId
+        'facebook_id': facebookId,
+        'country_code':countryCode
     }
 
     return axios.post("https://poppo.tv/platform/bk/registerWithEmail", qs.stringify(data), customConfig)
@@ -94,6 +100,7 @@ function register(values, facebookId) {
 }
 
 function getshowsbyCategory() {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
     var uId = 74961
     let user_id = getCookie('userId');
@@ -109,7 +116,8 @@ function getshowsbyCategory() {
         },
         params: {
             pubid: 50023,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
@@ -122,6 +130,7 @@ function getshowsbyCategory() {
 }
 
 function getShows(key) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
     var userId = localStorage.getItem('userId');
     if (userId) {
@@ -143,7 +152,8 @@ function getShows(key) {
         params: {
             pubid: 50023,
             key: key,
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/searchShows', customConfig).then(
@@ -156,6 +166,7 @@ function getShows(key) {
 }
 
 function verifyEmail(values, userRegisterId) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -168,7 +179,8 @@ function verifyEmail(values, userRegisterId) {
         params: {
             pubid: 50023,
             user_id: userRegisterId,
-            otp: values.verification_code
+            otp: values.verification_code,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/verifyOtpFromEmail', customConfig).then(
@@ -181,6 +193,7 @@ function verifyEmail(values, userRegisterId) {
 }
 
 function login(values) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
     let device_id = localStorage.getItem('deviceId');
     let ipaddress = localStorage.getItem('ipaddress');
@@ -196,7 +209,8 @@ function login(values) {
             'user_email': values.email,
             'password': values.password,
             'device_id': device_id,
-            'ipaddress': ipaddress
+            'ipaddress': ipaddress,
+            'country_code':countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Loginnew', customConfig).then(
@@ -208,6 +222,7 @@ function login(values) {
         });
 }
 function userSubscription(userLoggedId) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
     let device_id = localStorage.getItem('deviceId');
     const customConfig = {
@@ -222,6 +237,7 @@ function userSubscription(userLoggedId) {
             'uid': userLoggedId,
             'country_code': 'cx',
             'device_id': device_id,
+            'country_code':countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/getUserSubscriptions', customConfig).then(
@@ -233,6 +249,7 @@ function userSubscription(userLoggedId) {
         });
 }
 function forgotEmail(values) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -245,6 +262,7 @@ function forgotEmail(values) {
         params: {
             pubid: 50023,
             'user_email': values.forgot_email,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Forgotpassword', customConfig).then(
@@ -256,6 +274,7 @@ function forgotEmail(values) {
         });
 }
 function logoutAll(user_id) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -268,6 +287,7 @@ function logoutAll(user_id) {
         params: {
             pubid: 50023,
             'user_id': user_id,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Logoutall', customConfig).then(
@@ -279,6 +299,7 @@ function logoutAll(user_id) {
         });
 }
 function publisherSubscription() {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -290,6 +311,7 @@ function publisherSubscription() {
         },
         params: {
             pubid: 50023,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetpublisherSubscriptions', customConfig).then(
@@ -303,6 +325,7 @@ function publisherSubscription() {
 }
 
 function videoSubscription(selectedVideoId) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -314,7 +337,8 @@ function videoSubscription(selectedVideoId) {
         },
         params: {
             pubid: 50023,
-            video_id: selectedVideoId
+            video_id: selectedVideoId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetvideoSubscriptions', customConfig).then(
@@ -327,6 +351,7 @@ function videoSubscription(selectedVideoId) {
 }
 
 function androidTokeDecode(antkn) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -338,7 +363,8 @@ function androidTokeDecode(antkn) {
         },
         params: {
             pubid: 50023,
-            key: antkn
+            key: antkn,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetUserSubscriptionDetails', customConfig).then(
@@ -350,6 +376,7 @@ function androidTokeDecode(antkn) {
         });
 }
 function stripeSession(sub_id) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -361,7 +388,8 @@ function stripeSession(sub_id) {
         },
         params: {
             pubid: 50023,
-            sub_id: sub_id
+            sub_id: sub_id,
+            country_code:countryCode
         }
     };
     return axios.get('http://poppo.tv/createStripeSession', customConfig).then(
@@ -373,6 +401,7 @@ function stripeSession(sub_id) {
         });
 }
 function stripeDecode(sessionId) {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -384,7 +413,8 @@ function stripeDecode(sessionId) {
         },
         params: {
             pubid: 50023,
-            sessionId: sessionId
+            sessionId: sessionId,
+            country_code:countryCode
         }
     };
     return axios.get('http://poppo.tv/fetchStripeDetails', customConfig).then(
@@ -396,6 +426,7 @@ function stripeDecode(sessionId) {
         });
 }
 function paymentUpdate(subscription, mode_of_payment, status) {
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -425,7 +456,8 @@ function paymentUpdate(subscription, mode_of_payment, status) {
         'country_code': 'cx',
         'receiptid': subscription,
         'pubid': 50023,
-        'device_type': deviceType
+        'device_type': deviceType,
+        'country_code':countryCode
     }
     return axios.post("https://poppo.tv/platform/bk/api/updateTransaction", qs.stringify(data), customConfig)
         .then((response) => {
@@ -437,6 +469,7 @@ function paymentUpdate(subscription, mode_of_payment, status) {
 
 }
 function unsubscribe(receiptid, sub_id) {
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -456,6 +489,7 @@ function unsubscribe(receiptid, sub_id) {
         'userid': uId,
         'receiptid': receiptid,
         'pubid': 50023,
+        'country_code':countryCode
     }
     return axios.post("https://poppo.tv/platform/bk/api/unsubscribe", qs.stringify(data), customConfig)
         .then((response) => {
@@ -467,6 +501,7 @@ function unsubscribe(receiptid, sub_id) {
 
 }
 function paypalSubscription() {
+    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
     var uId = 74961
     let user_id = getCookie('userId');
@@ -483,6 +518,7 @@ function paypalSubscription() {
         params: {
             pubid: 50023,
             'user_id': uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/checkPaypalSubscribed', customConfig).then(
@@ -494,6 +530,7 @@ function paypalSubscription() {
         });
 }
 function facebokLogin(facebook_id, facebook_email) {
+    let countryCode = getCookie('country_code');
     let device_id = localStorage.getItem('deviceId');
     var token = localStorage.getItem('access-token');
     let ipaddress = localStorage.getItem('ipaddress');
@@ -511,7 +548,8 @@ function facebokLogin(facebook_id, facebook_email) {
         'ipaddress': ipaddress,
         'pubid': 50023,
         'loginType': 'facebook',
-        'fb_email': facebook_email
+        'fb_email': facebook_email,
+        'country_code':countryCode
 
     }
 
@@ -525,6 +563,7 @@ function facebokLogin(facebook_id, facebook_email) {
 
 }
 function facebokLink(facebook_id, facebook_email) {
+    let countryCode = getCookie('country_code');
     let device_id = localStorage.getItem('deviceId');
     var token = localStorage.getItem('access-token');
     let ipaddress = localStorage.getItem('ipaddress');
@@ -542,7 +581,8 @@ function facebokLink(facebook_id, facebook_email) {
         'ipaddress': ipaddress,
         'pubid': 50023,
         'loginType': 'facebook',
-        'fb_email': facebook_email
+        'fb_email': facebook_email,
+        'country_code':countryCode
     }
 
     return axios.post("https://poppo.tv/platform/bk/linkSocialAccount", qs.stringify(data), customConfig)
@@ -554,10 +594,11 @@ function facebokLink(facebook_id, facebook_email) {
         });
 
 }
-function getLocation(){
+function getLocation() {
     return axios.get('https://geolocation-db.com/json/');
 }
 function analytics() {
+    let countryCode = getCookie('country_code');
     setCookie('device_analytics', 'true');
     let uId = 74961;
     let user_id = getCookie('userId');
@@ -584,7 +625,7 @@ function analytics() {
         }
     };
     let currentLocation = JSON.parse(localStorage.getItem('currentLocation'));
-    console.log(currentLocation,'currentLocation');
+    console.log(currentLocation, 'currentLocation');
     const data = {
         "device_id": device_id,
         "publisherid": 50023,
@@ -605,7 +646,8 @@ function analytics() {
         "browser": browserType,
         "user_name": firstName,
         "user_email": '',
-        "user_contact_number": ''
+        "user_contact_number": '',
+        'country_code':countryCode
     }
     return axios.post("https://analytics.poppo.tv/device", qs.stringify(data), customConfig)
         .then((response) => {
@@ -616,6 +658,13 @@ function analytics() {
         });
 
 }
+function getGeoInfo(){
+    return axios.get('https://ipapi.co/json/').then((response) => {
+        return response.data;
+    }).catch((error) => {
+        console.log(error);
+    });
+};
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -660,6 +709,7 @@ export const service = {
     facebokLink,
     analytics,
     getLocation,
+    getGeoInfo,
     getCookie,
     setCookie,
 };

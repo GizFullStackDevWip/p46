@@ -57,6 +57,10 @@ const App = () => {
     if (analyticsVal !== 'true') {
       fetchData();
     }
+    service.getGeoInfo().then(response => {
+      console.log('response api--->', response);
+      service.setCookie("country_code", response.country, 30);
+    })
 
   }, []);
   return (

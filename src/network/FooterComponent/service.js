@@ -4,6 +4,7 @@ const qs = require('querystring');
 
 function contact(values) {
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -23,6 +24,7 @@ function contact(values) {
         'platform': values.platform,
         'topic': values.topic,
         'message': values.message,
+        'country_code':countryCode
     }
 
     return axios.post('https://staging.poppo.tv/sendSupport', qs.stringify(data), customConfig).then(

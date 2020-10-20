@@ -46,7 +46,7 @@ const Register = (state) => {
         age: ''
     });
     const [errors, setErrors] = useState({
-        firstname: 'First Name',
+        firstname: 'Name',
         email: 'Email',
         password: 'Password',
         password2: 'Confirm Password',
@@ -585,6 +585,8 @@ const Register = (state) => {
                                                     </div> */}
 
                                                     <div className="regnSubmitWrapper" >
+                                                    <p style={{paddingTop: '10px', fontSize: '14px'}}>Already have an account?
+                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
                                                         <button className="button buttonLarge regnSubmit" type="submit">
                                                             <div className="buttonBg"></div>
                                                             <div className="buttonContent">Register</div>
@@ -593,14 +595,13 @@ const Register = (state) => {
                                                     <div className="regnAgreeContent">
                                                         <p>By registering, you agree to HappiTV
                                                              <Link to="/termsofuse">
-                                                                <div className="linkButton">&nbsp;Term of Use</div>
+                                                                <div className="linkButton">&nbsp;Terms of Use</div>
                                                             </Link>&nbsp; and
                                                             <Link to="/policydarkmode">
                                                                 <div className="linkButton" href="#">&nbsp;Privacy Policy</div>
                                                             </Link>
                                                         </p>
-                                                        <p>Already have an account?
-                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
+                                                        
                                                     </div>
                                                 </form>
                                             </div>
@@ -632,7 +633,7 @@ const Register = (state) => {
                                                     <div className="regnAgreeContent">
                                                         <p>By registering, you agree to HappiTV
                                                             <Link to="/termsofuse">
-                                                                <div className="linkButton"> &nbsp;Term of Use</div>
+                                                                <div className="linkButton"> &nbsp;Terms of Use</div>
                                                             </Link>&nbsp; and
                                                             <Link to="/policydarkmode">
                                                                 <div className="linkButton" href="#"> &nbsp;Privacy Policy</div>

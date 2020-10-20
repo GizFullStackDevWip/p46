@@ -4,6 +4,7 @@ function fetchHomeBannerDetails() {
     var token = localStorage.getItem('access-token');
     let uId = 74961;
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -16,7 +17,8 @@ function fetchHomeBannerDetails() {
         },
         params: {
             uid: uId,
-            pubid: 50023
+            pubid: 50023,
+            country_code:countryCode
         }
 
     };
@@ -32,6 +34,7 @@ function getshowsbyCategory(){
     var token = localStorage.getItem('access-token');
     var uId = 74961
     let user_id = getCookie('userId');
+    let countryCode = getCookie('country_code');
     if (user_id) {
         uId = user_id;
     }
@@ -44,7 +47,8 @@ function getshowsbyCategory(){
         },
         params: {
             pubid: 50023,
-            user_id: uId
+            user_id: uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
@@ -58,6 +62,7 @@ function getshowsbyCategory(){
 
 function getshowsbyPartner(partner_id){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -73,7 +78,8 @@ function getshowsbyPartner(partner_id){
         params: {
             pubid: 50023,
             user_id: uId,
-            partner_id: partner_id
+            partner_id: partner_id,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/partnerVideos', customConfig).then(
@@ -87,6 +93,7 @@ function getshowsbyPartner(partner_id){
 
 function getRecentlyAddedShows(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -101,7 +108,8 @@ function getRecentlyAddedShows(){
         },
         params: {
             pubid: 50023,
-            uid: uId
+            uid: uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/NewArrivalsUpdated2', customConfig).then(
@@ -115,6 +123,7 @@ function getRecentlyAddedShows(){
 
 function getLiveChannels(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -123,7 +132,8 @@ function getLiveChannels(){
             'access-token': token,
         },
         params: {
-            pubid: 50023
+            pubid: 50023,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/Getallchannels', customConfig).then(
@@ -137,6 +147,7 @@ function getLiveChannels(){
 
 function getPartners(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -145,7 +156,8 @@ function getPartners(){
             'access-token': token,
         },
         params: {
-            pubid: 50023
+            pubid: 50023,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/partnerList', customConfig).then(
@@ -159,6 +171,7 @@ function getPartners(){
 
 function getChannelDetails(id){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -167,7 +180,8 @@ function getChannelDetails(id){
             'access-token': token,
         },
         params: {
-            channelid: id
+            channelid: id,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/liveSchedule', customConfig).then(
@@ -180,6 +194,7 @@ function getChannelDetails(id){
 }
 function getLiveSchedule(id){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     const customConfig = {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -188,7 +203,8 @@ function getLiveSchedule(id){
             'access-token': token,
         },
         params: {
-            channelid: id
+            channelid: id,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/liveSchedule', customConfig).then(
@@ -202,6 +218,7 @@ function getLiveSchedule(id){
 
 function addToMyPlayList(id,flag){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -218,7 +235,8 @@ function addToMyPlayList(id,flag){
             pubid:50023,
             show_id:id,
             uid:uId,
-            watchlistflag:flag
+            watchlistflag:flag,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/WatchlistShows', customConfig).then(
@@ -232,6 +250,7 @@ function addToMyPlayList(id,flag){
 
 function playList(){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
     let user_id = getCookie('userId');
     if (user_id) {
@@ -246,7 +265,8 @@ function playList(){
         },
         params: {
             pubid:50023,
-            uid:uId
+            uid:uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetWatchlistUpdated', customConfig).then(
@@ -259,6 +279,7 @@ function playList(){
 }
 function getShows(key) {
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var userId = localStorage.getItem('userId');
     if(userId){
         uId = userId
@@ -279,7 +300,8 @@ function getShows(key) {
         params: {
             pubid: 50023,
             key: key,
-            uid:uId
+            uid:uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/searchShows', customConfig).then(
@@ -292,6 +314,7 @@ function getShows(key) {
 }
 function showsByCategory(id){
     var token = localStorage.getItem('access-token');
+    let countryCode = getCookie('country_code');
     var uId = 74961
         let user_id = getCookie('userId');
         if (user_id) {
@@ -307,7 +330,8 @@ function showsByCategory(id){
         params: {
             pubid:50023,
             genre_id:id,
-            uid:uId
+            uid:uId,
+            country_code:countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/api/GetshowsByCategoryUpdated2', customConfig).then(

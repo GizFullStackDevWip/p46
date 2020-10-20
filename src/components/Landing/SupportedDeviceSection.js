@@ -6,11 +6,15 @@ const SupportedDeviceSection = () => {
         <div className="container lpMainContainer">
             <div className="row lpFlexWrapper">
                 <div className="col col-12 col-md-8">
-                    <h2 className="H1">Stream Anywhere</h2></div>
+                    <h2 className="H1" style={{ paddingBottom: '0px' }}>Stream Anywhere</h2>
+                </div>
             </div>
-            <div className="row lpFlexWrapper">
+            
+
+            <div className="row lpFlexWrapper" style={{ paddingTop: '35px' }}>
                 <div className="col col-12 col-md-6">
                     <div className="lpSectionFont lpSectionBlack lpSectionTextCenter"> HappiTV is available on Android, iOS, Roku, Android&nbsp;TV, Amazon Fire TV and the Web.</div>
+                    <div class="lpSectionFont lpSectionBlack lpSectionTextCenter"><span class="badge badge-secondary" style={{fontSize: '12pt'}}>COMING SOON!!</span></div>
                 </div>
             </div>
             <div className="row lpFlexWrapper">

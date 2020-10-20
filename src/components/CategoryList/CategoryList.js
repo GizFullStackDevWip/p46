@@ -5,8 +5,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
-var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
@@ -40,7 +38,7 @@ const CategoryList = () => {
                     }
                 })
             }
-        } else {
+        }else {
             service.showsByCategory(parsed.category_id).then(response => {
                 console.log(response.data);
                 setShowName(parsed.category_name);
@@ -111,23 +109,6 @@ const CategoryList = () => {
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
                                                         </div>
-
-                                                        {/* {
-                                                            show.single_video == 0 ?
-
-                                                                <div className="moviePoster"
-                                                                    style={{ backgroundImage: `url(${bannerSeriesUrl + show.logo})` }}>
-                                                                    <div className="FeNml"></div>
-                                                                </div>
-                                                                : (
-                                                                    show.single_video == 1 ?
-                                                                        <div className="moviePoster"
-                                                                            style={{ backgroundImage: `url(${bannerShowUrl + show.logo})` }}>
-                                                                            <div className="FeNml"></div>
-                                                                        </div>
-                                                                        : null
-                                                                )
-                                                        } */}
                                                         <div className="moviePoster"
                                                             style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
                                                             <div className="FeNml"></div>
