@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link } from 'react-router-dom';
-var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
-var bannerSeriesUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+
 const Subscription = ({ param }) => {
+
     const [androidData, setAndroidData] = useState('');
     const [isAndroid, setIsAndroid] = useState(false);
-    const [antkn, setAntkn] = useState('')
+    const [antkn, setAntkn] = useState('');
+
     useEffect(() => {
         window.scrollTo(0, 0);
         const urlParams = new URLSearchParams(window.location.search);
@@ -23,26 +23,7 @@ const Subscription = ({ param }) => {
             })
         }
     }, []);
-    const responsive = {
-        superLargeDesktop: {
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5
-        },
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 5
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1
-        }
-    };
-
-
+    
     const subscriptionForMob = () => {
         let subscription = {}
         let isMobile = navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i);
@@ -88,10 +69,7 @@ const Subscription = ({ param }) => {
                                         }}
                                     ><button type="button" className="subscribe-btn" style={{ cursor: 'pointer' }}>Subscribe</button>
                                     </Link>
-
                                 </div>
-
-
                                 <div className="wishlistPosition wishlistTranslate wishlistParentClose">
                                     <div className="wishlistButton">
                                         <div className="wlgradientPosition wlgradientTranslate wlgradientClose"

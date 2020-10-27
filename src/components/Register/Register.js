@@ -3,7 +3,6 @@ import FacebookLogin from 'react-facebook-login';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { confirmAlert } from 'react-confirm-alert';
-import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { service } from '../../network/service';
@@ -36,8 +35,6 @@ const Register = (state) => {
     const [isErrorVerifyMsg, setIsErrorVerifyMsg] = useState(false);
     const [msgErrorVerify, setMsgErrorVerify] = useState("");
     const [isEmailExistMsg, setIsEmailExistMsg] = useState(false);
-    const [age, setAge] = useState('');
-    const [isAgeList, setIsAgeList] = useState(false);
     const [values, setValues] = useState({
         firstname: '',
         email: '',
@@ -59,18 +56,12 @@ const Register = (state) => {
         verification_code: 'Verification Code'
     });
     const [passwordShown1, setPasswordShown1] = useState(false);
-    const [passwordShown2, setPasswordShown2] = useState(false);
     const [eye1, setEye1] = useState(<FontAwesomeIcon icon={faEye} />);
-    const [eye2, setEye2] = useState(<FontAwesomeIcon icon={faEye} />);
     const [isEye1, setIsEye1] = useState(false);
     const [isEye2, setIsEye2] = useState(false);
     const togglePasswordVisiblity1 = () => {
         setPasswordShown1(passwordShown1 ? false : true);
         setEye1(passwordShown1 ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />);
-    };
-    const togglePasswordVisiblity2 = () => {
-        setPasswordShown2(passwordShown2 ? false : true);
-        setEye2(passwordShown2 ? <FontAwesomeIcon icon={faEye} /> : <FontAwesomeIcon icon={faEyeSlash} />);
     };
     let FBData = null;
     useEffect(() => {
@@ -107,12 +98,11 @@ const Register = (state) => {
         return (false);
     }
     const validateName = firstname => {
-        if (/^[A-Za-z]+$/.test(firstname.trim())) {
+        if (/^[a-zA-Z ]*$/.test(firstname.trim())) {
             return (true);
         }
         return (false);
     }
-
     const onChangeHandler = (e) => {
         const { name, value } = e.target;
 
@@ -166,15 +156,6 @@ const Register = (state) => {
     const validation = () => {
         let errors = {}
         let formIsValid = true;
-        // if (values.age) {
-        //     errors.age = 'Age Group'
-        //     setAge('');
-        // } else {
-        //     formIsValid = false
-        //     errors.age = "Select age group"
-        //     setAge(' Input--errored');
-        // }
-
         if (values.firstname.trim()) {
             var errorMsg = validateName(values.firstname);
             if (errorMsg === true) {
@@ -205,22 +186,13 @@ const Register = (state) => {
             errors.email = "Required Email Field"
             setEmail(' Input--errored');
         }
-
-
         if (values.password.trim()) {
             if (values.password.length >= 6 && values.password.length <= 30) {
-                console.log(values.password.length);
                 if (values.password.trim()) {
-                    // if (values.password.trim() == values.password2.trim()) {
-                        errors.password = "Password"
-                        setPassword('');
-                        errors.password2 = "Confirm Password"
-                        setPassword2('');
-                    // } else {
-                    //     formIsValid = false
-                    //     setPassword(' Input--errored');
-                    //     errors.password = "Password do not match"
-                    // }
+                    errors.password = "Password"
+                    setPassword('');
+                    errors.password2 = "Confirm Password"
+                    setPassword2('');
                 } else {
                     errors.password = "Password"
                     setPassword('');
@@ -235,36 +207,6 @@ const Register = (state) => {
             setPassword(' Input--errored');
             errors.password = "Required Password Field"
         }
-
-
-        // if (values.password2.trim()) {
-        //     if (values.password.trim()) {
-        //         if (values.password.trim() == values.password2.trim()) {
-        //             if (values.password2.length >= 6 && values.password2.length <= 30) {
-        //                 errors.password = "Password"
-        //                 setPassword('');
-        //                 errors.password2 = "Confirm Password"
-        //                 setPassword2('');
-        //             } else {
-        //                 formIsValid = false
-        //                 setPassword2(' Input--errored');
-        //                 errors.password2 = "Length must be between 6 and 30"
-        //             }
-        //         } else {
-        //             formIsValid = false
-        //             setPassword2(' Input--errored');
-        //             errors.password2 = "Password do not match"
-        //         }
-        //     } else {
-        //         errors.password2 = "Confirm Password"
-        //         setPassword2('');
-        //     }
-        // } else {
-        //     formIsValid = false
-        //     setPassword2(' Input--errored');
-        //     errors.password2 = "Required Confirm Password Field"
-        // }
-
         setErrors(errors);
         return formIsValid;
     }
@@ -302,9 +244,7 @@ const Register = (state) => {
     const onVerifyHandler = (e) => {
         e.preventDefault();
         if (validationVerify()) {
-            console.log(userRegisterId);
             service.verifyEmail(valuesVerify, userRegisterId).then(response => {
-                console.log(response, 'res');
                 if (response.status == 1) {
                     localStorage.setItem('isLoggedIn', true);
                     localStorage.setItem('userName', response.data[0].first_name);
@@ -339,33 +279,29 @@ const Register = (state) => {
                 service.setCookie("userId", response.data[0].user_id, 30);
                 service.userSubscription(response.data[0].user_id).then(response => {
                     // if (response.forcibleLogout == false) {
+                    service.setCookie("isLoggedIn", "true", 30);
+                    var user_sub = response.data;
+                    if (user_sub.length > 0) {
                         service.setCookie("isLoggedIn", "true", 30);
-                        var user_sub = response.data;
-                        if (user_sub.length > 0) {
-                            service.setCookie("isLoggedIn", "true", 30);
-                            setMsgSucess('You are successfully registered');
-                            setIsSuccessMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessMsg(false);
-                            }, 5000);
-                            history.push('/home');
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
+                        setMsgSucess('You are successfully registered');
+                        setIsSuccessMsg(true);
+                        setTimeout(function () {
+                            setIsSuccessMsg(false);
+                        }, 5000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.push('/home');
 
-                        } else {
-                            service.setCookie("isLoggedIn", "true", 30);
-                            setMsgSucess('You are successfully registered');
-                            setIsSuccessMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessMsg(false);
-                            }, 5000);
-                            history.push('/home');
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
+                    } else {
+                        service.setCookie("isLoggedIn", "true", 30);
+                        setMsgSucess('You are successfully registered');
+                        setIsSuccessMsg(true);
+                        setTimeout(function () {
+                            setIsSuccessMsg(false);
+                        }, 5000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.push('/home');
 
-                        }
+                    }
 
                     //     return false;
                     // }
@@ -417,7 +353,6 @@ const Register = (state) => {
             };
         })
     }
-
     const onFBLink = () => {
         service.facebokLink(FBData.id, FBData.email).then(response => {
             localStorage.setItem('isLoggedIn', true);
@@ -425,33 +360,29 @@ const Register = (state) => {
             service.setCookie("userId", response.data[0].user_id, 30);
             service.userSubscription(response.data[0].user_id).then(response => {
                 // if (response.forcibleLogout == false) {
+                service.setCookie("isLoggedIn", "true", 30);
+                var user_sub = response.data;
+                if (user_sub.length > 0) {
                     service.setCookie("isLoggedIn", "true", 30);
-                    var user_sub = response.data;
-                    if (user_sub.length > 0) {
-                        service.setCookie("isLoggedIn", "true", 30);
-                        setMsgSucess('You are successfully registered');
-                        setIsSuccessMsg(true);
-                        setTimeout(function () {
-                            setIsSuccessMsg(false);
-                        }, 5000);
-                        history.push('/home');
-                        // history.push({
-                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                        // });
+                    setMsgSucess('You are successfully registered');
+                    setIsSuccessMsg(true);
+                    setTimeout(function () {
+                        setIsSuccessMsg(false);
+                    }, 5000);
+                    dispatch({ type: "LOGIN", payload: true });
+                    history.push('/home');
 
-                    } else {
-                        service.setCookie("isLoggedIn", "true", 30);
-                        setMsgSucess('You are successfully registered');
-                        setIsSuccessMsg(true);
-                        setTimeout(function () {
-                            setIsSuccessMsg(false);
-                        }, 5000);
-                        history.push('/home');
-                        // history.push({
-                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                        // });
+                } else {
+                    service.setCookie("isLoggedIn", "true", 30);
+                    setMsgSucess('You are successfully registered');
+                    setIsSuccessMsg(true);
+                    setTimeout(function () {
+                        setIsSuccessMsg(false);
+                    }, 5000);
+                    dispatch({ type: "LOGIN", payload: true });
+                    history.push('/home');
 
-                    }
+                }
 
                 //     return false;
                 // }
@@ -467,21 +398,6 @@ const Register = (state) => {
     const onSignIn = () => {
         history.push('/signin');
     }
-    //  const onAgeHandler =() => {
-    //      setIsAgeList(true);
-    //  }
-    const myAge = (e) => {
-        setValues({
-            ...values,
-            ['age']: e.value,
-        })
-    }
-    const options = [
-        { value: '4-13', label: '4-13 age', className: 'Select__listItem' },
-        { value: '13-18', label: '13-18 age', className: 'Select__listItem' },
-        { value: '18+', label: '18+ age', className: 'Select__listItem' },
-
-    ];
 
     return (
         <div className="pageWrapper searchPageMain">
@@ -499,7 +415,6 @@ const Register = (state) => {
                                                     <div className="buttonBg"></div>
                                                     <FacebookLogin
                                                         appId="642916756425595"
-                                                        // autoLoad={true}
                                                         fields="name,email,picture,first_name"
                                                         callback={responseFacebook}
                                                         cssClass="button buttonLarge buttonBlock registerFacebook"
@@ -536,10 +451,10 @@ const Register = (state) => {
                                                         )
                                                     }
                                                     <div className={"input" + firstname} style={{ marginTop: '18px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="firstname" type="text" maxLength="60" value={values.firstname} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.firstname}</span></div>
                                                     <div className={"input" + email} style={{ marginTop: '22px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="email" type="email" value={values.email} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="email" type="email" value={values.email} onChange={onChangeHandler} />
                                                         <span className="inputLabel">{errors.email}</span>
                                                         {
                                                             !values.email &&
@@ -548,7 +463,7 @@ const Register = (state) => {
 
                                                     </div>
                                                     <div className={"input" + password} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
+                                                        <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="password" type={passwordShown1 ? "text" : "password"} value={values.password} onChange={onChangeHandler} />
                                                         {
                                                             isEye1 && (
                                                                 <i className="eyeIcon" onClick={togglePasswordVisiblity1}>{eye1}</i>
@@ -562,30 +477,9 @@ const Register = (state) => {
                                                         }
 
                                                     </div>
-                                                    {/* <span class="eyeicon" onClick={() => { onEyeHandler()}}><img src={eyeIcon} width='20'></img></span> */}
-                                                    {/* <div className={"input" + password2} style={{ marginTop: '20px' }}>
-                                                        <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="password2" type={passwordShown2 ? "text" : "password"} onPaste={(e) => { e.preventDefault() }} value={values.password2} onChange={onChangeHandler} />
-                                                        {
-                                                            isEye2 && (
-                                                                <i className="eyeIcon" onClick={togglePasswordVisiblity2}>{eye2}</i>
-                                                            )
-                                                        }
-
-                                                        <span className="inputLabel">{errors.password2}</span>
-                                                        {
-                                                            !values.password2 &&
-                                                            <span className="inputHint">This has to match the above password</span>
-                                                        }
-
-                                                    </div>
-                                                    <div role="option" className={"input" + age} aria-selected="" value={values.age} style={{ width: '32%', marginTop: '20px', padding: '0px' }}>
-
-                                                        <Dropdown options={options} onChange={myAge} placeholderClassName="dropLabel" placeholder="" />
-                                                        <span className="inputLabel">{errors.age}</span>
-                                                    </div> */}
 
                                                     <div className="regnSubmitWrapper" >
-                                                    <p style={{paddingTop: '10px', fontSize: '14px'}}>Already have an account?
+                                                        <p style={{ paddingTop: '10px', fontSize: '14px' }}>Already have an account?
                                                         <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
                                                         <button className="button buttonLarge regnSubmit" type="submit">
                                                             <div className="buttonBg"></div>
@@ -594,14 +488,14 @@ const Register = (state) => {
                                                     </div>
                                                     <div className="regnAgreeContent">
                                                         <p>By registering, you agree to HappiTV
-                                                             <Link to="/termsofuse">
+                                                             <Link to="/termsandconditions">
                                                                 <div className="linkButton">&nbsp;Terms of Use</div>
                                                             </Link>&nbsp; and
-                                                            <Link to="/policydarkmode">
+                                                            <Link to="/privacypolicy">
                                                                 <div className="linkButton" href="#">&nbsp;Privacy Policy</div>
                                                             </Link>
                                                         </p>
-                                                        
+
                                                     </div>
                                                 </form>
                                             </div>
@@ -620,7 +514,7 @@ const Register = (state) => {
                                                             )
                                                         }
                                                         <div className={"input" + verification_code}>
-                                                            <input className="inputText" style={{border: 'none', padding: '0px', marginTop: '10px'}}  name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
+                                                            <input className="inputText" style={{ border: 'none', padding: '0px', marginTop: '10px' }} name="verification_code" type="text" maxLength="60" value={valuesVerify.verification_code} onChange={onChangeHandlerVerify} />
                                                             <span className="inputLabel">{errorsVerify.verification_code}</span>
                                                         </div>
                                                         <div className="regnSubmitWrapper">
@@ -632,10 +526,10 @@ const Register = (state) => {
                                                     </form>
                                                     <div className="regnAgreeContent">
                                                         <p>By registering, you agree to HappiTV
-                                                            <Link to="/termsofuse">
+                                                            <Link to="/termsandconditions">
                                                                 <div className="linkButton"> &nbsp;Terms of Use</div>
                                                             </Link>&nbsp; and
-                                                            <Link to="/policydarkmode">
+                                                            <Link to="/privacypolicy">
                                                                 <div className="linkButton" href="#"> &nbsp;Privacy Policy</div>
                                                             </Link>
                                                         </p>
@@ -645,8 +539,6 @@ const Register = (state) => {
                                                 </div>
                                             )
                                     }
-
-
                                 </div>
                             </div>
                         </div>

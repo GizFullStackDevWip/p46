@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/GetVideos/service';
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 import ReactHlsPlayer from 'react-hls-player';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { convertTime, deviceDetect, playerController, convertSecondsToMin } from '../../Utils/utils';
 import { FacebookShareButton, TwitterShareButton } from "react-share";
-import videothumbnail from '../../images/videothumbnail.png';
 
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 var videoImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
@@ -21,7 +19,6 @@ const handleScroll = () => {
         playerController(150, playerId);
     }
 }
-
 const VideoDetails = (categoryId, episode) => {
 
     const history = useHistory();
@@ -67,12 +64,11 @@ const VideoDetails = (categoryId, episode) => {
                         autoplay={true}
                         controls={true}
                         width={'100%'}
-                        poster={videothumbnail}
                         height={'100%'}
-                        onReady={onPlayerReady}
-                        onPlay={onVideoPlay(videoDetail.video_id)}
-                        onPause={onVideoPause}
-                        onEnd={onVideoEnd}
+                        // onPlayerReady={onPlayerReady}
+                        // onPlay={onVideoPlay(videoDetail.video_id)}
+                        // onPause={onVideoPause}
+                        // onEnded={onVideoEnd}
                     />)
                 })
                 details = videoDetail;
@@ -86,7 +82,6 @@ const VideoDetails = (categoryId, episode) => {
         setUpdate(false);
         window.addEventListener('scroll', handleScroll)
     }, [update, login]);
-
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -105,13 +100,14 @@ const VideoDetails = (categoryId, episode) => {
             items: 1
         }
     };
-
     const onPlayerReady = () => {
-        service.onVideoPlayFunction(details).then(response => {
+        let event = 'POP02';
+        service.onVideoPlayFunction(details, event).then(response => {
+            console.log(response);
         })
     }
-
     const onVideoPlay = (videoId) => {
+        console.log('on video play');
         service.checkVideoSubscription(videoId).then(response => {
             let videoDetails = response.data[0];
             if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
@@ -119,7 +115,6 @@ const VideoDetails = (categoryId, episode) => {
                     if (useResponse.data.length == 0) {
                         let isLoggedIn = localStorage.getItem('isLoggedIn');
                         if (isLoggedIn == 'false') {
-                            localStorage.setItem('currentUrl', window.location.pathname);
                             history.push({
                                 pathname: '/signin'
                             });
@@ -131,13 +126,13 @@ const VideoDetails = (categoryId, episode) => {
                     // }
                 })
             } else {
-                console.log('playing...')
+                // console.log('playing...');
             }
         })
-        service.onVideoPlayFunction(details).then(response => {
+        let event = 'POP03';
+        service.onVideoPlayFunction(details, event).then(response => {
         })
     }
-
     const signOut = () => {
         let ui = localStorage.getItem('userId')
         setTimeout(function () {
@@ -153,20 +148,21 @@ const VideoDetails = (categoryId, episode) => {
             // window.location.href = "http://stagingweb.gethappi.tv/login?lo=1&ui=" + ui;
         }, 100);
     }
-
     const eraseCookie = (name) => {
         document.cookie = name + '=; Max-Age=-99999999;';
     }
-
     const onVideoPause = () => {
-        service.onVideoPlayFunction(details).then(response => {
+        let event = 'POP04';
+        service.onVideoPlayFunction(details, event).then(response => {
+            console.log(response);
         })
     }
     const onVideoEnd = () => {
-        service.onVideoPlayFunction(details).then(response => {
+        let event = 'POP05';
+        service.onVideoPlayFunction(details, event).then(response => {
+            console.log(response);
         })
     }
-
     const functionOnclick = (show) => {
         history.push({
             pathname: '/home/movies',
@@ -174,12 +170,10 @@ const VideoDetails = (categoryId, episode) => {
         });
         setUpdate(true);
     }
-
     const hoverFunction = (flag, index) => {
         setHover(flag);
         setFocusedId(index);
     }
-
     const addtoMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
@@ -236,9 +230,7 @@ const VideoDetails = (categoryId, episode) => {
             dispatch({ type: "SIGN_IN_BLOCK" });
         }
     }
-
     return (
-
         <div className="menuCloseJS closeMenuWrapper">
             <div className="videoPage">
                 <div className="videoPageContainer">
@@ -258,34 +250,43 @@ const VideoDetails = (categoryId, episode) => {
                     <div className="videoPageBGimg"
                         style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}>
                     </div>
-                    {(isDesktop === true) ?
+                    {
+                        showDetails.teaser &&
+                        (<div>
+                            {(isDesktop === true) ?
 
-                        <div className="_2xXnB forLargeDevice" >
-                            <div className="_2KWdL">
-                                <section className="_1dQ5J">
-                                    <div className="_3tqpT">
-                                        {videoPlayer}
+                                <div className="_2xXnB forLargeDevice" >
+                                    <div className="_2KWdL">
+                                        <section className="_1dQ5J">
+                                            <div className="_3tqpT">
+                                                {videoPlayer}
+                                            </div>
+                                        </section>
                                     </div>
-                                </section>
-                            </div>
-                        </div> :
-                        <div className="forSmallDevice" >
-                            <div className="_2KWdL">
-                                <section className="_1dQ5J">
-                                    <div className="_3tqpT">
-                                        {videoPlayer}
+                                </div> :
+                                <div className="forSmallDevice" >
+                                    <div className="_2KWdL">
+                                        <section className="_1dQ5J">
+                                            <div className="_3tqpT">
+                                                {videoPlayer}
+                                            </div>
+                                        </section>
                                     </div>
-                                </section>
-                            </div>
-                        </div>
+                                </div>
+                            }
+                        </div>)
                     }
+
                     <div className="videoPageContentWrapper videoPageContentPadding">
                         <div className="vpContent">
                             <div className="container vpContainer vpDesktopContainer">
                                 <div className="row vp3Section movieInfo">
-                                    <div className="vpMiddleHeading">
-                                        <h1 className="vpMiddleh1">{showDetails.show_name}</h1>
-                                    </div>
+                                    {
+                                        showDetails.show_name &&
+                                        <div className="vpMiddleHeading">
+                                            <h1 className="vpMiddleh1">{showDetails.show_name}</h1>
+                                        </div>
+                                    }
                                     <div className="col col-2-5">
                                         <div className="vpLeftSection">
                                             {
@@ -347,21 +348,27 @@ const VideoDetails = (categoryId, episode) => {
                                                             share === true ?
                                                                 <div>
                                                                     <div className="_1TcfH _1Dgjh" style={{ left: '7px' }}>
-                                                                        <FacebookShareButton url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id} quote={showDetails.video_title + ' || ' + showDetails.video_description} className="share" style={{
-                                                                            display: 'flex',
-                                                                            flexDirection: 'column'
-                                                                        }}>
-
+                                                                        <FacebookShareButton
+                                                                            url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            quote={showDetails.video_title + ' || ' + showDetails.video_description}
+                                                                            className="share" style={{
+                                                                                display: 'flex',
+                                                                                flexDirection: 'column'
+                                                                            }}>
                                                                             <span className="ATag _1H0lX _135ID _3Dyhl">
                                                                                 <svg className="svgIcon facebookIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 20" style={{ fill: 'currentcolor' }}>
                                                                                     <path fill="currentColor" fillRule="evenodd" d="M2 0C.938 0 0 1.063 0 1.97v16.093C0 19.03 1.063 20 2 20h9v-8H8V9h3V7c-.318-2.573 1.26-3.98 4-4 .668.02 1.617.103 2 0v3h-2c-.957-.16-1.2.436-1 1v2h3l-1 3h-2v8h3.938c1.03 0 2.062-.938 2.062-1.938V1.97C20 1.03 18.937 0 17.937 0H2z"></path>
-                                                                                </svg><span className="_3SXQW">Facebook</span></span>
+                                                                                </svg>
+                                                                                <span className="_3SXQW">Facebook</span>
+                                                                            </span>
                                                                         </FacebookShareButton>
 
-                                                                        <TwitterShareButton url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id} title={showDetails.video_title} description={showDetails.video_description} style={{
-                                                                            display: 'flex',
-                                                                            flexDirection: 'column'
-                                                                        }}>
+                                                                        <TwitterShareButton url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            title={showDetails.video_title} description={showDetails.video_description}
+                                                                            style={{
+                                                                                display: 'flex',
+                                                                                flexDirection: 'column'
+                                                                            }}>
                                                                             <span className="ATag _1H0lX _135ID _3Dyhl">
                                                                                 <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 20 17" style={{ fill: 'currentcolor' }}>
                                                                                     <path d="M6 17c7.837 0 11.965-6.156 12-11-.035-.67-.035-.844 0-1 .756-.59 1.45-1.297 2-2-.75.218-1.543.433-2 1 .5-.978 1.14-1.77 1-3-.358.763-1.24 1.095-2 1C15.29.647 12.69.568 11 2c-1.03 1.084-1.48 2.555-1 4-3.45-.204-6.524-1.74-9-4C.303 3.584.86 5.945 3 7c-.99.11-1.63-.062-2 0-.2 1.6 1.178 3.255 3 4-.512-.202-1.146-.178-2 0 .777 1.35 2.318 2.478 4 3-1.38.635-3.175 1.246-5 1-.35.244-.675.223-1 0 1.877 1.37 4.06 2 6 2" fill="currentColor" fillRule="evenodd"></path>
@@ -396,15 +403,9 @@ const VideoDetails = (categoryId, episode) => {
                                             <div className="vpLengthCensor">
                                                 <div className="vpLengthYear">
                                                     {
-                                                        showDetails.year &&
-                                                        <div className="movieYearText">{showDetails.year}
-                                                            <span className="vpYearBreak">·</span>
-                                                        </div>
+                                                        showDetails.video_duration &&
+                                                        <div className="movieLength">{showDetails.video_duration && convertTime(showDetails.video_duration)}</div>
                                                     }
-
-
-                                                    <div className="movieLength">{showDetails.video_duration && convertTime(showDetails.video_duration)}</div>
-
                                                 </div>
                                                 <div className="vpCCwrapper">
                                                     <svg className="svgIcon vpCCicon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 28 18" style={{ fill: 'currentcolor' }}>
@@ -420,6 +421,7 @@ const VideoDetails = (categoryId, episode) => {
                                             <div className="vpMovieCategory">
                                                 <div className="vpCategoryFlex vpCategoryMargin">
                                                     {
+                                                        categories &&
                                                         categories.map((item, index) => {
                                                             return (
                                                                 <div key={index} className="movieCensorBox vpMovieType vpMovieTypeMargin">{item}</div>
@@ -432,22 +434,27 @@ const VideoDetails = (categoryId, episode) => {
                                         {
                                             isDesktop === true ?
                                                 showDetails.single_video === 0 ?
-                                                    (<div className="vpMiddleDesc">Episodes : { episodeLength}<br/>{showDetails.synopsis}</div>
+                                                    (<div className="vpMiddleDesc">Partner :
+                                                        <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }} className="linkHover">{showDetails.partner_name}</Link>
+                                                        <br />Episodes : { episodeLength}<br />{showDetails.synopsis}</div>
                                                     ) : <div className="vpMiddleDesc">{showDetails.video_description}</div>
                                                 : null
                                         }
                                     </div>
-                                    
+
                                 </div>
                                 {
-                                        isDesktop === false ?
-                                            showDetails.single_video === 0 ?
-                                                (<div className="">Episodes : { episodeLength}<br/>{showDetails.synopsis}</div>
-                                                ) : <div className="">{showDetails.video_description}</div>
-                                            : null
-                                    }
+                                    isDesktop === false ?
+                                        showDetails.single_video === 0 ?
+                                            (<div className="">Partner :
+                                                <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }} className="linkHover">{showDetails.partner_name}</Link>
+                                                <br />Episodes : { episodeLength}<br />{showDetails.synopsis}</div>
+                                            ) : <div className="">{showDetails.video_description}</div>
+                                        : null
+                                }
                                 {
-                                    showDetails.single_video === 0 ?
+                                    showDetails &&
+                                        showDetails.single_video === 0 ?
                                         (
                                             <div className="row vp3Section youMayLike">
                                                 <div className="col">
@@ -457,9 +464,10 @@ const VideoDetails = (categoryId, episode) => {
                                                             <div className="carouselContent">
                                                                 <Carousel className="row carouselRow" responsive={responsive}>
                                                                     {
+                                                                        episodeList &&
                                                                         episodeList.map((show, index) => {
                                                                             return (
-                                                                                <div className="col col-3" index={index}>
+                                                                                <div className="col col-3" key={index}>
                                                                                     <div className="movieTile">
                                                                                         <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                                                                             onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
@@ -475,10 +483,14 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                     </svg>
                                                                                                     : null}
                                                                                             </div>
-                                                                                            <div className="moviePoster"
-                                                                                                style={{ backgroundImage: `url(${videoImageUrl + show.thumbnail})` }}>
-                                                                                                <div className="FeNml"></div>
-                                                                                            </div>
+                                                                                            {
+                                                                                                show.thumbnail &&
+                                                                                                <div className="moviePoster"
+                                                                                                    style={{ backgroundImage: `url(${videoImageUrl + show.thumbnail})` }}>
+                                                                                                    <div className="FeNml"></div>
+                                                                                                </div>
+                                                                                            }
+
                                                                                             <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                                                                 <div className="wishlistButton">
                                                                                                     <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -510,14 +522,12 @@ const VideoDetails = (categoryId, episode) => {
                                                                                                 }}>{show.video_title}</a></h3>
                                                                                                 <div className="movieCatYear">
                                                                                                     <div>
-                                                                                                        <div className="movieYear">
-                                                                                                            {
-                                                                                                                show.year ?
-                                                                                                                    <div className="_1MmGl">({show.year}) . {convertSecondsToMin(show.video_duration)}</div>
-                                                                                                                    :
-                                                                                                                    <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
-                                                                                                            }
-                                                                                                        </div>
+                                                                                                        {
+                                                                                                            show.video_duration &&
+                                                                                                            <div className="movieYear">
+                                                                                                                <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
+                                                                                                            </div>
+                                                                                                        }
                                                                                                         <div className="movieCategory mcMargin">
                                                                                                             {
                                                                                                                 show.category_name.map((item, index) => {
@@ -563,7 +573,7 @@ const VideoDetails = (categoryId, episode) => {
                                                         {
                                                             similarShows.map((show, index) => {
                                                                 return (
-                                                                    <div className="col col-3" index={index}>
+                                                                    <div className="col col-3" key={index}>
                                                                         <div className="movieTile">
                                                                             <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                 <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
@@ -607,12 +617,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                     <div className="movieCatYear">
                                                                                         <div>
                                                                                             <div className="movieYear">
-                                                                                                {
-                                                                                                    show.year ?
-                                                                                                        <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
-                                                                                                        :
-                                                                                                        <div className="_1MmGl">{convertTime(show.video_duration)}</div>
-                                                                                                }
+                                                                                                <div className="_1MmGl">{convertTime(show.video_duration)}</div>
                                                                                             </div>
                                                                                             <div className="movieCategory mcMargin" >
                                                                                                 {

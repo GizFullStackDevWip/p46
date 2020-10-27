@@ -8,7 +8,9 @@ import { service } from '../../network/service';
 import { loadStripe } from '@stripe/stripe-js';
 const stripePromise = loadStripe('pk_test_51wp2oVC2wmQE6yzIjb2hp9y0095vrZfJY');
 const stripe = require('stripe')('sk_test_xZYLlAJh0K41AxdDs7OYLLd4007lfxLGM9');
+
 const Payment = (state) => {
+
   const history = useHistory();
   const isLoggedIn = service.getCookie('isLoggedIn');
   const [androidData, setAndroidData] = useState(null);
@@ -16,7 +18,9 @@ const Payment = (state) => {
   const [paymentData, setPaymentData] = useState(null);
   const [paypalLink, setPaypalLink] = useState('');
   const [subscription, setSubscription] = useState([]);
+
   useEffect(() => {
+    
     window.scrollTo(0, 0);
     if (state.location.state) {
       setAndroidData(state.location.state.androidData);
@@ -38,7 +42,6 @@ const Payment = (state) => {
     } else if (isLoggedIn == 'true') {
       history.push('/home');
     }
-    console.log(state);
 
     var singleObj = [];
     service.userSubscription(97918).then(response => {

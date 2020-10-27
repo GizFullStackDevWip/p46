@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
+import PrivateRoutes from './PrivateRoutes';
+import PublicRoutes from './PublicRoutes';
+
 import Home from '../components/Home/Home';
 import Movies from '../components/Movies/Movies';
 import CategoryList from '../components/CategoryList/CategoryList';
@@ -12,7 +15,6 @@ import AboutUs from '../components/FooterComponents/AboutUs/AboutUs';
 import Search from '../components/Search/Search';
 import Header from '../components/Basic/Header';
 import Footer from '../components/Basic/Footer';
-import Live from '../components/Live/Live';
 import SubscriptionList from '../components/SubscriptionList/SubscriptionList';
 import Landing from '../components/Landing/Landing';
 import Success from '../components/Payment/Succes';
@@ -27,40 +29,48 @@ import Contact from '../components/FooterComponents/Contact/Contact';
 import ContactSupport from '../components/FooterComponents/ContactSupport/ContactSupport';
 import SupportedDevices from '../components/FooterComponents/SupportedDevices/SupportedDevices';
 import PartnerList from '../components/PartnerList/PartnerList';
+import WebTermsOfUse from '../components/FooterComponents/WebTermsOfUse/WebTermsOfUse';
+import WebPrivacyPolicy from '../components/FooterComponents/WebPrivacyPolicy/WebPrivacyPolicy';
+import CookiePolicy from '../components/FooterComponents/CookiePolicy/CookiePolicy';
+import Cookie from '../common/Cookie';
 const routes = () => (
-    <Router>
+    <BrowserRouter>
         <Header />
+        <Cookie />
         <div className="closeMenuWrapper">
             <Switch>
-                <Route path="/" exact component={Landing} />
-                <Route path="/home" exact component={Home} />
-                <Route path="/home/movies" exact component={Movies} />
-                <Route path="/home/categorylist" exact component={CategoryList} />
-                <Route path="/home/partnershows" exact component={PartnerShows} />
-                <Route path="/home/recentlyadded" exact component={RecentlyAdded} />
-                <Route path="/signin" exact component={SignIn} />
-                <Route path="/register" exact component={Register} />
-                <Route path="/home/series" exact component={Series} />
-                <Route path="/aboutus" exact component={AboutUs} />
-                <Route path="/search" exact component={Search} />
-                <Route path="/home/live" exact component={Live} />
-                <Route path="/subscription" exact component={SubscriptionList} />
-                <Route path="/success" exact component={Success} />
-                <Route path="/error" exact component={Error} />
-                <Route path="/payment" exact component={Payment} />
-                <Route path="/videoplayer" exact component={VideoPlayer} />
-                <Route path="/termsofuse" exact component={TermsOfUse} />
-                <Route path="/policydarkmode" exact component={PrivacyPolicy} />
-                <Route path="/pressrelease" exact component={PressRelease} />
-                <Route path="/advertisewithus" exact component={AdvertiseWithUs} />
-                <Route path="/contactus" exact component={Contact} />
-                <Route path="/contactsupport" exact component={ContactSupport} />
-                <Route path="/supportdevice" exact component={SupportedDevices} />
-                <Route path="/partnerList" exact component={PartnerList} />
+                <PublicRoutes restricted={true} path="/" exact component={Landing} />
+                <PrivateRoutes path="/home" exact component={Home} />
+                <PrivateRoutes path="/home/movies" exact component={Movies} />
+                <PrivateRoutes path="/home/categorylist" exact component={CategoryList} />
+                <PrivateRoutes path="/home/partnershows" exact component={PartnerShows} />
+                <PrivateRoutes path="/home/recentlyadded" exact component={RecentlyAdded} />
+                <PublicRoutes restricted={false} path="/signin" exact component={SignIn} />
+                <PublicRoutes restricted={false} path="/register" exact component={Register} />
+                <PrivateRoutes path="/home/series" exact component={Series} />
+                <PublicRoutes restricted={false} path="/aboutus" exact component={AboutUs} />
+                <PrivateRoutes path="/search" exact component={Search} />
+                <PublicRoutes restricted={false} path="/subscription" exact component={SubscriptionList} />
+                <PublicRoutes restricted={false} path="/success" exact component={Success} />
+                <PublicRoutes restricted={false} path="/error" exact component={Error} />
+                <PublicRoutes restricted={false} path="/payment" exact component={Payment} />
+                <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
+                <PublicRoutes restricted={false} path="/termsandconditions" exact component={WebTermsOfUse} />
+                <PublicRoutes restricted={false} path="/privacypolicy" exact component={WebPrivacyPolicy} />
+                <PublicRoutes restricted={false} path="/termsofuse" exact component={TermsOfUse} />
+                <PublicRoutes restricted={false} path="/policydarkmode" exact component={PrivacyPolicy} />
+                <PublicRoutes restricted={false} path="/pressrelease" exact component={PressRelease} />
+                <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
+                <PublicRoutes restricted={false} path="/contactus" exact component={Contact} />
+                <PublicRoutes restricted={false} path="/contactsupport" exact component={ContactSupport} />
+                <PublicRoutes restricted={false} path="/supportdevice" exact component={SupportedDevices} />
+                <PrivateRoutes path="/partnerList" exact component={PartnerList} />
+                <PublicRoutes restricted={false} path="/cookiepolicy" exact component={CookiePolicy} />
             </Switch>
         </div>
         <Footer />
-    </Router>
+
+    </BrowserRouter>
 
 );
 export default routes;

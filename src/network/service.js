@@ -1,4 +1,4 @@
-import { getDeviceType,getBrowserType } from '../Utils/utils';
+import { getDeviceType, getBrowserType } from '../Utils/utils';
 const axios = require('axios');
 const qs = require('querystring');
 function authenticate() {
@@ -16,20 +16,33 @@ function authenticate() {
         },
         params: {
             uid: uId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
 
     return axios.get("https://poppo.tv/platform/bk/authenticate", customConfig)
         .then((response) => {
-            localStorage.setItem('access-token', response.data.token);
+            if (response.data.message == 'Invalid user') {
+                localStorage.removeItem("userName");
+                localStorage.removeItem("userId");
+                localStorage.setItem('isLoggedIn', 'false');
+                eraseCookie('userName');
+                eraseCookie('userId');
+                eraseCookie('userEmail');
+                eraseCookie('subscriptionId');
+                authenticate();
+            } else {
+                localStorage.setItem('access-token', response.data.token);
+            }
         })
         .catch((error) => {
             return [];
         });
 
 }
-
+function eraseCookie(name) {
+    document.cookie = name + '=; Max-Age=-99999999;';
+}
 function keyAuthenticate(key) {
     let countryCode = getCookie('country_code');
     const customConfig = {
@@ -40,13 +53,13 @@ function keyAuthenticate(key) {
             'access-token': localStorage.getItem('access-token'),
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             key: key,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
 
-    return axios.get("https://poppo.tv/platform/bk/api/GetUserSubscriptionDetails", customConfig)
+    return axios.get(process.env.REACT_APP_API_URL+"GetUserSubscriptionDetails", customConfig)
         .then((response) => {
             if (response.data.status == 100) {
                 // console.log('keyAuth', response)
@@ -83,10 +96,10 @@ function register(values, facebookId) {
         'last_name': values.lastname,
         'user_email': values.email,
         'password': values.password,
-        'pubid': 50023,
+        'pubid': process.env.REACT_APP_PUBID,
         'device_type': 'web',
         'facebook_id': facebookId,
-        'country_code':countryCode
+        'country_code': countryCode
     }
 
     return axios.post("https://poppo.tv/platform/bk/registerWithEmail", qs.stringify(data), customConfig)
@@ -115,12 +128,12 @@ function getshowsbyCategory() {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             user_id: uId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'getShowsByCategory', customConfig).then(
         response => {
             return response.data;
         })
@@ -150,13 +163,13 @@ function getShows(key) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             key: key,
             uid: uId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/searchShows', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'searchShows', customConfig).then(
         response => {
             return response.data;
         })
@@ -166,7 +179,6 @@ function getShows(key) {
 }
 
 function verifyEmail(values, userRegisterId) {
-    let countryCode = getCookie('country_code');
     var token = localStorage.getItem('access-token');
 
     const customConfig = {
@@ -177,10 +189,9 @@ function verifyEmail(values, userRegisterId) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             user_id: userRegisterId,
-            otp: values.verification_code,
-            country_code:countryCode
+            otp: values.verification_code
         }
     };
     return axios.get('https://poppo.tv/platform/bk/verifyOtpFromEmail', customConfig).then(
@@ -205,12 +216,12 @@ function login(values) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             'user_email': values.email,
             'password': values.password,
             'device_id': device_id,
             'ipaddress': ipaddress,
-            'country_code':countryCode
+            'country_code': countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Loginnew', customConfig).then(
@@ -233,14 +244,14 @@ function userSubscription(userLoggedId) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             'uid': userLoggedId,
             'country_code': 'cx',
             'device_id': device_id,
-            'country_code':countryCode
+            'country_code': countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/getUserSubscriptions', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'getUserSubscriptions', customConfig).then(
         response => {
             return response.data;
         })
@@ -260,9 +271,9 @@ function forgotEmail(values) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             'user_email': values.forgot_email,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Forgotpassword', customConfig).then(
@@ -285,9 +296,9 @@ function logoutAll(user_id) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             'user_id': user_id,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
     return axios.get('https://poppo.tv/platform/bk/Logoutall', customConfig).then(
@@ -310,11 +321,11 @@ function publisherSubscription() {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
-            country_code:countryCode
+            pubid: process.env.REACT_APP_PUBID,
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/GetpublisherSubscriptions', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'GetpublisherSubscriptions', customConfig).then(
         response => {
             return response.data;
         })
@@ -336,12 +347,12 @@ function videoSubscription(selectedVideoId) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             video_id: selectedVideoId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/GetvideoSubscriptions', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'GetvideoSubscriptions', customConfig).then(
         response => {
             return response.data;
         })
@@ -362,12 +373,12 @@ function androidTokeDecode(antkn) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             key: antkn,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/GetUserSubscriptionDetails', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'GetUserSubscriptionDetails', customConfig).then(
         response => {
             return response.data;
         })
@@ -387,9 +398,9 @@ function stripeSession(sub_id) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             sub_id: sub_id,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
     return axios.get('http://poppo.tv/createStripeSession', customConfig).then(
@@ -412,9 +423,9 @@ function stripeDecode(sessionId) {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             sessionId: sessionId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
     return axios.get('http://poppo.tv/fetchStripeDetails', customConfig).then(
@@ -455,11 +466,11 @@ function paymentUpdate(subscription, mode_of_payment, status) {
         'amount': orginal_amount,
         'country_code': 'cx',
         'receiptid': subscription,
-        'pubid': 50023,
+        'pubid': process.env.REACT_APP_PUBID,
         'device_type': deviceType,
-        'country_code':countryCode
+        'country_code': countryCode
     }
-    return axios.post("https://poppo.tv/platform/bk/api/updateTransaction", qs.stringify(data), customConfig)
+    return axios.post(process.env.REACT_APP_API_URL+"updateTransaction", qs.stringify(data), customConfig)
         .then((response) => {
             return response.data;
         })
@@ -488,10 +499,10 @@ function unsubscribe(receiptid, sub_id) {
         'sub_id': sub_id,
         'userid': uId,
         'receiptid': receiptid,
-        'pubid': 50023,
-        'country_code':countryCode
+        'pubid': process.env.REACT_APP_PUBID,
+        'country_code': countryCode
     }
-    return axios.post("https://poppo.tv/platform/bk/api/unsubscribe", qs.stringify(data), customConfig)
+    return axios.post(process.env.REACT_APP_API_URL+"unsubscribe", qs.stringify(data), customConfig)
         .then((response) => {
             return response.data;
         })
@@ -516,12 +527,12 @@ function paypalSubscription() {
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             'user_id': uId,
-            country_code:countryCode
+            country_code: countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/checkPaypalSubscribed', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'checkPaypalSubscribed', customConfig).then(
         response => {
             return response.data;
         })
@@ -546,10 +557,10 @@ function facebokLogin(facebook_id, facebook_email) {
         'device_id': device_id,
         'facebook_id': facebook_id,
         'ipaddress': ipaddress,
-        'pubid': 50023,
+        'pubid': process.env.REACT_APP_PUBID,
         'loginType': 'facebook',
         'fb_email': facebook_email,
-        'country_code':countryCode
+        'country_code': countryCode
 
     }
 
@@ -579,10 +590,10 @@ function facebokLink(facebook_id, facebook_email) {
         'device_id': device_id,
         'facebook_id': facebook_id,
         'ipaddress': ipaddress,
-        'pubid': 50023,
+        'pubid': process.env.REACT_APP_PUBID,
         'loginType': 'facebook',
         'fb_email': facebook_email,
-        'country_code':countryCode
+        'country_code': countryCode
     }
 
     return axios.post("https://poppo.tv/platform/bk/linkSocialAccount", qs.stringify(data), customConfig)
@@ -599,9 +610,11 @@ function getLocation() {
 }
 function analytics() {
     let countryCode = getCookie('country_code');
-    setCookie('device_analytics', 'true');
+    let sessionId = localStorage.getItem('session_id');
+    // setCookie('device_analytics',true);
     let uId = 74961;
     let user_id = getCookie('userId');
+    let email_id = getCookie('userEmail');
     if (user_id) {
         uId = user_id;
     }
@@ -611,7 +624,7 @@ function analytics() {
     if (!firstName) {
         firstName = ''
     }
-    let appid = 61;
+    let appid = 73;
     let deviceType = getDeviceType();
     let ctimestamp = Date.now().toString();
     let ctime = ctimestamp.slice(0, 10);
@@ -625,10 +638,10 @@ function analytics() {
         }
     };
     let currentLocation = JSON.parse(localStorage.getItem('currentLocation'));
-    console.log(currentLocation, 'currentLocation');
     const data = {
+        "session_id": sessionId,
         "device_id": device_id,
-        "publisherid": 50023,
+        "publisherid": process.env.REACT_APP_PUBID,
         "app_id": appid,
         "user_id": uId,
         "ip_address": currentLocation.IPv4,
@@ -645,9 +658,8 @@ function analytics() {
         "device_model": navigator.userAgent,
         "browser": browserType,
         "user_name": firstName,
-        "user_email": '',
-        "user_contact_number": '',
-        'country_code':countryCode
+        "user_email": email_id,
+        "user_contact_number": ''
     }
     return axios.post("https://analytics.poppo.tv/device", qs.stringify(data), customConfig)
         .then((response) => {
@@ -658,11 +670,11 @@ function analytics() {
         });
 
 }
-function getGeoInfo(){
+function getGeoInfo() {
     return axios.get('https://ipapi.co/json/').then((response) => {
         return response.data;
     }).catch((error) => {
-        console.log(error);
+        // console.log(error);
     });
 };
 function getCookie(name) {

@@ -4,6 +4,7 @@ import { Link, useHistory, Redirect } from 'react-router-dom';
 import { service } from '../../../network/FooterComponent/service';
 import { ToastContainer, toast } from 'react-toastify';
 import csc from 'country-state-city';
+
 const ContactSupport = () => {
     const history = useHistory();
     const [classValues, setClassValues] = useState({
@@ -41,10 +42,10 @@ const ContactSupport = () => {
     const [button, setButton] = useState(false);
     const [disableblock, setDisableblock] = useState(false);
     const [state, setState] = useState([]);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         let country = csc.getAllCountries();
-        console.log('COUNTRY', country);
         setCountry(country);
 
     }, []);
@@ -98,70 +99,50 @@ const ContactSupport = () => {
             }
         } else {
             formIsValid = false;
-            classValues.email = ' Input--errored'
-            errors.email = 'Required Field'
+            classValues.email = ' Input--errored';
+            errors.email = 'Required Field';
         }
 
         if (values.state.trim()) {
-            classValues.state = ''
-            errors.state = 'State/Province'
+            classValues.state = '';
+            errors.state = 'State/Province';
         } else {
             formIsValid = false;
-            classValues.state = ' Input--errored'
-            errors.state = 'Required Field'
+            classValues.state = ' Input--errored';
+            errors.state = 'Required Field';
         }
 
         if (values.country.trim()) {
-            classValues.country = ''
-            errors.country = 'Country'
+            classValues.country = '';
+            errors.country = 'Country';
         } else {
             formIsValid = false;
-            classValues.country = ' Input--errored'
-            errors.country = 'Required Field'
+            classValues.country = ' Input--errored';
+            errors.country = 'Required Field';
         }
         if (values.issues.trim()) {
-            classValues.issues = ''
-            errors.issues = 'Reason'
+            classValues.issues = '';
+            errors.issues = 'Reason';
         } else {
             formIsValid = false;
-            classValues.issues = ' Input--errored'
-            errors.issues = 'Required Field'
+            classValues.issues = ' Input--errored';
+            errors.issues = 'Required Field';
         }
 
-        // if (values.platform.trim()) {
-        //     classValues.platform = ''
-        //     errors.platform = 'Platform'
-        // } else {
-        //     formIsValid = false;
-        //     classValues.platform = ' Input--errored'
-        //     errors.platform = 'Required Field'
-        // }
-
-        // if (values.topic.trim()) {
-        //     classValues.topic = ''
-        //     errors.topic = 'Topic'
-        // } else {
-        //     formIsValid = false;
-        //     classValues.topic = ' Input--errored'
-        //     errors.topic = 'Required Field'
-        // }
-
         if (values.message.trim()) {
-            console.log(values.message.length)
-            if (values.message.length > 6) {
-                classValues.message = ''
-                errors.message = 'Message'
-            } else {
+            if (values.message.length < 5) {
                 formIsValid = false;
-                classValues.message = ' Input--errored'
-                errors.message = 'Minimum 5 character required!'
+                classValues.message = ' Input--errored';
+                errors.message = 'Minimum 5 character required!';
+            } else {
+                classValues.message = '';
+                errors.message = 'Message';
             }
         } else {
             formIsValid = false;
-            classValues.message = ' Input--errored'
-            errors.message = 'Required Field'
+            classValues.message = ' Input--errored';
+            errors.message = 'Required Field';
         }
-        console.log('errors', errors);
         setClassValues(classValues);
         setErrors(errors);
         return formIsValid;
@@ -172,11 +153,9 @@ const ContactSupport = () => {
             setButton(true);
             let country = csc.getAllCountries();
             const countryArray = country.filter(countryItem => countryItem.id == values.country);
-            console.log(countryArray[0].name, 'country name');
             values.country = countryArray[0].name;
             service.contact(values).then(response => {
                 toast.success("Thanks. We will get back to you shortly");
-                console.log('RESPONSE-SESND EMAIL->', response);
                 if (response.status === 100) {
                     setTimeout(function () {
                         setButton(true);

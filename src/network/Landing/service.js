@@ -17,12 +17,12 @@ function getshowsbyCategory(){
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             user_id: uId,
             country_code:countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/getShowsByCategory', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'getShowsByCategory', customConfig).then(
         response => {
             return response.data;
         })
@@ -41,11 +41,11 @@ function getLiveChannels(){
             'access-token': token,
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             country_code:countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/Getallchannels', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'Getallchannels', customConfig).then(
         response => {
             return response.data;
         })

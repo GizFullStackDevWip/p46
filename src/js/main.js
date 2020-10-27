@@ -14,13 +14,13 @@ $(document).ready(function () {
       $('.pageWrapper').addClass('menuOpened');
     }
   });
-  $(".closeMenuWrapper").hover(function () {
-    // if($('.pageWrapper').hasClass('menuOpened')) {
-    $('.menuItemContainer').addClass('menuClose');
-    $('.pageWrapper').removeClass('menuOpened');
-    // }
-    // });
-  });
+  // $(".closeMenuWrapper").hover(function () {
+  //   // if($('.pageWrapper').hasClass('menuOpened')) {
+  //   $('.menuItemContainer').addClass('menuClose');
+  //   $('.pageWrapper').removeClass('menuOpened');
+  //   // }
+  //   // });
+  // });
 
   $('.menuIcon').on('click', () => {
 
@@ -34,6 +34,9 @@ $(document).ready(function () {
     menuToggle += 1;
 
   })
+  $('.headerButton').on('click', () => {
+    $('.menuItemContainer').addClass('menuClose');
+    })
 
   // ACCORDION CLICK FUNCTION
   $(".faqIcon").click(function () {
@@ -74,7 +77,7 @@ $(document).ready(function () {
     //   nav.addClass('headerGradient');
     // }
     prev = scrollTop;
-    console.log('scrollTop', scrollTop);
+    // console.log('scrollTop', scrollTop);
 
   });
 

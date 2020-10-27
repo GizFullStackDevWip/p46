@@ -4,6 +4,7 @@ import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
+import $ from 'jquery';
 const queryString = require('query-string');
 
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
@@ -20,6 +21,7 @@ const Search = ({ history }) => {
     useEffect(() => {
         window.scrollTo(0, 0);
         updateUseEffect();
+        $('.menuItemContainer').addClass('menuClose');
     }, [parsed.input]);
 
     const updateUseEffect = () => {
@@ -37,7 +39,6 @@ const Search = ({ history }) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                console.log(response);
                 if (response.status === 100) {
                     updateUseEffect();
                 }
@@ -51,7 +52,6 @@ const Search = ({ history }) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                console.log(response);
                 if (response.status === 100) {
                     updateUseEffect();
                 }
@@ -62,9 +62,9 @@ const Search = ({ history }) => {
     }
 
     const functionOnClick = (show) => {
-        if(show.video_id){
+        if (show.video_id) {
             history.push({ pathname: '/videoplayer', state: { show_details: show } })
-        }else{
+        } else {
             history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) })
         }
     }
@@ -92,6 +92,7 @@ const Search = ({ history }) => {
                         <div className="searchResultMargin">
                             <div className="row">
                                 {
+                                    show &&
                                     show.map((show, index) => {
                                         return (
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
@@ -108,10 +109,14 @@ const Search = ({ history }) => {
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
                                                         </div>
-                                                        <div className="moviePoster"
-                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
-                                                            <div className="FeNml"></div>
-                                                        </div>
+                                                        {
+                                                            show.logo &&
+                                                            <div className="moviePoster"
+                                                                style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                                <div className="FeNml"></div>
+                                                            </div>
+                                                        }
+
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -137,21 +142,25 @@ const Search = ({ history }) => {
                                                     <section className="movieTextWrapper movieTextWrapperPadding">
                                                         <div className="movieTextFlex">
                                                             <h3>
-                                                                <div className="linkButton movieTextHeading"
-                                                                    onClick={() => { functionOnClick(show) }} >{show.show_name}</div>
+                                                                {
+                                                                    show.show_name &&
+                                                                    <div className="linkButton movieTextHeading"
+                                                                        onClick={() => { functionOnClick(show) }} >{show.show_name}</div>
+                                                                }
+
                                                             </h3>
                                                             <div className="movieCatYear">
                                                                 <div style={{ width: '130px' }}>
-                                                                    <div className="movieYear">
-                                                                        {
-                                                                            show.year ?
-                                                                                <div className="_1MmGl">({show.year}) . {convertTime(show.teaser_duration)}</div>
-                                                                                :
-                                                                                <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
-                                                                        }
-                                                                    </div>
+                                                                    {
+                                                                        show.teaser_duration &&
+                                                                        <div className="movieYear">
+                                                                            <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
+                                                                        </div>
+                                                                    }
+
                                                                     <div className="movieCategory mcMargin">
                                                                         {
+                                                                            show.category_name &&
                                                                             show.category_name.map((item, index) => {
                                                                                 if (index === show.category_name.length - 1) {
                                                                                     return (
@@ -167,7 +176,10 @@ const Search = ({ history }) => {
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                                    {
+                                                                        show.rating &&
+                                                                        <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                                    }
                                                                 </div>
                                                             </div>
                                                         </div>

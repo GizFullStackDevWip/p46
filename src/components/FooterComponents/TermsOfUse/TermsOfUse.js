@@ -5,7 +5,7 @@ const TermsOfUse = () => {
     }, []);
     return (
         <div>
-            <div className="menuCloseJS closeMenuWrapper">
+            <div className="menuCloseJS closeMenuWrapper" style={{marginTop: '-105px'}}>
                 <div className="privacyTermsFlex privacyTermsColor">
                     <div className="privacyTermsWidth">
                         <h1 className="privacyTermsHeading">Terms of Use</h1>
@@ -16,8 +16,7 @@ const TermsOfUse = () => {
                                 <p>This is a legal and binding agreement between you, the user ("user" or "you") of the services, as defined below, and HappiTV stating the terms that govern your use of the site (as defined below) and by accepting these terms of use in any manner or accessing this website, you consent, agree and undertake to abide, be bound by and adhere to the terms of use and the privacy policy accessible and any other terms which govern the site (together referred to as "terms of use" or "terms" or "terms and conditions") and if you do not agree to these terms of use, you are not entitled to avail of / use the services and any use thereafter shall be unauthorized.
                             </p>
                                 <h5>Description of service and acceptance of terms of use</h5>
-                                <p>HappiTV is a company, having its registered office at B7155 Hawthorn Ave apt 5, Los Angeles, CA - 90046.
-                            </p>
+                                
                                 <p>HappiTV provides an online website <a href="https://gethappi.tv/">‘https://gethappi.tv/’</a>
                              A Digital Platform For All LGBTQ+ Audiences Courting Millennials, Gen Xers and Centennials alike, Happi brings the whole community together with empowering voices that bring the best offering in Queer fiction worldwide, Reality TV that matters and a safe haven for the ideas that are changing the world. Whether you come for a laugh, a cathartic cry, information or simple escapism, Happi offers the special content that matters to one of the most coveted demographics in the nation and abroad: The discerning, educated and ready to influence LGBTQ+ audience.
                             </p>

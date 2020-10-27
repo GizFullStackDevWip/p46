@@ -12,7 +12,6 @@ const LiveContainer = () => {
         service.getLiveChannels().then(response => {
             if (response.data) {
                 service.getLiveSchedule(response.data[0].channel_id).then(response => {
-                    console.log('RESPOSNE OF LIVE SCHEDULE API', response.data);
                     setSchedule(response.data);
                 })
             }
@@ -39,6 +38,7 @@ const LiveContainer = () => {
     return (
         <section className="categoryWrapper">
             {
+                schedule &&
                 schedule.length > 0 &&
                 <div className="container categoryHeadWrapper">
                     <section className="categoryWrapper">
@@ -53,36 +53,39 @@ const LiveContainer = () => {
                         <div className="vpRightWrapper">
                             <Carousel responsive={responsive}>
                                 {
+                                    schedule &&
                                     schedule.map((item, index) => {
                                         return (
                                             <section className="movieTextWrapper vpRelatedMargin liveScheduleItem" key={index}>
                                                 <div className="vpRelatedImage">
-                                                    <img alt={item.video_title} src={bannerShowUrl + item.thumbnail} width="100%" />
+                                                    {
+                                                        item.thumbnail && <img alt={item.video_title} src={bannerShowUrl + item.thumbnail} width="100%" />
+                                                    }
                                                     <div className="liveTvBlackOverlay"></div>
-                                                    {/* <div className="liveTvPlay"></div> */}
                                                 </div>
                                                 <div className="movieTextFlex">
                                                     <div className="movieCatYear">
-                                                        {/* {
-                                                            index === 0 ?
-                                                                (
-                                                                    <div className="linkButton movieTextHeading" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>Now Playing</div>
-                                                                ) : index === 1 ? (
-                                                                    <div className="linkButton movieTextHeading" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>Next</div>
-                                                                ) : null
-                                                        } */}
                                                         <div>
                                                             <div className="movieCategory mcMargin webLivePeriod">
                                                                 <div>{item.starttime && convertTimeToLocal(item.starttime)} - {item.endtime && convertTimeToLocal(item.endtime)}</div>
                                                             </div>
                                                             {
                                                                 getDateStatus(item.starttime) &&
-                                                                <div className="linkButton movieTextHeading webLiveDate" style={{ color: '#fff', fontWeight: '800' }} title={item.video_title}>{getDateStatus(item.starttime)}</div>
+                                                                <div className="linkButton movieTextHeading webLiveDate" style={{ color: '#fff', fontWeight: '800' }}
+                                                                    title={item.video_title}>{getDateStatus(item.starttime)}
+                                                                </div>
                                                             }
                                                         </div>
                                                     </div>
-                                                    <h3 className="webLiveTitle">{item.video_title && <div className="linkButton movieTextHeading" title={item.video_title}>{item.video_title}</div>}
-                                                    </h3>
+                                                    {item.video_title &&
+                                                        <h3 className="webLiveTitle">
+                                                            {
+                                                                item.partner_name &&
+                                                                <div className="linkButton movieTextHeading" >{item.partner_name}<br /></div>
+                                                            }
+                                                            <div className="linkButton movieTextHeading" title={item.video_title}>{item.video_title}</div>
+                                                        </h3>
+                                                    }
                                                 </div>
                                             </section>
                                         );

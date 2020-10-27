@@ -6,6 +6,7 @@ import LiveContainer from './LiveContainer';
 import LiveSchedule from './LiveSchedule';
 import PartnerContainer from './PartnerContainer';
 import Notification from '../../common/Notification';
+import $ from 'jquery';
 
 const Home = () => {
     const [category, setCategory] = useState([]);
@@ -15,6 +16,7 @@ const Home = () => {
     const login = useSelector((state) => state.login);
     useEffect(() => {
         window.scrollTo(0, 0);
+        $('.menuItemContainer').addClass('menuClose');
         var singleObj = []
         service.getshowsbyCategory().then(response => {
             if (response.status === 100 && response.data.length > 0) {
@@ -81,6 +83,7 @@ const Home = () => {
                     <PartnerContainer />
                     <div className="allCategoryContainer">
                         {
+                            category &&
                             category.map((category, index) => {
                                 if (category.show_count !== '0') {
                                     return (

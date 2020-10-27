@@ -18,14 +18,14 @@ function getShowDetails(categoryId) {
             'access-token': token
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             show_id: categoryId,
             user_id: uId,
             country_code:countryCode
         }
     };
 
-    return axios.get('https://poppo.tv/platform/bk/api/getShowsDetails', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'getShowsDetails', customConfig).then(
         response => {
             return response.data;
         })

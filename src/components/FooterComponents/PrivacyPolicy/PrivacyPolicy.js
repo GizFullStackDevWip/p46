@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
     }, []);
     return (
         <div>
-            <div className="menuCloseJS closeMenuWrapper">
+            <div className="menuCloseJS closeMenuWrapper" style={{marginTop: '-105px'}}>
                 <div className="privacyTermsFlex privacyTermsColor privacyTermsScroll">
                     <div className="privacyTermsWidth">
                         <h1 className="privacyTermsHeading">Privacy</h1>

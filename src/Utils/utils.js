@@ -9,7 +9,11 @@ export const playerController = (position, playerId) => {
         } else if (screenPosition < position) {
             if (playerStream != null) {
                 if (playerStream.paused) {
-                    playerStream.play();
+                    try {
+                        playerStream.play();
+                    } catch (error) {
+                        console.log('playerStreamError', error)
+                    }
                 }
             }
 
@@ -49,7 +53,7 @@ export const convertSecondsToMin = (d) => {
     var hDisplay = h > 0 ? h + (h == 1 ? " hr, " : " hrs, ") : "";
     var mDisplay = m > 0 ? m + (m == 1 ? " min, " : " mins, ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? " sec" : " secs") : "";
-    return hDisplay + mDisplay; 
+    return hDisplay + mDisplay;
 }
 export const validateName = (stringValue) => {
     if (/^[A-Za-z]+$/.test(stringValue.trim())) {
@@ -74,7 +78,7 @@ export const getDateStatus = (d) => {
         } else {
             let tempDate = moment.utc(d);
             let localDate = moment(tempDate).local();
-            let timeData = localDate.format('DD-MM-YYYY');
+            let timeData = localDate.format('MM-DD-YYYY');
             return timeData;
         }
     } else if (newDate > date) {
@@ -124,4 +128,41 @@ export const getBrowserType = () => {
     if (isEdgeChromium === true) {
         return 'EdgeChromium';
     }
+}
+export const getSessionId = () => {
+    let date = new Date();
+    let millis = date.getTime();
+    console.log('millis==>', millis);
+    let deviceId = localStorage.getItem('deviceId');
+    let sessionId = millis + deviceId;
+    localStorage.setItem('session_id', sessionId);
+}
+
+export const checkOperatingSystem = () => {
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    //Check mobile device is Android
+    if (/android/i.test(userAgent)) {
+        //Add your Code here
+        return 'android';
+    }
+
+    //Check mobile device is IOS
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        //Add your Code here
+        return 'iPhone';
+    }
+
+    //Check device os is Windows (For Laptop and PC)
+    if (navigator.appVersion.indexOf("Win") != -1) {
+        //Add your Code here
+        return 'window';
+    }
+
+    //Check device os is MAC (For Laptop and PC)
+    if (navigator.appVersion.indexOf("Mac") != -1) {
+        //Add your Code here
+        return 'mac';
+    }
+    return 'none';
 }

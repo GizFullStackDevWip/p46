@@ -11,11 +11,9 @@ const Series = () => {
     const parsed = queryString.parse(search);
     const [showDetails, setShowDetails] = useState([]);
     const [episodes, setEpisodes] = useState([]);
-    console.log(parsed.show_id);
     useEffect(() => {
         window.scrollTo(0, 0);
         service.getShowDetails(parsed.show_id).then(response => {
-            console.log(response, 'details ');
             if (response.status == 100 && response.data.length > 0) {
                 setEpisodes(response.data);
                 setShowDetails(response.data[0]);
@@ -95,7 +93,7 @@ const Series = () => {
                                             <div className="vpMiddleInfoSection vpInfoPadding">
                                                 <div className="vpLengthCensor">
                                                     <div className="vpLengthYear">
-                                                        <div className="movieYearText">{showDetails.year}</div>
+                                                        {/* <div className="movieYearText">{showDetails.year}</div> */}
                                                     </div>
                                                     <div className="vpCCwrapper">
                                                         <div>

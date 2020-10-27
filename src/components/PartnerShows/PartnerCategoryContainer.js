@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
-import { service } from '../../network/Partner/service';
-import { useSelector, useDispatch } from 'react-redux';
-import { convertTime, convertSecondsToMin } from '../../Utils/utils';
+import { convertSecondsToMin } from '../../Utils/utils';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 
@@ -11,12 +9,12 @@ const PartnerCategoryContainer = ({ param }) => {
     const [similarShows, setSetimilarShows] = useState(param);
     const history = useHistory();
     const [hover, setHover] = useState(false);
-    const [update, setUpdate] = useState(false);
-    const dispatch = useDispatch();
     const [focusedId, setFocusedId] = useState(-1);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
@@ -35,6 +33,7 @@ const PartnerCategoryContainer = ({ param }) => {
             items: 1
         }
     };
+
     const functionOnclick = (show) => {
         history.push(
             { pathname: '/videoplayer', state: { show_details: show } }
@@ -44,45 +43,17 @@ const PartnerCategoryContainer = ({ param }) => {
         setHover(flag);
         setFocusedId(index);
     }
-    const addtoMylistFunction = (show) => {
-        console.log('SHOWS', show);
-        setUpdate(true);
-        let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
-            service.addToMyPlayList(show.show_id, 1).then(response => {
-                console.log('RESPONSE OF ADDMYPLAYLIST', response);
-                if (response.status === 100) {
-                    setUpdate(false);
-                }
-            })
-        }
-        else {
-            dispatch({ type: "SIGN_IN_BLOCK" });
-        }
-    }
-    const removeFromMylistFunction = (show) => {
-        console.log('SHOWS', show);
-        setUpdate(true);
-        let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
-            service.addToMyPlayList(show.show_id, 0).then(response => {
-                if (response.status === 100) {
-                    setUpdate(false);
-                }
-                console.log('RESPONSE OF REMOVE MYPLAYLIST', response);
-            })
-        } else {
-            dispatch({ type: "SIGN_IN_BLOCK" });
-        }
-    }
     return (
         <Carousel className="row carouselRow" responsive={responsive}>
             {
+                similarShows &&
                 similarShows.map((show, index) => {
                     return (
-                        <div className="col col-3" index={index}>
+                        <div className="col col-3" key={index}>
                             <div className="movieTile">
-                                <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                    onMouseOver={() => { hoverFunction(true, index) }}
+                                    onMouseLeave={() => { hoverFunction(false, index) }}>
                                     <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                         {hover === true && focusedId === index ?
                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
@@ -91,10 +62,13 @@ const PartnerCategoryContainer = ({ param }) => {
                                             </svg>
                                             : null}
                                     </div>
-                                    <div className="moviePoster"
-                                        style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
-                                        <div className="FeNml"></div>
-                                    </div>
+                                    {
+                                        show.thumbnail && <div className="moviePoster"
+                                            style={{ backgroundImage: `url(${imageUrl + show.thumbnail})` }}>
+                                            <div className="FeNml"></div>
+                                        </div>
+                                    }
+
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                         <div className="wishlistButton">
                                             <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -105,19 +79,27 @@ const PartnerCategoryContainer = ({ param }) => {
                                 </div>
                                 <section className="movieTextWrapper movieTextWrapperPadding">
                                     <div className="movieTextFlex">
-                                        <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.video_title}</a></h3>
+                                        <h3>
+                                            {
+                                                show.video_title &&
+                                                <a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.video_title}</a>
+                                            }
+                                        </h3>
                                         <div className="movieCatYear">
                                             <div>
-                                                <div className="movieYear">
-                                                    <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
-                                                </div>
+                                                {
+                                                    show.video_duration &&
+                                                    <div className="movieYear">
+                                                        <div className="_1MmGl">{convertSecondsToMin(show.video_duration)}</div>
+                                                    </div>
+                                                }
+
                                                 {
                                                     show.video_description &&
                                                     <div className="movieCategory mcMargin" >
                                                         {show.video_description.slice(0, 90) + '...'}
                                                     </div>
                                                 }
-
                                             </div>
                                         </div>
                                     </div>

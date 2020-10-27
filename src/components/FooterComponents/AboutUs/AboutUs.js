@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import $ from 'jquery';
 const AboutUs = () => {
 	window.scrollTo(0, 0);
 	useEffect(() => {
+		$('.menuItemContainer').addClass('menuClose');
 	}, []);
 	return (
 		<div>
@@ -144,7 +146,9 @@ const AboutUs = () => {
 															<div className="wpb_single_image wpb_content_element vc_align_center container">
 																<figure className="wpb_wrapper vc_figure ">
 																	<div className="vc_single_image-wrapper   vc_box_border_grey">
-																		<img width="640" height="316" src="./images/aboutus/map3-1.png" className="vc_single_image-img attachment-large" alt="" /></div>
+																		{/* <img width="640" height="316" src={require('../../../images/aboutus/map3-1.png')}
+																		 className="vc_single_image-img attachment-large" alt="" /> */}
+																		 </div>
 																</figure>
 															</div>
 														</div>
@@ -219,7 +223,7 @@ const AboutUs = () => {
 															<div className="wpb_text_column wpb_content_element    container tubi-footer">
 																<div className="wpb_wrapper">
 																	<hr />
-																	<p>The provided agreements on happitv.com are for informational purposes only and do not constitute legal advice.</p>
+																	<p>The provided agreements on HappiTv are for informational purposes only and do not constitute legal advice.</p>
 																</div>
 															</div>
 														</div>

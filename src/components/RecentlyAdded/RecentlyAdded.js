@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
-
+import $ from 'jquery';
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 const queryString = require('query-string');
@@ -17,13 +17,13 @@ const RecentlyAdded = () => {
     const dispatch = useDispatch();
     const parsed = queryString.parse(search);
     const [showList, setShowList] = useState([]);
-    const [showName, setShowName] = useState('');
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const signInBlock = useSelector((state) => state.signInBlock);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        $('.menuItemContainer').addClass('menuClose');
         updateUseEffect();
 
     }, [search]);
@@ -31,7 +31,6 @@ const RecentlyAdded = () => {
     const updateUseEffect = () => {
         service.getRecentlyAddedShows().then(response => {
             var data = response.data;
-            setShowName(parsed.partner_name);
             setShowList(data);
         })
     }
@@ -80,10 +79,11 @@ const RecentlyAdded = () => {
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
-                            <h1 className="SearchResultText">{showName}</h1></div>
+                            <h1 className="SearchResultText">Recently Added</h1></div>
                         <div className="searchResultMargin">
                             <div className="row">
                                 {
+                                    showList &&
                                     showList.map((show, index) => {
                                         return (
                                             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2" key={index}>
@@ -100,10 +100,14 @@ const RecentlyAdded = () => {
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
                                                         </div>
-                                                        <div className="moviePoster"
-                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
-                                                            <div className="FeNml"></div>
-                                                        </div>
+                                                        {
+                                                            show.logo &&
+                                                            <div className="moviePoster"
+                                                                style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                                <div className="FeNml"></div>
+                                                            </div>
+                                                        }
+
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                                             <div className="wishlistButton">
                                                                 <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -132,16 +136,16 @@ const RecentlyAdded = () => {
                                                                 onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}</div></h3>
                                                             <div className="movieCatYear">
                                                                 <div>
-                                                                    <div className="movieYear">
-                                                                        {
-                                                                            show.year ?
-                                                                                <div className="_1MmGl">({show.year}) . {convertTime(show.teaser_duration)}</div>
-                                                                                :
-                                                                                <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
-                                                                        }
-                                                                    </div>
+                                                                    {
+                                                                        show.teaser_duration &&
+                                                                        <div className="movieYear">
+                                                                            <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
+                                                                        </div>
+                                                                    }
+
                                                                     <div className="movieCategory mcMargin">
                                                                         {
+                                                                            show.category_name &&
                                                                             show.category_name.map((item, index) => {
                                                                                 if (index === show.category_name.length - 1) {
                                                                                     return (
@@ -157,7 +161,10 @@ const RecentlyAdded = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div>
-                                                                    <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                                    {
+                                                                        show.rating &&
+                                                                        <div className="movieCensorBox moviecensorText">{show.rating}</div>
+                                                                    }
                                                                 </div>
                                                             </div>
                                                         </div>

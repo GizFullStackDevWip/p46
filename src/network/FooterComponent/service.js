@@ -2,6 +2,7 @@ const axios = require('axios');
 const qs = require('querystring');
 
 
+
 function contact(values) {
     var token = localStorage.getItem('access-token');
     let countryCode = getCookie('country_code');
@@ -16,7 +17,7 @@ function contact(values) {
     const data = {
         'name': values.firstname,
         'email': values.email,
-        'pubid': 50023,
+        'pubid': process.env.REACT_APP_PUBID,
         'state': values.state,
         'reason':values.issues,
         'country': values.country,
@@ -27,7 +28,7 @@ function contact(values) {
         'country_code':countryCode
     }
 
-    return axios.post('https://staging.poppo.tv/sendSupport', qs.stringify(data), customConfig).then(
+    return axios.post(process.env.REACT_APP_API_URL+'sendSupport', qs.stringify(data), customConfig).then(
         response => {
             return response.data;
         })

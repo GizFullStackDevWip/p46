@@ -15,6 +15,7 @@ const Show = ({ param, update }) => {
     const [shows, setShows] = useState([]);
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
+
     useEffect(() => {
         if (param !== undefined) {
             setShows(param);
@@ -47,7 +48,6 @@ const Show = ({ param, update }) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                console.log('ADD TO MYPLAY LIST RESPONSE', response);
                 update.clickHandler();
             })
         } else {
@@ -59,7 +59,6 @@ const Show = ({ param, update }) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                console.log('REMOVE FROM MY PLAYLIST RESPONSE', response);
                 update.clickHandler();
             })
         } else {
@@ -71,6 +70,7 @@ const Show = ({ param, update }) => {
         <div className="carouselContent">
             <Carousel responsive={responsive}>
                 {
+                    shows &&
                     shows.map((show, index) => {
                         return (
                             <div className="movieTile" key={index} style={{ padding: '12px' }} >
@@ -87,9 +87,14 @@ const Show = ({ param, update }) => {
                                         </svg>
 
                                     </div>
-                                    <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
-                                        <div className="FeNml"></div>
-                                    </div>
+                                    {
+                                        show.logo &&
+                                        <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
+                                            <div className="FeNml">
+                                            </div>
+                                        </div>
+                                    }
+
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
                                         <div className="wishlistButton">
                                             <div className={hover === true && focusedId === index ? "wlgradientPosition wlgradientTranslate wlgradientOpen" : "wlgradientPosition wlgradientTranslate wlgradientClose"}
@@ -117,20 +122,23 @@ const Show = ({ param, update }) => {
                                 <section className="movieTextWrapper movieTextWrapperPadding">
                                     <div className="movieTextFlex">
                                         <h3>
-                                            <div className="linkButton movieTextHeading"
-                                                onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}
-                                            </div>
+                                            {
+                                                show.show_name &&
+                                                <div className="linkButton movieTextHeading"
+                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}
+                                                </div>
+                                            }
+
                                         </h3>
                                         <div className="movieCatYear">
                                             <div>
-                                                <div className="movieYear">
-                                                    {
-                                                        show.year ?
-                                                            <div className="_1MmGl">({show.year}) . {convertTime(show.video_duration)}</div>
-                                                            :
-                                                            <div className="_1MmGl">{convertTime(show.video_duration)}</div>
-                                                    }
-                                                </div>
+                                                {
+                                                    show.video_duration &&
+                                                    <div className="movieYear">
+                                                        <div className="_1MmGl">{convertTime(show.video_duration)}</div>
+                                                    </div>
+                                                }
+
                                                 {/* <div className="movieCategory mcMargin">
                                                     {
                                                         show.category_name.map((item, index) => {
@@ -146,9 +154,12 @@ const Show = ({ param, update }) => {
                                                         })
                                                     }
                                                 </div> */}
-                                                <div className="movieCategory mcMargin">
-                                                    <div >{show.category_name}</div>
-                                                </div>
+                                                {
+                                                    show.category_name &&
+                                                    <div className="movieCategory mcMargin">
+                                                        <div >{show.category_name}</div>
+                                                    </div>
+                                                }
                                             </div>
                                             <div>
                                                 {show.rating && <div className="movieCensorBox moviecensorText">{show.rating}</div>}

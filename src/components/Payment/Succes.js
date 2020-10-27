@@ -36,7 +36,6 @@ const Success = () => {
                 });
             });
 
-            console.log(sessionId)
         } else if (paypalData) {
             setInterval(async () => {
                const result = await service.paypalSubscription().then(response => {

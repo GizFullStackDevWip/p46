@@ -1,31 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { service } from "../../network/Home/service";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Link } from "react-router-dom";
 var moment = require("moment");
-const Subscription = ({ param, msgHandler }) => {
-  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
-  const [msgSuccess, setMsgSucess] = useState("");
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
 
+const Subscription = ({ param, msgHandler }) => {
+  
   const onUnsubscribeHandler = (param) => {
     if (
       (param.mode_of_payment == "stripe" ||
@@ -41,6 +20,7 @@ const Subscription = ({ param, msgHandler }) => {
       });
     }
   };
+  
   const subscriptionForMob = () => {
     let subscription = {};
     let isMobile = navigator.userAgent.match(

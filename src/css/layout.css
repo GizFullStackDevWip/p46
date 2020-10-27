@@ -10,7 +10,7 @@ body {
 	font-size: $baseFontSize;
 }
 
-body {
+/* body {
 	font-family: $fontFamily;
 	color: $baseColor;
 	background-color: #f0f3f5;
@@ -38,7 +38,7 @@ body {
 	&.chat-popup-on {
 		overflow: hidden;
 	}
-}
+} */
 #page{
 	overflow: hidden;
 	padding-top: 87px;

@@ -24,7 +24,9 @@ const Movies = ({ }) => {
                             : null
                     }
                     <div className="videoPage" >
-                        <VideoDetails categoryId={parsed} />
+                        {
+                            parsed && <VideoDetails categoryId={parsed} />
+                        }
                         <div itemProp="video" itemScope="" itemType="//schema.org/VideoObject" style={{ display: 'none' }}>
                             <meta itemProp="name" property="media:title" content="Kids TV Cartoon Shows (2019)" />
                             <span property="media:type" content="application/x-shockwave-flash">

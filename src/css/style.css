@@ -2599,7 +2599,7 @@ html.is-ps5 {
 }
 
 .headerMenu.hideHeader {
-    transform: translateY(-120px)
+    transform: translateY(-160px)
 }
 
 .headerMenu._1_yXL {
@@ -4154,7 +4154,7 @@ a.headerMenuItems:hover {
 }
 
 .categoryWrapper .categoryLinkWrapper .categoryHeading ._2hvCx {
-    margin: 2rem 0 1rem
+    margin: 2rem 0 0rem
 }
 
 .categoryWrapper .categoryLinkWrapper .categoryHeading ._2hvCx ._1mK3G {
@@ -5556,11 +5556,15 @@ a.headerMenuItems:hover {
         margin-bottom: 0px !important;
         min-height: 180px;
     }
+    .borderpartner{
+        border-top: 1px solid rgba(211,215,219,.5);
+    }
     .vpContent .vpContainer .vp3Section.youMayLike {
         margin-top: 70px;
-        border-top: 1px solid rgba(211,215,219,.5);
+        /* border-top: 1px solid rgba(211,215,219,.5); */
         padding-top: 45px;
     }
+    
 }
 
 .vpContent .vpContainer .vpMiddleh1 {
@@ -5639,7 +5643,7 @@ a.headerMenuItems:hover {
 @media (min-width: 960px) {
     .vpContent .vpContainer .vpMiddleDesc {
         padding-bottom: 0;
-        margin-bottom: -40px;
+        margin-bottom: 0px;
     }
 }
 
@@ -6372,7 +6376,7 @@ a.headerMenuItems:hover {
 }
 
 .landingPageWrapper .lpWhiteSection .lpMainContainer h2 {
-    margin-top: 5rem;
+    margin-top: 0rem;
     width: 100%;
     font-size: 27px;
     font-weight: 700;
@@ -6388,7 +6392,7 @@ a.headerMenuItems:hover {
         font-weight: 700;
         line-height: 64px;
         letter-spacing: .21px;
-        margin-top: 8rem
+        margin-top: 0rem
     }
 }
 
@@ -8289,7 +8293,7 @@ h2.plHeading {
 .liveVideoWrapper .hpWrapperVideo {
     position: absolute;
     left: 30px;
-    bottom: 100px;
+    bottom: 173px;
     background: rgba(38,38,45,.7);
     width: 350px;
     display: none;
@@ -8363,7 +8367,7 @@ h2.plHeading {
         width: 14px;
     }
     .liveTvGuide {
-        margin: 0px -12px 20px;
+        margin: 0px -12px 0px;
     }
     .mainPlayerBackButton {
         top: 13%;
@@ -8595,7 +8599,7 @@ div {
         }
         .webLiveTitle {
             position: absolute;
-            top: 50px;
+            top: 33px;
         }
         .webLivePeriod {
             position: absolute;
@@ -8949,3 +8953,59 @@ div {
     overflow: auto;
     -webkit-overflow-scrolling: touch
 }
+.linkHover:hover{
+    color: white;
+    opacity: 0.7;
+}
+
+
+@media (max-width: 768px) {
+    .landingPageWrapper .mobileBanner {
+        background-size: 100% 100% !important;
+        background-position: bottom !important;
+        height: 630px !important;
+        }
+    }
+    .landingPageWrapper .mobileBanner {
+        position: relative;
+        width: 100%;
+    }
+
+/* .testclass{
+    padding-left:42%;
+}
+@media (min-width:768px){
+    .testclass{
+        padding-left: 42%;
+    }
+}
+@media (max-width:767px){
+    .testclass{
+        padding-left: 42%;
+    }
+} */
+
+.buttonopen {
+    background-color: #0b78fa;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    padding: 2px 13px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 5px 5px;
+    cursor: pointer;
+  }
+  .player-overlay {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+      z-index:999;
+  }

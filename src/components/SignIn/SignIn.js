@@ -84,7 +84,6 @@ const SignIn = () => {
                 .then(json => localStorage.setItem('ipaddress', json.IPv4));
             setIsGetIP(false);
         }
-        console.log(showId, 'showId');
     }, []);
     const validateEmail = email => {
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
@@ -190,20 +189,8 @@ const SignIn = () => {
             setEmail(' Input--errored');
         }
         if (values.password.trim()) {
-            if (values.password.length >= 6 && values.password.length <= 30) {
-                if (values.password.trim()) {
-                    errors.password = "Password"
-                    setPassword('');
-
-                } else {
-                    errors.password = "Password"
-                    setPassword('');
-                }
-            } else {
-                formIsValid = false
-                setPassword(' Input--errored');
-                errors.password = "Length must be between 6 and 30"
-            }
+            errors.password = "Password"
+            setPassword('');
         } else {
             formIsValid = false
             setPassword(' Input--errored');
@@ -211,6 +198,33 @@ const SignIn = () => {
         }
         setErrors(errors);
         return formIsValid;
+    }
+
+    async function analyticsDevice() {
+        await service.getLocation().then(response => {
+            let currentLocation = {}
+            currentLocation['country_name'] = response.data.country_name
+            currentLocation['city'] = response.data.city
+            currentLocation['latitude'] = response.data.latitude
+            currentLocation['longitude'] = response.data.longitude
+            currentLocation['IPv4'] = response.data.IPv4
+            currentLocation['state'] = response.data.state
+            localStorage.setItem('currentLocation', JSON.stringify(currentLocation));
+            service.analytics().then(response => {
+                console.log('response of device analytics',response);
+                if(response.message){
+                    service.setCookie('device_analytics',true);
+                }
+            })
+        }).catch((error) => {
+            service.analytics().then(response => {
+                console.log('response of device analytics',response);
+                if(response.message){
+                    service.setCookie('device_analytics',true);
+                }
+            })
+        });
+
     }
     const responseFacebook = (response) => {
         setFacebookData(response);
@@ -224,37 +238,56 @@ const SignIn = () => {
                 service.userSubscription(response.data[0].user_id).then(response => {
                     setUserLoggedId(loginFBData.user_id);
                     // if (response.forcibleLogout == false) {
-                        localStorage.setItem('isLoggedIn', true);
-                        localStorage.setItem('userName', loginFBData.first_name);
-                        service.setCookie("userId", userLoggedId, 30);
-                        service.setCookie("isLoggedIn", "true", 30);
-                        var user_sub = response.data;
-                        if (user_sub.length > 0) {
-                            setMsgSucessLogin('You are successfully logged in.');
-                            setIsSuccessLoginMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessLoginMsg(false);
-                            }, 1000);
-                            dispatch({ type: "LOGIN", payload: true });
-                            history.goBack();
+                    localStorage.setItem('isLoggedIn', true);
+                    localStorage.setItem('userName', loginFBData.first_name);
+                    service.setCookie("userId", userLoggedId, 30);
+                    service.setCookie("userEmail", response.email, 30);
+                    service.setCookie("isLoggedIn", "true", 30);
 
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
+                    let analyticsVal = service.getCookie('device_analytics');
+                    if (analyticsVal) {
+                        if (analyticsVal === 'true') {
+                            let storedData = service.getCookie('deviceAnalyticsCheck');
+                            let deviceId = localStorage.getItem('deviceId');
+                            let presentData = deviceId + userLoggedId;
+                            if (storedData !== presentData) {
+                                service.setCookie("deviceAnalyticsCheck", presentData, 30);
+                                analyticsDevice();
+                            }
 
                         } else {
-                            setMsgSucessLogin('You are successfully logged in.');
-                            setIsSuccessLoginMsg(true);
-                            setTimeout(function () {
-                                setIsSuccessLoginMsg(false);
-                            }, 5000);
-                            dispatch({ type: "LOGIN", payload: true });
-                            history.goBack();
-                            // history.push({
-                            //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                            // });
-
+                            let deviceId = localStorage.getItem('deviceId');
+                            let deviceAnalyticsCheck = deviceId + userLoggedId;
+                            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                            analyticsDevice();
                         }
+                    } else {
+                        let deviceId = localStorage.getItem('deviceId');
+                        let deviceAnalyticsCheck = deviceId + userLoggedId;
+                        service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                        analyticsDevice();
+                    }
+
+                    var user_sub = response.data;
+                    if (user_sub.length > 0) {
+                        setMsgSucessLogin('You are successfully logged in.');
+                        setIsSuccessLoginMsg(true);
+                        setTimeout(function () {
+                            setIsSuccessLoginMsg(false);
+                        }, 1000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.goBack();
+
+                    } else {
+                        setMsgSucessLogin('You are successfully logged in.');
+                        setIsSuccessLoginMsg(true);
+                        setTimeout(function () {
+                            setIsSuccessLoginMsg(false);
+                        }, 5000);
+                        dispatch({ type: "LOGIN", payload: true });
+                        history.goBack();
+
+                    }
 
                     // } else {
                     //     setIsErrorLogoutMsg(true);
@@ -302,7 +335,6 @@ const SignIn = () => {
             };;
         });
     }
-
     const onFBLink = () => {
 
         service.facebokLink(FBData.id, FBData.email).then(response => {
@@ -310,37 +342,56 @@ const SignIn = () => {
             service.userSubscription(response.data[0].user_id).then(response => {
                 setUserLoggedId(loginFBData.user_id);
                 // if (response.forcibleLogout == false) {
-                    localStorage.setItem('isLoggedIn', true);
-                    localStorage.setItem('userName', loginFBData.first_name);
-                    service.setCookie("userId", userLoggedId, 30);
-                    service.setCookie("isLoggedIn", "true", 30);
-                    var user_sub = response.data;
-                    if (user_sub.length > 0) {
-                        setMsgSucessLogin('You are successfully logged in.');
-                        setIsSuccessLoginMsg(true);
-                        setTimeout(function () {
-                            setIsSuccessLoginMsg(false);
-                        }, 1000);
-                        dispatch({ type: "LOGIN", payload: true });
-                        history.goBack();
+                localStorage.setItem('isLoggedIn', true);
+                localStorage.setItem('userName', loginFBData.first_name);
+                service.setCookie("userId", userLoggedId, 30);
+                service.setCookie("userEmail", FBData.email, 30);
+                service.setCookie("isLoggedIn", "true", 30);
 
-                        // history.push({
-                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                        // });
+                let analyticsVal = service.getCookie('device_analytics');
+                if (analyticsVal) {
+                    if (analyticsVal === 'true') {
+                        let storedData = service.getCookie('deviceAnalyticsCheck');
+                        let deviceId = localStorage.getItem('deviceId');
+                        let presentData = deviceId + userLoggedId;
+                        if (storedData !== presentData) {
+                            service.setCookie("deviceAnalyticsCheck", presentData, 30);
+                            analyticsDevice();
+                        }
 
                     } else {
-                        setMsgSucessLogin('You are successfully logged in.');
-                        setIsSuccessLoginMsg(true);
-                        setTimeout(function () {
-                            setIsSuccessLoginMsg(false);
-                        }, 5000);
-                        dispatch({ type: "LOGIN", payload: true });
-                        history.goBack();
-                        // history.push({
-                        //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
-                        // });
-
+                        let deviceId = localStorage.getItem('deviceId');
+                        let deviceAnalyticsCheck = deviceId + userLoggedId;
+                        service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                        analyticsDevice();
                     }
+                } else {
+                    let deviceId = localStorage.getItem('deviceId');
+                    let deviceAnalyticsCheck = deviceId + userLoggedId;
+                    service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                    analyticsDevice();
+                }
+
+                var user_sub = response.data;
+                if (user_sub.length > 0) {
+                    setMsgSucessLogin('You are successfully logged in.');
+                    setIsSuccessLoginMsg(true);
+                    setTimeout(function () {
+                        setIsSuccessLoginMsg(false);
+                    }, 1000);
+                    dispatch({ type: "LOGIN", payload: true });
+                    history.goBack();
+
+                } else {
+                    setMsgSucessLogin('You are successfully logged in.');
+                    setIsSuccessLoginMsg(true);
+                    setTimeout(function () {
+                        setIsSuccessLoginMsg(false);
+                    }, 5000);
+                    dispatch({ type: "LOGIN", payload: true });
+                    history.goBack();
+
+                }
 
                 // } else {
                 //     setIsErrorLogoutMsg(true);
@@ -358,8 +409,8 @@ const SignIn = () => {
             setIsEmailExistMsg(false);
         }, 5000);
     }
-
     const onLoginHandler = (e) => {
+        //normal sign in
         e.preventDefault();
         if (validation()) {
             service.login(values).then(response => {
@@ -368,29 +419,57 @@ const SignIn = () => {
                     service.userSubscription(response.data[0].user_id).then(response => {
                         setUserLoggedId(loginData.user_id);
                         // if (response.forcibleLogout == false) {
-                            localStorage.setItem('isLoggedIn', true);
-                            localStorage.setItem('userName', loginData.first_name);
-                            localStorage.setItem('userId', loginData.user_id);
-                            service.setCookie("userId", loginData.user_id, 30);
-                            service.setCookie("isLoggedIn", "true", 30);
-                            var user_sub = response.data;
-                            if (user_sub.length > 0) {
-                                setMsgSucessLogin('You are successfully logged in.');
-                                setIsSuccessLoginMsg(true);
-                                setTimeout(function () {
-                                    setIsSuccessLoginMsg(false);
-                                }, 1000);
-                                dispatch({ type: "LOGIN", payload: true });
-                                history.goBack();
+                        localStorage.setItem('isLoggedIn', true);
+                        localStorage.setItem('userName', loginData.first_name);
+                        localStorage.setItem('userId', loginData.user_id);
+                        service.setCookie("userEmail", loginData.user_email, 30);
+                        service.setCookie("userId", loginData.user_id, 30);
+                        service.setCookie("isLoggedIn", "true", 30);
+
+
+                        let analyticsVal = service.getCookie('device_analytics');
+                        if (analyticsVal) {
+                            if (analyticsVal === 'true') {
+                                console.log('analytic value is true');
+                                let storedData = service.getCookie('deviceAnalyticsCheck');
+                                let deviceId = localStorage.getItem('deviceId');
+                                let presentData = deviceId + loginData.user_id;
+                                if (storedData !== presentData) {
+                                    service.setCookie("deviceAnalyticsCheck", presentData, 30);
+                                    analyticsDevice();
+                                }
+
                             } else {
-                                setMsgSucessLogin('You are successfully logged in.');
-                                setIsSuccessLoginMsg(true);
-                                setTimeout(function () {
-                                    setIsSuccessLoginMsg(false);
-                                }, 5000);
-                                dispatch({ type: "LOGIN", payload: true });
-                                history.goBack();
+                                let deviceId = localStorage.getItem('deviceId');
+                                let deviceAnalyticsCheck = deviceId + loginData.user_id;
+                                service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                                analyticsDevice();
                             }
+                        } else {
+                            let deviceId = localStorage.getItem('deviceId');
+                            let deviceAnalyticsCheck = deviceId + loginData.user_id;
+                            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                            analyticsDevice();
+                        }
+
+                        var user_sub = response.data;
+                        if (user_sub.length > 0) {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 1000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
+                        } else {
+                            setMsgSucessLogin('You are successfully logged in.');
+                            setIsSuccessLoginMsg(true);
+                            setTimeout(function () {
+                                setIsSuccessLoginMsg(false);
+                            }, 5000);
+                            dispatch({ type: "LOGIN", payload: true });
+                            history.goBack();
+                        }
 
                         // } else {
                         //     setIsErrorLogoutMsg(true);
@@ -431,12 +510,36 @@ const SignIn = () => {
         e.preventDefault();
         if (validationVerify()) {
             service.verifyEmail(valuesVerify, userLoggedId).then(response => {
-                console.log('response of the email varification in sign in page', response);
                 if (response.status == 1) {
                     localStorage.setItem('isLoggedIn', true);
                     service.setCookie("userId", userLoggedId, 30);
                     service.setCookie("isLoggedIn", "true", 30);
                     setMsgSucessVerify('Your registration is completed');
+
+                    let analyticsVal = service.getCookie('device_analytics');
+                    if (analyticsVal) {
+                        if (analyticsVal === 'true') {
+                            let storedData = service.getCookie('deviceAnalyticsCheck');
+                            let deviceId = localStorage.getItem('deviceId');
+                            let presentData = deviceId + userLoggedId;
+                            if (storedData !== presentData) {
+                                service.setCookie("deviceAnalyticsCheck", presentData, 30);
+                                analyticsDevice();
+                            }
+
+                        } else {
+                            let deviceId = localStorage.getItem('deviceId');
+                            let deviceAnalyticsCheck = deviceId + userLoggedId;
+                            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                            analyticsDevice();
+                        }
+                    } else {
+                        let deviceId = localStorage.getItem('deviceId');
+                        let deviceAnalyticsCheck = deviceId + userLoggedId;
+                        service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
+                        analyticsDevice();
+                    }
+
                     setIsSuccessVerifyMsg(true);
                     setTimeout(function () {
                         setIsSuccessVerifyMsg(false);
@@ -505,15 +608,11 @@ const SignIn = () => {
             }
         });
     }
-
     window.signInTrigger = () => {
         setIsLogin(true);
         setIsForgot(false);
         document.getElementById('signInLink').style.display = 'none';
     }
-
-
-
     return (
         <div className="pageWrapper">
             <div className="topContainer">
@@ -529,7 +628,6 @@ const SignIn = () => {
                                             <FacebookLogin
                                                 appId="642916756425595"
                                                 isMobile={false}
-                                                // autoLoad={true}
                                                 fields="name,email,picture,first_name,last_name"
                                                 callback={responseFacebook}
                                                 cssClass="button buttonLarge buttonBlock registerFacebook"
@@ -688,17 +786,16 @@ const SignIn = () => {
                                                         }
 
                                                     </div>
-                                                    <div className="row signSubmitWrapper">
-                                                        <div className="col col-sm-6 col-sm-offset-6">
-                                                            <button className="button buttonLarge buttonBlock" type="submit">
-                                                                <div className="buttonBg"></div>
-                                                                <div className="buttonContent">Sign In</div>
-                                                            </button>
-                                                        </div>
+                                                    <div className="regnSubmitWrapper" >
+                                                        <p style={{ paddingTop: '10px', fontSize: '14px' }}> Don't have an account?
+                                                        <Link to={{ pathname: "/register" }}><span className="linkButton">&nbsp; Register</span></Link></p>
+                                                        <button className="button buttonLarge regnSubmit" type="submit">
+                                                            <div className="buttonBg"></div>
+                                                            <div className="buttonContent">Sign In</div>
+                                                        </button>
                                                     </div>
                                                     <div className="signAgree">
-                                                        <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span> <span>·
-                                                    </span> Don't have an account? <Link className="linkButton" to="/register">Register</Link>
+                                                        <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span>
                                                         </p>
                                                     </div>
                                                 </form>

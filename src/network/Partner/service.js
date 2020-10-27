@@ -18,14 +18,14 @@ function getPartnerShows(partnerId) {
             'access-token': token
         },
         params: {
-            pubid: 50023,
+            pubid: process.env.REACT_APP_PUBID,
             partner_id: partnerId,
             user_id: uId,
             country_code:countryCode
         }
     };
 
-    return axios.get('https://poppo.tv/platform/bk/api/partnerVideosByShows', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'partnerVideosByShows', customConfig).then(
         response => {
             return response.data;
         })
@@ -45,14 +45,14 @@ function addToMyPlayList(id,flag){
             'access-token': token,
         },
         params: {
-            pubid:50023,
+            pubid:process.env.REACT_APP_PUBID,
             show_id:id,
             uid:userId,
             watchlistflag:flag,
             country_code:countryCode
         }
     };
-    return axios.get('https://poppo.tv/platform/bk/api/WatchlistShows', customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'WatchlistShows', customConfig).then(
         response => {
             return response.data;
         })
