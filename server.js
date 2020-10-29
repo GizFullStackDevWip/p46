@@ -5,7 +5,6 @@ const path = require('path');
 const fs = require('fs')
 const axios = require('axios');
 
-
 app.get('/', function (request, response) {
   console.log('Home page visited!');
   const filePath = path.resolve(__dirname, './build', 'index.html');
@@ -22,9 +21,6 @@ app.get('/', function (request, response) {
 });
 
 app.get('/home/movies', function (request, response) {
-  // var url_string = "https://gethappi.tv" + request.originalUrl;
-  // var url = new URL(url_string);
-  // var showId = url.searchParams.get("show_id");
   var str = request.originalUrl;
   var str_array = str.split('?');
   var secVar = str_array[1].split('=');

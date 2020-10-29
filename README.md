@@ -1,4 +1,4 @@
-## Demo of adding dynamic metadata tags server side with Create React App
+## HappiTV adding dynamic metadata tags server side with Create React App
 
 To try the demo, first clone this repo.
 
