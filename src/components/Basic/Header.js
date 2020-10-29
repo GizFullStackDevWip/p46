@@ -24,11 +24,13 @@ const Header = () => {
     const [typing, setTyping] = useState(false);
     const [background, setBackground] = useState(false);
     const [mouseHover, setMouseHover] = useState(false);
+    const [update, setUpdate] = useState(true);
 
     const [downloadHoverStyle, setDownloadHoverStyle] = useState([]);
     const [downloadHover, setDownloadHover] = useState(false);
     const [deviceType, setDeviceType] = useState('');
-    const [menuClose, setMenuClose] = useState('menuItemContainer menuClose');
+    // const [menuClose, setMenuClose] = useState('menuItemContainer menuClose');
+    const [menuClose, setMenuClose] = useState(false);
 
 
     currentPathStrings = (currentPath === '/register' ||
@@ -104,24 +106,19 @@ const Header = () => {
     }
 
     const functionLogout = () => {
-        // window.location.reload(false);
-        
-        // setTimeout(() => {
         localStorage.removeItem("userName");
         localStorage.removeItem("userId");
         service.setCookie("isLoggedIn", false, 30);
-        localStorage.setItem('isLoggedIn', 'false');
+        localStorage.removeItem('isLoggedIn');
         dispatch({ type: "LOGOUT" });
         setMouseHover(false);
         eraseCookie('userName');
         eraseCookie('userId');
-        // document.cookie = 'userId' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         eraseCookie('userEmail');
         eraseCookie('subscriptionId');
         history.push({
             pathname: '/'
         });
-        // }, 2000);
     }
 
 
@@ -164,20 +161,30 @@ const Header = () => {
                 }
                 <header className={currentPathStrings ?
                     "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}
-                    onMouseLeave={()=>{setMenuClose('menuItemContainer menuClose')}}
-                    >
+                >
                     <div className="screenContainer">
                         <div className={background === true ? "blackScreen1" : ''}
-                            onMouseEnter={() => { setMouseHover(false); setBackground(false) }}>
+                            onMouseEnter={() => { setMouseHover(false); setBackground(false); setMenuClose(true) }}>
                         </div>
                     </div>
                     <div className="container headerWrapper">
                         <div className="logosection">
                             <div className="logoContain">
-                                <div className="menuIcon" rel="nofollow">
-                                    <span className="hamburger" onMouseOver={()=>{setMenuClose('menuItemContainer')}}></span>
+                                <div className="menuIcon" rel="nofollow" onMouseOver={() => { if (menuClose === false) {
+                                        setMenuClose(true);
+                                    } else {
+                                        setMenuClose(false);
+                                    } }} onClick={() => {
+                                    if (menuClose === false) {
+                                        setMenuClose(true);
+                                    } else {
+                                        setMenuClose(false);
+                                    }
+                                }}>
+                                    <span className="hamburger"></span>
                                 </div>
-                                <div className={menuClose}>
+                                <div className={menuClose === true ? 'menuItemContainer' : 'menuItemContainer menuClose'}
+                                    onMouseLeave={() => { setMenuClose(false); setBackground(false) }}>
                                     <div className="menuWrapper" >
                                         <div className="mobileSearch">
                                             <section className="searchContainer mobileSearchBG">
@@ -198,7 +205,7 @@ const Header = () => {
                                                 }
                                             </section>
                                         </div>
-                                        <div className="menuRowItem" onMouseLeave={()=>{setMenuClose('menuItemContainer menuClose')}}>
+                                        <div className="menuRowItem" onMouseLeave={() => { setMenuClose(true) }}>
                                             <div className="menuWrapperHeight">
                                                 <div className="menuWidth20" >
                                                     <div className="menuCol">
@@ -349,7 +356,7 @@ const Header = () => {
                                                 mouseHover === true ?
                                                     <div onMouseLeave={() => {
                                                         setMouseHover(false);
-                                                            setBackground(false)
+                                                        setBackground(false)
                                                     }}>
                                                         <div className="_30s-L _13opw">
                                                             <a className="ATag activeOnWhite" href="/account">Account Settings</a>
@@ -429,20 +436,30 @@ const Header = () => {
         return (
             <header className={currentPathStrings ?
                 "headerMenu headerWhite headerGradient" : "headerMenu gradientCheck headerGradient"}
-                onMouseLeave={()=>{setMenuClose('menuItemContainer menuClose')}}
             >
                 <div className="screenContainer">
                     <div className={background === true ? "blackScreen1" : ''}
-                        onMouseEnter={() => { setMouseHover(false); setBackground(false) }}>
+                        onMouseEnter={() => { setMouseHover(false); setBackground(false); setMenuClose(false) }}>
                     </div>
                 </div>
                 <div className="container headerWrapper">
                     <div className="logosection">
                         <div className="logoContain">
-                            <div className="menuIcon" rel="nofollow">
-                                <span className="hamburger" onMouseOver={()=>{setMenuClose('menuItemContainer')}}></span>
+                            <div className="menuIcon" rel="nofollow" onMouseOver={() => { if (menuClose === false) {
+                                        setMenuClose(true);
+                                    } else {
+                                        setMenuClose(false);
+                                    } }} onClick={() => {
+                                    if (menuClose === false) {
+                                        setMenuClose(true);
+                                    } else {
+                                        setMenuClose(false);
+                                    }
+                                }}>
+                                <span className="hamburger" ></span>
                             </div>
-                            <div className={menuClose}>
+                            <div className={menuClose === true ? 'menuItemContainer' : 'menuItemContainer menuClose'}
+                                onMouseLeave={() => { setMenuClose(false); setBackground(false) }}>
                                 <div className="menuWrapper" >
                                     <div className="mobileSearch">
                                         <section className="searchContainer mobileSearchBG">
@@ -465,7 +482,7 @@ const Header = () => {
 
                                         </section>
                                     </div>
-                                    <div className="menuRowItem" onMouseLeave={()=>{setMenuClose('menuItemContainer menuClose')}}>
+                                    <div className="menuRowItem" onMouseLeave={() => { setMenuClose('menuItemContainer menuClose') }}>
                                         <div className="menuWrapperHeight">
                                             <div className="menuWidth20" >
                                                 <div className="menuCol">
@@ -614,7 +631,7 @@ const Header = () => {
                                             mouseHover === true ?
                                                 <div onMouseLeave={() => {
                                                     setMouseHover(false);
-                                                        setBackground(false)
+                                                    setBackground(false)
                                                 }}>
                                                     <div className="_30s-L _13opw">
                                                         <a className="ATag activeOnWhite" href="/account">Account Settings</a>

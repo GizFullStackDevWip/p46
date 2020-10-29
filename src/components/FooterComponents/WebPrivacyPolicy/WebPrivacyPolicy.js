@@ -13,7 +13,7 @@ const WebPrivacyPolicy = () => {
                             <div className="privacyTermsContent">
                                 <h5>1. Introduction</h5>
                                 <p>This privacy policy covers the information HappiTV (“platform” or “we”) collects from the user(s) (“user or “you”) of
-                                <a href="https://gethappi.tv/"> https://gethappi.tv//</a>(“website”) and any associated mobile sites, applications (“apps”) or the services provided by the platform on the website (as defined in the terms of use of the website – “terms of use”), which services can be used or accessed on the site.
+                                <a style={{ color:'blue'}} href="https://gethappi.tv/" target="_blank"> ‘https://gethappi.tv//‘ </a>(“website”) and any associated mobile sites, applications (“apps”) or the services provided by the platform on the website (as defined in the terms of use of the website – “terms of use”), which services can be used or accessed on the site.
                             </p>
                                 <p>This privacy policy should be read in conjunction and together with the terms of use.
                                 personal information of a user is collected if the user registers with the website, accesses the website or takes any action on the website or uses or accesses the services as defined in the terms of use.

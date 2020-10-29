@@ -2,18 +2,18 @@ import $ from 'jquery';
 $(document).ready(function () {
   // MENU HOVER FUNCTION
   var menuToggle = 0;
-  $(".menuIcon").hover(function () {
-    if ($(this).next('.menuItemContainer').hasClass('menuClose')) {
-      $(this).next('.menuItemContainer').removeClass('menuClose');
-      $('.pageWrapper').addClass('menuOpened');
-    }
-  });
-  $(".menuWrapper").hover(function () {
-    if ($(this).parent('.menuItemContainer').hasClass('menuClose')) {
-      $(this).parent('.menuItemContainer').removeClass('menuClose');
-      $('.pageWrapper').addClass('menuOpened');
-    }
-  });
+  // $(".menuIcon").hover(function () {
+  //   if ($(this).next('.menuItemContainer').hasClass('menuClose')) {
+  //     $(this).next('.menuItemContainer').removeClass('menuClose');
+  //     $('.pageWrapper').addClass('menuOpened');
+  //   }
+  // });
+  // $(".menuWrapper").hover(function () {
+  //   if ($(this).parent('.menuItemContainer').hasClass('menuClose')) {
+  //     $(this).parent('.menuItemContainer').removeClass('menuClose');
+  //     $('.pageWrapper').addClass('menuOpened');
+  //   }
+  // });
   // $(".closeMenuWrapper").hover(function () {
   //   // if($('.pageWrapper').hasClass('menuOpened')) {
   //   $('.menuItemContainer').addClass('menuClose');
@@ -22,18 +22,18 @@ $(document).ready(function () {
   //   // });
   // });
 
-  $('.menuIcon').on('click', () => {
+  // $('.menuIcon').on('click', () => {
 
-    if ($('.menuItemContainer').hasClass('menuClose')) {
-      $('.menuItemContainer').removeClass('menuClose');
-    } else {
-      if (menuToggle > 0) {
-        $('.menuItemContainer').addClass('menuClose');
-      }
-    }
-    menuToggle += 1;
+  //   if ($('.menuItemContainer').hasClass('menuClose')) {
+  //     $('.menuItemContainer').removeClass('menuClose');
+  //   } else {
+  //     if (menuToggle > 0) {
+  //       $('.menuItemContainer').addClass('menuClose');
+  //     }
+  //   }
+  //   menuToggle += 1;
 
-  })
+  // })
   $('.headerButton').on('click', () => {
     $('.menuItemContainer').addClass('menuClose');
     })

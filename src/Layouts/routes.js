@@ -40,32 +40,33 @@ const routes = () => (
         <div className="closeMenuWrapper">
             <Switch>
                 <PublicRoutes restricted={true} path="/" exact component={Landing} />
-                <PrivateRoutes path="/home" exact component={Home} />
-                <PrivateRoutes path="/home/movies" exact component={Movies} />
-                <PrivateRoutes path="/home/categorylist" exact component={CategoryList} />
-                <PrivateRoutes path="/home/partnershows" exact component={PartnerShows} />
-                <PrivateRoutes path="/home/recentlyadded" exact component={RecentlyAdded} />
                 <PublicRoutes restricted={false} path="/signin" exact component={SignIn} />
                 <PublicRoutes restricted={false} path="/register" exact component={Register} />
-                <PrivateRoutes path="/home/series" exact component={Series} />
                 <PublicRoutes restricted={false} path="/aboutus" exact component={AboutUs} />
-                <PrivateRoutes path="/search" exact component={Search} />
                 <PublicRoutes restricted={false} path="/subscription" exact component={SubscriptionList} />
                 <PublicRoutes restricted={false} path="/success" exact component={Success} />
                 <PublicRoutes restricted={false} path="/error" exact component={Error} />
                 <PublicRoutes restricted={false} path="/payment" exact component={Payment} />
-                <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
                 <PublicRoutes restricted={false} path="/termsandconditions" exact component={WebTermsOfUse} />
                 <PublicRoutes restricted={false} path="/privacypolicy" exact component={WebPrivacyPolicy} />
                 <PublicRoutes restricted={false} path="/termsofuse" exact component={TermsOfUse} />
                 <PublicRoutes restricted={false} path="/policydarkmode" exact component={PrivacyPolicy} />
                 <PublicRoutes restricted={false} path="/pressrelease" exact component={PressRelease} />
-                <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
                 <PublicRoutes restricted={false} path="/contactus" exact component={Contact} />
                 <PublicRoutes restricted={false} path="/contactsupport" exact component={ContactSupport} />
                 <PublicRoutes restricted={false} path="/supportdevice" exact component={SupportedDevices} />
-                <PrivateRoutes path="/partnerList" exact component={PartnerList} />
                 <PublicRoutes restricted={false} path="/cookiepolicy" exact component={CookiePolicy} />
+
+                <PrivateRoutes path="/home" exact component={Home} />
+                <PrivateRoutes path="/home/movies" exact component={Movies} />
+                <PrivateRoutes path="/home/categorylist" exact component={CategoryList} />
+                <PrivateRoutes path="/home/partnershows" exact component={PartnerShows} />
+                <PrivateRoutes path="/home/recentlyadded" exact component={RecentlyAdded} />
+                <PrivateRoutes path="/home/series" exact component={Series} />
+                <PrivateRoutes path="/search" exact component={Search} />
+                <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
+                <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
+                <PrivateRoutes path="/partnerList" exact component={PartnerList} />
             </Switch>
         </div>
         <Footer />

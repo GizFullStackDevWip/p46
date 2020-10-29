@@ -17,7 +17,7 @@ const WebTermsOfUse = () => {
                             </p>
                                 <h5>Description of service and acceptance of terms of use</h5>
                                 
-                                <p>HappiTV provides an online website <a href="https://gethappi.tv/">‘https://gethappi.tv/’</a>
+                                <p>HappiTV provides an online website <a style={{ color:'blue'}} href="https://gethappi.tv/" target="_blank"> ‘https://gethappi.tv/’ </a>
                              A Digital Platform For All LGBTQ+ Audiences Courting Millennials, Gen Xers and Centennials alike, Happi brings the whole community together with empowering voices that bring the best offering in Queer fiction worldwide, Reality TV that matters and a safe haven for the ideas that are changing the world. Whether you come for a laugh, a cathartic cry, information or simple escapism, Happi offers the special content that matters to one of the most coveted demographics in the nation and abroad: The discerning, educated and ready to influence LGBTQ+ audience.
                             </p>
                                 <p>HappiTV content and the partner content will be made available to you through different modes, at the discretion of HappiTV, including via video on demand basis for viewing at the user's discretion at a time chosen by you and download for offline viewing by you. please note that the availability of, and your ability to access, the content or some part of services,

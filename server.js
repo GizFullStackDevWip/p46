@@ -22,9 +22,14 @@ app.get('/', function (request, response) {
 });
 
 app.get('/home/movies', function (request, response) {
-  var url_string = "https://gethappi.tv" + request.originalUrl;
-  var url = new URL(url_string);
-  var showId = url.searchParams.get("show_id");
+  // var url_string = "https://gethappi.tv" + request.originalUrl;
+  // var url = new URL(url_string);
+  // var showId = url.searchParams.get("show_id");
+  var str = request.originalUrl;
+  var str_array = str.split('?');
+  var secVar = str_array[1].split('=');
+
+  var showId = secVar[1];
   var guestId = 74961;
 
   const customConfig = {
@@ -75,7 +80,7 @@ app.get('/home/movies', function (request, response) {
                 } catch (error) {
                   thumb = response2.data.data[0].thumbnail;
                 }
-              console.log('showDetailsThumb', 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/' + thumb)
+                console.log('showDetailsThumb', 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/' + thumb)
 
                 if (videoDesc == null) {
                   videoDesc = response2.data.data[0].video_title;

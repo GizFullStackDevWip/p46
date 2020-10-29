@@ -670,6 +670,33 @@ function analytics() {
         });
 
 }
+function cookiePlicy() {
+    let uId = 74961;
+    let user_id = getCookie('userId');
+    let token = localStorage.getItem('access-token');
+    if (user_id) {
+        uId = user_id;
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+        }
+    };
+    const data = {
+        "uid": uId,
+    }
+    return axios.post(process.env.REACT_APP_API_URL+"acceptCookies", qs.stringify(data), customConfig)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+
+}
 function getGeoInfo() {
     return axios.get('https://ipapi.co/json/').then((response) => {
         return response.data;
@@ -724,4 +751,5 @@ export const service = {
     getGeoInfo,
     getCookie,
     setCookie,
+    cookiePlicy
 };

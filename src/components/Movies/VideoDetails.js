@@ -349,8 +349,8 @@ const VideoDetails = (categoryId, episode) => {
                                                                 <div>
                                                                     <div className="_1TcfH _1Dgjh" style={{ left: '7px' }}>
                                                                         <FacebookShareButton
-                                                                            url={'https://staging.gethappi.tv/home/movies?show_id=' + showDetails.show_id}
-                                                                            quote={showDetails.video_title + ' || ' + showDetails.video_description}
+                                                                            url={'https://gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            quote={showDetails.video_title + ' || ' + showDetails.synopsis}
                                                                             className="share" style={{
                                                                                 display: 'flex',
                                                                                 flexDirection: 'column'

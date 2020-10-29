@@ -16,9 +16,9 @@ var landingImages = [
     , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/GIRLS1440X890%20copy-2.jpg'
     , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/PRIDE1440X890-2.jpg'];
 var landingImagesMobile = [
-    'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile1_portrait(1).jpg'
-    ,'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile2_portrait(1).jpg'
-    ,'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile4_portrait(1).jpg'];
+    'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile1_portrait.jpg'
+    , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile2_portrait.jpg'
+    , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile4_portrait.jpg'];
 
 const Landing = () => {
     const history = useHistory();
