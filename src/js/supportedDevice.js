@@ -107,7 +107,7 @@ $(document).ready(function () {
                  <h2 class="selectedDeviceHeading">Amazon Fire TV</h2>
                  <div class="selectedDeviceContent">
                  <img class="selectedDeviceImage" src=${image0}>
-                 <div class="selectedDeviceText">You can directly install the latest version of the Happi TV  channel to your Amazon Fire TV player from Amazon’s Appstore.</div><a class="selectedDeviceButton" target="_blank" href="https://www.amazon.com/Happitv-Inc/dp/B075NTHVJW">
+                 <div class="selectedDeviceText">You can directly install the latest version of the Happi TV  channel to your Amazon Fire TV player from Amazon’s Appstore.</div><a class="selectedDeviceButton" target="_blank" href="https://www.amazon.com/gp/product/B08LQV7MD1">
                  <button class="button buttonLarge buttonInverse">
                  <div class="buttonBg"></div>
                  <div class="buttonContent">Install Now</div>

@@ -20,7 +20,7 @@ const Footer = () => {
                     <div className="row footerLogoSocial">
                         <Link to="/home">
                             <div className="footerLogo">
-                                <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/favicon.png'} style={{ cursor: 'pointer' }} width={60} />
+                                <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} width={60} />
                             </div>
                         </Link>
                         <div className="_23TJ8"></div>
@@ -95,7 +95,7 @@ const Footer = () => {
                                 <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://apps.apple.com/in/app/happitv/id1535463535') }} rel="noopener" target="_self" className="linkButton">iOS</div></li>
                                 <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://play.google.com/store') }} rel="noopener" target="_self" className="linkButton">Android</div></li>
                                 <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv') }} rel="noopener" target="_self" className="linkButton">Roku</div></li>
-                                <li><div style={{ color: '#fff' }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li>
+                                <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://www.amazon.com/gp/product/B08LQV7MD1') }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li>
                             </ul>
                         </div>
                         <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">

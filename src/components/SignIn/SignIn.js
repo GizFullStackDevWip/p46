@@ -7,6 +7,7 @@ import { Link, useHistory, useLocation, Redirect } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { deviceDetect } from '../../Utils/utils';
 const SignIn = () => {
     let isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn === 'true') {
@@ -17,7 +18,7 @@ const SignIn = () => {
     const dispatch = useDispatch();
 
     const showId = useSelector((state) => state.showId);
-
+    const [isDesktop, setIsDesktop] = useState(deviceDetect());
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [verification_code, setVerification] = useState('');
@@ -211,16 +212,14 @@ const SignIn = () => {
             currentLocation['state'] = response.data.state
             localStorage.setItem('currentLocation', JSON.stringify(currentLocation));
             service.analytics().then(response => {
-                console.log('response of device analytics',response);
-                if(response.message){
-                    service.setCookie('device_analytics',true);
+                if (response.message) {
+                    service.setCookie('device_analytics', true);
                 }
             })
         }).catch((error) => {
             service.analytics().then(response => {
-                console.log('response of device analytics',response);
-                if(response.message){
-                    service.setCookie('device_analytics',true);
+                if (response.message) {
+                    service.setCookie('device_analytics', true);
                 }
             })
         });
@@ -430,7 +429,6 @@ const SignIn = () => {
                         let analyticsVal = service.getCookie('device_analytics');
                         if (analyticsVal) {
                             if (analyticsVal === 'true') {
-                                console.log('analytic value is true');
                                 let storedData = service.getCookie('deviceAnalyticsCheck');
                                 let deviceId = localStorage.getItem('deviceId');
                                 let presentData = deviceId + loginData.user_id;
@@ -786,14 +784,34 @@ const SignIn = () => {
                                                         }
 
                                                     </div>
-                                                    <div className="regnSubmitWrapper" >
-                                                        <p style={{ paddingTop: '10px', fontSize: '14px' }}> Don't have an account?
-                                                        <Link to={{ pathname: "/register" }}><span className="linkButton">&nbsp; Register</span></Link></p>
-                                                        <button className="button buttonLarge regnSubmit" type="submit">
-                                                            <div className="buttonBg"></div>
-                                                            <div className="buttonContent">Sign In</div>
-                                                        </button>
-                                                    </div>
+                                                    {
+                                                        isDesktop ?
+                                                            (
+                                                                <div className="regnSubmitWrapper" >
+                                                                    <p style={{ paddingTop: '10px', fontSize: '14px' }}> Don't have an account?&nbsp;
+                                                        <Link to={{ pathname: "/register" }}><span className="linkButton">Register</span></Link></p>
+                                                                    <button className="button buttonLarge regnSubmit" type="submit">
+                                                                        <div className="buttonBg"></div>
+                                                                        <div className="buttonContent">Sign In</div>
+                                                                    </button>
+                                                                </div>
+                                                            ) :
+                                                            (
+                                                                <div>
+                                                                    <div className="regnSubmitWrapper" >
+                                                                        <button className="button buttonLarge regnSubmit" style={{width:'100vw'}} type="submit">
+                                                                            <div className="buttonBg"></div>
+                                                                            <div className="buttonContent">Sign In</div>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="regnSubmitWrapper" >
+                                                                        <p style={{ paddingLeft: '20px', fontSize: '14px', textAlign: 'center' }}> Don't have an account?&nbsp;
+                                                                <Link to={{ pathname: "/register" }}><span className="linkButton">Register</span></Link></p>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                    }
+
                                                     <div className="signAgree">
                                                         <p><span className="linkButton" onClick={onClickForgot}>Forgot password?</span>
                                                         </p>

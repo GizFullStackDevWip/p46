@@ -8,6 +8,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import { service } from '../../network/service';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, Redirect, Link } from 'react-router-dom';
+import { deviceDetect } from '../../Utils/utils';
 
 const Register = (state) => {
     let isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -17,6 +18,7 @@ const Register = (state) => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const [isDesktop, setIsDesktop] = useState(deviceDetect());
     const [firstname, setFirstName] = useState('');
     const [facebookData, setFacebookData] = useState(null);
     const [facebookId, setFacebookId] = useState('');
@@ -478,14 +480,35 @@ const Register = (state) => {
 
                                                     </div>
 
-                                                    <div className="regnSubmitWrapper" >
-                                                        <p style={{ paddingTop: '10px', fontSize: '14px' }}>Already have an account?
-                                                        <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span></Link></p>
-                                                        <button className="button buttonLarge regnSubmit" type="submit">
-                                                            <div className="buttonBg"></div>
-                                                            <div className="buttonContent">Register</div>
-                                                        </button>
-                                                    </div>
+                                                    {
+                                                        isDesktop ?
+                                                            <div className="regnSubmitWrapper" >
+                                                                <p style={{ paddingTop: '10px', fontSize: '14px' }}>Already have an account?
+                                                                    <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span>
+                                                                    </Link>
+                                                                </p>
+                                                                <button className="button buttonLarge regnSubmit" type="submit">
+                                                                    <div className="buttonBg"></div>
+                                                                    <div className="buttonContent">Register</div>
+                                                                </button>
+                                                            </div> : (
+                                                                <div>
+                                                                    <div className="regnSubmitWrapper" >
+                                                                        <button className="button buttonLarge regnSubmit" style={{width:'100vw'}} type="submit">
+                                                                            <div className="buttonBg"></div>
+                                                                            <div className="buttonContent">Register</div>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="regnSubmitWrapper" >
+                                                                        <p style={{ paddingLeft: '20px', fontSize: '14px', textAlign: 'center' }}>Already have an account?
+                                                                            <Link to={{ pathname: "/signin" }}><span className="linkButton">&nbsp; Sign In</span>
+                                                                            </Link>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+
+                                                            )
+                                                    }
                                                     <div className="regnAgreeContent">
                                                         <p>By registering, you agree to HappiTV
                                                              <Link to="/termsandconditions">

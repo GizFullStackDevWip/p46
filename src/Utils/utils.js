@@ -12,7 +12,7 @@ export const playerController = (position, playerId) => {
                     try {
                         playerStream.play();
                     } catch (error) {
-                        console.log('playerStreamError', error)
+                        // console.log('playerStreamError', error)
                     }
                 }
             }
@@ -132,7 +132,6 @@ export const getBrowserType = () => {
 export const getSessionId = () => {
     let date = new Date();
     let millis = date.getTime();
-    console.log('millis==>', millis);
     let deviceId = localStorage.getItem('deviceId');
     let sessionId = millis + deviceId;
     localStorage.setItem('session_id', sessionId);

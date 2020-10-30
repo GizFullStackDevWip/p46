@@ -23,7 +23,6 @@ const LiveContainer = () => {
     useEffect(() => {
 
         service.getLiveChannels().then(response => {
-            console.log('channel get all->', response.data[0]);
             if (response.data) {
                 setLogo(response.data[0].image);
                 setChannels(response.data[0]);
@@ -50,9 +49,7 @@ const LiveContainer = () => {
     }, []);
     const onPlayingFunction = () => {
         setInterval(() => {
-            console.log('isVideoPause', pause);
             if (pause === false) {
-                console.log('hey time out paying');
                 pause = false
             }
         }, 5000);
@@ -68,7 +65,6 @@ const LiveContainer = () => {
         })
     }
     const onVideoPause = () => {
-        console.log('clicked');
         let event = 'POP04';
         setIsVideoPause(false);
         pause = true
@@ -85,7 +81,7 @@ const LiveContainer = () => {
             <div className="hpLiveBanner">
                 <div className="liveVideoWrapper">
                     {videoPlayer}
-                    <div className="hpWrapperVideo">
+                    <div className="hpWrapperVideo" style={{ height: '88px' }}>
                         <section className="movieTextWrapper vpRelatedMargin">
                             <div className="vpRelatedImage">
                                 {

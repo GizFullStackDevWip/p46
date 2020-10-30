@@ -80,7 +80,7 @@ const VideoPlayer = (history) => {
     const onVideoEnd = () => {
         let event = 'POP05';
         service.onVideoPlayFunction(details, event).then(response => {
-            console.log('on end video');
+            // console.log('on end video');
             historys.push({
                 pathname: '/home'
             });

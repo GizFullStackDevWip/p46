@@ -62,7 +62,6 @@ const App = () => {
     // let analyticsVal = service.getCookie('device_analytics');
     // let userEmail = service.getCookie('userEmail');
     // let userId = service.getCookie('userId');
-    // console.log('userEmail', analyticsVal, userEmail);
     // if (userEmail && userId) {
     //   if (analyticsVal) {
     //     if (analyticsVal === null) {

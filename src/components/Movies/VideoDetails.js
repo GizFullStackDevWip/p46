@@ -103,11 +103,10 @@ const VideoDetails = (categoryId, episode) => {
     const onPlayerReady = () => {
         let event = 'POP02';
         service.onVideoPlayFunction(details, event).then(response => {
-            console.log(response);
+            // console.log(response);
         })
     }
     const onVideoPlay = (videoId) => {
-        console.log('on video play');
         service.checkVideoSubscription(videoId).then(response => {
             let videoDetails = response.data[0];
             if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
@@ -154,13 +153,13 @@ const VideoDetails = (categoryId, episode) => {
     const onVideoPause = () => {
         let event = 'POP04';
         service.onVideoPlayFunction(details, event).then(response => {
-            console.log(response);
+            // console.log(response);
         })
     }
     const onVideoEnd = () => {
         let event = 'POP05';
         service.onVideoPlayFunction(details, event).then(response => {
-            console.log(response);
+            // console.log(response);
         })
     }
     const functionOnclick = (show) => {

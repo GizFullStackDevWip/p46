@@ -6,7 +6,6 @@ const fs = require('fs')
 const axios = require('axios');
 
 app.get('/', function (request, response) {
-  console.log('Home page visited!');
   const filePath = path.resolve(__dirname, './build', 'index.html');
   fs.readFile(filePath, 'utf8', function (err, data) {
     if (err) {
@@ -62,8 +61,6 @@ app.get('/home/movies', function (request, response) {
           };
           axios.get('https://poppo.tv/platform/bk/api/getShowsDetails', showConfig)
             .then(response2 => {
-              console.log('response2', response2.data.data[0])
-              console.log('video_description', response2.data.data[0].video_description)
               fs.readFile(filePath, 'utf8', function (err, data) {
                 if (err) {
                   return console.log(err);
@@ -76,7 +73,6 @@ app.get('/home/movies', function (request, response) {
                 } catch (error) {
                   thumb = response2.data.data[0].thumbnail;
                 }
-                console.log('showDetailsThumb', 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/' + thumb)
 
                 if (videoDesc == null) {
                   videoDesc = response2.data.data[0].video_title;
@@ -102,8 +98,6 @@ app.get('/home/movies', function (request, response) {
       console.log(error);
       response.sendFile(filePath);
     });
-
-  console.log('ShowMoviesShowId', showId);
 
 });
 

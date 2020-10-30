@@ -57,7 +57,6 @@ const Header = () => {
                 setCategory(response.data);
             }
         })
-        console.log('navigator.userAgent', navigator.userAgent);
         let device = checkOperatingSystem();
         setDeviceType(device);
         if (device === 'none' || device === 'window' || device === 'mac') {
@@ -146,7 +145,7 @@ const Header = () => {
                     <header className="headerMenu headerWhite headerGradient"
                         style={{ backgroundColor: '#d9d7d7', marginTop: '-80px', padding: '0px' }}>
                         <div className="container headerWrapper" >
-                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/favicon.png'} style={{ cursor: 'pointer' }} width={40} />
+                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} width={40} />
                             <div className="logosection" style={{ padding: '4px' }}>
                                 <div className="logoContain" style={{ width: '174px' }}>
                                     <span style={{ fontSize: '16px', fontWeight: '700' }}>HappiTV - Watch Movies & TV Shows<br />
@@ -304,7 +303,7 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/favicon.png'} style={{ cursor: 'pointer' }} onClick={() => {
+                                <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} onClick={() => {
                                     setInput('');
                                     history.push({
                                         pathname: '/home'
@@ -359,8 +358,8 @@ const Header = () => {
                                                         setBackground(false)
                                                     }}>
                                                         <div className="_30s-L _13opw">
-                                                            <a className="ATag activeOnWhite" href="/account">Account Settings</a>
-                                                            <a href="/contactsupport" rel="noopener" target="_blank" className="ATag">Help Center</a>
+                                                            {/* <a className="ATag activeOnWhite" href="/account">Account Settings</a> */}
+                                                            <a href="/contactsupport" rel="noopener" target="_blank" className="ATag activeOnWhite">Help Center</a>
                                                             <span className="_1xPbF"></span><div className="ATag signout" onClick={functionLogout}>Sign Out</div>
                                                         </div>
                                                     </div>
@@ -581,7 +580,7 @@ const Header = () => {
                                     </div>
                                 </div>
                             </div>
-                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/favicon.png'} style={{ cursor: 'pointer' }} onClick={() => {
+                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} onClick={() => {
                                 setInput('');
                                 history.push({
                                     pathname: '/home'
@@ -634,8 +633,8 @@ const Header = () => {
                                                     setBackground(false)
                                                 }}>
                                                     <div className="_30s-L _13opw">
-                                                        <a className="ATag activeOnWhite" href="/account">Account Settings</a>
-                                                        <a href="/contactsupport" rel="noopener" target="_blank" className="ATag">Help Center</a>
+                                                        {/* <a className="ATag activeOnWhite" href="/account">Account Settings</a> */}
+                                                        <a href="/contactsupport" rel="noopener" target="_blank" className="ATag activeOnWhite">Help Center</a>
                                                         <span className="_1xPbF"></span><div className="ATag signout" onClick={functionLogout}>Sign Out</div>
                                                     </div>
                                                 </div>
