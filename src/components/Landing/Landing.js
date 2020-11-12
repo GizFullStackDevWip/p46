@@ -13,7 +13,7 @@ import Header from '../Basic/Header';
 var landingImages = [
     'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/BOYSBOAT1440X890-2.jpg'
     , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/BOYSPARK1440X890-2.jpg'
-    , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/GIRLS1440X890%20copy-2.jpg'
+    , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/GIRLS1440X890copy-2.jpg'
     , 'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/PRIDE1440X890-2.jpg'];
 var landingImagesMobile = [
     'https://gizmeon.s.llnwi.net/vod/happitv-static-files/banner/mobile1_portrait.jpg'

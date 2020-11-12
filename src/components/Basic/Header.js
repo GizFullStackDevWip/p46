@@ -129,7 +129,7 @@ const Header = () => {
     }
     const deviceOpenFunction = () => {
         if (deviceType === 'android') {
-            window.location = "https://play.google.com/store";
+            window.location = "https://play.google.com/store/apps/details?id=com.happi.android";
         } else if (deviceType === 'iPhone') {
             window.location = "https://apps.apple.com/in/app/happitv/id1535463535";
         }

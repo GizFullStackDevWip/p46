@@ -9009,3 +9009,10 @@ div {
     background-color: #000;
       z-index:999;
   }
+
+  .mainPlayer {
+      margin-top: 60px;
+      /* margin-left: 4vw; */
+      width: 98vw;
+      height: calc((100vw - 17vw) * 0.5625);
+  }

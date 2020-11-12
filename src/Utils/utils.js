@@ -1,5 +1,5 @@
 import moment from 'moment';
-
+import { service } from '../network/service';
 export const playerController = (position, playerId) => {
     let screenPosition = document.documentElement.scrollTop;
     let playerStream = document.getElementById(playerId);
@@ -164,4 +164,60 @@ export const checkOperatingSystem = () => {
         return 'mac';
     }
     return 'none';
+}
+export const convertAdUrl = (videoDetails) => {
+    const adUrl = videoDetails.ad_link;
+    const currentLocation = JSON.parse(localStorage.getItem('currentLocation'));
+    let uId = 74961;
+    let user_id = service.getCookie('userId');
+    if (user_id) {
+        uId = user_id;
+    }
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const dnt = 0;
+    const ipAddress = currentLocation.IPv4;
+    const latitude = currentLocation.latitude;
+    const longitude = currentLocation.longitude;
+    const userAgent = navigator.userAgent;
+    const deviceIfa = '';
+    const uuid = '';
+    const country = currentLocation.country_name;
+    const deviceId = localStorage.getItem('deviceId');
+    const keyword = videoDetails.category_name;
+    const deviceModel = navigator.userAgent;
+    const deviceMake = navigator.userAgent;
+    const channelId = videoDetails.channel_id;
+    const userId = uId;
+    const videoId = videoDetails.video_id;
+    const bundleId = '';
+    const appName = 'happitv';
+    const duration = videoDetails.video_duration;
+    const appstoreUrl = window.location.href;
+
+    const finalAdurl = adUrl
+    .replace('[WIDTH]',width)
+    .replace('[HEIGHT]',height)
+    .replace('[DNT]',dnt)
+    .replace('[IP_ADDRESS]',ipAddress)
+    .replace('[LATITUDE]',latitude)
+    .replace('[LONGITUDE]',longitude)
+    .replace('[USER_AGENT]',userAgent)
+    .replace('[DEVICE_IFA]',deviceIfa)
+    .replace('[UUID]',uuid)
+    .replace('[COUNTRY]',country)
+    .replace('[DEVICE_ID]',deviceId)
+    .replace('[KEYWORDS]',keyword)
+    .replace('[DEVICE_MODEL]',deviceModel)
+    .replace('[DEVICE_MAKE]',deviceMake)
+    .replace('[CHANNEL_ID]',channelId)
+    .replace('[USER_ID]',userId)
+    .replace('[VIDEO_ID]',videoId)
+    .replace('[BUNDLE]',bundleId)
+    .replace('[APP_NAME]',appName)
+    .replace('[DURATION]',duration)
+    .replace('[APP_STORE_URL]',appstoreUrl);
+    
+    return finalAdurl;
+
 }

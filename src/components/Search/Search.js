@@ -8,6 +8,7 @@ import $ from 'jquery';
 const queryString = require('query-string');
 
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
+var videoImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 
 const Search = ({ history }) => {
     var { search } = useLocation();
@@ -110,11 +111,16 @@ const Search = ({ history }) => {
                                                             </svg>
                                                         </div>
                                                         {
-                                                            show.logo &&
+
+                                                            show.single_video === 0 ?
                                                             <div className="moviePoster"
-                                                                style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                                style={{ backgroundImage: `url(${videoImageUrl + show.thumbnail})` }}>
                                                                 <div className="FeNml"></div>
-                                                            </div>
+                                                            </div>:
+                                                            <div className="moviePoster"
+                                                            style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                            <div className="FeNml"></div>
+                                                        </div>
                                                         }
 
                                                         <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
@@ -145,7 +151,14 @@ const Search = ({ history }) => {
                                                                 {
                                                                     show.show_name &&
                                                                     <div className="linkButton movieTextHeading"
-                                                                        onClick={() => { functionOnClick(show) }} >{show.show_name}</div>
+                                                                        onClick={() => { functionOnClick(show) }} >{show.show_name}&nbsp;
+                                                                            {show.single_video === 0 ?
+                                                                            <div>
+                                                                                ({show.video_title.length > 26 ? show.video_title.slice(0, 26) + '..' : show.video_title})
+                                                                                        </div>
+                                                                            : null
+                                                                        }
+                                                                    </div>
                                                                 }
 
                                                             </h3>

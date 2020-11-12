@@ -114,7 +114,7 @@ const SupportedDevices =()=>{
                                         </a>
                                     </div>
                                     <div className="selectedDeviceNotes"><span className="selectedDeviceHelpText">Minimum Requirements: </span> Firmware 7.7.</div>
-                                    <div className="selectedDeviceNotes"><span className="selectedDeviceHelpText">For a list of countries where HappiTV is available, see our <a href="#" rel="noopener" target="_self" className="linkButton">help article</a></span></div>
+                                    <div className="selectedDeviceNotes"><span className="selectedDeviceHelpText">For a list of countries where HappiTV is available, see our <a href="/contactsupport" rel="noopener" target="_self" className="linkButton">help article</a></span></div>
                                 </div>
                             </div>
                         </div>

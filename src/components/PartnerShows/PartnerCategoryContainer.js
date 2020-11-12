@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
+import ReadMoreAndLess from 'react-read-more-less';
 import { convertSecondsToMin } from '../../Utils/utils';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
@@ -96,8 +97,15 @@ const PartnerCategoryContainer = ({ param }) => {
 
                                                 {
                                                     show.video_description &&
-                                                    <div className="movieCategory mcMargin" >
-                                                        {show.video_description.slice(0, 90) + '...'}
+                                                    <div className="movieCategory mcMargin">
+                                                        <ReadMoreAndLess
+                                                            className="read-more-content"
+                                                            charLimit={85}
+                                                            readMoreText="Read more"
+                                                            readLessText="Read less"
+                                                        >
+                                                            {show.video_description}
+                                                        </ReadMoreAndLess>
                                                     </div>
                                                 }
                                             </div>

@@ -18,7 +18,9 @@ const App = () => {
         var murmur = Fingerprint2.x64hash128(values.join(''), 31);
         localStorage.setItem('deviceId', murmur);
         service.getGeoInfo().then(response => {
+          if(response) {
           service.setCookie("country_code", response.country, 30);
+        }
         })
       })
     })
@@ -29,7 +31,9 @@ const App = () => {
         var murmur = Fingerprint2.x64hash128(values.join(''), 31);
         localStorage.setItem('deviceId', murmur);
         service.getGeoInfo().then(response => {
-          service.setCookie("country_code", response.country, 30);
+          if(response) {
+            service.setCookie("country_code", response.country, 30);
+          }
         })
       })
     }, 500)

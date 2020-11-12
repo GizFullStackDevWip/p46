@@ -39,7 +39,7 @@ const LiveContainer = () => {
                         <div className="categoryLinkWrapper">
                             <div className="categoryHeading">
                                 <Link to="/partnerList">
-                                    <div className="_2hvCx"><h2 className="_1mK3G">Partners</h2>
+                                    <div className="_2hvCx"><h2 className="_1mK3G">Content Creators</h2>
                                     </div>
                                 </Link>
                             </div>
