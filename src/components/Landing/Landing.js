@@ -64,7 +64,7 @@ const Landing = () => {
                                                                 <div className="Xd2tG"></div>
                                                                 <div className="container lpMainContainer">
                                                                     <div className="row lpSectionWrapper">
-                                                                        <div className="col col-12 col-md-12 lpFlexCenter" style={{ paddingTop: '147%', paddingLeft: '13%' }}>
+                                                                        <div className="col col-12 col-md-12 lpFlexCenter" style={{ paddingTop: '69vh', paddingLeft: '10%' }}>
                                                                             <Link to="/register">
                                                                                 <button className="button buttonLarge watchBottom" >
                                                                                     <div className="buttonBg" style={{ background: '#e0559ca1' }}></div>

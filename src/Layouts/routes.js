@@ -27,6 +27,7 @@ import PressRelease from '../components/FooterComponents/PressRelease/PressRelea
 import AdvertiseWithUs from '../components/FooterComponents/AdvertiseWithUs/AdvertiseWithUs';
 import Contact from '../components/FooterComponents/Contact/Contact';
 import ContactSupport from '../components/FooterComponents/ContactSupport/ContactSupport';
+import IosRedirect from '../components/FooterComponents/IosRedirect/IosRedirect';
 import SupportedDevices from '../components/FooterComponents/SupportedDevices/SupportedDevices';
 import PartnerList from '../components/PartnerList/PartnerList';
 import WebTermsOfUse from '../components/FooterComponents/WebTermsOfUse/WebTermsOfUse';
@@ -54,6 +55,7 @@ const routes = () => (
                 <PublicRoutes restricted={false} path="/pressrelease" exact component={PressRelease} />
                 <PublicRoutes restricted={false} path="/contactus" exact component={Contact} />
                 <PublicRoutes restricted={false} path="/contactsupport" exact component={ContactSupport} />
+                <PublicRoutes restricted={false} path="/iosredirect" exact component={IosRedirect} />
                 <PublicRoutes restricted={false} path="/supportdevice" exact component={SupportedDevices} />
                 <PublicRoutes restricted={false} path="/cookiepolicy" exact component={CookiePolicy} />
 

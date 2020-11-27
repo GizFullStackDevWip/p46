@@ -77,7 +77,7 @@ const PartnerShows = () => {
                                                                     <div className="carousel carouselNoMask">
                                                                         <div className="carouselContent">
                                                                             {
-                                                                                item.videos && <PartnerCategoryContainer param={item.videos} />
+                                                                                item.videos && <PartnerCategoryContainer param={item}/>
                                                                             }
                                                                         </div>
                                                                     </div>

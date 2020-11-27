@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { service } from '../../network/GetVideos/service';
 import Carousel from 'react-multi-carousel';
-import ReactHlsPlayer from 'react-hls-player';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { convertTime, deviceDetect, playerController, convertSecondsToMin } from '../../Utils/utils';
@@ -19,8 +18,7 @@ const handleScroll = () => {
         playerController(150, playerId);
     }
 }
-const VideoDetails = (categoryId, episode) => {
-
+const EpisodeDetails = (categoryId) => {
     const history = useHistory();
     const login = useSelector((state) => state.login);
     const [hover, setHover] = useState(false);
@@ -28,7 +26,6 @@ const VideoDetails = (categoryId, episode) => {
     const [other, setOther] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
     const [showDetails, setShowDetails] = useState([]);
-    const [episodeLength, setEpisodeLength] = useState([]);
     const [similarShows, setSimilarShows] = useState([]);
     const [update, setUpdate] = useState(false);
     const [episodeList, setEpisodeList] = useState([]);
@@ -40,41 +37,30 @@ const VideoDetails = (categoryId, episode) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+        var subItem = []
+        service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
             var data = response.data;
-            setEpisodeLength(response.data.length);
             if (data.length > 0) {
                 var videoDetail = '';
                 dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                setShowDetails(response.data[0]);
+                setShowDetails(categoryId.categoryId.show);
                 setCategories(response.data[0].category_name);
-                setEpisodeList(response.data);
-                videoDetail = response.data[0];
-                service.playerToken().then(tokenResponse => {
-                    let newURL = ''
-                    if (videoDetail.teaser) {
-                        let arr = videoDetail.teaser.split('/');
-                        newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[arr.length-2] + '&token=' + tokenResponse.data.data + '&type=trailer';
-                    } else {
-                        newURL = '';
+                data.map((item, index) => {
+                    if (item.video_id !== categoryId.categoryId.show.video_id) {
+                        subItem.push(item);
                     }
-                    setVideoPlayer(<ReactHlsPlayer
-                        id='singleVideo'
-                        url={newURL}
-                        autoplay={true}
-                        controls={true}
-                        width={'100%'}
-                        height={'100%'}
-                        // onPlayerReady={onPlayerReady}
-                        // onPlay={onVideoPlay(videoDetail.video_id)}
-                        // onPause={onVideoPause}
-                        // onEnded={onVideoEnd}
-                    />)
                 })
-                details = videoDetail;
-                service.similarShow(videoDetail.video_id).then(response => {
+                setEpisodeList(subItem);
+                service.similarShow(categoryId.categoryId.show.video_id).then(response => {
                     if (response.status == 100 && response.data.length > 0) {
                         setSimilarShows(response.data);
+                    }
+                })
+                data.map((item, index) => {
+                    if (item.video_id === categoryId.categoryId.show.video_id) {
+                        setShowDetails(item);
+                        videoDetail = item;
+                        details = item;
                     }
                 })
             }
@@ -100,73 +86,20 @@ const VideoDetails = (categoryId, episode) => {
             items: 1
         }
     };
-    const onPlayerReady = () => {
-        let event = 'POP02';
-        service.onVideoPlayFunction(details, event).then(response => {
-            // console.log(response);
-        })
-    }
-    const onVideoPlay = (videoId) => {
-        service.checkVideoSubscription(videoId).then(response => {
-            let videoDetails = response.data[0];
-            if (videoDetails.premium_flag == 1 || videoDetails.payper_flag == 1 || videoDetails.rental_flag == 1) {
-                service.checkUserSubscription().then(useResponse => {
-                    if (useResponse.data.length == 0) {
-                        let isLoggedIn = localStorage.getItem('isLoggedIn');
-                        if (isLoggedIn == 'false') {
-                            history.push({
-                                pathname: '/signin'
-                            });
-                        }
-                        // window.location.href = 'http://stagingweb.gethappi.tv/homeSub?sh=' + videoId;
-                    }
-                    // if (useResponse.forcibleLogout === true) {
-                    //     // signOut()
-                    // }
-                })
-            } else {
-                // console.log('playing...');
-            }
-        })
-        let event = 'POP03';
-        service.onVideoPlayFunction(details, event).then(response => {
-        })
-    }
-    const signOut = () => {
-        let ui = localStorage.getItem('userId')
-        setTimeout(function () {
-            eraseCookie('userName');
-            eraseCookie('userId');
-            eraseCookie('userEmail');
-            eraseCookie('subscriptionId');
-        }, 10);
-        setTimeout(function () {
-            // history.push({
-            //     pathname: '/signin'
-            // });
-            // window.location.href = "http://stagingweb.gethappi.tv/login?lo=1&ui=" + ui;
-        }, 100);
-    }
-    const eraseCookie = (name) => {
-        document.cookie = name + '=; Max-Age=-99999999;';
-    }
-    const onVideoPause = () => {
-        let event = 'POP04';
-        service.onVideoPlayFunction(details, event).then(response => {
-            // console.log(response);
-        })
-    }
-    const onVideoEnd = () => {
-        let event = 'POP05';
-        service.onVideoPlayFunction(details, event).then(response => {
-            // console.log(response);
-        })
-    }
-    const functionOnclick = (show) => {
-        history.push({
-            pathname: '/home/movies',
-            search: encodeURI(`show_id=${show.show_id}`)
-        });
+
+    const functionOnclick = (show, path) => {
+        if (path === 'episode') {
+            history.push({
+                pathname: '/videoplayer',
+                state: { show_details: show, singleVideo: show.single_video }
+            });
+            window.location.reload(false);
+        } else if (path === 'show') {
+            history.push({
+                pathname: '/home/movies',
+                search: encodeURI(`show_id=${show.show_id}`)
+            });
+        }
         setUpdate(true);
     }
     const hoverFunction = (flag, index) => {
@@ -176,21 +109,32 @@ const VideoDetails = (categoryId, episode) => {
     const addtoMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
+            var subItem = []
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 if (response.status === 100) {
-                    service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+                    service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
                             var videoDetail = '';
                             dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                            setShowDetails(response.data[0]);
+                            setShowDetails(categoryId.categoryId.show);
                             setCategories(response.data[0].category_name);
-                            setEpisodeList(response.data);
-                            videoDetail = response.data[0];
-                            details = videoDetail;
-                            service.similarShow(videoDetail.video_id).then(response => {
+                            data.map((item, index) => {
+                                if (item.video_id !== categoryId.categoryId.show.video_id) {
+                                    subItem.push(item);
+                                }
+                            })
+                            setEpisodeList(subItem);
+                            service.similarShow(categoryId.categoryId.show.video_id).then(response => {
                                 if (response.status == 100 && response.data.length > 0) {
                                     setSimilarShows(response.data);
+                                }
+                            })
+                            data.map((item, index) => {
+                                if (item.video_id === categoryId.categoryId.show.video_id) {
+                                    setShowDetails(item);
+                                    videoDetail = item;
+                                    details = item;
                                 }
                             })
                         }
@@ -204,21 +148,32 @@ const VideoDetails = (categoryId, episode) => {
     const removeFromMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
+            var subItem = []
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 if (response.status === 100) {
-                    service.getShowDetails(categoryId.categoryId.show_id).then(response => {
+                    service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
                             var videoDetail = '';
                             dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                            setShowDetails(response.data[0]);
+                            setShowDetails(categoryId.categoryId.show);
                             setCategories(response.data[0].category_name);
-                            setEpisodeList(response.data);
-                            videoDetail = response.data[0];
-                            details = videoDetail;
-                            service.similarShow(videoDetail.video_id).then(response => {
+                            data.map((item, index) => {
+                                if (item.video_id !== categoryId.categoryId.show.video_id) {
+                                    subItem.push(item);
+                                }
+                            })
+                            setEpisodeList(subItem);
+                            service.similarShow(categoryId.categoryId.show.video_id).then(response => {
                                 if (response.status == 100 && response.data.length > 0) {
                                     setSimilarShows(response.data);
+                                }
+                            })
+                            data.map((item, index) => {
+                                if (item.video_id === categoryId.categoryId.show.video_id) {
+                                    setShowDetails(item);
+                                    videoDetail = item;
+                                    details = item;
                                 }
                             })
                         }
@@ -233,88 +188,28 @@ const VideoDetails = (categoryId, episode) => {
         <div className="menuCloseJS closeMenuWrapper">
             <div className="videoPage">
                 <div className="videoPageContainer">
-                    {
-                        showDetails.single_video === 0 ?
-                            <div className="videoPageBGimg"
-                                style={{ backgroundImage: `url(${showsImageUrl + showDetails.logo})` }}
-                            ></div> : (
-                                showDetails.single_video === 1 ?
-                                    <div className="videoPageBGimg"
-                                        style={{ backgroundImage: `url(${showsImageUrl + showDetails.thumbnail})` }}
-                                    ></div>
-                                    :
-                                    null
-                            )
-                    }
-                    <div className="videoPageBGimg"
-                        style={{ backgroundImage: 'linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))' }}>
-                    </div>
-                    {
-                        showDetails.teaser &&
-                        (<div>
-                            {(isDesktop === true) ?
-
-                                <div className="_2xXnB forLargeDevice" >
-                                    <div className="_2KWdL">
-                                        <section className="_1dQ5J">
-                                            <div className="_3tqpT">
-                                                {videoPlayer}
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div> :
-                                <div className="forSmallDevice" >
-                                    <div className="_2KWdL">
-                                        <section className="_1dQ5J">
-                                            <div className="_3tqpT">
-                                                {videoPlayer}
-                                            </div>
-                                        </section>
-                                    </div>
-                                </div>
-                            }
-                        </div>)
-                    }
-
-                    <div className="videoPageContentWrapper videoPageContentPadding">
+                    <div className="videoPageContentWrapper videoPageContentPadding"
+                        style={{ paddingTop: '20px' }}>
                         <div className="vpContent">
                             <div className="container vpContainer vpDesktopContainer">
-                                <div className="row vp3Section movieInfo">
+                                <div className="row vp3Section">
                                     {
-                                        showDetails.show_name &&
+                                        showDetails.video_title &&
                                         <div className="vpMiddleHeading">
-                                            <h1 className="vpMiddleh1">{showDetails.show_name}</h1>
+                                            <h1 className="vpMiddleh1">{showDetails.video_title}</h1>
                                         </div>
                                     }
-                                    <div className="col col-2-5">
+                                    <div className="col col-1-5">
                                         <div className="vpLeftSection">
-                                            {
-                                                showDetails.single_video === 0 ?
-                                                    <div className="vpPoster" style={{ backgroundImage: `url(${showsImageUrl + showDetails.logo})`, marginLeft: '7px' }}
-                                                    ></div> : (
-                                                        showDetails.single_video === 1 ?
-                                                            <div className="vpPoster" style={{ backgroundImage: `url(${showsImageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
-                                                            ></div>
-                                                            :
-                                                            null
-                                                    )
-                                            }
-                                            <div className="vpLeftButtonWrapper vpLeftButtonMargin" style={{ marginTop: '7px' }}>
-                                                <div className="vpLeftButtons"><button className="button buttonLarge buttonBlock vpWatchSeason" style={{ height: '41px' }} onClick={() => {
-                                                    history.push(
-                                                        { pathname: '/videoplayer', state: { show_details: showDetails ,singleVideo : showDetails.single_video} }
-                                                    )
-                                                }}>
-                                                    <div className="buttonBg"></div>
-                                                    <div className="buttonContent">
-                                                        {
-                                                            showDetails.single_video === 0 ?
-                                                                (<div className="vpWatchSeasonText">Watch S01:E01</div>)
-                                                                : showDetails.single_video === 1 ? (<div className="vpWatchSeasonText">Watch Now</div>) : null
-                                                        }
-                                                    </div>
-                                                </button>
 
+                                            {
+                                                showDetails.thumbnail &&
+                                                <div className="vpPoster" style={{ backgroundImage: `url(${videoImageUrl + showDetails.thumbnail})`, marginLeft: '7px' }}
+                                                ></div>
+                                            }
+
+                                            <div className="vpLeftButtonWrapper vpLeftButtonMargin" style={{ marginTop: '7px' }}>
+                                                <div className="vpLeftButtons">
                                                     {
                                                         showDetails.watchlist_flag === 1 ?
                                                             (
@@ -397,7 +292,7 @@ const VideoDetails = (categoryId, episode) => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col col-3-5 movieTagsMob">
+                                    <div className="col col-4-5 movieTagsMob">
                                         <div className="vpMiddleInfoSection vpInfoPadding">
                                             <div className="vpLengthCensor">
                                                 <div className="vpLengthYear">
@@ -433,8 +328,10 @@ const VideoDetails = (categoryId, episode) => {
                                         {
                                             isDesktop === true ?
                                                 showDetails.single_video === 0 ?
-                                                    (<div className="vpMiddleDesc">Partner : <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }} className="linkHover"> {showDetails.partner_name}</Link>
-                                                        <br />Episodes : { episodeLength}<br />{showDetails.synopsis}</div>
+                                                    (<div className="vpMiddleDesc">Partner :
+                                                        <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }}
+                                                            className="linkHover">{showDetails.partner_name}</Link>
+                                                        <br />{showDetails.video_description}</div>
                                                     ) : <div className="vpMiddleDesc">{showDetails.video_description}</div>
                                                 : null
                                         }
@@ -444,8 +341,9 @@ const VideoDetails = (categoryId, episode) => {
                                 {
                                     isDesktop === false ?
                                         showDetails.single_video === 0 ?
-                                            (<div className="">Partner : <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }} className="linkHover"> {showDetails.partner_name}</Link>
-                                                <br />Episodes : { episodeLength}<br />{showDetails.synopsis}</div>
+                                            (<div className="">Partner :
+                                                <Link to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${showDetails.partner_id}&partner_name=${showDetails.partner_name}`) }} className="linkHover">{showDetails.partner_name}</Link>
+                                                <br />{showDetails.synopsis}</div>
                                             ) : <div className="">{showDetails.video_description}</div>
                                         : null
                                 }
@@ -466,15 +364,20 @@ const VideoDetails = (categoryId, episode) => {
                                                                             return (
                                                                                 <div className="col col-3" key={index}>
                                                                                     <div className="movieTile">
-                                                                                        <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
-                                                                                            onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                                                        <div className="movieTileImage"
+                                                                                            className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                                                                            onMouseOver={() => { hoverFunction(true, index) }}
+                                                                                            onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                             <div onClick={() => {
-                                                                                                history.push(
-                                                                                                    { pathname: '/videoplayer', state: { show_details: show ,singleVideo : showDetails.single_video} }
-                                                                                                )
+                                                                                                functionOnclick(show, 'episode')
+                                                                                                // history.push(
+                                                                                                //     { pathname: '/videoplayer', state: { show_details: show } }
+                                                                                                // )
                                                                                             }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                                 {hover === true && focusedId === index ?
-                                                                                                    <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
+                                                                                                    <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet"
+                                                                                                        viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
+                                                                                                        onClick={() => { functionOnclick(show, 'episode') }}>
                                                                                                         <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                                                         <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                                                                     </svg>
@@ -513,9 +416,10 @@ const VideoDetails = (categoryId, episode) => {
                                                                                         <section className="movieTextWrapper movieTextWrapperPadding">
                                                                                             <div className="movieTextFlex">
                                                                                                 <h3><a className="linkButton movieTextHeading" onClick={() => {
-                                                                                                    history.push(
-                                                                                                        { pathname: '/videoplayer', state: { show_details: show ,singleVideo : showDetails.single_video} }
-                                                                                                    )
+                                                                                                    functionOnclick(show, 'episode')
+                                                                                                    // history.push(
+                                                                                                    //     { pathname: '/videoplayer', state: { show_details: show } }
+                                                                                                    // )
                                                                                                 }}>{show.video_title}</a></h3>
                                                                                                 <div className="movieCatYear">
                                                                                                     <div>
@@ -563,7 +467,8 @@ const VideoDetails = (categoryId, episode) => {
                                 <div className="row vp3Section youMayLike">
                                     <div className="col">
                                         <div>
-                                            <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>You May Also Like</div>
+                                            <div className="heading"
+                                                style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>You May Also Like</div>
                                             <div className="carousel carouselNoMask">
                                                 <div className="carouselContent">
                                                     <Carousel className="row carouselRow" responsive={responsive}>
@@ -572,10 +477,15 @@ const VideoDetails = (categoryId, episode) => {
                                                                 return (
                                                                     <div className="col col-3" key={index}>
                                                                         <div className="movieTile">
-                                                                            <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index} onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
-                                                                                <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
+                                                                            <div className="movieTileImage"
+                                                                                className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
+                                                                                onMouseOver={() => { hoverFunction(true, index) }}
+                                                                                onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                                                <div onClick={() => { functionOnclick(show, 'show') }}
+                                                                                    className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                     {hover === true && focusedId === index ?
-                                                                                        <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
+                                                                                        <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
+                                                                                            onClick={() => { functionOnclick(show, 'show') }}>
                                                                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                                                         </svg>
@@ -610,7 +520,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                             </div>
                                                                             <section className="movieTextWrapper movieTextWrapperPadding">
                                                                                 <div className="movieTextFlex">
-                                                                                    <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show) }}>{show.show_name}</a></h3>
+                                                                                    <h3><a className="linkButton movieTextHeading" onClick={() => { functionOnclick(show, 'show') }}>{show.show_name}</a></h3>
                                                                                     <div className="movieCatYear">
                                                                                         <div>
                                                                                             <div className="movieYear">
@@ -657,4 +567,4 @@ const VideoDetails = (categoryId, episode) => {
         </div >
     );
 }
-export default VideoDetails;
+export default EpisodeDetails;

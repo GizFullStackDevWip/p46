@@ -3018,7 +3018,7 @@ html.is-ps5 {
     line-height: 16px;
     letter-spacing: .5px;
     line-height: 2.18;
-    color: #707c86;
+    color: rgb(224, 85, 156);
     text-transform: uppercase;
     padding-bottom: 4px
 }
@@ -3027,7 +3027,7 @@ a.headerMenuItems {
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
-    color: #26262d!important;
+    color: rgb(224, 85, 156) !important;
     line-height: 1.71;
     white-space: nowrap;
     text-overflow: ellipsis;

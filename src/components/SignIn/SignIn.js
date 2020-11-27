@@ -624,7 +624,7 @@ const SignIn = () => {
                                         <button className="button buttonLarge buttonBlock registerFacebook">
                                             <div className="buttonBg"></div>
                                             <FacebookLogin
-                                                appId="642916756425595"
+                                                appId="677536043137548"
                                                 isMobile={false}
                                                 fields="name,email,picture,first_name,last_name"
                                                 callback={responseFacebook}

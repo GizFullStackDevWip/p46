@@ -316,7 +316,7 @@ div.form-field{
 		}
 
 	}
-	.tubi-select {
+	.happi-select {
 		position: relative;
 		background-color: $white;
 		display: inline-block;
@@ -427,7 +427,7 @@ div.form-field{
 		label.error{
 			color: $violet;
 		}
-		.tubi-select {
+		.happi-select {
 			& > .select-selected {
 				color: $white;
 				border: solid 1px $violet;

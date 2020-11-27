@@ -1,13 +1,13 @@
-.tubi-header > .main-bg:after {
+.happi-header > .main-bg:after {
     background-image: url(../images/advertise/main-bg.JPG);
 }
-.tubi-header {
+.happi-header {
     height: 810px;
 }
-.tubi-header .header-content h1 {
+.happi-header .header-content h1 {
     max-width: 100%;
 }
-.tubi-header .header-content h1 span {
+.happi-header .header-content h1 span {
     max-width: 650px;
     margin: 0 auto;
 }
@@ -15,7 +15,7 @@
     margin-bottom: 4.2vw !important;
 }
 @media screen and (max-width: 768px) {
-    .tubi-header {
+    .happi-header {
         height: 608px;
     }    
 }
@@ -64,7 +64,7 @@
     margin-bottom: 90px !important;
 }
 
-.tubi_images_carousel_wrapper figcaption {
+.happi_images_carousel_wrapper figcaption {
 	font-size:1.5rem;
 	font-style:normal;
 	color:#000;
@@ -74,17 +74,17 @@
 #page {
 	padding-top:0;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item img, #content .tubi-service-list .wpb_wrapper .service-item img {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item img, #content .happi-service-list .wpb_wrapper .service-item img {
 	max-width:none;
 }
-#content .tubi-service-list-wrapper .tubi-service-list.small h5 {
+#content .happi-service-list-wrapper .happi-service-list.small h5 {
 	line-height:1.1;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image {
 	padding:0 !important;
 	padding-bottom:22px !important;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-bottom > div {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-bottom > div {
 	top:80%;
 	left:unset;
 	padding:0;
@@ -92,7 +92,7 @@
 -ms-transform: none;
 transform: none;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-middle > div {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-middle > div {
 	top:45%;
 	left:unset;
 	padding:0;
@@ -100,7 +100,7 @@ transform: none;
 -ms-transform: none;
 transform: none;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-top > div {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-top > div {
 	top:5%;
 	left:unset;
 	padding:0;
@@ -108,7 +108,7 @@ transform: none;
 -ms-transform: none;
 transform: none;
 }
-#content .tubi-service-list-wrapper .tubi-service-list .wpb_wrapper .service-item.copy-over-image > div h5 {
+#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image > div h5 {
 	color:#fff !important;
 }
 .b-close {
@@ -123,7 +123,7 @@ height: 30px;
 .mega-model-popup img {
 	display:none;
 }
-.tubi-press.list #press-wrapper .file-item h6 {
+.happi-press.list #press-wrapper .file-item h6 {
 	padding-bottom:15px;
 }
 .page-id-50 .press-subheading {
@@ -153,10 +153,10 @@ align-items: initial !important;
 	margin-top:-125px;
 	margin-bottom:175px;
 }
-.page-id-216 .tubi-text-banner a.btn {
+.page-id-216 .happi-text-banner a.btn {
 	display:none !important;
 }
-.page-id-216 .tubi-text-banner.small {
+.page-id-216 .happi-text-banner.small {
 	padding: 35px 40px 60px;
 }
 .page-id-41 .model-popup-btn {
@@ -172,10 +172,10 @@ border: none;
 	max-width:900px;
 	height:auto;
 }
-.content-grid .grid-list li .tubi-quotes.quote-right .quote {
+.content-grid .grid-list li .happi-quotes.quote-right .quote {
 	padding: 50px 0 0 50px;
 }
-.content-grid .grid-list li .tubi-quotes.quote-left .quote {
+.content-grid .grid-list li .happi-quotes.quote-left .quote {
 	background-position: 0 0;
 }
 .post-thumbnail {
@@ -184,10 +184,10 @@ border: none;
 .video-slider {
 	max-width:1000px;
 }
-.page-id-40 div.form-field .tubi-select > .select-selected {
+.page-id-40 div.form-field .happi-select > .select-selected {
 	/*margin-top:-2px;*/
 }
-.page-id-20 div.form-field .tubi-select > .select-selected.select-arrow-active, .page-id-50 div.form-field .tubi-select > .select-selected.select-arrow-active {
+.page-id-20 div.form-field .happi-select > .select-selected.select-arrow-active, .page-id-50 div.form-field .happi-select > .select-selected.select-arrow-active {
 	margin-bottom:1px;
 }
 p a {
@@ -199,20 +199,20 @@ p a {
 #disclaimer .btn {
 	display:none;
 }
-.container.tubi-text-banner {
+.container.happi-text-banner {
 	max-width:1220px;
 }
-.tubi-brand-assets .file-item h6 > span > span.ext, .tubi-brand-assets .file-item h6 > span > span {
+.happi-brand-assets .file-item h6 > span > span.ext, .happi-brand-assets .file-item h6 > span > span {
 color:#707C86;
 
 }
 .file-field label.slate-grey {
 	padding-bottom:0;
 }
-.tubi-check-list .wpb_wrapper .check-item {
+.happi-check-list .wpb_wrapper .check-item {
 	padding:20px 0;
 }
-.tubi-check-list .wpb_wrapper .check-item > div h6 + p {
+.happi-check-list .wpb_wrapper .check-item > div h6 + p {
 	padding-top:0;
 }
 a:visited {
@@ -232,10 +232,10 @@ a.btn.white span {
 		margin-top:-125px;
 		margin-bottom:125px;
 	}
-	.content-grid .grid-list li .tubi-quotes.quote-right .quote {
+	.content-grid .grid-list li .happi-quotes.quote-right .quote {
 	padding: 50px 0 20px 0px;
 }
-	#content .tubi-service-list.b-border .wpb_wrapper .service-item:last-child:after {
+	#content .happi-service-list.b-border .wpb_wrapper .service-item:last-child:after {
 		content: "";
 display: block;
 position: absolute;
@@ -251,7 +251,7 @@ background-image: -o-linear-gradient(left, #bc067b, #fe322a 69%, #ff501a;
 background-image: linear-gradient(to right, #bc067b, #fe322a 69%, #ff501a;
 	}
 }
-#content .tubi-service-list .wpb_wrapper .service-item img {
+#content .happi-service-list .wpb_wrapper .service-item img {
 	max-width:200px;
 }
 .leadership .service-item img {

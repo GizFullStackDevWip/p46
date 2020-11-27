@@ -15,7 +15,7 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner">
                                             <div className="wpb_wrapper">
-                                                <div className="tubi-header">
+                                                <div className="happi-header">
                                                     <div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
                                                     <div className="header-content">
                                                         <h1>Let your Brand Stand Out with HappiTV<span>
@@ -30,7 +30,7 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner">
                                             <div className="wpb_wrapper">
-                                                <div className="wpb_text_column wpb_content_element  normal w_780  wpb_animate_when_almost_visible wpb_slideInUp slideInUp test-class1 test-class2 container tubi-content wpb_start_animation animated" id="test_id">
+                                                <div className="wpb_text_column wpb_content_element  normal w_780  wpb_animate_when_almost_visible wpb_slideInUp slideInUp test-class1 test-class2 container happi-content wpb_start_animation animated" id="test_id">
                                                     <div className="wpb_wrapper">
                                                         <h2>Why HappiTV</h2>
                                                         <p><span style={{ fontWeight: '400' }}>
@@ -45,8 +45,8 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner vc_custom_1586820513875">
                                             <div className="wpb_wrapper">
-                                                <div className="tubi-service-list-wrapper ">
-                                                    <div className="wpb_text_column wpb_content_element  normal normal   container tubi-service-list">
+                                                <div className="happi-service-list-wrapper ">
+                                                    <div className="wpb_text_column wpb_content_element  normal normal   container happi-service-list">
                                                         <div className="wpb_wrapper">
                                                             <div className="service-item ">
                                                                  <img src={require('../../..//images/advertise/premium-content.png')}  alt="" style={{ width: '100%' }} />
@@ -87,12 +87,12 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner">
                                             <div className="wpb_wrapper">
-                                                <div className="wpb_text_column wpb_content_element   normal normal  vc_custom_1581602957907 ad-experience container tubi-text-banner"  style={{ backgroundImage: `url(${image})`,paddingBottom: '60px' }}>
+                                                <div className="wpb_text_column wpb_content_element   normal normal  vc_custom_1581602957907 ad-experience container happi-text-banner"  style={{ backgroundImage: `url(${image})`,paddingBottom: '60px' }}>
                                                     <div className="wpb_wrapper">
                                                         <h2><img src={require('../../../images/advertise/ad-counter.svg')}
                                                          alt="" />Experience</h2>
                                                         <p>Tell your brand story through full screen, immersive environments and make meaningful connections with
-                                                        <br /> our viewers.</p> <a className="btn white " href="https://corporate.tubitv.com/partners/advertisewithus/ad-experience/" title="Legal" target="">
+                                                        <br /> our viewers.</p> <a className="btn white " href="https://corporate.happitv.com/partners/advertisewithus/ad-experience/" title="Legal" target="">
                                                             <span>Learn More</span></a>
                                                     </div>
                                                 </div>
@@ -109,7 +109,7 @@ const AdvertiseWithUs = () => {
                                                         <div className="vc_single_image-wrapper   vc_box_border_grey">
                                                             <img width="1526" height="314" src={require("../../../images/advertise/experiance.jpg")}
                                                                 className="vc_single_image-img attachment-full" alt=""
-                                                                srcSet="https://corporate.tubitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices.png 1526w, https://corporate.tubitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-300x62.png 300w, https://corporate.tubitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-1024x211.png 1024w, https://corporate.tubitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-768x158.png 768w"
+                                                                srcSet="https://corporate.happitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices.png 1526w, https://corporate.happitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-300x62.png 300w, https://corporate.happitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-1024x211.png 1024w, https://corporate.happitv.com/wp-content/uploads/2020/03/advertise-anywhere-devices-768x158.png 768w"
                                                                 sizes="(max-width: 1526px) 100vw, 1526px" />
                                                         </div>
                                                     </figure>
@@ -122,7 +122,7 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner">
                                             <div className="wpb_wrapper">
-                                                <div className="wpb_text_column wpb_content_element  normal w_780  test-class1 test-class2 container tubi-content" id="test_id">
+                                                <div className="wpb_text_column wpb_content_element  normal w_780  test-class1 test-class2 container happi-content" id="test_id">
                                                     <div className="wpb_wrapper">
                                                         <h2>Advertise Anywhere</h2>
                                                         <p>Advertising with HappiTV is available on Android, iOS, Roku, Amazon Fire TV and the web.</p>
@@ -136,7 +136,7 @@ const AdvertiseWithUs = () => {
                                     <div className="wpb_column vc_column_container vc_col-sm-12">
                                         <div className="vc_column-inner">
                                             <div className="wpb_wrapper">
-                                                <div className=" tubi-gallery container">
+                                                <div className=" happi-gallery container">
                                                     <div className="wpb_wrapper">
                                                         <div className=" wpb_image_grid" data-itemwidth="400" data-interval="3">
                                                             <ul className="image_grid" style={{maxWidth: '600px'}}>

@@ -7,7 +7,7 @@ import { convertSecondsToMin } from '../../Utils/utils';
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 
 const PartnerCategoryContainer = ({ param }) => {
-    const [similarShows, setSetimilarShows] = useState(param);
+    const [similarShows, setSetimilarShows] = useState(param.videos);
     const history = useHistory();
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
@@ -37,7 +37,7 @@ const PartnerCategoryContainer = ({ param }) => {
 
     const functionOnclick = (show) => {
         history.push(
-            { pathname: '/videoplayer', state: { show_details: show } }
+            { pathname: '/videoplayer', state: { show_details: show ,singleVideo : param.single_video} }
         )
     }
     const hoverFunction = (flag, index) => {
