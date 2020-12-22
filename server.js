@@ -61,27 +61,33 @@ app.get('/home/movies', function (request, response) {
           };
           axios.get('https://poppo.tv/platform/bk/api/getShowsDetails', showConfig)
             .then(response2 => {
-              
               fs.readFile(filePath, 'utf8', function (err, data) {
                 if (err) {
                   return console.log(err);
                 }
                 data = data.replace(/\$OG_TITLE/g, 'HappiTV');
                 if (response2.data.data) {
-                  var videoDesc = response2.data.data[0].video_description;
-                  var thumb = '';
-                  try {
-                    thumb = response2.data.data[0].logo;
-                  } catch (error) {
-                    thumb = response2.data.data[0].thumbnail;
-                  }
+                  let exists = response2.data.data.some(a => typeof a == 'object');
+                  if (exists === true) {
+                    var videoDesc = '';
+                    videoDesc = response2.data.data[0].video_description;
+                    var thumb = '';
+                    try {
+                      thumb = response2.data.data[0].logo;
+                    } catch (error) {
+                      thumb = response2.data.data[0].thumbnail;
+                    }
 
-                  if (videoDesc == null) {
-                    videoDesc = response2.data.data[0].video_title;
+                    if (videoDesc == null) {
+                      videoDesc = response2.data.data[0].video_title;
+                    }
+                    data = data.replace(/\$OG_DESCRIPTION/g, videoDesc);
+                    data = data.replace(/\$OG_IMAGE/g, 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/' + thumb);
+                  } else {
+                    console.log('no data array exist')
                   }
-                  data = data.replace(/\$OG_DESCRIPTION/g, videoDesc);
-                  data = data.replace(/\$OG_IMAGE/g, 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/' + thumb);
-
+                } else {
+                  console.log('no data object exist')
                 }
                 result = data.replace(/\$OG_URL/g, 'https://gethappi.tv' + request.originalUrl);
                 response.send(result);

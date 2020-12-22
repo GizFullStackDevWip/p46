@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const SupportedDeviceSection = () => {
     return (
-        <div className="container lpMainContainer">
+        <div className="container lpMainContainer" style={{marginBottom: '0'}}>
             <div className="row lpFlexWrapper" style={{ paddingTop: '36px',fontSize: '16pt' }}>
             </div>
             <div className="row lpFlexWrapper">
@@ -72,14 +72,14 @@ const SupportedDeviceSection = () => {
                             </svg>
                         </div> */}
                     </div>
-                    <div className="lpFlexWrapper">
+                    {/* <div className="lpFlexWrapper">
                         <Link to="/supportdevice">
                             <button className="button buttonLarge buttonSecondary buttonInverse">
                                 <div className="buttonBg"></div>
                                 <div className="buttonContent">Supported Devices</div>
                             </button>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
