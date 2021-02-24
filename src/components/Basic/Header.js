@@ -230,7 +230,7 @@ const Header = () => {
                                                         <div className="menuListItems">
                                                             <div className="menuInnerCol">
                                                                 <Link to={{ pathname: '/home/recentlyadded' }}>
-                                                                    <div className="linkButton headerMenuItems">Recently Added </div>
+                                                                    <div className="linkButton headerMenuItems">New Arrivals </div>
                                                                 </Link>
                                                             </div>
                                                         </div>
@@ -246,8 +246,12 @@ const Header = () => {
                                                             <Link to={{ pathname: '/contactus' }}>
                                                                 <div className="linkButton headerMenuItems">Contact</div>
                                                             </Link>
-
                                                         </div>
+                                                        <div className="menuListItems">
+                                                        <Link to={{ pathname: '/tv' }}>
+                                                            <div className="linkButton headerMenuItems">Link TV App</div>
+                                                        </Link>
+                                                    </div>
                                                         <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                         <div className="menuListItems">
                                                             <div className="menuInnerCol">
@@ -507,7 +511,7 @@ const Header = () => {
                                                     <div className="menuListItems">
                                                         <div className="menuInnerCol">
                                                             <Link to={{ pathname: '/home/recentlyadded' }}>
-                                                                <div className="linkButton headerMenuItems">Recently Added </div>
+                                                                <div className="linkButton headerMenuItems">New Arrivals </div>
                                                             </Link>
                                                         </div>
                                                     </div>
@@ -523,7 +527,11 @@ const Header = () => {
                                                         <Link to={{ pathname: '/contactus' }}>
                                                             <div className="linkButton headerMenuItems">Contact</div>
                                                         </Link>
-
+                                                    </div>
+                                                    <div className="menuListItems">
+                                                        <Link to={{ pathname: '/tv' }}>
+                                                            <div className="linkButton headerMenuItems">Link TV App</div>
+                                                        </Link>
                                                     </div>
                                                     <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                     <div className="menuListItems">

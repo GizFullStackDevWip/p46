@@ -64,7 +64,7 @@ const Search = ({ history }) => {
 
     const functionOnClick = (show) => {
         if (show.video_id) {
-            history.push({ pathname: '/videoplayer', state: { show_details: show ,singleVideo : show.single_video} })
+            history.push({ pathname: '/videoplayer',search: encodeURI(`show_id=${show.show_id}&single_video=${show.single_video}&video_id=${show.video_id}`)})
         } else {
             history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) })
         }

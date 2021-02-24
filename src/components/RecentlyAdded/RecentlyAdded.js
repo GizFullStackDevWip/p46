@@ -79,7 +79,7 @@ const RecentlyAdded = () => {
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
-                            <h1 className="SearchResultText">Recently Added</h1></div>
+                            <h1 className="SearchResultText">New Arrivals</h1></div>
                         <div className="searchResultMargin">
                             <div className="row">
                                 {

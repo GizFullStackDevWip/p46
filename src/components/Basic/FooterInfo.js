@@ -45,7 +45,7 @@ const FooterInfo = () => {
                         </g>
                     </svg>
                 </a>
-                <a href="https://play.google.com/store" rel="noopener" target="_blank" className="linkButton">
+                <a href="https://play.google.com/store/apps/details?id=com.happi.android" rel="noopener" target="_blank" className="linkButton">
                     <svg locale="[object Object]" className="svgIcon appStoreGoogle" preserveAspectRatio="xMidYMid meet" viewBox="0 0 180 53.3" style={{ fill: 'rgb(32, 32, 38)' }}>
                         <g id="g10" transform="matrix(1.33333 0 0 -1.33333 0 80)">
                             <g id="g12" transform="scale(.1)">

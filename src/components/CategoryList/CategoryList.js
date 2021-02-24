@@ -91,7 +91,7 @@ const CategoryList = () => {
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
-                            <h1 className="SearchResultText">{showName}</h1>
+                            <h1 className="SearchResultText">{showName.replace(/%20/g,' ')}</h1>
                             {
                                 parsed.category_id === 'playlist' ?
                                     <span style={{ fontWeight: '600', fontSize: '9pt', color: 'white' }}>To add to your playlist, click "Add To My List" on any movie title or show and it will populate here.</span>

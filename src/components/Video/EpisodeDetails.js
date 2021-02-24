@@ -18,7 +18,7 @@ const handleScroll = () => {
         playerController(150, playerId);
     }
 }
-const EpisodeDetails = (categoryId) => {
+const EpisodeDetails = (showId, videoId) => {
     const history = useHistory();
     const login = useSelector((state) => state.login);
     const [hover, setHover] = useState(false);
@@ -38,29 +38,25 @@ const EpisodeDetails = (categoryId) => {
     useEffect(() => {
         window.scrollTo(0, 0);
         var subItem = []
-        service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
+        service.getShowDetails(showId.showId).then(response => {
             var data = response.data;
             if (data.length > 0) {
                 var videoDetail = '';
-                dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                setShowDetails(categoryId.categoryId.show);
+                dispatch({ type: "SHOW_ID", payload: showId.showId });
                 setCategories(response.data[0].category_name);
                 data.map((item, index) => {
-                    if (item.video_id !== categoryId.categoryId.show.video_id) {
+                    if (item.video_id == showId.videoId) {
+                        setShowDetails(item);
+                        videoDetail = item;
+                        details = item;
+                    } else {
                         subItem.push(item);
                     }
                 })
                 setEpisodeList(subItem);
-                service.similarShow(categoryId.categoryId.show.video_id).then(response => {
+                service.similarShow(showId.videoId).then(response => {
                     if (response.status == 100 && response.data.length > 0) {
                         setSimilarShows(response.data);
-                    }
-                })
-                data.map((item, index) => {
-                    if (item.video_id === categoryId.categoryId.show.video_id) {
-                        setShowDetails(item);
-                        videoDetail = item;
-                        details = item;
                     }
                 })
             }
@@ -88,11 +84,14 @@ const EpisodeDetails = (categoryId) => {
     };
 
     const functionOnclick = (show, path) => {
+        console.log('show', show);
         if (path === 'episode') {
-            history.push({
-                pathname: '/videoplayer',
-                state: { show_details: show, singleVideo: show.single_video }
-            });
+            history.push(
+                {
+                    pathname: '/videoplayer',
+                    search: encodeURI(`show_id=${show.show_id}&single_video=${show.single_video}&video_id=${show.video_id}`)
+                }
+            );
             window.location.reload(false);
         } else if (path === 'show') {
             history.push({
@@ -112,29 +111,25 @@ const EpisodeDetails = (categoryId) => {
             var subItem = []
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 if (response.status === 100) {
-                    service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
+                    service.getShowDetails(showId.showId).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
                             var videoDetail = '';
-                            dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                            setShowDetails(categoryId.categoryId.show);
+                            dispatch({ type: "SHOW_ID", payload: showId.showId });
                             setCategories(response.data[0].category_name);
                             data.map((item, index) => {
-                                if (item.video_id !== categoryId.categoryId.show.video_id) {
+                                if (item.video_id == showId.videoId) {
+                                    setShowDetails(item);
+                                    videoDetail = item;
+                                    details = item;
+                                } else {
                                     subItem.push(item);
                                 }
                             })
                             setEpisodeList(subItem);
-                            service.similarShow(categoryId.categoryId.show.video_id).then(response => {
+                            service.similarShow(showId.videoId).then(response => {
                                 if (response.status == 100 && response.data.length > 0) {
                                     setSimilarShows(response.data);
-                                }
-                            })
-                            data.map((item, index) => {
-                                if (item.video_id === categoryId.categoryId.show.video_id) {
-                                    setShowDetails(item);
-                                    videoDetail = item;
-                                    details = item;
                                 }
                             })
                         }
@@ -151,29 +146,25 @@ const EpisodeDetails = (categoryId) => {
             var subItem = []
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 if (response.status === 100) {
-                    service.getShowDetails(categoryId.categoryId.show.show_id).then(response => {
+                    service.getShowDetails(showId.showId).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
                             var videoDetail = '';
-                            dispatch({ type: "SHOW_ID", payload: categoryId.categoryId.show_id });
-                            setShowDetails(categoryId.categoryId.show);
+                            dispatch({ type: "SHOW_ID", payload: showId.showId });
                             setCategories(response.data[0].category_name);
                             data.map((item, index) => {
-                                if (item.video_id !== categoryId.categoryId.show.video_id) {
+                                if (item.video_id == showId.videoId) {
+                                    setShowDetails(item);
+                                    videoDetail = item;
+                                    details = item;
+                                } else {
                                     subItem.push(item);
                                 }
                             })
                             setEpisodeList(subItem);
-                            service.similarShow(categoryId.categoryId.show.video_id).then(response => {
+                            service.similarShow(showId.videoId).then(response => {
                                 if (response.status == 100 && response.data.length > 0) {
                                     setSimilarShows(response.data);
-                                }
-                            })
-                            data.map((item, index) => {
-                                if (item.video_id === categoryId.categoryId.show.video_id) {
-                                    setShowDetails(item);
-                                    videoDetail = item;
-                                    details = item;
                                 }
                             })
                         }
@@ -243,7 +234,8 @@ const EpisodeDetails = (categoryId) => {
                                                                 <div>
                                                                     <div className="_1TcfH _1Dgjh" style={{ left: '7px' }}>
                                                                         <FacebookShareButton
-                                                                            url={'https://gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            // url={'https://gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            url={'https://gethappi.tv/videoplayer?show_id=' + showDetails.show_id + '&single_video=' + showDetails.single_video + '&video_id=' + showDetails.video_id}
                                                                             quote={showDetails.video_title + ' || ' + showDetails.synopsis}
                                                                             className="share" style={{
                                                                                 display: 'flex',
@@ -257,7 +249,9 @@ const EpisodeDetails = (categoryId) => {
                                                                             </span>
                                                                         </FacebookShareButton>
 
-                                                                        <TwitterShareButton url={'https://gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                        <TwitterShareButton
+                                                                            // url={'https://gethappi.tv/home/movies?show_id=' + showDetails.show_id}
+                                                                            url={'https://gethappi.tv/videoplayer?show_id=' + showDetails.show_id + '&single_video=' + showDetails.single_video + '&video_id=' + showDetails.video_id}
                                                                             title={showDetails.video_title} description={showDetails.video_description}
                                                                             style={{
                                                                                 display: 'flex',
@@ -370,9 +364,6 @@ const EpisodeDetails = (categoryId) => {
                                                                                             onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                             <div onClick={() => {
                                                                                                 functionOnclick(show, 'episode')
-                                                                                                // history.push(
-                                                                                                //     { pathname: '/videoplayer', state: { show_details: show } }
-                                                                                                // )
                                                                                             }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                                 {hover === true && focusedId === index ?
                                                                                                     <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet"
@@ -417,9 +408,6 @@ const EpisodeDetails = (categoryId) => {
                                                                                             <div className="movieTextFlex">
                                                                                                 <h3><a className="linkButton movieTextHeading" onClick={() => {
                                                                                                     functionOnclick(show, 'episode')
-                                                                                                    // history.push(
-                                                                                                    //     { pathname: '/videoplayer', state: { show_details: show } }
-                                                                                                    // )
                                                                                                 }}>{show.video_title}</a></h3>
                                                                                                 <div className="movieCatYear">
                                                                                                     <div>

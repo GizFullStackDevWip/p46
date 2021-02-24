@@ -606,7 +606,7 @@ function facebokLink(facebook_id, facebook_email) {
 
 }
 function getLocation() {
-    return axios.get('https://geolocation-db.com/json/');
+    return axios.get('https://giz.poppo.tv/service/ipinfo');
 }
 function analytics() {
     let countryCode = getCookie('country_code');
@@ -704,6 +704,42 @@ function getGeoInfo() {
         // console.log(error);
     });
 };
+function generateTvLink(){
+    let uId = 74961;
+    let countryCode = getCookie('country_code');
+    let ipaddress = localStorage.getItem('ipaddress');
+    let deviceId = localStorage.getItem('deviceId')
+    let user_id = getCookie('userId');
+    let token = localStorage.getItem('access-token');
+    if (user_id) {
+        uId = user_id;
+    }
+    const customConfig = {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Access-Control-Allow-Origin': true,
+            crossorigin: true,
+            'access-token': token,
+            'uid': uId,
+            'pubid': process.env.REACT_APP_PUBID,
+            'country_code': countryCode,
+            'channelid': 354,
+            'dev_id': deviceId,
+            'ip': ipaddress,
+            'device_type': 'web',
+        },
+       
+    };
+    return axios.post('https://api.gizmott.com/api/v1/user/code/generate','',customConfig)
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            return [];
+        });
+
+
+}
 function getCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -751,5 +787,6 @@ export const service = {
     getGeoInfo,
     getCookie,
     setCookie,
-    cookiePlicy
+    cookiePlicy,
+    generateTvLink
 };

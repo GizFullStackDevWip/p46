@@ -52,16 +52,24 @@
   <!-- End Facebook Pixel Code -->
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-182664233-1">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-182664233-1');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-185946420-1">
+  </script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-185946420-1');
+  </script>
   <!-- End Global site tag -->
+  <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) { for (var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)ttq.setAndDefer(e, ttq.methods[n]); return e }, ttq.load = function (e, n) { var i = "https://analytics.tiktok.com/i18n/pixel/events.js"; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = i, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {}; var o = document.createElement("script"); o.type = "text/javascript", o.async = !0, o.src = i + "?sdkid=" + e + "&lib=" + t; var a = document.getElementsByTagName("script")[0]; a.parentNode.insertBefore(o, a) };
+
+
+      ttq.load('BVU9HVPVB1U4SF0MR4PG');
+      ttq.page();
+    }(window, document, 'ttq');
+  </script>
   <!-- Load dependent stylesheets. -->
   <link rel="stylesheet" href="//googleads.github.io/videojs-ima/node_modules/video.js/dist/video-js.min.css" />
   <link rel="stylesheet"
@@ -91,6 +99,11 @@
   <script src="//googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
   <script src="//googleads.github.io/videojs-ima/dist/videojs.ima.js"></script>
 
+  <link href="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video-js.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video.js"></script>
+  <script src="%PUBLIC_URL%/mediatailor.js"></script>
+
   <script>
 
     window.playMainPlayer = (adTagUrl, videoElem, videoId, vd) => {
@@ -111,6 +124,40 @@
 
       }, 1000)
 
+    }
+
+    window.playLivePlayer = (playerId, details, adParams) => {
+
+      setTimeout(() => {
+        if (player) { videojs(playerId).dispose(); } else { var player }
+        player = videojs(playerId);
+
+        try {
+          console.log('adParams', adParams)
+          createSSAI(details.ssai_link, playerId, adParams);
+        } catch (error) {
+          // console.log('imaError', error)
+        }
+        livePlayerEvents(player, details);
+
+      }, 1000)
+
+    }
+
+    const livePlayerEvents = (player, vd) => {
+
+      player.on("play", function () {
+        window.onLiveVideoPlay(vd);
+      });
+
+      player.on("pause", function () {
+        window.onLiveVideoPause(vd);
+      });
+
+      player.on("end", function () {
+        window.onLiveVideoEnd(vd);
+      });
+      
     }
 
     const playerEvents = (player, videoId, vd) => {

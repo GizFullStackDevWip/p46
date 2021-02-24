@@ -302,7 +302,7 @@ const VideoDetails = (categoryId, episode) => {
                                             <div className="vpLeftButtonWrapper vpLeftButtonMargin" style={{ marginTop: '7px' }}>
                                                 <div className="vpLeftButtons"><button className="button buttonLarge buttonBlock vpWatchSeason" style={{ height: '41px' }} onClick={() => {
                                                     history.push(
-                                                        { pathname: '/videoplayer', state: { show_details: showDetails ,singleVideo : showDetails.single_video} }
+                                                        { pathname: '/videoplayer',search: encodeURI(`show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${showDetails.video_id}`)}
                                                     )
                                                 }}>
                                                     <div className="buttonBg"></div>
@@ -470,7 +470,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                             onMouseOver={() => { hoverFunction(true, index) }} onMouseLeave={() => { hoverFunction(false, index) }}>
                                                                                             <div onClick={() => {
                                                                                                 history.push(
-                                                                                                    { pathname: '/videoplayer', state: { show_details: show ,singleVideo : showDetails.single_video} }
+                                                                                                    { pathname: '/videoplayer',search: encodeURI(`show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${showDetails.video_id}`)}
                                                                                                 )
                                                                                             }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                                                                 {hover === true && focusedId === index ?
@@ -514,7 +514,7 @@ const VideoDetails = (categoryId, episode) => {
                                                                                             <div className="movieTextFlex">
                                                                                                 <h3><a className="linkButton movieTextHeading" onClick={() => {
                                                                                                     history.push(
-                                                                                                        { pathname: '/videoplayer', state: { show_details: show ,singleVideo : showDetails.single_video} }
+                                                                                                        { pathname: '/videoplayer',search: encodeURI(`show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${showDetails.video_id}`) }
                                                                                                     )
                                                                                                 }}>{show.video_title}</a></h3>
                                                                                                 <div className="movieCatYear">

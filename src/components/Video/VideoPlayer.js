@@ -2,70 +2,49 @@ import React, { useState, useEffect } from 'react';
 import ReactHlsPlayer from 'react-hls-player';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/Video/service';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import { convertAdUrl } from '../../Utils/utils';
 import EpisodeDetails from './EpisodeDetails';
-// import { useId } from "react-id-generator";
+const queryString = require('query-string');
 var details = []
 const VideoPlayer = (history) => {
-
+    var { search } = useLocation();
+    const parsed = queryString.parse(search);
+    const historys = useHistory();
     const [videoPlayer, setVideoPlayer] = useState(
         <video id="content_video" className="video-js vjs-default-skin mainPlayer"
             controls preload="auto" > <source src="" type="video/mp4" /> </video>
     );
-    const [videoDetails, setVideoDetails] = useState();
-    const historys = useHistory();
-    // const [htmlId] = useId();
     const login = useSelector((state) => state.login);
-    const data = { "show": history.location.state.show_details }
+    const [showData, setShowData] = useState([]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn === 'true') {
             let show_details = ''
-            service.getShowDetails(history.location.state.show_details.show_id).then(response => {
-                console.log(response.data);
+            service.getShowDetails(parsed.show_id).then(response => {
+                setShowData(response.data);
                 response.data.map((item, index) => {
-                    if (item.video_id === history.location.state.show_details.video_id) {
+                    console.log(parsed.video_id);
+                    if (item.video_id == parsed.video_id) {
                         show_details = item
                     }
                 })
-                console.log(show_details,'show details');
-                setVideoDetails(show_details);
-                console.log('session id', show_details);
                 details = show_details;
                 service.playerToken().then(tokenResponse => {
                     let arr = show_details.video_name.split('/');
-                    // console.log('arrId', arr[arr.length-2] )
-                    let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[arr.length-2] + '&token=' + tokenResponse.data.data + '&type=video';
-                    // setVideoPlayer(<ReactHlsPlayer
-                    //     id='singleVideo'
-                    //     url={newURL}
-                    //     autoplay={true}
-                    //     controls={true}
-                    //     width={'100%'}
-                    //     height={'100%'}
-                    //     onPlayerReady={onPlayerReady}
-                    //     onReady={onPlayerReady}
-                    //     onPlay={onVideoPlay(show_details.video_id)}
-                    //     onPause={onVideoPause}
-                    //     onEnded={onVideoEnd}
-                    // />)
+                    let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[arr.length - 2] + '&token=' + tokenResponse.data.data + '&type=video';
                     let videoElem = 'content_video' + show_details.video_id + new Date().valueOf();
                     setVideoPlayer(<video id={videoElem} className="video-js vjs-default-skin mainPlayer"
                         controls preload="auto"
                         autoPlay >
                         <source src={newURL} type="application/x-mpegURL" />
                     </video>)
-                    // show_details.ad_link = 'http://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/ad_rule_samples&ciu_szs=300x250&ad_rule=1&impl=s&gdfp_req=1&env=vp&output=xml_vmap1&unviewed_position_start=1&cust_params=sample_ar%3Dpremidpostpod%26deployment%3Dgmf-js&cmsid=496&vid=short_onecue&correlator=';
-
                     let adUrl = convertAdUrl(show_details);
                     window.playMainPlayer(adUrl, videoElem, show_details.video_id, details);
-
                 })
             })
-
 
         } else {
             historys.push({
@@ -105,7 +84,6 @@ const VideoPlayer = (history) => {
     window.onVideoPause = (vd) => {
         let event = 'POP04';
         service.onVideoPlayFunction(vd, event).then(response => {
-            //sd
         })
     }
     window.onVideoEnd = (vd) => {
@@ -129,8 +107,8 @@ const VideoPlayer = (history) => {
                         </div>
                     </div>
                     {
-                        history.location.state.singleVideo === 0 ?
-                            <EpisodeDetails categoryId={data}
+                        parsed.single_video == 0 ?
+                            <EpisodeDetails showId={parsed.show_id} videoId={parsed.video_id}
                             /> : null
                     }
                 </div>

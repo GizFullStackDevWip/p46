@@ -6,6 +6,7 @@ import LiveContainer from './LiveContainer';
 import LiveSchedule from './LiveSchedule';
 import PartnerContainer from './PartnerContainer';
 import Notification from '../../common/Notification';
+import { useHistory, Redirect, Link } from 'react-router-dom';
 import $ from 'jquery';
 
 const Home = () => {

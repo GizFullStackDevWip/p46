@@ -6,14 +6,20 @@ import { convertTimeToLocal, deviceDetect, playerController, ssaiAdParam } from 
 var liveThumbnailUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/images/';
 var details = [];
 var pause = false;
-
+const handleScroll = () => {
+    let playerId = 'singleVideo_html5_api';
+    if (deviceDetect() === true) {
+        playerController(600, playerId);
+    } else {
+        playerController(150, playerId);
+    }
+}
 
 const LiveContainer = () => {
     const [channels, setChannels] = useState([]);
     const [logo, setLogo] = useState('');
     const [videoPlayer, setVideoPlayer] = useState();
     const [isVideoPause, setIsVideoPause] = useState(true);
-    const [isSSAI, setIsSSAI] = useState(false);
     useEffect(() => {
 
         service.getLiveChannels().then(response => {
@@ -21,24 +27,7 @@ const LiveContainer = () => {
                 setLogo(response.data[0].image);
                 setChannels(response.data[0]);
                 details = response.data[0];
-                // console.log('aaadetails', details.ssai_enabled)
-                if (!details.ssai_enabled) {
-                    setVideoPlayer(<ReactHlsPlayer
-                        id='singleVideo_html5_api'
-                        url={response.data[0].live_link}
-                        autoplay={true}
-                        controls={true}
-                        width={'100%'}
-                        height={'100%'}
-                        onPlayerReady={window.onPlayerReady}
-                        onReady={window.onPlayerReady}
-                        onPlay={window.onVideoPlay}
-                        onPlaying={window.onPlayingFunction}
-                        onPause={window.onVideoPause}
-                        onEnded={window.onVideoEnd}
-                    />)
-                } else {
-                    setIsSSAI(true) 
+                if (response.data[0].live_link) {
                     ssaiAdParam(response.data[0]).then(params => {
                         window.playLivePlayer('singleVideo', response.data[0], params);
                     })
@@ -47,54 +36,43 @@ const LiveContainer = () => {
         })
         window.addEventListener('scroll', handleScroll)
     }, []);
-    window.onPlayingFunction = () => {
+    const onPlayingFunction = () => {
         setInterval(() => {
             if (pause === false) {
                 pause = false
             }
         }, 5000);
     }
-    window.onPlayerReady = () => {
+    const onPlayerReady = () => {
         let event = 'POP02';
         service.onVideoPlayFunction(details, event).then(response => {
         })
     }
-    window.onVideoPlay = () => {
+    window.onLiveVideoPlay = (vd) => {
         let event = 'POP03';
-        service.onVideoPlayFunction(details, event).then(response => {
+        service.onVideoPlayFunction(vd, event).then(response => {
         })
     }
-    window.onVideoPause = () => {
+    window.onLiveVideoPause = (vd) => {
         let event = 'POP04';
         setIsVideoPause(false);
         pause = true
-        service.onVideoPlayFunction(details, event).then(response => {
+        service.onVideoPlayFunction(vd, event).then(response => {
         })
     }
-    window.onVideoEnd = () => {
+    window.onLiveVideoEnd = (vd) => {
         let event = 'POP05';
-        service.onVideoPlayFunction(details, event).then(response => {
+        service.onVideoPlayFunction(vd, event).then(response => {
         })
     }
-
-    const handleScroll = () => {
-        let playerId = 'singleVideo_html5_api';
-        // let playerId = (!isSSAI) ? 'singleVideo': 'singleVideo_html5_api';
-        if (deviceDetect() === true) {
-            playerController(600, playerId);
-        } else {
-            playerController(150, playerId);
-        }
-    }
-
     return (
         <div className="entireBanner" id="live">
             <div className="hpLiveBanner">
                 <div className="liveVideoWrapper">
-                    {(!isSSAI) ? videoPlayer : <video id="singleVideo" className="video-js vjs-default-skin mainPlayer"
+                <video id="singleVideo" className="video-js vjs-default-skin mainPlayer"
                         controls preload="auto"
                         autoPlay >
-                    </video>}
+                    </video>
                     <div className="hpWrapperVideo" style={{ height: '88px' }}>
                         <section className="movieTextWrapper vpRelatedMargin">
                             <div className="vpRelatedImage">

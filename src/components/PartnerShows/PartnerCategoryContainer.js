@@ -14,6 +14,7 @@ const PartnerCategoryContainer = ({ param }) => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        console.log('param',param);
     }, []);
 
     const responsive = {
@@ -37,7 +38,7 @@ const PartnerCategoryContainer = ({ param }) => {
 
     const functionOnclick = (show) => {
         history.push(
-            { pathname: '/videoplayer', state: { show_details: show ,singleVideo : param.single_video} }
+            { pathname: '/videoplayer',search: encodeURI(`show_id=${show.show_id}&single_video=${param.single_video}&video_id=${show.video_id}`)}
         )
     }
     const hoverFunction = (flag, index) => {

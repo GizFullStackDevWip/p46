@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, useHistory, Redirect ,useLocation} from 'react-router-dom';
 import Slider from "react-slick";
 import SupportedDeviceSection from './SupportedDeviceSection';
 import QuestionAswerSection from './QuestionAswerSection';
@@ -22,6 +22,7 @@ var landingImagesMobile = [
 
 const Landing = () => {
     const history = useHistory();
+    localStorage.setItem("location", '/');
     const [isDesktop, setIsDesktop] = useState(deviceDetect());
     useEffect(() => {
         window.scrollTo(0, 0);

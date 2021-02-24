@@ -166,6 +166,13 @@ export const checkOperatingSystem = () => {
     return 'none';
 }
 export const convertAdUrl = (videoDetails) => {
+    // console.log('convertAdUrlvideoDetails', videoDetails)
+
+    let categories = '';
+    videoDetails.category_id.map((item, index) => {
+        categories = (categories) ? categories + ', ' + item : item
+
+    })
     const adUrl = videoDetails.ad_link;
     const currentLocation = JSON.parse(localStorage.getItem('currentLocation'));
     let uId = 74961;
@@ -183,6 +190,8 @@ export const convertAdUrl = (videoDetails) => {
     const deviceIfa = '';
     const uuid = '';
     const country = currentLocation.country_name;
+    const city = currentLocation.city;
+    const state = currentLocation.state;
     const deviceId = localStorage.getItem('deviceId');
     const keyword = videoDetails.category_name;
     const deviceModel = navigator.userAgent;
@@ -190,34 +199,77 @@ export const convertAdUrl = (videoDetails) => {
     const channelId = videoDetails.channel_id;
     const userId = uId;
     const videoId = videoDetails.video_id;
+    const showId = videoDetails.show_id;
     const bundleId = '';
     const appName = 'happitv';
     const duration = videoDetails.video_duration;
     const appstoreUrl = window.location.href;
 
     const finalAdurl = adUrl
-    .replace('[WIDTH]',width)
-    .replace('[HEIGHT]',height)
-    .replace('[DNT]',dnt)
-    .replace('[IP_ADDRESS]',ipAddress)
-    .replace('[LATITUDE]',latitude)
-    .replace('[LONGITUDE]',longitude)
-    .replace('[USER_AGENT]',userAgent)
-    .replace('[DEVICE_IFA]',deviceIfa)
-    .replace('[UUID]',uuid)
-    .replace('[COUNTRY]',country)
-    .replace('[DEVICE_ID]',deviceId)
-    .replace('[KEYWORDS]',keyword)
-    .replace('[DEVICE_MODEL]',deviceModel)
-    .replace('[DEVICE_MAKE]',deviceMake)
-    .replace('[CHANNEL_ID]',channelId)
-    .replace('[USER_ID]',userId)
-    .replace('[VIDEO_ID]',videoId)
-    .replace('[BUNDLE]',bundleId)
-    .replace('[APP_NAME]',appName)
-    .replace('[DURATION]',duration)
-    .replace('[APP_STORE_URL]',appstoreUrl);
-    
+        .replace('[WIDTH]', width)
+        .replace('[HEIGHT]', height)
+        .replace('[DNT]', dnt)
+        .replace('[IP_ADDRESS]', ipAddress)
+        .replace('[LATITUDE]', latitude)
+        .replace('[LONGITUDE]', longitude)
+        .replace('[USER_AGENT]', userAgent)
+        .replace('[DEVICE_IFA]', deviceIfa)
+        .replace('[UUID]', uuid)
+        .replace('[COUNTRY]', country)
+        .replace('[CITY]', city)
+        .replace('[REGION]', state)
+        .replace('[DEVICE_ID]', deviceId)
+        .replace('[KEYWORDS]', keyword)
+        .replace('[DEVICE_MODEL]', deviceModel)
+        .replace('[DEVICE_MAKE]', deviceMake)
+        .replace('[CHANNEL_ID]', channelId)
+        .replace('[USER_ID]', userId)
+        .replace('[VIDEO_ID]', videoId)
+        .replace('[SHOW_ID]', showId)
+        .replace('[CATEGORIES]', categories)
+        .replace('[BUNDLE]', bundleId)
+        .replace('[APP_NAME]', appName)
+        .replace('[DURATION]', duration)
+        .replace('[APP_STORE_URL]', appstoreUrl);
+
+    // console.log('finalAdurl', finalAdurl, adUrl)
+
     return finalAdurl;
+
+}
+
+
+export const ssaiAdParam = async (videoDetails) => {
+
+    const currentLocation = JSON.parse(localStorage.getItem('currentLocation'));
+
+    var adParams = {
+        "adsParams": {
+            "advid": "",
+            "appname": videoDetails.channel_name,
+            "bundleid": "https://gethappi.tv/",
+            "channelid": String(videoDetails.channel_id),
+            "country": currentLocation.country_code,
+            "description_url": "HappiTV",
+            "device_make": navigator.userAgent,
+            "device_model": navigator.userAgent,
+            "device_type": navigator.userAgent,
+            "deviceid": localStorage.getItem('deviceId'),
+            "dnt": "true",
+            "height": String(window.innerHeight),
+            "ip": currentLocation.IPv4,
+            "kwds": "HappiTV",
+            "lat": String(currentLocation.latitude),
+            "lon": String(currentLocation.longitude),
+            "totalduration": '',
+            "ua": navigator.userAgent,
+            "userid": String(localStorage.getItem('userId')),
+            "uuid": "",
+            "videoid": videoDetails.video_id && String(videoDetails.video_id),
+            "width": String(window.innerWidth)
+        }
+    }
+
+    return adParams;
 
 }

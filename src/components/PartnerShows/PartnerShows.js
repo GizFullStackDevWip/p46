@@ -72,7 +72,9 @@ const PartnerShows = () => {
                                                             <div className="col">
                                                                 <div>
                                                                     {
-                                                                        item.show_name && <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.show_name}</div>
+                                                                        item.show_name && <div className="heading hover" 
+                                                                        onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${item.show_id}`) }) }}
+                                                                        style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.show_name}</div>
                                                                     }
                                                                     <div className="carousel carouselNoMask">
                                                                         <div className="carouselContent">

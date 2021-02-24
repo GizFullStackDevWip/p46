@@ -34,6 +34,7 @@ import WebTermsOfUse from '../components/FooterComponents/WebTermsOfUse/WebTerms
 import WebPrivacyPolicy from '../components/FooterComponents/WebPrivacyPolicy/WebPrivacyPolicy';
 import CookiePolicy from '../components/FooterComponents/CookiePolicy/CookiePolicy';
 import Cookie from '../common/Cookie';
+import Activate from '../components/Activate/Activate';
 const routes = () => (
     <BrowserRouter>
         <Header />
@@ -69,6 +70,7 @@ const routes = () => (
                 <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
                 <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
                 <PrivateRoutes path="/partnerList" exact component={PartnerList} />
+                <PrivateRoutes path="/tv" exact component={Activate} />
             </Switch>
         </div>
         <Footer />
