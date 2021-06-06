@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="theme-color" content="#000000"><link rel="manifest" href="/manifest.json"><link rel="shortcut icon" href="/favicon_cffzct.png"><title>HappiTV</title><meta name="description" content="$OG_DESCRIPTION"/><meta property="og:title" content="HappiTV"/><meta property="og:description" content="$OG_DESCRIPTION"/><meta property="og:image" content="$OG_IMAGE"/><meta property="og:url" content="$OG_URL"><script>!function(e,t,n,c,o,a,f){e.fbq||(o=e.fbq=function(){o.callMethod?o.callMethod.apply(o,arguments):o.queue.push(arguments)},e._fbq||(e._fbq=o),(o.push=o).loaded=!0,o.version="2.0",o.queue=[],(a=t.createElement(n)).async=!0,a.src="https://connect.facebook.net/en_US/fbevents.js",(f=t.getElementsByTagName(n)[0]).parentNode.insertBefore(a,f))}(window,document,"script"),fbq("init","384702406057001"),fbq("track","PageView")</script><noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=384702406057001&ev=PageView
+  &noscript=1"/></noscript><script async src="https://www.googletagmanager.com/gtag/js?id=UA-185946420-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-185946420-1")</script><script>!function(e,t,i){e.TiktokAnalyticsObject=i;var s=e[i]=e[i]||[];s.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],s.setAndDefer=function(e,t){e[t]=function(){e.push([t].concat(Array.prototype.slice.call(arguments,0)))}};for(var n=0;n<s.methods.length;n++)s.setAndDefer(s,s.methods[n]);s.instance=function(e){for(var t=s._i[e]||[],n=0;n<s.methods.length;n++)s.setAndDefer(t,s.methods[n]);return t},s.load=function(e,t){var n="https://analytics.tiktok.com/i18n/pixel/events.js";s._i=s._i||{},s._i[e]=[],s._i[e]._u=n,s._t=s._t||{},s._t[e]=+new Date,s._o=s._o||{},s._o[e]=t||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=n+"?sdkid="+e+"&lib="+i;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)},s.load("BVU9HVPVB1U4SF0MR4PG"),s.page()}(window,document,"ttq")</script><link rel="stylesheet" href="//googleads.github.io/videojs-ima/node_modules/video.js/dist/video-js.min.css"/><link rel="stylesheet" href="//googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.css"/><link rel="stylesheet" href="//googleads.github.io/videojs-ima/dist/videojs.ima.css"/><link href="/static/css/2.292f9550.chunk.css" rel="stylesheet"><link href="/static/css/main.48a99664.chunk.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div><script src="//googleads.github.io/videojs-ima/node_modules/video.js/dist/video.min.js"></script><script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script><script src="//googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script><script src="//googleads.github.io/videojs-ima/dist/videojs.ima.js"></script><script src="/mediatailor.js"></script><script>window.playMainPlayer = (adTagUrl, videoElem, videoId, vd) => {
+      setTimeout(() => {
+        if (player) { videojs(videoElem).dispose(); } else { var player }
+        player = videojs(videoElem);
+        var options = {
+          id: videoElem,
+          adTagUrl
+        };
+        console.log('oprions->',options);
+        try {
+          player.ima(options);
+        } catch (error) {
+          // console.log('imaError', error)
+        }
+        playerEvents(player, videoId, vd);
+
+      }, 1000)
+
+    }
+
+    window.playLivePlayer = (playerId, details, adParams) => {
+
+      setTimeout(() => {
+        if (player) { videojs(playerId).dispose(); } else { var player }
+        player = videojs(playerId);
+
+        try {
+          console.log('adParams', adParams)
+          createSSAI(details.ssai_link, playerId, adParams);
+        } catch (error) {
+          // console.log('imaError', error)
+        }
+        livePlayerEvents(player, details);
+
+      }, 1000)
+
+    }
+
+    const livePlayerEvents = (player, vd) => {
+
+      player.on("play", function () {
+        window.onLiveVideoPlay(vd);
+      });
+
+      player.on("pause", function () {
+        window.onLiveVideoPause(vd);
+      });
+
+      player.on("end", function () {
+        window.onLiveVideoEnd(vd);
+      });
+      
+    }
+
+    const playerEvents = (player, videoId, vd) => {
+      player.on("play", function () {
+        window.onVideoPlay(videoId, vd);
+      });
+
+      player.on("pause", function () {
+        window.onVideoPause(vd);
+      });
+
+      player.on("end", function () {
+        window.onVideoEnd(vd);
+      });
+    }</script><script>!function(l){function e(e){for(var r,t,n=e[0],o=e[1],u=e[2],f=0,i=[];f<n.length;f++)t=n[f],p[t]&&i.push(p[t][0]),p[t]=0;for(r in o)Object.prototype.hasOwnProperty.call(o,r)&&(l[r]=o[r]);for(s&&s(e);i.length;)i.shift()();return c.push.apply(c,u||[]),a()}function a(){for(var e,r=0;r<c.length;r++){for(var t=c[r],n=!0,o=1;o<t.length;o++){var u=t[o];0!==p[u]&&(n=!1)}n&&(c.splice(r--,1),e=f(f.s=t[0]))}return e}var t={},p={1:0},c=[];function f(e){if(t[e])return t[e].exports;var r=t[e]={i:e,l:!1,exports:{}};return l[e].call(r.exports,r,r.exports,f),r.l=!0,r.exports}f.m=l,f.c=t,f.d=function(e,r,t){f.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},f.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},f.t=function(r,e){if(1&e&&(r=f(r)),8&e)return r;if(4&e&&"object"==typeof r&&r&&r.__esModule)return r;var t=Object.create(null);if(f.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:r}),2&e&&"string"!=typeof r)for(var n in r)f.d(t,n,function(e){return r[e]}.bind(null,n));return t},f.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return f.d(r,"a",r),r},f.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},f.p="/";var r=window.webpackJsonp=window.webpackJsonp||[],n=r.push.bind(r);r.push=e,r=r.slice();for(var o=0;o<r.length;o++)e(r[o]);var s=n;a()}([])</script><script src="/static/js/2.415a6fe7.chunk.js"></script><script src="/static/js/main.763d345c.chunk.js"></script></body></html>

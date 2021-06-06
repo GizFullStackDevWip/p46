@@ -99,15 +99,14 @@
   <script src="//googleads.github.io/videojs-ima/node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
   <script src="//googleads.github.io/videojs-ima/dist/videojs.ima.js"></script>
 
-  <link href="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video-js.css" rel="stylesheet">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video-js.css" rel="stylesheet">
 
-  <script src="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/video.js@7.8.4/dist/video.js"></script> -->
   <script src="%PUBLIC_URL%/mediatailor.js"></script>
 
   <script>
 
     window.playMainPlayer = (adTagUrl, videoElem, videoId, vd) => {
-
       setTimeout(() => {
         if (player) { videojs(videoElem).dispose(); } else { var player }
         player = videojs(videoElem);
@@ -115,6 +114,7 @@
           id: videoElem,
           adTagUrl
         };
+        console.log('oprions->',options);
         try {
           player.ima(options);
         } catch (error) {

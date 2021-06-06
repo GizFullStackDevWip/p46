@@ -32,7 +32,8 @@ const CategoryList = () => {
     const updateUseEffect = () => {
         if (parsed.category_id === 'playlist') {
             let isLoggedIn = localStorage.getItem('isLoggedIn');
-            if (isLoggedIn === 'true') {
+            let userId = service.getCookie("userId");
+            if (isLoggedIn === "true" && userId) {
                 service.playList().then(response => {
                     if (response.data) {
                         setShowList(response.data);
@@ -55,7 +56,8 @@ const CategoryList = () => {
 
     const addtoMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 if (response.status === 100) {
                     updateUseEffect();
@@ -68,7 +70,8 @@ const CategoryList = () => {
 
     const removeFromMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 if (response.status === 100) {
                     updateUseEffect();

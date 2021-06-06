@@ -46,7 +46,8 @@ const Show = ({ param, update }) => {
     }
     const addtoMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 update.clickHandler();
             })
@@ -57,7 +58,8 @@ const Show = ({ param, update }) => {
     }
     const removeFromMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 update.clickHandler();
             })

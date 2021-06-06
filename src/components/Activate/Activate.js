@@ -5,6 +5,7 @@ import Countdown from "react-countdown";
 
 const Activate = () => {
   let isLoggedIn = localStorage.getItem("isLoggedIn");
+  let userId = service.getCookie("userId");
   const [value, setValue] = useState("");
   const [timeOut, setTimeOut] = useState(false);
   const countDown = useRef();
@@ -17,7 +18,7 @@ const Activate = () => {
   }, [useEffectFunction]);
 
   const useEffectFunction = () => {
-    if (isLoggedIn === "true") {
+    if (isLoggedIn === "true" && userId) {
       countDown.current.getApi().start();
       service.generateTvLink().then((response) => {
         console.log("response", response);

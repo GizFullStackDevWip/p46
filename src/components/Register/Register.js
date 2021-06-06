@@ -16,7 +16,8 @@ const Register = (state) => {
     localStorage.setItem("location", location.state.from.pathname);
   }
   let isLoggedIn = localStorage.getItem("isLoggedIn");
-  if (isLoggedIn === "true") {
+  let userId = service.getCookie("userId");
+  if (isLoggedIn === "true" && userId) {
     return <Redirect to="/home" />;
   }
 

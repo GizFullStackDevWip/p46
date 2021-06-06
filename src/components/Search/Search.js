@@ -38,7 +38,8 @@ const Search = ({ history }) => {
 
     const addtoMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 if (response.status === 100) {
                     updateUseEffect();
@@ -51,7 +52,8 @@ const Search = ({ history }) => {
 
     const removeFromMylistFunction = (show) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 0).then(response => {
                 if (response.status === 100) {
                     updateUseEffect();

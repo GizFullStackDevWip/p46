@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="74px" height="74px" viewBox="0 0 74 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.1 (81669) - https://sketch.com -->
+    <title>ad counter</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1440-/-partners-advertise-with-us" transform="translate(-172.000000, -2338.000000)">
+            <g id="ad-experience" transform="translate(65.000000, 2240.000000)">
+                <g id="copy" transform="translate(110.000000, 101.000000)">
+                    <g id="ad-counter">
+                        <circle id="Oval" fill="#FFFFFF" opacity="0.200000003" cx="34" cy="34" r="24"></circle>
+                        <path d="M34,68 C52.7776815,68 68,52.7776815 68,34 C68,15.2223185 52.7776815,0 34,0 C15.2223185,0 0,15.2223185 0,34" id="Oval" stroke="#FFFFFF" stroke-width="5" transform="translate(34.000000, 34.000000) rotate(-270.000000) translate(-34.000000, -34.000000) "></path>
+                        <text id="AD" font-family="Vaud-Bold, Vaud" font-size="20" font-weight="bold" letter-spacing="0.555555556" fill="#FFFFFF">
+                            <tspan x="20.6444444" y="42">AD</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

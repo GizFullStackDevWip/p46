@@ -47,7 +47,8 @@ const Header = () => {
 
     useEffect(() => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             dispatch({ type: "LOGIN" });
         }
         service.getshowsbyCategory().then(response => {

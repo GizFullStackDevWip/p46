@@ -10,7 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { deviceDetect } from "../../Utils/utils";
 const SignIn = ({ props }) => {
   let isLoggedIn = localStorage.getItem("isLoggedIn");
-  if (isLoggedIn === "true") {
+  let userId = service.getCookie("userId");
+  if (isLoggedIn === "true" && userId) {
     return <Redirect to="/home" />;
   }
   let location = useLocation();

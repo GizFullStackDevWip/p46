@@ -21,7 +21,8 @@ const VideoPlayer = (history) => {
     useEffect(() => {
         window.scrollTo(0, 0);
         let isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (isLoggedIn === 'true') {
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
             let show_details = ''
             service.getShowDetails(parsed.show_id).then(response => {
                 setShowData(response.data);

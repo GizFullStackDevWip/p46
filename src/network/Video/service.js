@@ -176,5 +176,6 @@ export const service = {
     onVideoPlayFunction,
     checkVideoSubscription,
     checkUserSubscription,
-    getShowDetails
+    getShowDetails,
+getCookie
 };
