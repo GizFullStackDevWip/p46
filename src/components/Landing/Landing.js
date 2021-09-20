@@ -90,7 +90,7 @@ const Landing = () => {
                                                 <div className="row lpSectionWrapper lpFlexWrapper">
                                                     <div className="col col-12 col-md-6 lpFlexCenter">
                                                         <h2>Get an account today</h2>
-                                                        <div className="lpSectionFont gacTextColor lpSectionTextCenter">Access free content on all of your devices, sync your list and continue watching anywhere.</div>
+                                                        <div className="lpSectionFont gacTextColor lpSectionTextCenter"> Access all content at no charge on all of your devices, sync your list and continue watching anywhere.</div>
                                                         <button className="button buttonLarge buttonSecondary" onClick={() => {
                                                             history.push(
                                                                 { pathname: '/register' }
@@ -153,7 +153,7 @@ const Landing = () => {
                                                 <div className="row lpSectionWrapper lpFlexWrapper">
                                                     <div className="col col-12 col-md-6 lpFlexCenter">
                                                         <h2>Get an account today</h2>
-                                                        <div className="lpSectionFont gacTextColor lpSectionTextCenter">Access free content on all of your devices, sync your list and continue watching anywhere.</div>
+                                                        <div className="lpSectionFont gacTextColor lpSectionTextCenter"> Access all content free of charge across all of your devices, sync your list and continue watching anywhere.</div>
                                                         <button className="button buttonLarge buttonSecondary" onClick={() => {
                                                             history.push(
                                                                 { pathname: '/register' }

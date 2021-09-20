@@ -285,7 +285,7 @@ const FooterInfo = () => {
             </div >
             <div className="footerCopyright">
                 <div className="footerCopyText">
-                    <div>Copyright &copy; 2020 HappiTV, Inc.</div>
+                    <div>Copyright &copy; 2021 HappiTV, Inc.</div>
                     <div> All rights reserved.</div>
                 </div>
             </div>

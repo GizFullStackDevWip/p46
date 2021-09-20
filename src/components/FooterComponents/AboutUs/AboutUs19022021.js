@@ -23,7 +23,7 @@ const AboutUs = () => {
 																<div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
 																<div className="header-content">
 																	<h1>HappiTV<span>
-																		HappiTV is a new entertainment app dedicated to streaming content of interest to the LGBTQ+ community. Featuring Feature films, TV series, Non-fiction or short form videos,  HappiTV serves as an anchor for positive role models and powerful messages for the queer population. Unlike any other, HappiTV is a place where the community can find powerful entertainment and resources that will better their lives.
+																		HappiTV is a new entertainment app dedicated to streaming content of interest to the LGBTQ+ community. Featuring Feature films, TV series, Non-fiction or short form videos,  HappiTV serves as an anchor for positive role models and powerful messages for the queer population. HappiTV is a place where the community can find powerful entertainment and resources that will better their lives.
 
 																		We are a 100% minority owned and operated enterprise (LGBTQ+ and Latino) in the United Stated of America.
 

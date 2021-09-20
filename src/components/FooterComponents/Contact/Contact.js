@@ -95,7 +95,7 @@ const Contact = () => {
                                             <div className="wpb_wrapper">
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1580991299191 container happi-content">
                                                     <div className="wpb_wrapper">
-                                                        <h3 style={{ textAlign: 'center' }}>Get in Touch</h3>
+                                                        <h3 style={{ textAlign: 'center' }}>Please Get In Touch</h3>
                                                         <p>Review the contact options below to ensure we get your information to the right member of our team.</p>
                                                     </div>
                                                 </div>
@@ -151,7 +151,7 @@ const Contact = () => {
                                                             { pathname: '/contactsupport' }
                                                         )
                                                     }} style={{ color: '#26262d', borderRadius: '2px', fontSize: '14px', padding: '14px 61px}' }}>
-                                                        <i style={{ paddingRight: '5px' }} className="fa " aria-hidden="true"> </i> Get in Touch With a Sales Rep </button>
+                                                        <i style={{ paddingRight: '5px' }} className="fa " aria-hidden="true"> </i> Please get in Touch With a Sales Rep </button>
                                                 </div>
                                                 {/* <style>
                                                     .modal-popup-box .popup-176:hover {
