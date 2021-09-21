@@ -96,7 +96,7 @@ const Contact = () => {
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1580991299191 container happi-content">
                                                     <div className="wpb_wrapper">
                                                         <h3 style={{ textAlign: 'center' }}>Please Get In Touch</h3>
-                                                        <p>Review the contact options below to ensure we get your information to the right member of our team.</p>
+                                                        {/* <p>Review the contact options below to ensure we get your information to the right member of our team.</p> */}
                                                     </div>
                                                 </div>
                                             </div>
