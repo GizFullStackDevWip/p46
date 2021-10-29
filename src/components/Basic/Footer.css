@@ -1,0 +1,17 @@
+.investor__image__div {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.investor__image__li {
+  object-fit: contain;
+  width: 120px;
+}
+
+@media (max-width: 420px) {
+  .investor__image__li {
+    object-fit: contain;
+    width: 100px;
+  }
+}
