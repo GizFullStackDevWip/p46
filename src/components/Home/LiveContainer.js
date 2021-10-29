@@ -19,6 +19,7 @@ const LiveContainer = () => {
   const [isVideoPause, setIsVideoPause] = useState(true);
   const [isSSAI, setIsSSAI] = useState(false);
   const [livePlayerId, setLivePlayerId] = useState("");
+  let lplayerId = "";
   useEffect(() => {
     service.getLiveChannels().then((response) => {
       if (response.data) {
@@ -44,11 +45,12 @@ const LiveContainer = () => {
             />
           );
         } else {
-          let videoElem = "live_video" + new Date().valueOf();
-          setLivePlayerId(videoElem);
+          // let videoElem = "live_video" + new Date().valueOf();
+          lplayerId = "live_video" + new Date().valueOf();
+          setLivePlayerId(lplayerId);
           setIsSSAI(true);
           ssaiAdParam(response.data[0]).then((params) => {
-            window.playLivePlayer(videoElem, response.data[0], params);
+            window.playLivePlayer(lplayerId, response.data[0], params);
           });
         }
       }
@@ -84,15 +86,15 @@ const LiveContainer = () => {
   const handleScroll = () => {
     //   let playerId = "singleVideo_html5_api";
     let playerId;
-    if (livePlayerId && livePlayerId != "") {
-      playerId = livePlayerId + "_html5_api";
+    if (lplayerId && lplayerId != "") {
+      playerId = lplayerId + "_html5_api";
+      if (deviceDetect() === true) {
+        playerController(600, playerId);
+      } else {
+        playerController(150, playerId);
+      }
     }
     // let playerId = (!isSSAI) ? 'singleVideo': 'singleVideo_html5_api';
-    if (deviceDetect() === true) {
-      playerController(600, playerId);
-    } else {
-      playerController(150, playerId);
-    }
   };
 
   return (
