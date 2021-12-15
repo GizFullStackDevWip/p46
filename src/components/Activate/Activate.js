@@ -14,7 +14,7 @@ const Activate = () => {
     window.scrollTo(0, 0);
     useEffectFunction();
     const ua = navigator.userAgent;
-    console.log('ua',ua);
+    console.log("ua", ua);
   }, [useEffectFunction]);
 
   const useEffectFunction = () => {
@@ -33,7 +33,8 @@ const Activate = () => {
       <div className="styles-enterCodeWrap">
         <div className="styles-linkTvTitle">Link TV App</div>
         <span className="styles-enterCodetext">
-          Enter this code on your Roku TV, Fire TV or Android TV
+          If not registered, a code will be generated after the same. Enter this
+          code on your SmartTV.
         </span>
       </div>
       <input
@@ -68,7 +69,8 @@ const Activate = () => {
           <div className="styles-enterCodeWrap">
             <div className="styles-linkTvTitle">Link TV App</div>
             <span className="styles-enterCodetext">
-              Enter this code on your Roku TV, Fire TV or Android TV
+              If not registered, a code will be generated after the same. Enter
+              this code on your SmartTV.
             </span>
           </div>
           <input
@@ -108,7 +110,7 @@ const Activate = () => {
               <div className="activate-style">
                 <div className="styles-box">
                   <Countdown
-                    date={Date.now() + 5*6*10000}
+                    date={Date.now() + 5 * 6 * 10000}
                     renderer={renderer}
                     ref={(count) => (countDown.current = count)}
                     autoStart={false}
