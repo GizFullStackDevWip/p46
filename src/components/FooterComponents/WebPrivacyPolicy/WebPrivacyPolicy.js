@@ -20,6 +20,7 @@ const WebPrivacyPolicy = () => {
                                 the terms ‘personal information’, ‘sensitive personal data’ and ‘information’ shall have the meaning ascribed to it under the applicable laws in india. Your use of our services offered on the website is
                                 constructed to mean that you consent to our collection, storage, processing and transfer of your personal information or sensitive personal data or information in accordance with this privacy policy and you consent to the terms and conditions of this privacy policy.
                             </p>
+                            <p>This page is used to inform website visitors regarding our policies with the collection, use, disclosure and deletion of Personal Information if anyone decided to use our Service.</p>
                                 <p>Here are our privacy principles:</p>
                                 <ul>
                                     <li>Providing information to us is your choice.</li>
@@ -30,6 +31,7 @@ const WebPrivacyPolicy = () => {
                                 <ol>
                                     <li>The personal information or sensitive personal data or information which you may provide to the platform and/or which we may collect as part of the information provided is or could be the following:
                                     your registration details which may include the name, email address, mobile/contact details, age, gender, password, location, pin code, area code, occupation, provided by you.</li>
+                                    <li> The information that we collect will be used to contact or identify you, including allowing us to provide you meaningful customer support. If you would like to request modification or deletion of certain personally identifiable information, please contact us so that we will be able to do necessary actions.</li>
                                     <li>Your billing, tax registration, and other information pertaining to your transactions on the website or related to the services.</li>
                                     <li>You may in some cases share your debit or credit card details or other bank account details while accessing any services offered on the site on a subscription model.</li>
                                     <li>Your comments or other content that you publicly post or share on the website.</li>
@@ -98,13 +100,16 @@ const WebPrivacyPolicy = () => {
                                     <h5>12. Security</h5>
                                     <p>Platform uses commercially reasonable security practices and procedures industry practices and procedures designed to help keep your personal information or sensitive personal data or information safe. secure server software (ssl) encrypts all information you submit before it is sent to the platform. Furthermore, all of the user data we collect is protected against unauthorized access. To prevent unauthorized access, maintain data accuracy, and ensure correct use of information, we will employ commercially reasonable and practicable security practices and procedures and security
                                     methods and technologies. We will also ensure on reasonable commercial efforts basis that any agent or third party that we employ complies with the same security standards as we do for the protection of your personal information or sensitive personal data or information.</p>
+                                    <p>In the event any incident of breach may occur, we will promptly notify and immediately begin remediation under applicablelaws and regulations.</p>
                                     <p>Your information may be transferred to or may be maintained on computers, computer systems and computer resources located outside of your state or country where the privacy laws may be different (but no less stringent than the restrictions imposed by indian law) as those where you live. Your submission of such information represents your agreement to that transfer.</p>
                                     <p>Unfortunately, the transmission of information over the internet is not completely secure. although we strive to protect your personal data, we cannot guarantee the security of your data while it is being transmitted to our site; any transmission is at your own risk. once we have received your information, we have commercially reasonable procedures and security practices in place to reasonably endeavor to prevent unauthorized access.</p>
-                                    <h5>13. Changes in privacy policy</h5>
+                                    <h5>13. Children's Privacy</h5>
+                                    <p>Our Services strictly comply with the Children’s Online Privacy Protection Act (“COPPA”). We do not knowingly collect personal identifiable information from children under 13. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do necessary actions.</p>
+                                    <h5>14. Changes in privacy policy</h5>
                                     <p>From time to time we may update this privacy policy. your continued use of our website and the services constitutes your acceptance of the then-current privacy policy and terms of use so we encourage you to visit this page periodically to review any changes.</p>
-                                    <h5>14. Phishing</h5>
+                                    <h5>15. Phishing</h5>
                                     <p>Identity theft and the practice currently known as "phishing" are of great concern to the platform. safeguarding information to help protect you from identity theft is a top priority. we do not and will not, at any time, request your credit card information or national identification numbers in a non-secure or unsolicited e-mail or telephone communication.</p>
-                                    <h5>15. Contact us</h5>
+                                    <h5>16. Contact us</h5>
                                     <p>If you have any questions about this privacy policy, the practices of platform or your dealings with the website, you can contact us at <a href="support@gethappi.tv">support@gethappi.tv</a></p>
                                 </ol>
                             </div>
