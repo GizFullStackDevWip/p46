@@ -1112,7 +1112,7 @@ function videoSubscription(selectedVideoId) {
       });
   }
   
-  function facebokLogin(facebook_id, facebook_email) {
+  function facebookLogin(facebook_id, facebook_email) {
     let countryCode = getCookie("country_code");
     let device_id = localStorage.getItem("deviceId");
     var token = localStorage.getItem("access-token");
@@ -1181,7 +1181,7 @@ function videoSubscription(selectedVideoId) {
           return {};
         });
   }
-  function facebokLink(facebook_id, facebook_email) {
+  function facebookLink(facebook_id, facebook_email) {
     let countryCode = getCookie("country_code");
     let device_id = localStorage.getItem("deviceId");
     var token = localStorage.getItem("access-token");
@@ -1609,10 +1609,10 @@ export const service = {
     unsubscribe,
     getGuestUser,
     paypalSubscription,
-    facebokLogin,
+    facebookLogin,
     changePassword,
     forgotPassword,
-    facebokLink,
+    facebookLink,
     analytics,
     getLocation,
     getGeoInfo,
