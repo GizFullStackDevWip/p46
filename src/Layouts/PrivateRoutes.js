@@ -1,11 +1,14 @@
 import React from "react";
 import { Route, Redirect,Link, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch} from "react-redux";
+import { service } from "../network/service";
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const isLogin = useSelector((state) => state.login);
   let location = useLocation();
   let isLoggedIn = localStorage.getItem("isLoggedIn");
+  let guestUser = service.getCookie('guestUserId');
+  console.log("guestuserr",guestUser);
   console.log('location.state.from.pathname',location.pathname);
   return (
     // Show the component only when the user is logged in
@@ -13,7 +16,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) =>
-        isLoggedIn ? (
+       ( isLoggedIn  || guestUser )? (
           <Component {...props} />
         ) : (
           location.pathname === '/tv' ?

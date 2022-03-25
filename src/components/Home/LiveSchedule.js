@@ -36,7 +36,7 @@ const LiveContainer = () => {
         }
     };
     return (
-        <section className="categoryWrapper">
+        <section className="categoryWrapper" style={{background: '#26262d'}}>
             {
                 schedule &&
                 schedule.length > 0 &&

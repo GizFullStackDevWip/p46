@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import SupportedDeviceSection from './SupportedDeviceSection';
 import QuestionAswerSection from './QuestionAswerSection';
 import { deviceDetect } from '../../Utils/utils';
-
+import { service } from "../../network/service";
 import images from '../../images/landing/mobile1.jpeg';
 import images2 from '../../images/landing/mobile2.jpeg';
 import images3 from '../../images/landing/mobile3.jpeg';
@@ -39,7 +39,18 @@ const Landing = () => {
         slidesToShow: 3,
         slidesToScroll: 1,
     };
-
+   const skipLogin = () => {
+    service.getGuestUser().then((useResponse) => {
+        service.setCookie("userId", useResponse.user_id);
+        // service.userSubscription(useResponse.user_id).then((useResponse) => {
+        //   if (useResponse.login_needed) {
+        //     history.push({
+        //       pathname: "/signin",
+        //     });
+        //   }
+        // })
+      });
+   }
 
     return (
         <div>
@@ -66,8 +77,8 @@ const Landing = () => {
                                                                 <div className="container lpMainContainer">
                                                                     <div className="row lpSectionWrapper">
                                                                         <div className="col col-12 col-md-12 lpFlexCenter" style={{ paddingTop: '69vh', paddingLeft: '10%' }}>
-                                                                            <Link to="/register">
-                                                                                <button className="button buttonLarge watchBottom" >
+                                                                            <Link to={{ pathname: '/home' }}>
+                                                                                <button className="button buttonLarge watchBottom" onClick={()=>skipLogin()} >
                                                                                     <div className="buttonBg" style={{ background: '#e0559ca1' }}></div>
                                                                                     <div className="buttonContent">Start Watching</div>
                                                                                 </button>
@@ -129,8 +140,8 @@ const Landing = () => {
                                                                 <div className="container lpMainContainer">
                                                                     <div className="row lpSectionWrapper">
                                                                         <div className="col col-12 col-md-12 lpFlexCenter">
-                                                                            <Link to="/register">
-                                                                                <button className="button buttonLarge watchBottom" >
+                                                                            <Link to ={{ pathname: '/home' }}>
+                                                                                <button className="button buttonLarge watchBottom" onClick={()=>skipLogin()}>
                                                                                     <div className="buttonBg" style={{ background: '#e0559ca1' }}></div>
                                                                                     <div className="buttonContent">Start Watching</div>
                                                                                 </button>

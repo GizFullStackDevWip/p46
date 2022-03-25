@@ -5,7 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { service } from '../../network/Home/service';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
-
+import freeImg from '../../images/free.png'
+import premium from '../../images/Image.png';
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
 const Show = ({ param, update }) => {
@@ -79,11 +80,13 @@ const Show = ({ param, update }) => {
                                 <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                     onMouseOver={() => { hoverFunction(true, index) }}
                                     onMouseLeave={() => { hoverFunction(false, index) }}>
-                                    <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
+                                { show.is_free_video == false && <img src={premium} style={{position: 'absolute',display:"flex", top: '0px', zIndex: '2',width:"35px",paddingTop:"4px", paddingLeft:"4px"}} />}
+
+                                    <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
                                         className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
 
                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
-                                            onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>
+                                            onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>
                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                         </svg>
@@ -91,9 +94,11 @@ const Show = ({ param, update }) => {
                                     </div>
                                     {
                                         show.logo &&
+                                        <div className='athira'>
                                         <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
                                             <div className="FeNml">
                                             </div>
+                                        </div>
                                         </div>
                                     }
 
@@ -126,8 +131,8 @@ const Show = ({ param, update }) => {
                                         <h3>
                                             {
                                                 show.show_name &&
-                                                <div className="linkButton movieTextHeading"
-                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}>{show.show_name}
+                                                <div className="linkButton movieTextHeading" style={{display:"flex"}}
+                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name}
                                                 </div>
                                             }
 
@@ -137,7 +142,7 @@ const Show = ({ param, update }) => {
                                                 {
                                                     show.video_duration &&
                                                     <div className="movieYear">
-                                                        <div className="_1MmGl">{convertTime(show.video_duration)}</div>
+                                                        <div className="_1MmGl">{show.duration_text}</div>
                                                     </div>
                                                 }
 
@@ -157,9 +162,9 @@ const Show = ({ param, update }) => {
                                                     }
                                                 </div> */}
                                                 {
-                                                    show.category_name &&
+                                                    show.category_names &&
                                                     <div className="movieCategory mcMargin">
-                                                        <div >{show.category_name}</div>
+                                                        <div >{show.category_names}  </div>
                                                     </div>
                                                 }
                                             </div>

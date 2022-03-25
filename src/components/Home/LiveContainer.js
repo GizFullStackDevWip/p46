@@ -11,7 +11,7 @@ import {
 var liveThumbnailUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/images/";
 var details = [];
 var pause = false;
-
+var isSafari = false;
 const LiveContainer = () => {
   const [channels, setChannels] = useState([]);
   const [logo, setLogo] = useState("");
@@ -21,6 +21,16 @@ const LiveContainer = () => {
   const [livePlayerId, setLivePlayerId] = useState("");
   let lplayerId = "";
   useEffect(() => {
+    isSafari =
+    [
+      "iPad Simulator",
+      "iPhone Simulator",
+      "iPod Simulator",
+      "iPad",
+      "iPhone",
+      "iPod",
+    ].includes(navigator.platform) ||
+    (navigator.userAgent.includes("Mac") && "ontouchend" in document);
     service.getLiveChannels().then((response) => {
       if (response.data) {
         setLogo(response.data[0].image);
@@ -36,6 +46,7 @@ const LiveContainer = () => {
               controls={true}
               width={"100%"}
               height={"100%"}
+              playsinline
               onPlayerReady={window.onPlayerReady}
               onReady={window.onPlayerReady}
               onPlay={window.onVideoPlay}
@@ -64,6 +75,7 @@ const LiveContainer = () => {
       }
     }, 5000);
   };
+  
   window.onPlayerReady = () => {
     let event = "POP02";
     service.onVideoPlayFunction(details, event).then((response) => {});
@@ -89,7 +101,7 @@ const LiveContainer = () => {
     if (lplayerId && lplayerId != "") {
       playerId = lplayerId + "_html5_api";
       if (deviceDetect() === true) {
-        playerController(600, playerId);
+        playerController(150, playerId);
       } else {
         playerController(150, playerId);
       }
@@ -103,6 +115,7 @@ const LiveContainer = () => {
         <div className="liveVideoWrapper">
           {!isSSAI ? (
             videoPlayer
+            
           ) : (
             <video
               //   id="singleVideo"
@@ -111,9 +124,10 @@ const LiveContainer = () => {
               controls
               preload="auto"
               autoPlay
+              playsinline
             ></video>
           )}
-          <div className="hpWrapperVideo" style={{ height: "88px" }}>
+          {/* <div className="hpWrapperVideo" style={{ height: "88px"}}>
             <section className="movieTextWrapper vpRelatedMargin">
               <div className="vpRelatedImage">
                 {logo && (
@@ -149,7 +163,7 @@ const LiveContainer = () => {
                 )}
               </div>
             </section>
-          </div>
+          </div> */}
         </div>
         <div className="overlayTiles"></div>
       </div>

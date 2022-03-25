@@ -1,29 +1,20 @@
+
 import React, { useState, useEffect } from "react";
 import FacebookLogin from "react-facebook-login";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { confirmAlert } from "react-confirm-alert";
-import "react-dropdown/style.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { service } from "../../network/service";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Redirect, Link, useLocation } from "react-router-dom";
-import { deviceDetect } from "../../Utils/utils";
+import { useHistory, Redirect, Link } from "react-router-dom";
 
 const Register = (state) => {
-  let location = useLocation();
-  if (location.state && location.state.from) {
-    localStorage.setItem("location", location.state.from.pathname);
-  }
   let isLoggedIn = localStorage.getItem("isLoggedIn");
-  let userId = service.getCookie("userId");
-  if (isLoggedIn === "true" && userId) {
-    return <Redirect to="/home" />;
-  }
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const [isDesktop, setIsDesktop] = useState(deviceDetect());
+  const showId = useSelector((state) => state.showId);
   const [firstname, setFirstName] = useState("");
   const [facebookData, setFacebookData] = useState(null);
   const [facebookId, setFacebookId] = useState("");
@@ -42,19 +33,21 @@ const Register = (state) => {
   const [isErrorVerifyMsg, setIsErrorVerifyMsg] = useState(false);
   const [msgErrorVerify, setMsgErrorVerify] = useState("");
   const [isEmailExistMsg, setIsEmailExistMsg] = useState(false);
+  const [isFirstNameSelected, setIsFirstNameSelected] = useState(false);
+  const [isEmailSelected, setIsEmailSelected] = useState(false);
+  const [isPasswordSelected, setIsPasswordSelected] = useState(false);
+  const [isVerifyEmailSelected, setIsVerifyEmailSelected] = useState(false);
   const [values, setValues] = useState({
     firstname: "",
     email: "",
     password: "",
     password2: "",
-    age: "",
   });
   const [errors, setErrors] = useState({
     firstname: "Name",
     email: "Email",
     password: "Password",
     password2: "Confirm Password",
-    age: "Age Group",
   });
   const [valuesVerify, setValuesVerify] = useState({
     verification_code: "",
@@ -79,24 +72,23 @@ const Register = (state) => {
   let FBData = null;
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.getElementById("root").scrollTo(0, 0);
     if (state.location.state) {
-      if (state.location.state.facebookData) {
-        let FBData = state.location.state.facebookData;
-        setIsFbAcive(false);
-        setFacebookId(FBData.id);
-        setFacebookData(state.location.state.facebookData);
-        if (FBData.email) {
-          setValues({
-            ...values,
-            ["firstname"]: FBData.first_name,
-            ["email"]: FBData.email,
-          });
-        } else {
-          setValues({
-            ...values,
-            ["firstname"]: FBData.first_name,
-          });
-        }
+      let FBData = state.location.state.facebookData;
+      setIsFbAcive(false);
+      setFacebookId(FBData.id);
+      setFacebookData(state.location.state.facebookData);
+      if (FBData.email) {
+        setValues({
+          ...values,
+          ["firstname"]: FBData.first_name,
+          ["email"]: FBData.email,
+        });
+      } else {
+        setValues({
+          ...values,
+          ["firstname"]: FBData.first_name,
+        });
       }
     }
   }, []);
@@ -106,6 +98,12 @@ const Register = (state) => {
         email
       )
     ) {
+      return true;
+    }
+    return false;
+  };
+  const validatePassword = (password) => {
+    if (/^[a-zA-Z0-9@#$%&*^!.,+\-:;_\'\"?]{6,30}$/.test(password)) {
       return true;
     }
     return false;
@@ -151,6 +149,7 @@ const Register = (state) => {
       [name]: value,
     });
   };
+
   const validationVerify = () => {
     let errorsVerify = {};
     let formIsValid = true;
@@ -175,10 +174,11 @@ const Register = (state) => {
   const validation = () => {
     let errors = {};
     let formIsValid = true;
+
     if (values.firstname.trim()) {
       var errorMsg = validateName(values.firstname);
       if (errorMsg === true) {
-        errors.firstname = "First Name";
+        errors.firstname = "Name";
         setFirstName("");
       } else {
         formIsValid = false;
@@ -187,7 +187,7 @@ const Register = (state) => {
       }
     } else {
       formIsValid = false;
-      errors.firstname = "Required First Name Field";
+      errors.firstname = "Required Name Field";
       setFirstName(" Input--errored");
     }
     if (values.email.trim()) {
@@ -206,21 +206,35 @@ const Register = (state) => {
       setEmail(" Input--errored");
     }
     if (values.password.trim()) {
-      if (values.password.length >= 6 && values.password.length <= 30) {
-        if (values.password.trim()) {
-          errors.password = "Password";
-          setPassword("");
-          errors.password2 = "Confirm Password";
-          setPassword2("");
-        } else {
-          errors.password = "Password";
-          setPassword("");
-        }
+      var errorMsg = validatePassword(values.password);
+      if (errorMsg === true) {
+        errors.password = "Password";
+        setPassword("");
       } else {
         formIsValid = false;
         setPassword(" Input--errored");
-        errors.password = "Length must be between 6 and 30";
+        errors.password = "Invalid password";
+        setMsgError("Length must be between 6 and 30");
+        setIsErrorMsg(true);
+        setTimeout(function () {
+          setIsErrorMsg(false);
+        }, 5000);
       }
+      // if (values.password.length >= 6 && values.password.length <= 30) {
+      //     if (values.password.trim()) {
+      //         errors.password = "Password"
+      //         setPassword('');
+      //         errors.password2 = "Confirm Password"
+      //         setPassword2('');
+      //     } else {
+      //         errors.password = "Password"
+      //         setPassword('');
+      //     }
+      // } else {
+      //     formIsValid = false
+      //     setPassword(' Input--errored');
+      //     errors.password = "Length must be between 6 and 30"
+      // }
     } else {
       formIsValid = false;
       setPassword(" Input--errored");
@@ -233,8 +247,8 @@ const Register = (state) => {
     e.preventDefault();
     if (validation()) {
       service.register(values, facebookId).then((response) => {
-        if (response.status == 1) {
-          setUserRegisterId(response.data.user_id);
+        if (response.success == true) {
+          setUserRegisterId(response.user_id);
           setIsRegister(false);
           setMsgSucess(
             "OTP sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
@@ -243,13 +257,16 @@ const Register = (state) => {
           setTimeout(function () {
             setIsSuccessMsg(false);
           }, 5000);
-        } else if (response.status == 0) {
-          setMsgError("There was an error during registration");
-          setIsErrorMsg(true);
-          setTimeout(function () {
-            setIsErrorMsg(false);
-          }, 5000);
-        } else if (response.status == 2) {
+        }
+        // else if (response.status == 0) {
+        //     setMsgError('There was an error during registration');
+        //     setIsErrorMsg(true);
+        //     setTimeout(function () {
+        //         setIsErrorMsg(false);
+        //     }, 5000);
+
+        // }
+        else {
           setMsgError("Already registered user");
           setIsErrorMsg(true);
           setTimeout(function () {
@@ -263,10 +280,11 @@ const Register = (state) => {
     e.preventDefault();
     if (validationVerify()) {
       service.verifyEmail(valuesVerify, userRegisterId).then((response) => {
-        if (response.status == 1) {
+        if (response.success == true) {
           localStorage.setItem("isLoggedIn", true);
-          localStorage.setItem("userName", response.data[0].first_name);
           service.setCookie("userId", response.data[0].user_id, 30);
+          localStorage.setItem("userId", response.data[0].user_id);
+          localStorage.setItem("userName", response.data[0].first_name);
           service.setCookie("isLoggedIn", "true", 30);
           setMsgSucess("You are successfully registered");
           setIsSuccessMsg(true);
@@ -274,16 +292,19 @@ const Register = (state) => {
             setIsSuccessMsg(false);
           }, 5000);
           dispatch({ type: "LOGIN", payload: true });
-          if (location.state && location.state.from) {
-            history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data }
-            })
+          if (sessionStorage.getItem("tvActivateFlag") == "true") {
+            history.push("/tv");
           } else {
-            history.goBack();
+            if (showId != "") {
+              history.push({
+                pathname: "/home/movies",
+                search: encodeURI(`show_id=${showId}`),
+              });
+            } else {
+              window.location.href = "/home";
+            }
           }
-        } else if (response.status == 0) {
+        } else {
           setMsgErrorVerify("Invalid OTP");
           setIsErrorVerifyMsg(true);
           setTimeout(function () {
@@ -293,50 +314,122 @@ const Register = (state) => {
       });
     }
   };
-
-  async function analyticsDevice() {
-    await service
-      .getLocation()
-      .then((response) => {
-        let currentLocation = {};
-        currentLocation["country_name"] = response.data.country;
-        currentLocation["country_code"] = response.data.countryCode;
-        currentLocation["city"] = response.data.city;
-        currentLocation["latitude"] = response.data.lat;
-        currentLocation["longitude"] = response.data.lon;
-        currentLocation["IPv4"] = response.data.query;
-        currentLocation["state"] = response.data.region;
-        localStorage.setItem(
-          "currentLocation",
-          JSON.stringify(currentLocation)
-        );
-        service.analytics().then((response) => {
-          if (response.message) {
-            service.setCookie("device_analytics", true);
-          }
-        });
-      })
-      .catch((error) => {
-        service.analytics().then((response) => {
-          if (response.message) {
-            service.setCookie("device_analytics", true);
-          }
-        });
-      });
-  }
-  
   const responseFacebook = (response) => {
     FBData = response;
     setFacebookId(FBData.id);
     setFacebookEmail(FBData.email);
     setFacebookData(response);
-    service.facebokLogin(response.id, response.email).then((response) => {
-      if (response.status == 100) {
+    if (response.id != undefined && response.id != null && response.id != "")
+      service
+        .facebookLogin(
+          response.id,
+          response.email,
+          response.first_name,
+          response.last_name
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            localStorage.setItem("isLoggedIn", true);
+            localStorage.setItem("userName", response.data[0].first_name);
+            service.setCookie("userId", response.data[0].user_id, 30);
+            service
+              .userSubscription(response.data[0].user_id)
+              .then((response) => {
+                // if (response.forcibleLogout == false) {
+                service.setCookie("isLoggedIn", "true", 30);
+                var user_sub = response.data;
+                if (user_sub.length > 0) {
+                  service.setCookie("isLoggedIn", "true", 30);
+                  setMsgSucess("You are successfully registered");
+                  setIsSuccessMsg(true);
+                  setTimeout(function () {
+                    setIsSuccessMsg(false);
+                  }, 5000);
+                  // history.push('/home');
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    window.location.href = "/home";
+                  }
+                } else {
+                  service.setCookie("isLoggedIn", "true", 30);
+                  setMsgSucess("You are successfully registered");
+                  setIsSuccessMsg(true);
+                  setTimeout(function () {
+                    setIsSuccessMsg(false);
+                  }, 5000);
+                  // history.push('/home');
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    window.location.href = "/home";
+                  }
+                }
+
+                //     return false;
+                // }
+              });
+          } else if (response.status == 202) {
+            setMsgError("There was an error during registration");
+            setIsErrorMsg(true);
+            setTimeout(function () {
+              setIsErrorMsg(false);
+            }, 5000);
+          } else if (response.status == 203) {
+            setIsFbAcive(false);
+            if (FBData.email) {
+              setValues({
+                ...values,
+                ["firstname"]: FBData.first_name,
+                ["email"]: FBData.email,
+              });
+            } else {
+              setValues({
+                ...values,
+                ["firstname"]: FBData.first_name,
+              });
+            }
+          } else if (response.status == 201) {
+            setUserRegisterId(response.data[0].user_id);
+            setIsRegister(false);
+            setMsgSucess(
+              "OTP sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
+            );
+            setIsSuccessMsg(true);
+            setTimeout(function () {
+              setIsSuccessMsg(false);
+            }, 5000);
+          } else if (response.status == 204) {
+            confirmAlert({
+              closeOnEscape: false,
+              closeOnClickOutside: false,
+              message: "Do you want to link your Facebook account?",
+              buttons: [
+                {
+                  label: "Yes",
+                  onClick: () => onFBLink(),
+                },
+                {
+                  label: "No",
+                  onClick: () => onFBNoLink(),
+                },
+              ],
+            });
+          }
+        });
+  };
+  const onFBLink = () => {
+    service
+      .facebookLink(
+        FBData.id,
+        FBData.email,
+        FBData.first_name,
+        FBData.last_name
+      )
+      .then((response) => {
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("userName", response.data[0].first_name);
         service.setCookie("userId", response.data[0].user_id, 30);
-
-        analyticsDevice();
         service.userSubscription(response.data[0].user_id).then((response) => {
           // if (response.forcibleLogout == false) {
           service.setCookie("isLoggedIn", "true", 30);
@@ -348,16 +441,11 @@ const Register = (state) => {
             setTimeout(function () {
               setIsSuccessMsg(false);
             }, 5000);
-            dispatch({ type: "LOGIN", payload: true });
-            if (location.state && location.state.from) {
-            //   history.push(location.state.from.pathname);
-              history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data }
-            })
+            // history.push('/home');
+            if (sessionStorage.getItem("tvActivateFlag") == "true") {
+              history.push("/tv");
             } else {
-              history.goBack();
+              window.location.href = "/home";
             }
           } else {
             service.setCookie("isLoggedIn", "true", 30);
@@ -366,120 +454,18 @@ const Register = (state) => {
             setTimeout(function () {
               setIsSuccessMsg(false);
             }, 5000);
-            dispatch({ type: "LOGIN", payload: true });
-            if (location.state && location.state.from) {
-            //   history.push(location.state.from.pathname);
-              history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data }
-            })
+            // history.push('/home');
+            if (sessionStorage.getItem("tvActivateFlag") == "true") {
+              history.push("/tv");
             } else {
-              history.goBack();
+              window.location.href = "/home";
             }
           }
 
           //     return false;
           // }
         });
-      } else if (response.status == 102) {
-        setMsgError("There was an error during registration");
-        setIsErrorMsg(true);
-        setTimeout(function () {
-          setIsErrorMsg(false);
-        }, 5000);
-      } else if (response.status == 103) {
-        setIsFbAcive(false);
-        if (FBData.email) {
-          setValues({
-            ...values,
-            ["firstname"]: FBData.first_name,
-            ["email"]: FBData.email,
-          });
-        } else {
-          setValues({
-            ...values,
-            ["firstname"]: FBData.first_name,
-          });
-        }
-      } else if (response.status == 101) {
-        setUserRegisterId(response.data[0].user_id);
-        setIsRegister(false);
-        setMsgSucess(
-          "OTP sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
-        );
-        setIsSuccessMsg(true);
-        setTimeout(function () {
-          setIsSuccessMsg(false);
-        }, 5000);
-      } else if (response.status == 104) {
-        confirmAlert({
-          closeOnEscape: false,
-          closeOnClickOutside: false,
-          message: "Do you want to link your Facebook account?",
-          buttons: [
-            {
-              label: "Yes",
-              onClick: () => onFBLink(),
-            },
-            {
-              label: "No",
-              onClick: () => onFBNoLink(),
-            },
-          ],
-        });
-      }
-    });
-  };
-  const onFBLink = () => {
-    service.facebokLink(FBData.id, FBData.email).then((response) => {
-      localStorage.setItem("isLoggedIn", true);
-      localStorage.setItem("userName", response.data[0].first_name);
-      service.setCookie("userId", response.data[0].user_id, 30);
-      service.userSubscription(response.data[0].user_id).then((response) => {
-        // if (response.forcibleLogout == false) {
-        service.setCookie("isLoggedIn", "true", 30);
-        var user_sub = response.data;
-        if (user_sub.length > 0) {
-          service.setCookie("isLoggedIn", "true", 30);
-          setMsgSucess("You are successfully registered");
-          setIsSuccessMsg(true);
-          setTimeout(function () {
-            setIsSuccessMsg(false);
-          }, 5000);
-          dispatch({ type: "LOGIN", payload: true });
-          if (location.state && location.state.from) {
-            history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data }
-            })
-          } else {
-            history.goBack();
-          }
-        } else {
-          service.setCookie("isLoggedIn", "true", 30);
-          setMsgSucess("You are successfully registered");
-          setIsSuccessMsg(true);
-          setTimeout(function () {
-            setIsSuccessMsg(false);
-          }, 5000);
-          dispatch({ type: "LOGIN", payload: true });
-          if (location.state && location.state.from) {
-            history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data }
-            })
-          } else {
-            history.goBack();
-          }
-        }
-
-        //     return false;
-        // }
       });
-    });
   };
   const onFBNoLink = () => {
     setIsEmailExistMsg(true);
@@ -491,143 +477,173 @@ const Register = (state) => {
     history.push("/signin");
   };
 
-  return (
-    <div className="pageWrapper searchPageMain">
-      <div className="topContainer">
-        <div
-          className={`menuCloseJS closeMenuWrapper ${
-            isRegister ? "regnPage" : "regnPage1"
-          }`}
-        >
-          <div className="container">
-            <div className="row regnWrapper">
-              <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
-                <h3 className="H3">Let's get you set up!</h3>
-                <div>
-                  {isFbAcive && (
-                    <div>
-                      <div rel="noopener" target="_self">
-                        <button className="button buttonLarge buttonBlock registerFacebook">
-                          <div className="buttonBg"></div>
-                          <FacebookLogin
-                            appId="677536043137548"
-                            fields="name,email,picture,first_name"
-                            callback={responseFacebook}
-                            cssClass="button buttonLarge buttonBlock registerFacebook"
-                            isMobile={false}
-                            textButton="Register via Facebook"
-                          />
-                        </button>
+  if (isLoggedIn === "true") {
+    return <Redirect to="/home" />;
+  } else {
+    return (
+      <div className="pageWrapper searchPageMain">
+        <div className="topContainer">
+          <div
+            className={`menuCloseJS closeMenuWrapper ${
+              isRegister ? "regnPage" : "regnPage1"
+            }`}
+          >
+            <div className="container">
+              <div className="row regnWrapper">
+                <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
+                  <h3 className="H3">Let's get you set up!</h3>
+                  <div>
+                    {isFbAcive && (
+                      <div>
+                        <div rel="noopener" target="_self">
+                          <button className="button buttonLarge buttonBlock registerFacebook">
+                            <div className="buttonBg"></div>
+                            <FacebookLogin
+                              appId="260842788745437"
+                              fields="name,email,picture,first_name"
+                              callback={responseFacebook}
+                              cssClass="button buttonLarge buttonBlock registerFacebook"
+                              isMobile={false}
+                              textButton="Register via Facebook"
+                            />
+                          </button>
+                        </div>
+                        <div className="orContainer orMargin">
+                          <div className="orDivider"></div>
+                          <div className="orCircle">
+                            <div className="orText">OR</div>
+                          </div>
+                          <div className="orDivider"></div>
+                        </div>
                       </div>
-                      <div className="orContainer orMargin">
-                        <div className="orDivider"></div>
-                        <div className="orCircle">
-                          <div className="orText">OR</div>
-                        </div>
-                        <div className="orDivider"></div>
-                      </div>
-                    </div>
-                  )}
+                    )}
 
-                  {isRegister ? (
-                    <div id="registerId">
-                      <h5 className="H5 regnFormHeading">Register via Email</h5>
-                      <form
-                        className="regnformContainer"
-                        noValidate
-                        onSubmit={onSubmitHandler}
-                      >
-                        {isErrorMsg && <p className="_3nmo_">{msgError}</p>}
-                        {isEmailExistMsg && (
-                          <p className="_3nmo_">
-                            {facebookEmail} already exist, Please&nbsp;&nbsp;
-                            <button
-                              onClick={onSignIn}
-                              className="linkButton button buttonSmall"
-                            >
-                              <div className="buttonBg"></div>
-                              <div className="buttonContent">Sign In</div>
-                            </button>
-                          </p>
-                        )}
-                        <div
-                          className={"input" + firstname}
-                          style={{ marginTop: "18px" }}
+                    {isRegister ? (
+                      <div id="registerId">
+                        <h5 className="H5 regnFormHeading">
+                          Register via email
+                        </h5>
+                        <form
+                          className="regnformContainer"
+                          noValidate
+                          onSubmit={onSubmitHandler}
                         >
-                          <input
-                            className="inputText"
-                            style={{
-                              border: "none",
-                              padding: "0px",
-                              marginTop: "10px",
-                            }}
-                            name="firstname"
-                            type="text"
-                            maxLength="60"
-                            value={values.firstname}
-                            onChange={onChangeHandler}
-                          />
-                          <span className="inputLabel">{errors.firstname}</span>
-                        </div>
-                        <div
-                          className={"input" + email}
-                          style={{ marginTop: "22px" }}
-                        >
-                          <input
-                            className="inputText"
-                            style={{
-                              border: "none",
-                              padding: "0px",
-                              marginTop: "10px",
-                            }}
-                            name="email"
-                            type="email"
-                            value={values.email}
-                            onChange={onChangeHandler}
-                          />
-                          <span className="inputLabel">{errors.email}</span>
-                          {!values.email && (
-                            <span className="inputHint">
-                              We never share this
+                          {isErrorMsg && <p className="_3nmo_">{msgError}</p>}
+                          {isEmailExistMsg && (
+                            <p className="_3nmo_">
+                              {facebookEmail} already exist, Please&nbsp;&nbsp;
+                              <button
+                                onClick={onSignIn}
+                                className="linkButton button buttonSmall"
+                              >
+                                <div
+                                  className="buttonBg"
+                                  // style={{ backgroundColor: "#148AB7" }}
+                                ></div>
+                                <div className="buttonContent">Sign In</div>
+                              </button>
+                            </p>
+                          )}
+                          <div
+                            style={{ marginTop: "18px" }}
+                            onClick={() => setIsFirstNameSelected(true)}
+                            onBlur={() => setIsFirstNameSelected(false)}
+                            className={`input ${firstname} ${
+                              isFirstNameSelected ? "inputActive" : ""
+                            }`}
+                          >
+                            <input
+                              className="inputText"
+                              style={{
+                                border: "none",
+                                padding: "0px",
+                                marginTop: "10px",
+                              }}
+                              name="firstname"
+                              type="text"
+                              maxLength="60"
+                              value={values.firstname}
+                              onChange={onChangeHandler}
+                            />
+                            <span className="inputLabel">
+                              {errors.firstname}
                             </span>
-                          )}
-                        </div>
-                        <div
-                          className={"input" + password}
-                          style={{ marginTop: "20px" }}
-                        >
-                          <input
-                            className="inputText"
-                            style={{
-                              border: "none",
-                              padding: "0px",
-                              marginTop: "10px",
-                            }}
-                            name="password"
-                            type={passwordShown1 ? "text" : "password"}
-                            value={values.password}
-                            onChange={onChangeHandler}
-                          />
-                          {isEye1 && (
-                            <i
-                              className="eyeIcon"
-                              onClick={togglePasswordVisiblity1}
-                            >
-                              {eye1}
-                            </i>
-                          )}
+                          </div>
+                          <div
+                            style={{ marginTop: "22px" }}
+                            onClick={() => setIsEmailSelected(true)}
+                            onBlur={() => setIsEmailSelected(false)}
+                            className={`input ${email} ${
+                              isEmailSelected ? "inputActive" : ""
+                            }`}
+                          >
+                            <input
+                              className="inputText"
+                              style={{
+                                border: "none",
+                                padding: "0px",
+                                marginTop: "10px",
+                              }}
+                              name="email"
+                              type="email"
+                              value={values.email}
+                              onChange={onChangeHandler}
+                            />
+                            <span className="inputLabel">{errors.email}</span>
+                            {!values.email && (
+                              <span className="inputHint">
+                                We never share this
+                              </span>
+                            )}
+                          </div>
+                          <div
+                            style={{ marginTop: "20px" }}
+                            onClick={() => setIsPasswordSelected(true)}
+                            onBlur={() => setIsPasswordSelected(false)}
+                            className={`input ${password} ${
+                              isPasswordSelected ? "inputActive" : ""
+                            }`}
+                          >
+                            <input
+                              className="inputText"
+                              title="Length must be between 6 and 30"
+                              style={{
+                                border: "none",
+                                padding: "0px",
+                                marginTop: "10px",
+                              }}
+                              name="password"
+                              type={passwordShown1 ? "text" : "password"}
+                              value={values.password}
+                              onChange={onChangeHandler}
+                            />
+                            {isEye1 && (
+                              <i
+                                className="eyeIcon"
+                                onClick={togglePasswordVisiblity1}
+                              >
+                                {eye1}
+                              </i>
+                            )}
 
-                          <span className="inputLabel">{errors.password}</span>
-                          {!values.password && (
-                            <span className="inputHint">
-                              Pick something you can remember
+                            <span className="inputLabel">
+                              {errors.password}
                             </span>
-                          )}
-                        </div>
+                            {!values.password && (
+                              <span className="inputHint">
+                                Pick something you can remember
+                              </span>
+                            )}
+                          </div>
 
-                        {isDesktop ? (
                           <div className="regnSubmitWrapper">
-                            <p style={{ paddingTop: "10px", fontSize: "14px" }}>
+                            <p
+                              style={{
+                                paddingTop: "10px",
+                                fontSize: "14px",
+                                color: "rgb(112, 124, 134)",
+                              }}
+                            >
                               Already have an account?
                               <Link to={{ pathname: "/signin" }}>
                                 <span className="linkButton">
@@ -638,139 +654,123 @@ const Register = (state) => {
                             <button
                               className="button buttonLarge regnSubmit"
                               type="submit"
+                              id="registerSubmit"
                             >
-                              <div className="buttonBg"></div>
+                              <div
+                                className="buttonBg"
+                                // style={{ backgroundColor: "#81d742" }}
+                              ></div>
                               <div className="buttonContent">Register</div>
                             </button>
                           </div>
-                        ) : (
-                          <div>
-                            <div className="regnSubmitWrapper">
-                              <button
-                                className="button buttonLarge regnSubmit"
-                                style={{ width: "100vw" }}
-                                type="submit"
-                              >
-                                <div className="buttonBg"></div>
-                                <div className="buttonContent">Register</div>
-                              </button>
-                            </div>
-                            <div className="regnSubmitWrapper">
-                              <p
-                                style={{
-                                  paddingLeft: "20px",
-                                  fontSize: "14px",
-                                  textAlign: "center",
-                                }}
-                              >
-                                Already have an account?
-                                <Link to={{ pathname: "/signin" }}>
-                                  <span className="linkButton">
-                                    &nbsp; Sign In
-                                  </span>
-                                </Link>
-                              </p>
-                            </div>
+                          <div className="regnAgreeContent">
+                            <p>
+                              By registering, you agree to HappiTV
+                              <Link to="/termsofuse">
+                                <div className="linkButton">
+                                  &nbsp;Terms of Use
+                                </div>
+                              </Link>
+                              &nbsp; and
+                              <Link to="/policydarkmode">
+                                <div className="linkButton" href="#">
+                                  &nbsp;Privacy Policy
+                                </div>
+                              </Link>
+                            </p>
                           </div>
-                        )}
+                        </form>
+                      </div>
+                    ) : (
+                      <div id="verifyId">
+                        <h5
+                          className="H5 regnFormHeading"
+                          style={{ marginTop: "0px", marginBottom: "25px" }}
+                        >
+                          Email Verification
+                        </h5>
+                        <form
+                          className="regnformContainer"
+                          noValidate
+                          onSubmit={onVerifyHandler}
+                        >
+                          {isSuccessMsg && (
+                            <p className="_3nmo_success">{msgSuccess}</p>
+                          )}
+                          {isErrorVerifyMsg && (
+                            <p className="_3nmo_">{msgErrorVerify}</p>
+                          )}
+                          <div
+                            onClick={() => setIsVerifyEmailSelected(true)}
+                            onBlur={() => setIsVerifyEmailSelected(false)}
+                            className={`input ${verification_code} ${
+                              isVerifyEmailSelected ? "inputActive" : ""
+                            }`}
+                          >
+                            <input
+                              className="inputText"
+                              style={{
+                                border: "none",
+                                padding: "0px",
+                                marginTop: "10px",
+                              }}
+                              name="verification_code"
+                              type="text"
+                              maxLength="60"
+                              value={valuesVerify.verification_code}
+                              onChange={onChangeHandlerVerify}
+                            />
+                            <span className="inputLabel">
+                              {errorsVerify.verification_code}
+                            </span>
+                          </div>
+                          <div className="regnSubmitWrapper">
+                            <button
+                              className="button buttonLarge regnSubmit"
+                              type="submit"
+                            >
+                              <div
+                                className="buttonBg"
+                                // style={{ backgroundColor: "#81d742" }}
+                              ></div>
+                              <div className="buttonContent">Verify</div>
+                            </button>
+                          </div>
+                        </form>
                         <div className="regnAgreeContent">
                           <p>
-                            By registering, you agree to HappiTV
-                            <Link to="/termsandconditions">
+                            By registering, you agree to HappiTv
+                            <Link to="/termsofuse">
                               <div className="linkButton">
+                                {" "}
                                 &nbsp;Terms of Use
                               </div>
                             </Link>
                             &nbsp; and
-                            <Link to="/privacypolicy">
+                            <Link to="/policydarkmode">
                               <div className="linkButton" href="#">
+                                {" "}
                                 &nbsp;Privacy Policy
                               </div>
                             </Link>
                           </p>
+                          <p>
+                            Already have an account?
+                            <Link to={{ pathname: "/signin" }}>
+                              <span className="linkButton">&nbsp; Sign In</span>
+                            </Link>
+                          </p>
                         </div>
-                      </form>
-                    </div>
-                  ) : (
-                    <div id="verifyId">
-                      <h5
-                        className="H5 regnFormHeading"
-                        style={{ marginTop: "0px", marginBottom: "25px" }}
-                      >
-                        Email Verification
-                      </h5>
-                      <form
-                        className="regnformContainer"
-                        noValidate
-                        onSubmit={onVerifyHandler}
-                      >
-                        {isSuccessMsg && (
-                          <p className="_3nmo_success">{msgSuccess}</p>
-                        )}
-                        {isErrorVerifyMsg && (
-                          <p className="_3nmo_">{msgErrorVerify}</p>
-                        )}
-                        <div className={"input" + verification_code}>
-                          <input
-                            className="inputText"
-                            style={{
-                              border: "none",
-                              padding: "0px",
-                              marginTop: "10px",
-                            }}
-                            name="verification_code"
-                            type="text"
-                            maxLength="60"
-                            value={valuesVerify.verification_code}
-                            onChange={onChangeHandlerVerify}
-                          />
-                          <span className="inputLabel">
-                            {errorsVerify.verification_code}
-                          </span>
-                        </div>
-                        <div className="regnSubmitWrapper">
-                          <button
-                            className="button buttonLarge regnSubmit"
-                            type="submit"
-                          >
-                            <div className="buttonBg"></div>
-                            <div className="buttonContent">Verify</div>
-                          </button>
-                        </div>
-                      </form>
-                      <div className="regnAgreeContent">
-                        <p>
-                          By registering, you agree to HappiTV
-                          <Link to="/termsandconditions">
-                            <div className="linkButton">
-                              {" "}
-                              &nbsp;Terms of Use
-                            </div>
-                          </Link>
-                          &nbsp; and
-                          <Link to="/privacypolicy">
-                            <div className="linkButton" href="#">
-                              {" "}
-                              &nbsp;Privacy Policy
-                            </div>
-                          </Link>
-                        </p>
-                        <p>
-                          Already have an account?
-                          <Link to={{ pathname: "/signin" }}>
-                            <span className="linkButton">&nbsp; Sign In</span>
-                          </Link>
-                        </p>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 export default Register;

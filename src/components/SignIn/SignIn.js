@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import FacebookLogin from "react-facebook-login";
 import { service } from "../../network/service";
@@ -7,20 +8,17 @@ import { Link, useHistory, useLocation, Redirect } from "react-router-dom";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useSelector, useDispatch } from "react-redux";
-import { deviceDetect } from "../../Utils/utils";
-const SignIn = ({ props }) => {
+const SignIn = () => {
   let isLoggedIn = localStorage.getItem("isLoggedIn");
-  let userId = service.getCookie("userId");
-  if (isLoggedIn === "true" && userId) {
+  if (isLoggedIn === "true") {
     return <Redirect to="/home" />;
   }
-  let location = useLocation();
 
   const history = useHistory();
   const dispatch = useDispatch();
 
   const showId = useSelector((state) => state.showId);
-  const [isDesktop, setIsDesktop] = useState(deviceDetect());
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verification_code, setVerification] = useState("");
@@ -50,6 +48,10 @@ const SignIn = ({ props }) => {
   const [facebookId, setFacebookId] = useState("");
   const [facebookEmail, setFacebookEmail] = useState("");
   const [isEmailExistMsg, setIsEmailExistMsg] = useState(false);
+  const [isEmailSelected, setIsEmailSelected] = useState(false);
+  const [isForgotEmailSelected, setIsForgotEmailSelected] = useState(false);
+  const [isPasswordSelected, setIsPasswordSelected] = useState(false);
+  const [isVerifyEmailSelected, setIsVerifyEmailSelected] = useState(false);
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -86,7 +88,8 @@ const SignIn = ({ props }) => {
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.getElementById("signInLink").style.display = "none";
+    var siginElem = document.getElementById("signInLink");
+    if (siginElem) siginElem.style.display = "none";
     if (isGetIP) {
       fetch("https://giz.poppo.tv/service/ipinfo")
         .then((res) => res.json())
@@ -100,6 +103,12 @@ const SignIn = ({ props }) => {
         email
       )
     ) {
+      return true;
+    }
+    return false;
+  };
+  const validatePassword = (password) => {
+    if (/^[a-zA-Z0-9@#$%&*^!.,+\-:;_\'\"?]{6,30}$/.test(password)) {
       return true;
     }
     return false;
@@ -202,8 +211,28 @@ const SignIn = ({ props }) => {
       setEmail(" Input--errored");
     }
     if (values.password.trim()) {
-      errors.password = "Password";
-      setPassword("");
+      // var errorMsg = validatePassword(values.password);
+      // if (errorMsg === true) {
+      //     errors.password = 'Password'
+      //     setPassword('');
+      // } else {
+      //     formIsValid = false
+      //     setPassword(' Input--errored');
+      //     errors.password = 'Invalid password'
+      // }
+      // if (values.password.length >= 6 && values.password.length <= 30) {
+      //     if (values.password.trim()) {
+      //         errors.password = "Password"
+      //         setPassword('');
+      //     } else {
+      //         errors.password = "Password"
+      //         setPassword('');
+      //     }
+      // } else {
+      //     formIsValid = false
+      //     setPassword(' Input--errored');
+      //     errors.password = "Length must be between 6 and 30"
+      // }
     } else {
       formIsValid = false;
       setPassword(" Input--errored");
@@ -212,45 +241,119 @@ const SignIn = ({ props }) => {
     setErrors(errors);
     return formIsValid;
   };
-
-  async function analyticsDevice() {
-    await service
-      .getLocation()
-      .then((response) => {
-        let currentLocation = {};
-        currentLocation["country_name"] = response.data.country;
-        currentLocation["country_code"] = response.data.countryCode;
-        currentLocation["city"] = response.data.city;
-        currentLocation["latitude"] = response.data.lat;
-        currentLocation["longitude"] = response.data.lon;
-        currentLocation["IPv4"] = response.data.query;
-        currentLocation["state"] = response.data.region;
-        localStorage.setItem(
-          "currentLocation",
-          JSON.stringify(currentLocation)
-        );
-        service.analytics().then((response) => {
-          if (response.message) {
-            service.setCookie("device_analytics", true);
-          }
-        });
-      })
-      .catch((error) => {
-        service.analytics().then((response) => {
-          if (response.message) {
-            service.setCookie("device_analytics", true);
-          }
-        });
-      });
-  }
   const responseFacebook = (response) => {
     setFacebookData(response);
     FBData = response;
     setFacebookId(FBData.id);
     setFacebookEmail(FBData.email);
     setAccessTokenFB(response.accessToken);
-    service.facebokLogin(response.id, response.email).then((response) => {
-      if (response.status == 100) {
+    if (response.id != undefined && response.id != null && response.id != "")
+      service
+        .facebookLogin(
+          response.id,
+          response.email,
+          response.first_name,
+          response.last_name
+        )
+        .then((response) => {
+          if (response.status == 200) {
+            service.setCookie("userId", response.data[0].user_id, 30);
+            let loginFBData = response.data[0];
+            service
+              .userSubscription(response.data[0].user_id)
+              .then((response) => {
+                setUserLoggedId(loginFBData.user_id);
+                // if (response.forcibleLogout == false) {
+                localStorage.setItem("isLoggedIn", true);
+                localStorage.setItem("userName", loginFBData.first_name);
+                service.setCookie("userId", loginFBData.user_id, 30);
+                service.setCookie("userEmail", loginFBData.user_email, 30);
+                service.setCookie("isLoggedIn", "true", 30);
+
+                var user_sub = response.data;
+                if (user_sub.length > 0) {
+                  setMsgSucessLogin("You are successfully logged in.");
+                  setIsSuccessLoginMsg(true);
+                  setTimeout(function () {
+                    setIsSuccessLoginMsg(false);
+                  }, 1000);
+                  dispatch({ type: "LOGIN", payload: true });
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    history.goBack();
+                  }
+                } else {
+                  setMsgSucessLogin("You are successfully logged in.");
+                  setIsSuccessLoginMsg(true);
+                  setTimeout(function () {
+                    setIsSuccessLoginMsg(false);
+                  }, 5000);
+                  dispatch({ type: "LOGIN", payload: true });
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    history.goBack();
+                  }
+                }
+
+                // } else {
+                //     setIsErrorLogoutMsg(true);
+                //     setTimeout(function () {
+                //         setIsErrorLogoutMsg(false);
+                //     }, 5000);
+                // }
+              });
+          } else if (response.status == 202) {
+            setMsgErrorLogin("Please enter a valid user email and password");
+            setIsErrorLoginMsg(true);
+            setTimeout(function () {
+              setIsErrorLoginMsg(false);
+            }, 5000);
+          } else if (response.status == 203) {
+            history.push({
+              pathname: "/register",
+              state: { facebookData: FBData },
+            });
+          } else if (response.status == 201) {
+            setUserLoggedId(response.data[0].user_id);
+            setIsLogin(false);
+            setIsVeriy(true);
+            setMsgSucessVerify(
+              "OTP sent to your Email (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
+            );
+            setIsSuccessVerifyMsg(true);
+            setTimeout(function () {
+              setIsSuccessVerifyMsg(false);
+            }, 5000);
+          } else if (response.status == 204) {
+            confirmAlert({
+              closeOnEscape: false,
+              closeOnClickOutside: false,
+              message: "Do you want to link your Facebook account?",
+              buttons: [
+                {
+                  label: "Yes",
+                  onClick: () => onFBLink(),
+                },
+                {
+                  label: "No",
+                  onClick: () => onFBNoLink(),
+                },
+              ],
+            });
+          }
+        });
+  };
+  const onFBLink = () => {
+    service
+      .facebookLink(
+        FBData.id,
+        FBData.email,
+        FBData.first_name,
+        FBData.last_name
+      )
+      .then((response) => {
         let loginFBData = response.data[0];
         service.userSubscription(response.data[0].user_id).then((response) => {
           setUserLoggedId(loginFBData.user_id);
@@ -258,35 +361,8 @@ const SignIn = ({ props }) => {
           localStorage.setItem("isLoggedIn", true);
           localStorage.setItem("userName", loginFBData.first_name);
           service.setCookie("userId", loginFBData.user_id, 30);
-          service.setCookie("userEmail", loginFBData.user_email, 30);
+          service.setCookie("userEmail", FBData.email, 30);
           service.setCookie("isLoggedIn", "true", 30);
-
-          let analyticsVal = service.getCookie("device_analytics");
-          if (analyticsVal) {
-            if (analyticsVal === "true") {
-              let storedData = service.getCookie("deviceAnalyticsCheck");
-              let deviceId = localStorage.getItem("deviceId");
-              let presentData = deviceId + loginFBData.user_id;
-              if (storedData !== presentData) {
-                service.setCookie("deviceAnalyticsCheck", presentData, 30);
-                analyticsDevice();
-              }
-            } else {
-              let deviceId = localStorage.getItem("deviceId");
-              let deviceAnalyticsCheck = deviceId + loginFBData.user_id;
-              service.setCookie(
-                "deviceAnalyticsCheck",
-                deviceAnalyticsCheck,
-                30
-              );
-              analyticsDevice();
-            }
-          } else {
-            let deviceId = localStorage.getItem("deviceId");
-            let deviceAnalyticsCheck = deviceId + loginFBData.user_id;
-            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
-            analyticsDevice();
-          }
 
           var user_sub = response.data;
           if (user_sub.length > 0) {
@@ -296,15 +372,8 @@ const SignIn = ({ props }) => {
               setIsSuccessLoginMsg(false);
             }, 1000);
             dispatch({ type: "LOGIN", payload: true });
-            let prevLocation = localStorage.getItem("location");
-            if (prevLocation === "/tv") {
+            if (sessionStorage.getItem("tvActivateFlag") == "true") {
               history.push("/tv");
-            } else if (location.state && location.state.from) {
-              history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data },
-              });
             } else {
               history.goBack();
             }
@@ -315,15 +384,8 @@ const SignIn = ({ props }) => {
               setIsSuccessLoginMsg(false);
             }, 5000);
             dispatch({ type: "LOGIN", payload: true });
-            let prevLocation = localStorage.getItem("location");
-            if (prevLocation === "/tv") {
+            if (sessionStorage.getItem("tvActivateFlag") == "true") {
               history.push("/tv");
-            } else if (location.state && location.state.from) {
-              history.push({
-                pathname: location.state.from.pathname,
-                search: encodeURI(location.state.from.search),
-                state: { item: response.data },
-              });
             } else {
               history.goBack();
             }
@@ -336,131 +398,7 @@ const SignIn = ({ props }) => {
           //     }, 5000);
           // }
         });
-      } else if (response.status == 102) {
-        setMsgErrorLogin("Please enter a valid user email and password");
-        setIsErrorLoginMsg(true);
-        setTimeout(function () {
-          setIsErrorLoginMsg(false);
-        }, 5000);
-      } else if (response.status == 103) {
-        history.push({
-          pathname: "/register",
-          state: { facebookData: FBData },
-        });
-      } else if (response.status == 101) {
-        setUserLoggedId(response.data[0].user_id);
-        setIsLogin(false);
-        setIsVeriy(true);
-        setMsgSucessVerify(
-          "OTP sent to your Email (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
-        );
-        setIsSuccessVerifyMsg(true);
-        setTimeout(function () {
-          setIsSuccessVerifyMsg(false);
-        }, 5000);
-      } else if (response.status == 104) {
-        confirmAlert({
-          closeOnEscape: false,
-          closeOnClickOutside: false,
-          message: "Do you want to link your Facebook account?",
-          buttons: [
-            {
-              label: "Yes",
-              onClick: () => onFBLink(),
-            },
-            {
-              label: "No",
-              onClick: () => onFBNoLink(),
-            },
-          ],
-        });
-      }
-    });
-  };
-  const onFBLink = () => {
-    service.facebokLink(FBData.id, FBData.email).then((response) => {
-      let loginFBData = response.data[0];
-      service.userSubscription(response.data[0].user_id).then((response) => {
-        setUserLoggedId(loginFBData.user_id);
-        // if (response.forcibleLogout == false) {
-        localStorage.setItem("isLoggedIn", true);
-        localStorage.setItem("userName", loginFBData.first_name);
-        service.setCookie("userId", loginFBData.user_id, 30);
-        service.setCookie("userEmail", FBData.email, 30);
-        service.setCookie("isLoggedIn", "true", 30);
-
-        let analyticsVal = service.getCookie("device_analytics");
-        if (analyticsVal) {
-          if (analyticsVal === "true") {
-            let storedData = service.getCookie("deviceAnalyticsCheck");
-            let deviceId = localStorage.getItem("deviceId");
-            let presentData = deviceId + loginFBData.user_id;
-            if (storedData !== presentData) {
-              service.setCookie("deviceAnalyticsCheck", presentData, 30);
-              analyticsDevice();
-            }
-          } else {
-            let deviceId = localStorage.getItem("deviceId");
-            let deviceAnalyticsCheck = deviceId + loginFBData.user_id;
-            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
-            analyticsDevice();
-          }
-        } else {
-          let deviceId = localStorage.getItem("deviceId");
-          let deviceAnalyticsCheck = deviceId + loginFBData.user_id;
-          service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
-          analyticsDevice();
-        }
-
-        var user_sub = response.data;
-        if (user_sub.length > 0) {
-          setMsgSucessLogin("You are successfully logged in.");
-          setIsSuccessLoginMsg(true);
-          setTimeout(function () {
-            setIsSuccessLoginMsg(false);
-          }, 1000);
-          dispatch({ type: "LOGIN", payload: true });
-          let prevLocation = localStorage.getItem("location");
-          if (prevLocation === "/tv") {
-            history.push("/tv");
-          } else if (location.state && location.state.from) {
-            history.push({
-              pathname: location.state.from.pathname,
-              search: encodeURI(location.state.from.search),
-              state: { item: response.data },
-            });
-          } else {
-            history.goBack();
-          }
-        } else {
-          setMsgSucessLogin("You are successfully logged in.");
-          setIsSuccessLoginMsg(true);
-          setTimeout(function () {
-            setIsSuccessLoginMsg(false);
-          }, 5000);
-          dispatch({ type: "LOGIN", payload: true });
-          let prevLocation = localStorage.getItem("location");
-          if (prevLocation === "/tv") {
-            history.push("/tv");
-          } else if (location.state && location.state.from) {
-            history.push({
-              pathname: location.state.from.pathname,
-              search: encodeURI(location.state.from.search),
-              state: { item: response.data },
-            });
-          } else {
-            history.goBack();
-          }
-        }
-
-        // } else {
-        //     setIsErrorLogoutMsg(true);
-        //     setTimeout(function () {
-        //         setIsErrorLogoutMsg(false);
-        //     }, 5000);
-        // }
       });
-    });
   };
   const onFBNoLink = () => {
     setIsEmailExistMsg(true);
@@ -469,117 +407,94 @@ const SignIn = ({ props }) => {
     }, 5000);
   };
   const onLoginHandler = (e) => {
-    //normal sign in
     e.preventDefault();
+    let prevDomain = document.referrer
+      .replace("http://", "")
+      .replace("https://", "")
+      .split(/[/?#]/)[0];
+    let currentDomain = window.location.href
+      .replace("http://", "")
+      .replace("https://", "")
+      .split(/[/?#]/)[0];
     if (validation()) {
       service.login(values).then((response) => {
-        if (response.status == 100) {
-          let loginData = response.data[0];
-          service
-            .userSubscription(response.data[0].user_id)
-            .then((response) => {
-              setUserLoggedId(loginData.user_id);
-              // if (response.forcibleLogout == false) {
+        if (response.status == 200) {
+          let loginData = response.data.data[0];
+          service.userSubscription(loginData.user_id).then((response) => {
+            setUserLoggedId(loginData.user_id);
+            if (response.forcibleLogout == false) {
               localStorage.setItem("isLoggedIn", true);
               localStorage.setItem("userName", loginData.first_name);
               localStorage.setItem("userId", loginData.user_id);
               service.setCookie("userEmail", loginData.user_email, 30);
               service.setCookie("userId", loginData.user_id, 30);
               service.setCookie("isLoggedIn", "true", 30);
-
-              let analyticsVal = service.getCookie("device_analytics");
-              if (analyticsVal) {
-                if (analyticsVal === "true") {
-                  let storedData = service.getCookie("deviceAnalyticsCheck");
-                  let deviceId = localStorage.getItem("deviceId");
-                  let presentData = deviceId + loginData.user_id;
-                  if (storedData !== presentData) {
-                    service.setCookie("deviceAnalyticsCheck", presentData, 30);
-                    analyticsDevice();
-                  }
-                } else {
-                  let deviceId = localStorage.getItem("deviceId");
-                  let deviceAnalyticsCheck = deviceId + loginData.user_id;
-                  service.setCookie(
-                    "deviceAnalyticsCheck",
-                    deviceAnalyticsCheck,
-                    30
-                  );
-                  analyticsDevice();
-                }
-              } else {
-                let deviceId = localStorage.getItem("deviceId");
-                let deviceAnalyticsCheck = deviceId + loginData.user_id;
-                service.setCookie(
-                  "deviceAnalyticsCheck",
-                  deviceAnalyticsCheck,
-                  30
-                );
-                analyticsDevice();
-              }
-
               var user_sub = response.data;
               if (user_sub.length > 0) {
                 setMsgSucessLogin("You are successfully logged in.");
                 setIsSuccessLoginMsg(true);
                 setTimeout(function () {
                   setIsSuccessLoginMsg(false);
-                }, 1000);
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    if (prevDomain == currentDomain) {
+                      history.goBack();
+                    } else {
+                      window.location.href = "/home";
+                    }
+                    // history.goBack();
+                  }
+                }, 2000);
                 dispatch({ type: "LOGIN", payload: true });
-                let prevLocation = localStorage.getItem("location");
-                if (prevLocation === "/tv") {
-                  history.push("/tv");
-                } else if (location.state && location.state.from) {
-                  history.push({
-                    pathname: location.state.from.pathname,
-                    search: encodeURI(location.state.from.search),
-                    state: { item: response.data },
-                  });
-                } else {
-                  history.goBack();
-                }
+                // history.goBack();
+
+                // history.push({
+                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                // });
               } else {
                 setMsgSucessLogin("You are successfully logged in.");
                 setIsSuccessLoginMsg(true);
                 setTimeout(function () {
                   setIsSuccessLoginMsg(false);
-                }, 5000);
+                  if (sessionStorage.getItem("tvActivateFlag") == "true") {
+                    history.push("/tv");
+                  } else {
+                    if (prevDomain == currentDomain) {
+                      history.goBack();
+                    } else {
+                      window.location.href = "/home";
+                    }
+                    // history.goBack();
+                  }
+                }, 2000);
                 dispatch({ type: "LOGIN", payload: true });
-                let prevLocation = localStorage.getItem("location");
-                if (prevLocation === "/tv") {
-                  history.push("/tv");
-                } else if (location.state && location.state.from) {
-                  history.push({
-                    pathname: location.state.from.pathname,
-                    search: encodeURI(location.state.from.search),
-                    state: { item: response.data },
-                  });
-                } else {
-                  history.goBack();
-                }
+                // history.goBack();
+                // history.push({
+                //     pathname: '/home/movies', search: encodeURI(`show_id=${showId}`)
+                // });
               }
-
-              // } else {
-              //     setIsErrorLogoutMsg(true);
-              //     setTimeout(function () {
-              //         setIsErrorLogoutMsg(false);
-              //     }, 5000);
-              // }
-            });
-        } else if (response.status == 102) {
+            } else {
+              setIsErrorLogoutMsg(true);
+              setTimeout(function () {
+                setIsErrorLogoutMsg(false);
+              }, 5000);
+            }
+          });
+        } else if (response.status == 202) {
           setMsgErrorLogin("Please enter a valid user email and password");
           setIsErrorLoginMsg(true);
           setTimeout(function () {
             setIsErrorLoginMsg(false);
           }, 5000);
-        } else if (response.status == 103) {
+        } else if (response.status == 203) {
           setMsgErrorLogin("Login limit exceed");
           setIsErrorLoginMsg(true);
           setTimeout(function () {
             setIsErrorLoginMsg(false);
           }, 5000);
-        } else if (response.status == 101) {
-          setUserLoggedId(response.data[0].user_id);
+        } else if (response.status == 201) {
+          setUserLoggedId(response.data.data[0].user_id);
           setIsLogin(false);
           setIsVeriy(true);
           setMsgSucessVerify(
@@ -597,45 +512,25 @@ const SignIn = ({ props }) => {
     e.preventDefault();
     if (validationVerify()) {
       service.verifyEmail(valuesVerify, userLoggedId).then((response) => {
-        if (response.status == 1) {
+        console.log(
+          "response of the email varification in sign in page",
+          response
+        );
+        if (response.success == true) {
           localStorage.setItem("isLoggedIn", true);
           service.setCookie("userId", userLoggedId, 30);
           service.setCookie("isLoggedIn", "true", 30);
           setMsgSucessVerify("Your registration is completed");
-
-          let analyticsVal = service.getCookie("device_analytics");
-          if (analyticsVal) {
-            if (analyticsVal === "true") {
-              let storedData = service.getCookie("deviceAnalyticsCheck");
-              let deviceId = localStorage.getItem("deviceId");
-              let presentData = deviceId + userLoggedId;
-              if (storedData !== presentData) {
-                service.setCookie("deviceAnalyticsCheck", presentData, 30);
-                analyticsDevice();
-              }
-            } else {
-              let deviceId = localStorage.getItem("deviceId");
-              let deviceAnalyticsCheck = deviceId + userLoggedId;
-              service.setCookie(
-                "deviceAnalyticsCheck",
-                deviceAnalyticsCheck,
-                30
-              );
-              analyticsDevice();
-            }
-          } else {
-            let deviceId = localStorage.getItem("deviceId");
-            let deviceAnalyticsCheck = deviceId + userLoggedId;
-            service.setCookie("deviceAnalyticsCheck", deviceAnalyticsCheck, 30);
-            analyticsDevice();
-          }
-
           setIsSuccessVerifyMsg(true);
           setTimeout(function () {
             setIsSuccessVerifyMsg(false);
           }, 5000);
-          window.location.href = "/";
-        } else if (response.status == 0) {
+          if (sessionStorage.getItem("tvActivateFlag") == "true") {
+            history.push("/tv");
+          } else {
+            window.location.href = "/";
+          }
+        } else {
           setMsgErrorVerify("Invalid OTP");
           setIsErrorVerifyMsg(true);
           setTimeout(function () {
@@ -649,7 +544,7 @@ const SignIn = ({ props }) => {
     e.preventDefault();
     if (validationForgot()) {
       service.forgotEmail(valuesForgot).then((response) => {
-        if (response.status == 100) {
+        if (response.success == true) {
           setMsgSucessForgot(
             "Reset Password Link sent to your Email Id (Note:  If you do not find the email in your inbox, please check your spam filter or bulk email folder)"
           );
@@ -659,14 +554,8 @@ const SignIn = ({ props }) => {
             setIsLogin(true);
             setIsForgot(false);
           }, 5000);
-        } else if (response.status == 101) {
+        } else if (response.success == false) {
           setMsgErrorForgot("Email id does't exist.");
-          setIsErrorForgotMsg(true);
-          setTimeout(function () {
-            setIsErrorForgotMsg(false);
-          }, 5000);
-        } else {
-          setMsgErrorForgot("Failed please try again.");
           setIsErrorForgotMsg(true);
           setTimeout(function () {
             setIsErrorForgotMsg(false);
@@ -685,7 +574,7 @@ const SignIn = ({ props }) => {
   };
   const onLogout = () => {
     service.logoutAll(userLoggedId).then((response) => {
-      if (response.status == 100) {
+      if (response.success == true) {
         setIsSuccessLogoutMsg(true);
         setTimeout(function () {
           setIsSuccessLogoutMsg(false);
@@ -711,13 +600,24 @@ const SignIn = ({ props }) => {
             <div className="row signWrapper">
               <div className="col col-9 col-lg-6 col-xl-6 col-xxl-4">
                 <h3 className="H3">Welcome Back!</h3>
-                {/* <h4 style={{color:"red",textAlign:"center",fontSize:"13px", lineHeight:"20px"}}>Signing in through Facebook is going through an update and <br></br> not available at this time</h4> */}
+                {/* <h4
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    fontSize: "13px",
+                    lineHeight: "20px",
+                  }}
+                >
+                  Signing in through Facebook is going through an update and{" "}
+                  <br></br> not available at this time
+                </h4> */}
                 <div>
                   <div rel="noopener" target="_self">
                     <button className="button buttonLarge buttonBlock registerFacebook">
                       <div className="buttonBg"></div>
                       <FacebookLogin
-                        appId="677536043137548"
+                        // appId="653161942064655"
+                        appId="539071810682799"
                         isMobile={false}
                         fields="name,email,picture,first_name,last_name"
                         callback={responseFacebook}
@@ -747,7 +647,13 @@ const SignIn = ({ props }) => {
                         {isErrorForgotMsg && (
                           <p className="_3nmo_">{msgErrorForgot}</p>
                         )}
-                        <div className={"input" + forgot_email}>
+                        <div
+                          onClick={() => setIsForgotEmailSelected(true)}
+                          onBlur={() => setIsForgotEmailSelected(false)}
+                          className={`input ${forgot_email} ${
+                            isForgotEmailSelected ? "inputActive" : ""
+                          }`}
+                        >
                           <input
                             className="inputText"
                             style={{
@@ -770,7 +676,10 @@ const SignIn = ({ props }) => {
                               className="button buttonLarge buttonBlock"
                               type="submit"
                             >
-                              <div className="buttonBg"></div>
+                              <div
+                                className="buttonBg"
+                                // style={{ backgroundColor: "#148AB7" }}
+                              ></div>
                               <div className="buttonContent">Submit</div>
                             </button>
                           </div>
@@ -818,7 +727,13 @@ const SignIn = ({ props }) => {
                         {isErrorVerifyMsg && (
                           <p className="_3nmo_">{msgErrorVerify}</p>
                         )}
-                        <div className={"input" + verification_code}>
+                        <div
+                          onClick={() => setIsVerifyEmailSelected(true)}
+                          onBlur={() => setIsVerifyEmailSelected(false)}
+                          className={`input ${verification_code} ${
+                            isVerifyEmailSelected ? "inputActive" : ""
+                          }`}
+                        >
                           <input
                             className="inputText"
                             style={{
@@ -843,7 +758,10 @@ const SignIn = ({ props }) => {
                               className="button buttonLarge buttonBlock"
                               type="submit"
                             >
-                              <div className="buttonBg"></div>
+                              <div
+                                className="buttonBg"
+                                // style={{ backgroundColor: "#148AB7" }}
+                              ></div>
                               <div className="buttonContent">Verify</div>
                             </button>
                           </div>
@@ -894,7 +812,10 @@ const SignIn = ({ props }) => {
                               onClick={onLogout}
                               className="linkButton button buttonSmall"
                             >
-                              <div className="buttonBg"></div>
+                              <div
+                                className="buttonBg"
+                                // style={{ backgroundColor: "#148AB7" }}
+                              ></div>
                               <div className="buttonContent">Logout All</div>
                             </button>
                           </p>
@@ -911,7 +832,13 @@ const SignIn = ({ props }) => {
                           </p>
                         )}
 
-                        <div className={"input" + email}>
+                        <div
+                          onClick={() => setIsEmailSelected(true)}
+                          onBlur={() => setIsEmailSelected(false)}
+                          className={`input ${email} ${
+                            isEmailSelected ? "inputActive" : ""
+                          }`}
+                        >
                           <input
                             className="inputText"
                             style={{
@@ -931,9 +858,16 @@ const SignIn = ({ props }) => {
                             </span>
                           )}
                         </div>
-                        <div className={"input" + password}>
+                        <div
+                          onClick={() => setIsPasswordSelected(true)}
+                          onBlur={() => setIsPasswordSelected(false)}
+                          className={`input ${password} ${
+                            isPasswordSelected ? "inputActive" : ""
+                          }`}
+                        >
                           <input
                             className="inputText"
+                            title="Length must be between 6 and 30"
                             style={{
                               border: "none",
                               padding: "0px",
@@ -959,53 +893,33 @@ const SignIn = ({ props }) => {
                             </span>
                           )}
                         </div>
-                        {isDesktop ? (
-                          <div className="regnSubmitWrapper">
-                            <p style={{ paddingTop: "10px", fontSize: "14px" }}>
-                              {" "}
-                              Don't have an account?&nbsp;
-                              <Link to={{ pathname: "/register" }}>
-                                <span className="linkButton">Register</span>
-                              </Link>
-                            </p>
-                            <button
-                              className="button buttonLarge regnSubmit"
-                              type="submit"
-                            >
-                              <div className="buttonBg"></div>
-                              <div className="buttonContent">Sign In</div>
-                            </button>
-                          </div>
-                        ) : (
-                          <div>
-                            <div className="regnSubmitWrapper">
-                              <button
-                                className="button buttonLarge regnSubmit"
-                                style={{ width: "100vw" }}
-                                type="submit"
-                              >
-                                <div className="buttonBg"></div>
-                                <div className="buttonContent">Sign In</div>
-                              </button>
-                            </div>
-                            <div className="regnSubmitWrapper">
-                              <p
-                                style={{
-                                  paddingLeft: "20px",
-                                  fontSize: "14px",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {" "}
-                                Don't have an account?&nbsp;
-                                <Link to={{ pathname: "/register" }}>
-                                  <span className="linkButton">Register</span>
-                                </Link>
-                              </p>
-                            </div>
-                          </div>
-                        )}
-
+                        <div className="regnSubmitWrapper">
+                          <p
+                            style={{
+                              paddingTop: "10px",
+                              fontSize: "14px",
+                              color: "rgb(112, 124, 134)",
+                            }}
+                          >
+                            {" "}
+                            Don't have an account?
+                            <Link to={{ pathname: "/register" }}>
+                              <span className="linkButton">
+                                &nbsp; Register
+                              </span>
+                            </Link>
+                          </p>
+                          <button
+                            className="button buttonLarge regnSubmit"
+                            type="submit"
+                          >
+                            <div
+                              className="buttonBg"
+                              // style={{ backgroundColor: "#148AB7" }}
+                            ></div>
+                            <div className="buttonContent">Sign In</div>
+                          </button>
+                        </div>
                         <div className="signAgree">
                           <p>
                             <span

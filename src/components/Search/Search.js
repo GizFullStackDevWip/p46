@@ -4,6 +4,7 @@ import { service } from "../../network/Home/service";
 import { convertTime } from "../../Utils/utils";
 import { useSelector, useDispatch } from "react-redux";
 import Notification from "../../common/Notification";
+import premium from "../../images/Image.png";
 import $ from "jquery";
 const queryString = require("query-string");
 
@@ -41,7 +42,7 @@ const Search = ({ history }) => {
     let userId = service.getCookie("userId");
     if (isLoggedIn === "true" && userId) {
       service.addToMyPlayList(show.show_id, 1).then((response) => {
-        if (response.status === 100) {
+        if (response.success === true) {
           updateUseEffect();
         }
       });
@@ -55,7 +56,7 @@ const Search = ({ history }) => {
     let userId = service.getCookie("userId");
     if (isLoggedIn === "true" && userId) {
       service.addToMyPlayList(show.show_id, 0).then((response) => {
-        if (response.status === 100) {
+        if (response.success === true) {
           updateUseEffect();
         }
       });
@@ -65,11 +66,18 @@ const Search = ({ history }) => {
   };
 
   const functionOnClick = (show) => {
+    console.log("show222222", show);
     if (show.video_id) {
+      // history.push({
+      //   pathname: "/videoplayer",
+      //   search: encodeURI(
+      //     `show_id=${show.show_id}&single_video=${show.single_video}&video_id=${show.video_id}`
+      //   ),
+      // });
       history.push({
-        pathname: "/videoplayer",
+        pathname: "/home/movies",
         search: encodeURI(
-          `show_id=${show.show_id}&single_video=${show.single_video}&video_id=${show.video_id}`
+          `show_id=${show.show_id}&is_fr=${show.is_free_video}`
         ),
       });
     } else {
@@ -121,6 +129,21 @@ const Search = ({ history }) => {
                               hoverFunction(false, index);
                             }}
                           >
+                            {" "}
+                            {show.is_free_video == false && (
+                              <img
+                                src={premium}
+                                style={{
+                                  position: "absolute",
+                                  display: "flex",
+                                  top: "0px",
+                                  zIndex: "2",
+                                  width: "35px",
+                                  paddingTop: "4px",
+                                  paddingLeft: "4px",
+                                }}
+                              />
+                            )}
                             <div
                               onClick={() => {
                                 functionOnClick(show);
@@ -136,9 +159,9 @@ const Search = ({ history }) => {
                                 preserveAspectRatio="xMidYMid meet"
                                 viewBox="0 0 62 62"
                                 style={{ fill: "currentcolor" }}
-                                onClick={() => {
-                                  functionOnClick(show);
-                                }}
+                                // onClick={() => {
+                                //   functionOnClick(show);
+                                // }}
                               >
                                 <circle
                                   r="30"
@@ -177,7 +200,6 @@ const Search = ({ history }) => {
                                 <div className="FeNml"></div>
                               </div>
                             )}
-
                             <div
                               className={
                                 hover === true && focusedId === index
@@ -235,6 +257,7 @@ const Search = ({ history }) => {
                                     onClick={() => {
                                       functionOnClick(show);
                                     }}
+                                    style={{ display: "flex" }}
                                   >
                                     {show.show_name}&nbsp;
                                     {show.single_video === 0 ? (

@@ -3,6 +3,7 @@ import { validateName, validateEmail } from '../../../Utils/utils';
 import { Link, useHistory, Redirect } from 'react-router-dom';
 import { service } from '../../../network/FooterComponent/service';
 import { ToastContainer, toast } from 'react-toastify';
+import Header from '../../Basic/Header';
 import csc from 'country-state-city';
 
 const ContactSupport = () => {
@@ -170,6 +171,7 @@ const ContactSupport = () => {
     return (
         <div className="menuCloseJS closeMenuWrapper">
             <ToastContainer />
+            <Header />
             <div className="csWrapper csWrapperColor">
                 <div className="csContainer">
                     <h1 className="csPageHeading">Support</h1>

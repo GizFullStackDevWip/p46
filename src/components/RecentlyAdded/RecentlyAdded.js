@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { convertTime } from '../../Utils/utils';
 import { useSelector, useDispatch } from 'react-redux';
 import Notification from '../../common/Notification';
+import premium from '../../images/Image.png';
 import $ from 'jquery';
 var showsImageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/';
 
@@ -45,7 +46,7 @@ const RecentlyAdded = () => {
         let userId = service.getCookie("userId");
         if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                if (response.status === 100) {
+                if (response.success === true) {
                     updateUseEffect();
                 }
             })
@@ -59,7 +60,7 @@ const RecentlyAdded = () => {
         let userId = service.getCookie("userId");
         if (isLoggedIn === "true" && userId) {
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                if (response.status === 100) {
+                if (response.success === true) {
                     updateUseEffect();
                 }
 
@@ -81,7 +82,7 @@ const RecentlyAdded = () => {
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
-                            <h1 className="SearchResultText">New Arrivals</h1></div>
+                            <h1 className="SearchResultText">New Releases</h1></div>
                         <div className="searchResultMargin">
                             <div className="row">
                                 {
@@ -93,6 +94,7 @@ const RecentlyAdded = () => {
                                                     <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                                         onMouseOver={() => { hoverFunction(true, index) }}
                                                         onMouseLeave={() => { hoverFunction(false, index) }}>
+                                                        { show.is_free_video == false && <img src={premium} style={{position: 'absolute',display:"flex", top: '0px', zIndex: '2',width:"35px", paddingTop:"4px", paddingLeft:"4px"}} />}
                                                         <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`) }) }}
                                                             className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
 
@@ -139,13 +141,14 @@ const RecentlyAdded = () => {
                                                             <div className="movieCatYear">
                                                                 <div>
                                                                     {
-                                                                        show.teaser_duration &&
+                                                                        show.duration_text &&
                                                                         <div className="movieYear">
-                                                                            <div className="_1MmGl">{convertTime(show.teaser_duration)}</div>
+                                                                            <div className="_1MmGl">{show.duration_text}</div>
                                                                         </div>
                                                                     }
 
                                                                     <div className="movieCategory mcMargin">
+                                                                        {show.category_names}
                                                                         {
                                                                             show.category_name &&
                                                                             show.category_name.map((item, index) => {

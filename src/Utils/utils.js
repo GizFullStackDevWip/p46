@@ -3,6 +3,9 @@ import { service } from "../network/service";
 export const playerController = (position, playerId) => {
   let screenPosition = document.documentElement.scrollTop;
   let playerStream = document.getElementById(playerId);
+  console.log("screenPosition",screenPosition);
+  console.log("position",position);
+  console.log("playerstream",playerStream);
   if (playerStream !== null && playerStream !== "undefined") {
     if (screenPosition > position) {
       playerStream.pause();
@@ -180,9 +183,9 @@ export const checkOperatingSystem = () => {
 };
 export const convertAdUrl = (videoDetails) => {
   console.log("convertAdUrlvideoDetails", videoDetails);
-
+// debugger
   let categories = "";
-  videoDetails.category_id.map((item, index) => {
+  videoDetails.categories.map((item, index) => {
     categories = categories ? categories + ", " + item : item;
   });
   const adUrl = videoDetails.ad_link;
@@ -196,15 +199,15 @@ export const convertAdUrl = (videoDetails) => {
   const width = window.innerWidth;
   const height = window.innerHeight;
   const dnt = 0;
-  const ipAddress = currentLocation.IPv4;
-  const latitude = currentLocation.latitude;
-  const longitude = currentLocation.longitude;
+  const ipAddress = currentLocation && currentLocation.IPv4;
+  const latitude = currentLocation && currentLocation.latitude;
+  const longitude = currentLocation && currentLocation.longitude;
   const userAgent = navigator.userAgent;
   const deviceIfa = "";
   const uuid = "";
-  const country = currentLocation.country_name;
-  const city = currentLocation.city;
-  const state = currentLocation.state;
+  const country = currentLocation && currentLocation.country_name;
+  const city = currentLocation && currentLocation.city;
+  const state = currentLocation && currentLocation.state;
   const deviceId = localStorage.getItem("deviceId");
   const keyword = videoDetails.category_name;
   const deviceModel = navigator.userAgent;
@@ -260,7 +263,7 @@ export const ssaiAdParam = async (videoDetails) => {
       appname: videoDetails.channel_name,
       bundleid: "https://gethappi.tv/",
       channelid: String(videoDetails.channel_id),
-      country: currentLocation.country_code,
+      country: currentLocation && currentLocation.country_code,
       description_url: "HappiTV",
       device_make: navigator.userAgent,
       device_model: navigator.userAgent,
@@ -268,10 +271,10 @@ export const ssaiAdParam = async (videoDetails) => {
       deviceid: localStorage.getItem("deviceId"),
       dnt: "true",
       height: String(window.innerHeight),
-      ip: currentLocation.IPv4,
+      ip: currentLocation && currentLocation.IPv4,
       kwds: "HappiTV",
-      lat: String(currentLocation.latitude),
-      lon: String(currentLocation.longitude),
+      lat: currentLocation && String(currentLocation.latitude),
+      lon: currentLocation && String(currentLocation.longitude),
       totalduration: "",
       ua: navigator.userAgent,
       userid: String(localStorage.getItem("userId")),

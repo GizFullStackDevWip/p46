@@ -1,40 +1,56 @@
 import React, { useState, useEffect, useRef } from "react";
-import { service } from "../../network/service";
+import { service } from "./service";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import Countdown from "react-countdown";
+import "./activate.css";
 
 const Activate = () => {
-  let isLoggedIn = localStorage.getItem("isLoggedIn");
-  let userId = service.getCookie("userId");
+  const history = useHistory();
+  let isLoggedIn = service.getCookie("isLoggedIn");
   const [value, setValue] = useState("");
   const [timeOut, setTimeOut] = useState(false);
+  const [invalid, setInvalid] = useState(false);
   const countDown = useRef();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-    useEffectFunction();
-    const ua = navigator.userAgent;
-    console.log("ua", ua);
-  }, [useEffectFunction]);
-
-  const useEffectFunction = () => {
-    if (isLoggedIn === "true" && userId) {
+    document.getElementById("scroll-top").scroll(0, 0);
+    if (isLoggedIn === "true") {
+      console.log("hihsidhasih");
+      sessionStorage.removeItem("tvActivateFlag");
       countDown.current.getApi().start();
       service.generateTvLink().then((response) => {
-        console.log("response", response);
-        if (response) {
+        if (response === false) {
+          setTimeout(() => {
+            history.push("/signIn");
+          }, 3000);
+
+          setTimeOut({}, 3000);
+          setInvalid(true);
+        } else {
           setValue(response.code);
         }
       });
     }
+  }, []);
+
+  const InvalidMessage = () => {
+    return (
+      <div className="styles-inputBoxContainer">
+        <div className="styles-enterCodeWrap">
+          <span className="styles-enterCodetext">
+            No TV Subscription Found!
+          </span>
+        </div>
+      </div>
+    );
   };
+
   const Completionist = () => (
     <div className="styles-inputBoxContainer">
       <div className="styles-enterCodeWrap">
         <div className="styles-linkTvTitle">Link TV App</div>
         <span className="styles-enterCodetext">
-          If not registered, a code will be generated after the same. Enter this
-          code on your SmartTV.
+          Enter this code on your Roku TV, Fire TV or Android TV
         </span>
       </div>
       <input
@@ -69,8 +85,7 @@ const Activate = () => {
           <div className="styles-enterCodeWrap">
             <div className="styles-linkTvTitle">Link TV App</div>
             <span className="styles-enterCodetext">
-              If not registered, a code will be generated after the same. Enter
-              this code on your SmartTV.
+              Enter this code on your Roku TV, Fire TV or Android TV
             </span>
           </div>
           <input
@@ -99,28 +114,35 @@ const Activate = () => {
       }
     });
   };
-  if (isLoggedIn === "false" || isLoggedIn === null) {
+  if (isLoggedIn == "false" || isLoggedIn === null || isLoggedIn === "") {
+    sessionStorage.setItem("tvActivateFlag", true);
     return <Redirect to="/signin" />;
   } else {
     return (
-      <div className="pageWrapper searchPageMain">
-        <div className="topContainer">
-          <div className="menuCloseJS closeMenuWrapper">
-            <div className="activateContainer">
-              <div className="activate-style">
-                <div className="styles-box">
-                  <Countdown
-                    date={Date.now() + 5 * 6 * 10000}
-                    renderer={renderer}
-                    ref={(count) => (countDown.current = count)}
-                    autoStart={false}
-                  />
+      <>
+        <div className="pageWrapper" id="scroll-top" style={{background: 'rgb(26 28 33)'}}>
+          <div className="topContainer">
+            <div className="menuCloseJS closeMenuWrapper">
+              <div className="activateContainer">
+                <div className="activate-style">
+                  <div className="styles-box">
+                    {invalid === true ? (
+                      <InvalidMessage />
+                    ) : (
+                      <Countdown
+                        date={Date.now() + 5 * 6 * 10000}
+                        renderer={renderer}
+                        ref={(count) => (countDown.current = count)}
+                        autoStart={false}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 };

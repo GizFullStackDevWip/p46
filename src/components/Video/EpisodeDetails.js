@@ -54,11 +54,18 @@ const EpisodeDetails = (showId, videoId) => {
                     }
                 })
                 setEpisodeList(subItem);
-                service.similarShow(showId.videoId).then(response => {
-                    if (response.status == 100 && response.data.length > 0) {
-                        setSimilarShows(response.data);
-                    }
-                })
+                // service.similarShow(showId.videoId).then(response => {
+                //     if (response.status == 100 && response.data.length > 0) {
+                //         setSimilarShows(response.data);
+                //     }
+                // })
+                service
+                .similarShow(showId.videoId)
+                .then((response) => {
+                  if (response.success == true && response.data.length > 0) {
+                    setSimilarShows(response.data);
+                  }
+                });
             }
         })
         setUpdate(false);
@@ -111,7 +118,7 @@ const EpisodeDetails = (showId, videoId) => {
         if (isLoggedIn === "true" && userId) {
             var subItem = []
             service.addToMyPlayList(show.show_id, 1).then(response => {
-                if (response.status === 100) {
+                if (response.success === true) {
                     service.getShowDetails(showId.showId).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
@@ -128,11 +135,18 @@ const EpisodeDetails = (showId, videoId) => {
                                 }
                             })
                             setEpisodeList(subItem);
-                            service.similarShow(showId.videoId).then(response => {
-                                if (response.status == 100 && response.data.length > 0) {
-                                    setSimilarShows(response.data);
-                                }
-                            })
+                            // service.similarShow(showId.videoId).then(response => {
+                            //     if (response.status == 100 && response.data.length > 0) {
+                            //         setSimilarShows(response.data);
+                            //     }
+                            // })
+                            service
+                            .similarShow(showId.videoId)
+                            .then((response) => {
+                              if (response.success == true && response.data.length > 0) {
+                                setSimilarShows(response.data);
+                              }
+                            });
                         }
                     })
                 }
@@ -147,7 +161,7 @@ const EpisodeDetails = (showId, videoId) => {
         if (isLoggedIn === "true" && userId) {
             var subItem = []
             service.addToMyPlayList(show.show_id, 0).then(response => {
-                if (response.status === 100) {
+                if (response.success === true) {
                     service.getShowDetails(showId.showId).then(response => {
                         var data = response.data;
                         if (data.length > 0) {
@@ -164,11 +178,18 @@ const EpisodeDetails = (showId, videoId) => {
                                 }
                             })
                             setEpisodeList(subItem);
-                            service.similarShow(showId.videoId).then(response => {
-                                if (response.status == 100 && response.data.length > 0) {
-                                    setSimilarShows(response.data);
-                                }
-                            })
+                            // service.similarShow(showId.videoId).then(response => {
+                            //     if (response.status == 100 && response.data.length > 0) {
+                            //         setSimilarShows(response.data);
+                            //     }
+                            // })
+                            service
+                .similarShow(showId.videoId)
+                .then((response) => {
+                  if (response.success == true && response.data.length > 0) {
+                    setSimilarShows(response.data);
+                  }
+                });
                         }
                     })
                 }

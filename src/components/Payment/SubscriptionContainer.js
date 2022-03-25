@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Subscription from './Subscription';
+import { Link } from 'react-router-dom'
 
 const SubscriptionContainer = (param) => {
-
     const [msgFlag, setMsgFlag] = useState(null);
+    const [msg, setMsg] = useState(null);
     useEffect(() => {
     }, []);
-    
-    const msgHandler = (flag) => {
+    const msgHandler = (flag, msg) => {
         setMsgFlag(flag);
+        setMsg(msg);
         setTimeout(function () {
             setMsgFlag(null);
         }, 5000);
@@ -20,24 +21,34 @@ const SubscriptionContainer = (param) => {
                 {
                     (msgFlag == 'true') && (
                         <div className="alert alert-success" >
-                            <h4 className="alert-heading">Success!</h4>
-                            <p>You are successfully unsubscribed.</p>
+                            <h6 className="alert-heading"  style={{fontSize: '20px'}}>Success</h6>
+                            <p>{msg}</p>
 
                         </div>
                     )}
                 {
                     (msgFlag == 'false') && (
                         <div className="alert alert-danger" >
-                            <h4 className="alert-heading">Failed!</h4>
-                            <p>Your subscription cancellation has failed.</p>
+                            <h6 className="alert-heading"  style={{fontSize: '20px'}}>Failed</h6>
+                             <p>{msg}</p>
                         </div>
                     )}
-                <div className="categoryLinkWrapper">
-                    <p className="text-head" style={{ marginLeft: '-58px' }}>Subscribed Packages </p>
-                </div>
+                {
+                  param.param.length == 0 ? (
+                        <div className="categoryLinkWrapper">
+                            <p className="text-head packageMsg">No Subscribed Packages </p>
+                        </div>
+                    ):(
+                       
+                            <div className="categoryLinkWrapper">
+                                <p className="text-head packageMsg">Subscribed Packages </p>
+                            </div>
+                    )}
+                
 
                 <Subscription param={param.param} msgHandler={msgHandler} />
             </div>
+            
         </section>
     );
 };

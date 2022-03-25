@@ -2,14 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import Header from '../Basic/Header';
 import Footer from '../Basic/Footer';
+import { useDispatch } from 'react-redux';
 import { service } from '../../network/service';
 const Error = () => {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [subscription, setSubscription] = useState([]);
     useEffect(() => {
+        if ( localStorage.getItem('isAndroid')=='true'){
+            dispatch({ type: "SET_ANDROID" });
+        }
        
     }, []);
     const handleClick = () => {
+        let isAndroid = localStorage.getItem('isAndroid');
+        if (isAndroid == 'true') {
+            window.location.href = 'https://gethappi.tv/webviewfailed';  // android error redirect
+        }
+        history.push({
+            pathname: '/home'
+        });
         // error redirect
     }
     return (
@@ -32,7 +44,7 @@ const Error = () => {
                                     <p className="text-center">Your payment has been failed. Please try again..</p>
                                 </div>
                                  <div className="modal-footer">
-                                    <button className="btn btn-success btn-block" style={{backgroundColor: '#f2110f'}} onClick={handleClick} data-dismiss="modal">OK</button>
+                                    <button className="myBtn btn-success btn-block" style={{background: 'red', height: '50px'}}  onClick={handleClick} data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>

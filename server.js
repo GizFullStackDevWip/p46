@@ -32,6 +32,13 @@ app.get('/home/movies', function (request, response) {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Access-Control-Allow-Origin': true,
       crossorigin: true,
+      // uid: guestId,
+      // pubid: 50023,
+      // country_code: deviceResponse.data.country_code,
+      // channelid: 354,
+      // dev_id: device_id,
+      // ip: ipaddress,
+      // device_type: "web",
     },
     params: {
       uid: guestId,
@@ -41,7 +48,8 @@ app.get('/home/movies', function (request, response) {
 
   const filePath = path.resolve(__dirname, './build', 'index.html')
 
-  axios.get('https://poppo.tv/platform/bk/authenticate', customConfig)
+  // axios.get('https://poppo.tv/platform/bk/authenticate', customConfig)
+  axios.get('https://api.gizmott.com/api/v1/account/authenticate', customConfig)
     .then(response1 => {
       try {
         if (response1.data.token) {
@@ -51,6 +59,13 @@ app.get('/home/movies', function (request, response) {
               'Access-Control-Allow-Origin': true,
               crossorigin: true,
               'access-token': response1.data.token,
+              // uid: guestId,
+              // pubid: 50023,
+              // country_code: deviceResponse.data.country_code,
+              // channelid: 354,
+              // dev_id: device_id,
+              // ip: ipaddress,
+              // device_type: "web",
             },
             params: {
               pubid: 50023,
@@ -59,7 +74,12 @@ app.get('/home/movies', function (request, response) {
               country_code: 'US'
             }
           };
-          axios.get('https://poppo.tv/platform/bk/api/getShowsDetails', showConfig)
+          axios
+          .get(
+            "https://api.gizmott.com/api/v1/show/" + showId,
+            showConfig
+          )
+          // axios.get('https://poppo.tv/platform/bk/getShowsDetails', showConfig)
             .then(response2 => {
               fs.readFile(filePath, 'utf8', function (err, data) {
                 if (err) {

@@ -1,3 +1,4 @@
+
 const axios = require('axios');
 const qs = require('querystring');
 
@@ -28,7 +29,7 @@ function contact(values) {
         'country_code':countryCode
     }
 
-    return axios.post(process.env.REACT_APP_API_URL+'sendSupport', qs.stringify(data), customConfig).then(
+    return axios.post(process.env.REACT_APP_SUB_API_URL+'user/support/send', qs.stringify(data), customConfig).then(
         response => {
             return response.data;
         })

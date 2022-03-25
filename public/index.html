@@ -11,9 +11,9 @@
     -->
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon_cffzct.png">
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -77,11 +77,47 @@
   <link rel="stylesheet" href="//googleads.github.io/videojs-ima/dist/videojs.ima.css" />
 
 </head>
+<style>
+  .svgLoader {
+    animation: spin 0.5s linear infinite;
+    margin: auto;
+  }
 
+  .divLoader {
+    width: 100vw;
+    height: 100vh;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
 <body>
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
+  <div id="root">
+    <div class="divLoader">
+      <svg class="svgLoader" viewBox="0 0 100 100" width="10em" height="10em">
+        <path ng-attr-d="{{config.pathCmd}}" ng-attr-fill="{{config.color}}" stroke="none"
+          d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="#d5208a" transform="rotate(179.719 50 51)">
+          <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 51;360 50 51"
+            keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform>
+        </path>
+      </svg>
+    </div>
+  </div>
+
   <div id="root"></div>
   <!--
       This HTML file is a template.
@@ -106,7 +142,7 @@
 
   <script>
 
-    window.playMainPlayer = (adTagUrl, videoElem, videoId, vd) => {
+    window.playMainPlayer = (adTagUrl, videoElem, videoId, vd, withAd) => {
       setTimeout(() => {
         if (player) { videojs(videoElem).dispose(); } else { var player }
         player = videojs(videoElem);
@@ -115,12 +151,23 @@
           adTagUrl
         };
         console.log('oprions->',options);
-        try {
-          player.ima(options);
-        } catch (error) {
-          // console.log('imaError', error)
+
+        if(withAd == 'true') {
+          try {
+            player.ima(options);
+          } catch (error) {
+            // console.log('imaError', error)
+          }
         }
+        
         playerEvents(player, videoId, vd);
+        window.disposeMainPlayer = () => {
+          console.log("Before", player.isDisposed());
+          if (!player.isDisposed()) {
+            player.dispose();
+          }
+          console.log("After", player.isDisposed());
+        }
 
       }, 1000)
 
@@ -135,9 +182,13 @@
         try {
           console.log('adParams', adParams)
           createSSAI(details.ssai_link, playerId, adParams);
+          
         } catch (error) {
           // console.log('imaError', error)
         }
+        setTimeout(() => {
+            player.play();
+          }, 2000);
         livePlayerEvents(player, details);
 
       }, 1000)
@@ -152,6 +203,14 @@
 
       player.on("pause", function () {
         window.onLiveVideoPause(vd);
+      });
+
+      player.on('timeupdate', function() {
+        if(window.location.pathname != '/home') {
+          if (!player.isDisposed()) {
+            player.dispose();
+          }
+        }
       });
 
       player.on("end", function () {

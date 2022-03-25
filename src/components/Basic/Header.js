@@ -3,6 +3,7 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { service } from '../../network/service';
 import { useSelector, useDispatch } from 'react-redux';
 import { capitalize, checkOperatingSystem } from '../../Utils/utils';
+import './Header.css';
 import $ from 'jquery';
 const queryString = require('query-string');
 var currentPathStrings = '';
@@ -31,14 +32,14 @@ const Header = () => {
     const [deviceType, setDeviceType] = useState('');
     // const [menuClose, setMenuClose] = useState('menuItemContainer menuClose');
     const [menuClose, setMenuClose] = useState(false);
-
+    let urlParams = new URLSearchParams(window.location.search);
 
     currentPathStrings = (currentPath === '/register' ||
         currentPath === '/signin' ||
-        currentPath === '/aboutus' ||
+        // currentPath === '/aboutus' ||
         currentPath === '/pressrelease' ||
         currentPath === '/advertisewithus' ||
-        currentPath === '/contactus' ||
+        // currentPath === '/contactus' ||
         currentPath === '/contactsupport' ||
         currentPath === '/privacypolicy' ||
         currentPath === '/termsandconditions' ||
@@ -116,9 +117,10 @@ const Header = () => {
         eraseCookie('userId');
         eraseCookie('userEmail');
         eraseCookie('subscriptionId');
-        history.push({
-            pathname: '/'
-        });
+        window.location.href = '/';
+        // history.push({
+        //     pathname: '/'
+        // });
     }
 
 
@@ -136,7 +138,9 @@ const Header = () => {
         }
     }
 
-    if (currentPath === '/termsofuse' || currentPath === '/policydarkmode') {
+    if (currentPath === '/termsofuse' || currentPath === '/policydarkmode' ||
+    urlParams.get("antkn") != null ||
+    localStorage.getItem("isAndroid") == "true") {
         return (null);
     } else if (currentPath === '/') {
         return (
@@ -188,8 +192,8 @@ const Header = () => {
                                     <div className="menuWrapper" >
                                         <div className="mobileSearch">
                                             <section className="searchContainer mobileSearchBG">
-                                                {
-                                                    login === true ?
+                                                {/* {
+                                                    login === true ? */}
                                                         <div>
                                                             <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
                                                                 <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
@@ -201,8 +205,9 @@ const Header = () => {
                                                             <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
                                                                 <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
                                                             </svg>
-                                                        </div> : null
-                                                }
+                                                        </div> 
+                                                {/* //         : null
+                                                // } */}
                                             </section>
                                         </div>
                                         <div className="menuRowItem" onMouseLeave={() => { setMenuClose(true) }}>
@@ -217,7 +222,7 @@ const Header = () => {
                                                                 </Link>
                                                             </div>
                                                         </div>
-                                                        <div className="menuListItems">
+                                                        {/* <div className="menuListItems">
                                                             <div className="menuInnerCol">
                                                                 {
                                                                     login === true ?
@@ -227,11 +232,11 @@ const Header = () => {
                                                                         : null
                                                                 }
                                                             </div>
-                                                        </div>
+                                                        </div> */}
                                                         <div className="menuListItems">
                                                             <div className="menuInnerCol">
                                                                 <Link to={{ pathname: '/home/recentlyadded' }}>
-                                                                    <div className="linkButton headerMenuItems">New Arrivals </div>
+                                                                    <div className="linkButton headerMenuItems">New Releases </div>
                                                                 </Link>
                                                             </div>
                                                         </div>
@@ -498,7 +503,7 @@ const Header = () => {
                                                             </Link>
                                                         </div>
                                                     </div>
-                                                    <div className="menuListItems">
+                                                    {/* <div className="menuListItems">
                                                         <div className="menuInnerCol">
                                                             {
                                                                 login === true ?
@@ -508,11 +513,11 @@ const Header = () => {
                                                                     : null
                                                             }
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                     <div className="menuListItems">
                                                         <div className="menuInnerCol">
                                                             <Link to={{ pathname: '/home/recentlyadded' }}>
-                                                                <div className="linkButton headerMenuItems">New Arrivals </div>
+                                                                <div className="linkButton headerMenuItems">New Releases </div>
                                                             </Link>
                                                         </div>
                                                     </div>
@@ -521,6 +526,18 @@ const Header = () => {
                                                     <div className="menuListItems">
                                                         <Link to={{ pathname: '/aboutus' }}>
                                                             <div className="linkButton headerMenuItems">About Us</div>
+                                                        </Link>
+
+                                                    </div>
+                                                    <div className="menuListItems">
+                                                        <Link to={{ pathname: '/account' }}>
+                                                            <div className="linkButton headerMenuItems mobileview">My Info</div>
+                                                        </Link>
+
+                                                    </div>
+                                                    <div className="menuListItems">
+                                                        <Link to={{ pathname: '/home/categorylist?category_id=playlist&category_name=My%20List' }}>
+                                                            <div className="linkButton headerMenuItems mobileview">My Listing</div>
                                                         </Link>
 
                                                     </div>
@@ -606,12 +623,12 @@ const Header = () => {
                                     {
                                         login === true ?
                                             <div>
-                                                <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
+                                                <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor', marginLeft: '380px' }}>
                                                     <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                                                 </svg>
                                                 <form onSubmit={submitSearch}>
                                                     <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler}
-                                                        value={parsed.show_id ? typing === true ? input : '' : input} />
+                                                        value={parsed.show_id ? typing === true ? input : '' : input} style={{ marginLeft: '380px', background: 'transparent', border: '1px solid #fff', width: '65%',height: '30px', marginBottom: '10px'}} />
                                                 </form>
                                                 <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
                                                     <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
@@ -619,6 +636,50 @@ const Header = () => {
                                             </div>
                                             : null
                                     }
+                                    
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '-3px',
+                                        left: '-200px'}}>
+                                        <ul style={{
+                                            display: 'flex',
+                                            outline: 'none',
+                                            marginBottom: '20px',
+                                            fontSize: '12px',
+                                            color: '#fff',
+                                            listStyleType: 'none'}}>
+                                            <a href="/home"><li style={{padding: '0px 6px'}}>Home</li></a>
+                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{padding: '0px 6px'}}>Movies</li></a>
+                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{padding: '0px 6px'}}>Shows</li></a>
+                                            {/* <a href="/home/categorylist?category_id=playlist&category_name=My%20List"><li style={{padding: '0px 6px'}}>My List</li></a> */}
+                                            <a href="/home/recentlyadded"><li style={{padding: '0px 6px'}}>New Releases</li></a>
+                                            <li style={{padding: '0px 2px'}}>
+                                                <div className="dropdown">
+                                                <span className="dropbtn" style={{marginLeft: '6px', fontSize: '12px', color: '#fff'}}>Devices</span>
+                                                <div className="dropdown-content" style={{color: '#000', fontWeight: '600', lineHeight: '2px'}}>                                                
+                                                    <a href="https://apps.apple.com/in/app/happitv/id1535463535" target="_blank">iOS</a>
+                                                    <a href="https://play.google.com/store/apps/details?id=com.happi.android" target="_blank">Android</a>
+                                                    <a href="https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv" target="_blank">Roku</a>
+                                                    <a href="https://www.amazon.com/gp/product/B08LQV7MD1" target="_blank">Amazon Fire</a>
+                                                    <a href="https://play.google.com/store/apps/details?id=com.happi.androidtv" target="_blank">Android TV</a>
+                                                </div>
+                                            </div>
+                                            </li>
+                                            <a href="/tv"><li style={{padding: '0px 6px'}}>Link TV App</li></a>
+                                            <li style={{padding: '0px 0px'}}>
+                                                <div className="dropdown">
+                                                <span className="dropbtn" style={{marginLeft: '6px', fontSize: '12px', color: '#fff'}}>Account</span>
+                                                <div className="dropdown-content" style={{color: '#000', fontWeight: '600', lineHeight: '2px'}}>                                                
+                                                    <a href="/account">My Info</a>
+                                                    <a href="/home/categorylist?category_id=playlist&category_name=My%20List">My Listing</a>
+                                                    <a href="/aboutus">About Us</a>
+                                                    <a href="/contactus">Contact</a>
+                                                </div>
+                                            </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
                                 </section>
                             )
                     }

@@ -1,10 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { service } from "../../network/Home/service";
+import { service } from "../../network/service";
+import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Link } from "react-router-dom";
 var moment = require("moment");
-
 const Subscription = ({ param, msgHandler }) => {
-  
+  const [isSuccessMsg, setIsSuccessMsg] = useState(false);
+  const [msgSuccess, setMsgSucess] = useState("");
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 5,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
   const onUnsubscribeHandler = (param) => {
     if (
       (param.mode_of_payment == "stripe" ||
@@ -12,15 +33,14 @@ const Subscription = ({ param, msgHandler }) => {
       param.cancel_status !== true
     ) {
       service.unsubscribe(param.receiptid, param.sub_id).then((response) => {
-        if (response.status == 100) {
-          msgHandler("true");
+        if (response.success == true) {
+          msgHandler("true" , response.message);
         } else {
-          msgHandler("false");
+          msgHandler("false", response.message);
         }
       });
     }
   };
-  
   const subscriptionForMob = () => {
     let subscription = {};
     let isMobile = navigator.userAgent.match(
@@ -62,14 +82,29 @@ const Subscription = ({ param, msgHandler }) => {
           <div>
             <div className="moviePoster" style={{ padding: "20% 0" }}>
               <div className="FeNml"></div>
-              <button
-                type="button"
-                onClick={() => onUnsubscribeHandler(item)}
-                className="subscribe-btn"
-                style={{ cursor: "pointer" }}
-              >
-                Unsubscribe
-              </button>
+              {
+                item.cancel_status ? (
+                  <button
+                  type="button"
+                  disabled
+                  className="subscribe-btn"
+                  style={{ cursor: "pointer" }}
+                >
+                  Unsubscribed
+                </button>
+                ) : 
+                (
+                  <button
+                  type="button"
+                  onClick={() => onUnsubscribeHandler(item)}
+                  className="subscribe-btn"
+                  style={{ cursor: "pointer" }}
+                >
+                  Unsubscribe
+                </button>
+                )
+              }
+             
             </div>
 
             <div className="wishlistPosition wishlistTranslate wishlistParentClose">

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Header from '../../Basic/Header';
 import $ from 'jquery';
 const AboutUs = () => {
 	window.scrollTo(0, 0);
@@ -7,8 +8,10 @@ const AboutUs = () => {
 	}, []);
 	return (
 		<div>
+			
 			<div className="pageWrapper">
 				<div className="topContainer">
+				{/* <Header /> */}
 					<div className="menuCloseJS closeMenuWrapper">
 						<div id="content" className="site-content">
 							<div id="primary" className="content-area">

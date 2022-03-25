@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
-
+import { useSelector } from "react-redux";
 import Home from '../components/Home/Home';
 import Movies from '../components/Movies/Movies';
 import CategoryList from '../components/CategoryList/CategoryList';
@@ -15,6 +15,7 @@ import AboutUs from '../components/FooterComponents/AboutUs/AboutUs';
 import Search from '../components/Search/Search';
 import Header from '../components/Basic/Header';
 import Footer from '../components/Basic/Footer';
+import ChangePassword from "../components/ChangePassword/changePassword";
 import SubscriptionList from '../components/SubscriptionList/SubscriptionList';
 import Landing from '../components/Landing/Landing';
 import Success from '../components/Payment/Succes';
@@ -35,47 +36,69 @@ import WebPrivacyPolicy from '../components/FooterComponents/WebPrivacyPolicy/We
 import CookiePolicy from '../components/FooterComponents/CookiePolicy/CookiePolicy';
 import Cookie from '../common/Cookie';
 import Activate from '../components/Activate/Activate';
-const routes = () => (
-    <BrowserRouter>
-        <Header />
-        <Cookie />
-        <div className="closeMenuWrapper">
-            <Switch>
-                <PublicRoutes restricted={true} path="/" exact component={Landing} />
-                <PublicRoutes restricted={false} path="/signin" exact component={SignIn} />
-                <PublicRoutes restricted={false} path="/register" exact component={Register} />
-                <PublicRoutes restricted={false} path="/aboutus" exact component={AboutUs} />
-                <PublicRoutes restricted={false} path="/subscription" exact component={SubscriptionList} />
-                <PublicRoutes restricted={false} path="/success" exact component={Success} />
-                <PublicRoutes restricted={false} path="/error" exact component={Error} />
-                <PublicRoutes restricted={false} path="/payment" exact component={Payment} />
-                <PublicRoutes restricted={false} path="/termsandconditions" exact component={WebTermsOfUse} />
-                <PublicRoutes restricted={false} path="/privacypolicy" exact component={WebPrivacyPolicy} />
-                <PublicRoutes restricted={false} path="/termsofuse" exact component={TermsOfUse} />
-                <PublicRoutes restricted={false} path="/policydarkmode" exact component={PrivacyPolicy} />
-                <PublicRoutes restricted={false} path="/pressrelease" exact component={PressRelease} />
-                <PublicRoutes restricted={false} path="/contactus" exact component={Contact} />
-                <PublicRoutes restricted={false} path="/contactsupport" exact component={ContactSupport} />
-                <PublicRoutes restricted={false} path="/iosredirect" exact component={IosRedirect} />
-                <PublicRoutes restricted={false} path="/supportdevice" exact component={SupportedDevices} />
-                <PublicRoutes restricted={false} path="/cookiepolicy" exact component={CookiePolicy} />
+import CommunityList from "../components/Community/CommunityList";
+import CommunityShows from "../components/Community/CommunityShow";
+import Account from "../components/Account/Account";
+import BilingActivity from "../components/BilingActivity/BilingActivity";
 
-                <PrivateRoutes path="/home" exact component={Home} />
-                <PrivateRoutes path="/home/movies" exact component={Movies} />
-                <PrivateRoutes path="/home/categorylist" exact component={CategoryList} />
-                <PrivateRoutes path="/home/partnershows" exact component={PartnerShows} />
-                <PrivateRoutes path="/home/recentlyadded" exact component={RecentlyAdded} />
-                <PrivateRoutes path="/home/series" exact component={Series} />
-                <PrivateRoutes path="/search" exact component={Search} />
-                <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
-                <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
-                <PrivateRoutes path="/partnerList" exact component={PartnerList} />
-                <PrivateRoutes path="/tv" exact component={Activate} />
-            </Switch>
-        </div>
-        <Footer />
 
-    </BrowserRouter>
 
-);
+const routes = () => {
+    const path = window.location.pathname;
+    const isAndroid = useSelector((state) => state.isAndroid);
+    return(
+        <BrowserRouter>
+        {!isAndroid && <Header />}
+           {/* <Header /> */}
+           <Cookie />
+           <div className="closeMenuWrapper">
+               <Switch>
+                   <PublicRoutes restricted={true} path="/" exact component={Landing} />
+                   <PublicRoutes restricted={false} path="/signin" exact component={SignIn} />
+                   <PublicRoutes restricted={false} path="/register" exact component={Register} />
+                   <PublicRoutes restricted={false} path="/aboutus" exact component={AboutUs} />
+                   <PublicRoutes restricted={false} path="/subscription" exact component={SubscriptionList} />
+                   <PublicRoutes restricted={false} path="/success" exact component={Success} />
+                   <PublicRoutes restricted={false} path="/error" exact component={Error} />
+                   <PublicRoutes restricted={false} path="/payment" exact component={Payment} />
+                   <PublicRoutes restricted={false} path="/termsandconditions" exact component={WebTermsOfUse} />
+                   <PublicRoutes restricted={false} path="/privacypolicy" exact component={WebPrivacyPolicy} />
+                   <PublicRoutes restricted={false} path="/termsofuse" exact component={TermsOfUse} />
+                   <PublicRoutes restricted={false} path="/policydarkmode" exact component={PrivacyPolicy} />
+                   <PublicRoutes restricted={false} path="/pressrelease" exact component={PressRelease} />
+                   <PublicRoutes restricted={false} path="/contactus" exact component={Contact} />
+                   <PublicRoutes restricted={false} path="/contactsupport" exact component={ContactSupport} />
+                   <PublicRoutes restricted={false} path="/iosredirect" exact component={IosRedirect} />
+                   <PublicRoutes restricted={false} path="/supportdevice" exact component={SupportedDevices} />
+                   <PublicRoutes restricted={false} path="/cookiepolicy" exact component={CookiePolicy} />
+   
+                   <PublicRoutes   restricted={false} path="/home" exact component={Home} />
+                   <PrivateRoutes path="/home/movies" exact component={Movies} />
+                   <PrivateRoutes path="/home/categorylist" exact component={CategoryList} />
+                   <PrivateRoutes path="/home/partnershows" exact component={PartnerShows} />
+                   <PrivateRoutes path="/home/communityShows" exact component={CommunityShows} />
+                   <PrivateRoutes path="/home/recentlyadded" exact component={RecentlyAdded} />
+                   <PrivateRoutes path="/home/series" exact component={Series} />
+                   <PrivateRoutes
+               path="/changePassword"
+               exact
+               component={ChangePassword}
+             />
+                   <PrivateRoutes path="/search" exact component={Search} />
+                   <PrivateRoutes path="/videoplayer" exact component={VideoPlayer} />
+                   <PrivateRoutes path="/advertisewithus" exact component={AdvertiseWithUs} />
+                   <PrivateRoutes path="/partnerList" exact component={PartnerList} />
+                   <PrivateRoutes path="/communityList" exact component={CommunityList} />
+                   <PrivateRoutes path="/account" exact component={Account} />
+                   <PrivateRoutes path="/bilingActivity" exact component={BilingActivity} />
+                   <PrivateRoutes path="/tv" exact component={Activate} />
+               </Switch>
+           </div>
+           <Footer />
+   
+       </BrowserRouter>
+    )
+   
+
+    };
 export default routes;

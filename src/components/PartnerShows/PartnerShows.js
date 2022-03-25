@@ -22,6 +22,14 @@ const PartnerShows = () => {
                 setPartnerDetails(response.data);
                 setPartnerCategory(response.data.shows);
             }
+            // if (response.status === 'success') {
+            //     setPartnerDetails(response.data);
+            //     setPartnerCategory(response.data.shows);
+               
+            // } else {
+            //     history.goBack();
+            // }
+
 
         })
 
@@ -43,7 +51,7 @@ const PartnerShows = () => {
                         ></div>
                         <div className="moviePageContainer">
                             <div className="vpContent">
-                                <div className="container vpContainer">
+                                <div className="container vpContainer" style={{maxWidth:"1400px", paddingRight:"5px", paddingLeft:"10px"}}>
                                     <div className="row vp3Section">
                                         <div className="col col-5-5">
                                             <div className="vpLeftSection partnerDetailLeftSection" >

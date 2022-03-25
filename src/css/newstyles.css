@@ -1,7 +1,7 @@
 /* 20 sept 2020 */
 .App {
     text-align: center;
-    padding-top: 2rem;
+    /* padding-top: 2rem; */
   }
   
   .modal-overlay {
@@ -162,8 +162,11 @@
   /* 24th sept */
   .subscribe-btn{
       background:none;
-  color:#f2110f;
-  border:1px solid #f2110f;
+  /* color:#f2110f; */
+  color: rgba(195 ,5 ,102,  63%);
+
+  border:1px solid rgba(224, 85, 156, 0.63);
+
   width:170px;
   height:50px;
   outline: none;
@@ -174,7 +177,7 @@
   margin-left: 25px;
   }
   .subscribe-btn:hover{
-  background:#f2110f!important;
+  background:rgba(224, 85, 156, 0.63)!important;
   color:#fff!important;
   }
   .mytitle {
@@ -308,8 +311,11 @@
   }
   .subscribe-btn{
       background:none;
-  color:#f2110f;
-  border:1px solid #F2110F;
+  /* color:#f2110f;
+  border:1px solid #F2110F; */
+  color: rgba(195, 5 ,102 , 63%);
+
+  border:1px solid rgba(224, 85, 156, 0.63);
   width:170px;
   height:50px;
   outline: none;
@@ -320,7 +326,9 @@
   margin-left: 25px;
   }
   .subscribe-btn:hover{
-  background:#f2110f!important;
+  background:  rgba(224, 85, 156, 0.63);
+
+ 
   color:#fff!important;
   }
   .mytitle {
@@ -354,7 +362,7 @@
       cursor: pointer;
   }
   .myFieldSet {
-      width: 300px !important;
+      width: 420px !important;
       box-shadow: 0 10px 24px 0 rgba(82, 91, 115, .12)!important;
       padding-bottom: 20px!important;
       border: -1px!important
@@ -747,4 +755,12 @@
     .error-notification{
         border-color: red;
         color: red;
+    }
+
+    @media (min-width:300px) and (max-width:400px) {
+        .myFieldSet {
+            width: 300px !important;
+            box-shadow: 0 10px 24px 0 rgba(82, 91, 115, .12)!important;
+            padding-bottom: 20px!important;
+        }
     }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { service } from "../../network/Landing/service";
 import Slider from "react-slick";
+import { Link, useHistory } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Banner.css";
@@ -154,26 +155,31 @@ const SampleNextArrow = (props) => {
 };
 
 const Banner = () => {
+  const history = useHistory();
   const [bannerResp, setBannerResp] = useState();
+  const [shows, setShows] = useState([]);
+  const [hover, setHover] = useState(false);
+  const [focusedId, setFocusedId] = useState(-1);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-    service.landingPageBanner().then((response) => {
+    service.landingPageBannerContent().then((response) => {
       if (response.success == true) {
         setBannerResp([...response.data]);
       }
-      console.log("landingPageBanner", response);
+      // console.log("landingPageBanner", response);
     });
   }, []);
 
   const settings = {
     dots: false,
     centerMode: false,
-    infinite: false,
+    infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
-    autoplay: false,
+    autoplay: true,
     // cssEase: "linear",
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -181,14 +187,14 @@ const Banner = () => {
       {
         breakpoint: 3000,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 2500,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -217,19 +223,44 @@ const Banner = () => {
             <Slider {...settings}>
               {bannerResp &&
                 bannerResp.map((item, index) => {
-                  console.log("banner", index, bannerResp);
+                  // console.log("banner", index, bannerResp);
                   return (
-                    <div className="bannerImgDiv" key={index}>
+                    <div className="bannerImgDiv"  
+                   >
                       <img
                         className=""
                         alt={item.video_title}
-                        src={imageUrl + item.banner}
+                        src={imageUrl + item.banner_one}
+                        onClick={() => {
+                          {if(item.show_id != null){
+                            history.push({
+                              pathname: "/home/movies",
+                              search: encodeURI(`show_id=${item.show_id}`),
+                            }
+                            );
+                          }
+                       if(item.community_id != null){
+                          history.push({
+                            pathname: "/home/communityShows",
+                            search: encodeURI(`community_id=${item.community_id}`),
+                          });
+                        }
+                        if(item.partner_id != null){
+                          history.push({
+                            pathname: "/home/partnershows",
+                            search: encodeURI(`partner_id=${item.partner_id}`),
+                          });
+                        }
+                      }
+                     
+                    }} key={index}
                         width="100%"
+                        style={{ background: "#fff" }}
                       />
+                     
                     </div>
                   );
                 })}
-              <div className="empty__slider__item"></div>
             </Slider>
           </div>
         </div>
