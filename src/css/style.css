@@ -305,7 +305,7 @@ body {
     height: 100%;
     transition: all .2s cubic-bezier(.75,0,.28,1);
     border-radius: 2px;
-    background: #e0559c;
+    background: #b81313;
     /* background: #e0559c70; */
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.05)
 }
@@ -355,7 +355,7 @@ body {
 }
 
 .buttonSecondary .buttonBg {
-    background: #fff
+    background: black
 }
 
 .buttonSecondary.buttonInverse {
@@ -2596,8 +2596,8 @@ html.is-ps5 {
 }
 
 .headerMenu.headerGradient {
-    background: linear-gradient(rgba(0,0,0,.9) 1%,rgba(0,0,0,.8) 15%,rgba(0,0,0,.7) 30%,rgba(0,0,0,.6) 45%,rgba(0,0,0,.5) 60%,rgba(0,0,0,.3) 75%,transparent)
-/* background: black; */
+    /* background: linear-gradient(rgba(44, 2, 2, 0.9) 1%,rgba(80, 15, 15, 0.8) 15%,rgba(95, 40, 40, 0.7) 30%,rgba(143, 73, 73, 0.6) 45%,rgba(156, 102, 102, 0.5) 60%,rgba(218, 172, 172, 0.3) 75%,transparent) */
+background: rgb(255, 255, 255);
 }
 
 .headerMenu.hideHeader {
@@ -2726,7 +2726,7 @@ html.is-ps5 {
 .headerMenu .headerWrapper .searchBar {
     flex-basis: 33.3%;
     display: none;
-    color: #fff
+    color: rgb(0, 0, 0)
 }
 
 @media (min-width: 960px) {
@@ -2783,7 +2783,7 @@ html.is-ps5 {
 }
 
 .headerMenu.headerWhite .searchBar {
-    background-color: #f0f3f5;
+    background-color: #010608;
     border: 1px solid rgba(32,32,38,.1)
 }
 
@@ -2812,7 +2812,7 @@ html.is-ps5 {
 }
 
 .facebookIcon._27L2T {
-    background-color: #fff;
+    background-color: #3d6ac3;
     border-radius: 15%;
     color: #3d6ac3
 }
@@ -2843,7 +2843,7 @@ html.is-ps5 {
     position: relative;
     width: 22px;
     height: 2px;
-    background-color: #fff;
+    background-color: rgb(0, 0, 0);
     bottom: 2px
 }
 
@@ -2852,7 +2852,7 @@ html.is-ps5 {
     width: 100%;
     height: 2px;
     position: absolute;
-    background-color: #fff;
+    background-color: rgb(0, 0, 0);
     right: 0
 }
 
@@ -3052,13 +3052,14 @@ a.headerMenuItems:hover {
     border-radius: 40px;
     position: relative;
     display: block;
-    color: #fff
+    color: rgb(0, 0, 0);
+    margin-bottom:15px ;
 }
 
 .searchIcon {
     width: 18px;
     height: 18px;
-    top: 10px;
+    top: 13px;
     left: 16px
 }
 
@@ -3207,7 +3208,15 @@ a.headerMenuItems:hover {
 }
 
 .loginButtonContainer ul>li .headerSignInButton {
-    color: #fff
+    color: rgb(182, 17, 17);
+    border: #666;
+    border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  margin-left: 10px;
+
+
+    
 }
 
 .headerWhite .loginButtonContainer ul>li .headerSignInButton {
@@ -4514,8 +4523,9 @@ a.headerMenuItems:hover {
 
 .movieTile {
     font-size: 1rem;
-    display: flex;
-    flex-direction: column
+    display: contents;
+    flex-direction: column;
+    width: 275px;
 }
 
 .movieTile,.movieTile .movieTileImage {
@@ -4567,8 +4577,8 @@ a.headerMenuItems:hover {
 
 .movieTile .movieTileImage .moviePoster {
     width: 100%;
-    padding: 71.75% 0;
-    background-size: 100% 100%;
+    padding: 28.75% 0;
+    background-size: 100% ;
     background-position: 50% 50%;
     background-repeat: no-repeat;
     -webkit-backface-visibility: hidden;
@@ -4649,7 +4659,7 @@ a.headerMenuItems:hover {
     }
 
     .movieTile.a99wU .movieTileIcon .oSAtc circle {
-        r: 22px
+        r: 22px;
     }
 
     .movieTile.a99wU .movieTileIcon .oSAtc:hover circle {
@@ -4822,10 +4832,11 @@ a.headerMenuItems:hover {
 
 .movieTextWrapper .movieTextFlex {
     overflow: hidden;
-    width: 100%;
+    width: 95%;
     display: flex;
     flex-direction: column;
-    padding-top: 6px
+    padding-top: 6px;
+    overflow: auto;
 }
 
 .movieTextWrapper .movieTextFlex h3 {
@@ -4903,7 +4914,7 @@ a.headerMenuItems:hover {
 }
 
 .socialLinkContainer,.socialLinkContainer a {
-    color: #d7d7d7
+    color: #110d0d
 }
 
 .socialLinkContainer .footerSLWrapper {
@@ -4932,7 +4943,9 @@ a.headerMenuItems:hover {
 }
 
 .footer {
-    background: #202026;
+    /* background: linear-gradient(rgba(102, 76, 76, 0.9) 1%,rgba(105, 76, 76, 0.8) 15%,rgba(77, 31, 31, 0.7) 30%,rgba(73, 24, 24, 0.6) 45%,rgba(48, 5, 5, 0.5) 60%,rgba(17, 1, 1, 0.3) 75%,transparent); */
+    background: whitesmoke;
+    
     width: 100%;
     padding-top: 46px;
     color: #666;
@@ -5027,7 +5040,7 @@ a.headerMenuItems:hover {
 .footer .footerMenu .footerMenuContainer .footerMenuHead {
     display: inline-block;
     margin-bottom: 1.5rem;
-    color: #707c86;
+    color: #040404;
     font-weight: 700;
     letter-spacing: .7px
 }
@@ -5062,7 +5075,7 @@ a.headerMenuItems:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 11px;
     flex-grow: 1;
     flex-basis: 50%;
@@ -5070,8 +5083,8 @@ a.headerMenuItems:hover {
 }
 
 .footer .footerInfo .footerCopyright .footerCopyText div {
-    color: #707c86;
-    opacity: .5;
+    color: #000000;
+    /* opacity: .5; */
     font-size: 11px;
     display: block;
     text-align: center
@@ -5082,8 +5095,7 @@ a.headerMenuItems:hover {
 }
 
 .footer .footerInfo .footerCopyright .XJ_r0 {
-    color: #707c86;
-    opacity: .5;
+    color: #000000;
     font-size: 11px;
     margin: 1rem 0 0
 }
@@ -5508,15 +5520,15 @@ a.headerMenuItems:hover {
 }
 
 .vpContent .vpContainer .vpLeftSection {
-    width: 91%
+    width: 103%
 }
 
 .vpContent .vpContainer .vpLeftSection .vpPoster {
     width: 100%;
-    padding-top: 142.7%;
+    padding-top: 56.7%;
     background-position-x: 50%;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     position: relative
 }
 
@@ -7972,10 +7984,10 @@ a.headerMenuItems:hover {
     }
     .vpContent .vpContainer .vpLeftSection .vpPoster {
         /* width: 96%; */
-        padding-top: 142.7%;
+        padding-top: 56.7%;
         background-position-x: 50%;
         background-repeat: no-repeat;
-        background-size: cover;
+        background-size: contain;
         position: relative;
         /* width: 77vw; */
         width: 100%;
@@ -8303,18 +8315,21 @@ h2.plHeading {
 }
 .liveVideoWrapper {
     position: relative;
-    left: 25%;
+    /* left: 25%; */
+    background: linear-gradient(to right,black,red,black);
+    /* background: linear-gradient(to right, black 1%, red 49%,red 70%,black 1%); */
 }
 .liveVideoWrapper .hpWrapperVideo {
     position: absolute;
     left: -25vw;
     bottom: 0px;
-    background: rgba(38,38,45,.7);
+    background: transparent;
     width: 300px;
     display: none;
 }
 .liveVideoWrapper:hover .hpWrapperVideo {
     display: block;
+    background: transparent;
 }
 
 @media (min-width: 960px) {
@@ -8829,7 +8844,7 @@ div {
     align-items: center;
     cursor: pointer;
     z-index: 10000;
-    color: #fff;
+    color: rgb(71, 9, 9);
     font-weight: 600;
 }
 ._1-UPh {

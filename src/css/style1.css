@@ -7643,7 +7643,7 @@ a.headerMenuItems:hover {
 }
 
 .movieTile .movieTileImage .moviePoster {
-    width: 100%;
+    /* width: 100%; */
     padding: 71.75% 0;
     background-size: 100% 100%;
     background-position: 50% 50%;

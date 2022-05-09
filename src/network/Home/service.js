@@ -662,7 +662,7 @@ function getCookie(name) {
 //     },
 //   };
 //   return axios
-//     .get(process.env.REACT_APP_API_URL + "show/newarrivals/list", customConfig)
+//     .get(process.env.REACT_APP_SUB_API_URL + "show/newarrivals/list", customConfig)
 //     .then((response) => {
 //       return response.data;
 //     })

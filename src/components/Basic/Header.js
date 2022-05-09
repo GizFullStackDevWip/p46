@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { capitalize, checkOperatingSystem } from '../../Utils/utils';
 import './Header.css';
 import $ from 'jquery';
+import logo from '../../images/logo.png';
 const queryString = require('query-string');
 var currentPathStrings = '';
 
@@ -139,8 +140,8 @@ const Header = () => {
     }
 
     if (currentPath === '/termsofuse' || currentPath === '/policydarkmode' ||
-    urlParams.get("antkn") != null ||
-    localStorage.getItem("isAndroid") == "true") {
+        urlParams.get("antkn") != null ||
+        localStorage.getItem("isAndroid") == "true") {
         return (null);
     } else if (currentPath === '/') {
         return (
@@ -150,7 +151,7 @@ const Header = () => {
                     <header className="headerMenu headerWhite headerGradient"
                         style={{ backgroundColor: '#d9d7d7', marginTop: '-80px', padding: '0px' }}>
                         <div className="container headerWrapper" >
-                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} width={40} />
+                            <img src={logo} style={{ cursor: 'pointer', width: "350px", marginLeft: "10px" }} />
                             <div className="logosection" style={{ padding: '4px' }}>
                                 <div className="logoContain" style={{ width: '174px' }}>
                                     <span style={{ fontSize: '16px', fontWeight: '700' }}>HappiTV - Watch Movies & TV Shows<br />
@@ -174,11 +175,13 @@ const Header = () => {
                     <div className="container headerWrapper">
                         <div className="logosection">
                             <div className="logoContain">
-                                <div className="menuIcon" rel="nofollow" onMouseOver={() => { if (menuClose === false) {
+                                <div className="menuIcon" rel="nofollow" onMouseOver={() => {
+                                    if (menuClose === false) {
                                         setMenuClose(true);
                                     } else {
                                         setMenuClose(false);
-                                    } }} onClick={() => {
+                                    }
+                                }} onClick={() => {
                                     if (menuClose === false) {
                                         setMenuClose(true);
                                     } else {
@@ -194,18 +197,18 @@ const Header = () => {
                                             <section className="searchContainer mobileSearchBG">
                                                 {/* {
                                                     login === true ? */}
-                                                        <div>
-                                                            <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
-                                                                <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
-                                                            </svg>
-                                                            <form onSubmit={submitSearch}>
-                                                                <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler}
-                                                                    value={parsed.show_id ? typing === true ? input : '' : input} />
-                                                            </form>
-                                                            <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
-                                                                <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
-                                                            </svg>
-                                                        </div> 
+                                                <div>
+                                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
+                                                        <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
+                                                    </svg>
+                                                    <form onSubmit={submitSearch}>
+                                                        <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler}
+                                                            value={parsed.show_id ? typing === true ? input : '' : input} />
+                                                    </form>
+                                                    <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
+                                                        <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
+                                                    </svg>
+                                                </div>
                                                 {/* //         : null
                                                 // } */}
                                             </section>
@@ -254,10 +257,10 @@ const Header = () => {
                                                             </Link>
                                                         </div>
                                                         <div className="menuListItems">
-                                                        <Link to={{ pathname: '/tv' }}>
-                                                            <div className="linkButton headerMenuItems">Link TV App</div>
-                                                        </Link>
-                                                    </div>
+                                                            <Link to={{ pathname: '/tv' }}>
+                                                                <div className="linkButton headerMenuItems">Link TV App</div>
+                                                            </Link>
+                                                        </div>
                                                         <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                         <div className="menuListItems">
                                                             <div className="menuInnerCol">
@@ -313,12 +316,12 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} onClick={() => {
+                                <img src={logo} style={{ cursor: 'pointer', marginLeft: "10px" }} onClick={() => {
                                     setInput('');
                                     history.push({
                                         pathname: '/home'
                                     });
-                                }} width={60} />
+                                }} width={250} />
                             </div>
                         </div>
                         {
@@ -383,7 +386,7 @@ const Header = () => {
                                                         history.push({
                                                             pathname: '/signin'
                                                         });
-                                                    }} style={{ cursor: 'pointer' }} className="headerSignInButton" >Sign In</a></li>
+                                                    }} style={{ cursor: 'pointer' ,color:"gray"}} className="headerSignInButton" >Sign In</a></li>
                                                 </ul>
                                                 : (currentPath === '/signin' ?
 
@@ -395,9 +398,9 @@ const Header = () => {
                                                                     pathname: '/register'
                                                                 });
                                                             }}>
-                                                                <button className="button buttonSecondary buttonBlock" tabIndex="-1">
-                                                                    <div className="buttonBg"></div>
-                                                                    <div className="buttonContent">Register</div>
+                                                                <button className="button buttonSecondary buttonBlock" style={{backgroundColor: 'black'}} tabIndex="-1">
+                                                                    <div className="buttonBg" ></div>
+                                                                    <div className="buttonContent" style={{color:"white"}}>Register</div>
                                                                 </button>
                                                             </a>
                                                         </li>
@@ -407,7 +410,7 @@ const Header = () => {
                                                                 history.push({
                                                                     pathname: '/signin'
                                                                 });
-                                                            }} style={{ cursor: 'pointer' }} >Sign In</a></li>
+                                                            }} style={{ cursor: 'pointer',color:"gray" }} >Sign In</a></li>
                                                     </ul>
                                                     :
                                                     <ul>
@@ -420,7 +423,7 @@ const Header = () => {
                                                             }}>
                                                                 <button className="button buttonSecondary buttonBlock" tabIndex="-1">
                                                                     <div className="buttonBg"></div>
-                                                                    <div className="buttonContent">Register</div>
+                                                                    <div className="buttonContent" style={{color:"white"}}>Register</div>
                                                                 </button>
                                                             </a>
                                                         </li>
@@ -429,7 +432,7 @@ const Header = () => {
                                                             history.push({
                                                                 pathname: '/signin'
                                                             });
-                                                        }} style={{ cursor: 'pointer' }} >Sign In</a></li>
+                                                        }} style={{ cursor: 'pointer' ,color:"gray"}} >Sign In</a></li>
                                                     </ul>
                                                 )
                                         )
@@ -454,17 +457,19 @@ const Header = () => {
                 <div className="container headerWrapper">
                     <div className="logosection">
                         <div className="logoContain">
-                            <div className="menuIcon" rel="nofollow" onMouseOver={() => { if (menuClose === false) {
-                                        setMenuClose(true);
-                                    } else {
-                                        setMenuClose(false);
-                                    } }} onClick={() => {
-                                    if (menuClose === false) {
-                                        setMenuClose(true);
-                                    } else {
-                                        setMenuClose(false);
-                                    }
-                                }}>
+                            <div className="menuIcon" rel="nofollow" onMouseOver={() => {
+                                if (menuClose === false) {
+                                    setMenuClose(true);
+                                } else {
+                                    setMenuClose(false);
+                                }
+                            }} onClick={() => {
+                                if (menuClose === false) {
+                                    setMenuClose(true);
+                                } else {
+                                    setMenuClose(false);
+                                }
+                            }}>
                                 <span className="hamburger" ></span>
                             </div>
                             <div className={menuClose === true ? 'menuItemContainer' : 'menuItemContainer menuClose'}
@@ -606,12 +611,12 @@ const Header = () => {
                                     </div>
                                 </div>
                             </div>
-                            <img src={'https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png'} style={{ cursor: 'pointer' }} onClick={() => {
+                            <img src={logo} style={{ cursor: 'pointer', marginLeft: "10px" }} onClick={() => {
                                 setInput('');
                                 history.push({
                                     pathname: '/home'
                                 });
-                            }} width={60} />
+                            }} width={250} />
                         </div>
                     </div>
                     {
@@ -628,7 +633,7 @@ const Header = () => {
                                                 </svg>
                                                 <form onSubmit={submitSearch}>
                                                     <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler}
-                                                        value={parsed.show_id ? typing === true ? input : '' : input} style={{ marginLeft: '380px', background: 'transparent', border: '1px solid #fff', width: '65%',height: '30px', marginBottom: '10px'}} />
+                                                        value={parsed.show_id ? typing === true ? input : '' : input} style={{ marginLeft: '380px', background: 'transparent', border: '1px solid black', width: '65%', height: '30px', marginBottom: '-17px' , color: 'black'}} />
                                                 </form>
                                                 <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
                                                     <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
@@ -636,50 +641,52 @@ const Header = () => {
                                             </div>
                                             : null
                                     }
-                                    
+
                                     <div style={{
                                         position: 'absolute',
-                                        top: '-3px',
-                                        left: '-200px'}}>
+                                        top: '10px',
+                                        left: '-200px'
+                                    }}>
                                         <ul style={{
                                             display: 'flex',
                                             outline: 'none',
                                             marginBottom: '20px',
                                             fontSize: '12px',
                                             color: '#fff',
-                                            listStyleType: 'none'}}>
-                                            <a href="/home"><li style={{padding: '0px 6px'}}>Home</li></a>
-                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{padding: '0px 6px'}}>Movies</li></a>
-                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{padding: '0px 6px'}}>Shows</li></a>
+                                            listStyleType: 'none'
+                                        }}>
+                                            <a href="/home"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px'}}>Home</li></a>
+                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{ padding: '0px 6px' , fontSize: '14px', color: 'black'}}>Movies</li></a>
+                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{ padding: '0px 6px' , fontSize: '14px' , color: 'black'}}>Shows</li></a>
                                             {/* <a href="/home/categorylist?category_id=playlist&category_name=My%20List"><li style={{padding: '0px 6px'}}>My List</li></a> */}
-                                            <a href="/home/recentlyadded"><li style={{padding: '0px 6px'}}>New Releases</li></a>
-                                            <li style={{padding: '0px 2px'}}>
+                                            <a href="/home/recentlyadded"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px'}}>New Releases</li></a>
+                                            <li style={{ padding: '0px 2px' }}>
                                                 <div className="dropdown">
-                                                <span className="dropbtn" style={{marginLeft: '6px', fontSize: '12px', color: '#fff'}}>Devices</span>
-                                                <div className="dropdown-content" style={{color: '#000', fontWeight: '600', lineHeight: '2px'}}>                                                
-                                                    <a href="https://apps.apple.com/in/app/happitv/id1535463535" target="_blank">iOS</a>
-                                                    <a href="https://play.google.com/store/apps/details?id=com.happi.android" target="_blank">Android</a>
-                                                    <a href="https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv" target="_blank">Roku</a>
-                                                    <a href="https://www.amazon.com/gp/product/B08LQV7MD1" target="_blank">Amazon Fire</a>
-                                                    <a href="https://play.google.com/store/apps/details?id=com.happi.androidtv" target="_blank">Android TV</a>
+                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px', color: 'black' }}>Devices</span>
+                                                    <div className="dropdown-content" style={{ color: 'black', fontWeight: '600', lineHeight: '2px' }}>
+                                                        <a href="https://apps.apple.com/in/app/happitv/id1535463535" target="_blank">iOS</a>
+                                                        <a href="https://play.google.com/store/apps/details?id=com.happi.android" target="_blank">Android</a>
+                                                        <a href="https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv" target="_blank">Roku</a>
+                                                        <a href="https://www.amazon.com/gp/product/B08LQV7MD1" target="_blank">Amazon Fire</a>
+                                                        <a href="https://play.google.com/store/apps/details?id=com.happi.androidtv" target="_blank">Android TV</a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </li>
-                                            <a href="/tv"><li style={{padding: '0px 6px'}}>Link TV App</li></a>
-                                            <li style={{padding: '0px 0px'}}>
+                                            <a href="/tv"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px' }}>Link TV App</li></a>
+                                            <li style={{ padding: '0px 0px' }}>
                                                 <div className="dropdown">
-                                                <span className="dropbtn" style={{marginLeft: '6px', fontSize: '12px', color: '#fff'}}>Account</span>
-                                                <div className="dropdown-content" style={{color: '#000', fontWeight: '600', lineHeight: '2px'}}>                                                
-                                                    <a href="/account">My Info</a>
-                                                    <a href="/home/categorylist?category_id=playlist&category_name=My%20List">My Listing</a>
-                                                    <a href="/aboutus">About Us</a>
-                                                    <a href="/contactus">Contact</a>
+                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px', color: 'black' }}>Account</span>
+                                                    <div className="dropdown-content" style={{ color: '#000', fontWeight: '600', lineHeight: '2px' }}>
+                                                        <a href="/account">My Info</a>
+                                                        <a href="/home/categorylist?category_id=playlist&category_name=My%20List">My Listing</a>
+                                                        <a href="/aboutus">About Us</a>
+                                                        <a href="/contactus">Contact</a>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    
+
                                 </section>
                             )
                     }
@@ -732,7 +739,7 @@ const Header = () => {
                                                         }}>
                                                             <button className="button buttonSecondary buttonBlock" tabIndex="-1">
                                                                 <div className="buttonBg"></div>
-                                                                <div className="buttonContent">Register</div>
+                                                                <div className="buttonContent" style={{color:"white"}}>Register</div>
                                                             </button>
                                                         </a>
                                                     </li>
@@ -755,7 +762,7 @@ const Header = () => {
                                                         }}>
                                                             <button className="button buttonSecondary buttonBlock" tabIndex="-1">
                                                                 <div className="buttonBg"></div>
-                                                                <div className="buttonContent">Register</div>
+                                                                <div className="buttonContent" style={{color:"white"}}>Register</div>
                                                             </button>
                                                         </a>
                                                     </li>
@@ -764,7 +771,7 @@ const Header = () => {
                                                         history.push({
                                                             pathname: '/signin'
                                                         });
-                                                    }} style={{ cursor: 'pointer' }} >Sign In</a></li>
+                                                    }} style={{ cursor: 'pointer',color:"gray" }} >Sign In</a></li>
                                                 </ul>
                                             )
                                     )

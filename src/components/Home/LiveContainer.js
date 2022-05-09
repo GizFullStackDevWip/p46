@@ -44,8 +44,9 @@ const LiveContainer = () => {
               url={response.data[0].live_link}
               autoplay={true}
               controls={true}
-              width={"100%"}
+              width={"75%"}
               height={"100%"}
+              
               playsinline
               onPlayerReady={window.onPlayerReady}
               onReady={window.onPlayerReady}
@@ -114,7 +115,7 @@ const LiveContainer = () => {
       <div className="hpLiveBanner">
         <div className="liveVideoWrapper">
           {!isSSAI ? (
-            videoPlayer
+            <div style={{marginLeft:'', display:'flex' , justifyContent:'center' ,marginTop: '80px'}}>{videoPlayer}</div> 
             
           ) : (
             <video
@@ -125,6 +126,7 @@ const LiveContainer = () => {
               preload="auto"
               autoPlay
               playsinline
+              style={{width:'800px'}}
             ></video>
           )}
           {/* <div className="hpWrapperVideo" style={{ height: "88px"}}>

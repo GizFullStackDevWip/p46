@@ -284,9 +284,9 @@ const FooterInfo = () => {
                 </a >
             </div >
             <div className="footerCopyright">
-                <div className="footerCopyText">
-                    <div>Copyright &copy; 2022 HappiTV, Inc.</div>
-                    <div> All rights reserved.</div>
+                <div className="footerCopyText" style={{color: "black"}}>
+                    <div style={{color: "black"}}>Copyright &copy; 2022 RunwayTV, Inc.</div>
+                    <div style={{color: "black"}}> All rights reserved.</div>
                 </div>
             </div>
         </div>

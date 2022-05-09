@@ -212,7 +212,7 @@ function getShowDetails(showId) {
 
     return axios.get(process.env.REACT_APP_SUB_API_URL+'show/' + showId, customConfig).then(
         // return axios.get(process.env.REACT_APP_SUB_API_URL + "show/" + categoryId, customConfig).then(
-        // return axios.get(process.env.REACT_APP_API_URL+'getShowsDetails', customConfig).then(
+        // return axios.get(process.env.REACT_APP_SUB_API_URL+'getShowsDetails', customConfig).then(
         response => {
             return response.data;
         })

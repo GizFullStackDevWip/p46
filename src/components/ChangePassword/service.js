@@ -33,7 +33,7 @@ function changePassword(oldPassword, newPassword, checked) {
 
   return axios
     .post(
-      process.env.REACT_APP_API_URL + "account/password/change",
+      process.env.REACT_APP_SUB_API_URL + "account/password/change",
       qs.stringify(data),
       customConfig
     )
@@ -99,7 +99,7 @@ function logoutFunction(user) {
     },
   };
   return axios
-    .get(process.env.REACT_APP_API_URL + "account/logout", customConfig)
+    .get(process.env.REACT_APP_SUB_API_URL + "account/logout", customConfig)
     .then((response) => {
       localStorage.removeItem("previousSubId");
       return response.data;
@@ -141,7 +141,7 @@ function logoutFunction(user) {
   
 //     return axios
 //       .post(
-//         process.env.REACT_APP_API_URL + "account/password/change",
+//         process.env.REACT_APP_SUB_API_URL + "account/password/change",
 //         qs.stringify(data),
 //         customConfig
 //       )

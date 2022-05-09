@@ -131,7 +131,7 @@ function keyAuthenticate(key) {
 
     return axios
     .get(process.env.REACT_APP_SUB_API_URL+"GetUserSubscriptionDetails", customConfig)
-    // .get(process.env.REACT_APP_API_URL + "subscription/details", customConfig)
+    // .get(process.env.REACT_APP_SUB_API_URL + "subscription/details", customConfig)
         .then((response) => {
             if (response.data.status == 100) {
                 // console.log('keyAuth', response)
@@ -251,7 +251,7 @@ function register(values, facebookId) {
 //             country_code: countryCode
 //         }
 //     };
-//     return axios.get(process.env.REACT_APP_API_URL+'getShowsByCategory', customConfig).then(
+//     return axios.get(process.env.REACT_APP_SUB_API_URL+'getShowsByCategory', customConfig).then(
 //         response => {
 //             return response.data;
 //         })
@@ -327,7 +327,7 @@ function getshowsbyCategory() {
 //             country_code: countryCode
 //         }
 //     };
-//     return axios.get(process.env.REACT_APP_API_URL+'searchShows', customConfig).then(
+//     return axios.get(process.env.REACT_APP_SUB_API_URL+'searchShows', customConfig).then(
 //         response => {
 //             return response.data;
 //         })
@@ -436,7 +436,7 @@ function getShows(key) {
 //     };
 //     return axios
 //       .get(
-//           process.env.REACT_APP_API_URL + "account/otp/verify", customConfig
+//           process.env.REACT_APP_SUB_API_URL + "account/otp/verify", customConfig
 //       //   "https://staging.poppo.tv/platform/bk/verifyOtpFromEmail",
 //       //   customConfig
 //       )
@@ -561,7 +561,7 @@ function verifyEmail(values, userRegisterId) {
 //     };
 //     return axios
 //       // .get("https://staging.poppo.tv/platform/bk/Loginnew", customConfig)
-//       .get(process.env.REACT_APP_API_URL + "subscription/user", customConfig)
+//       .get(process.env.REACT_APP_SUB_API_URL + "subscription/user", customConfig)
 //       .then((response) => {
 //         return response.data;
 //       })
@@ -1537,7 +1537,7 @@ function analytics() {
   
     return axios
       .post(
-        process.env.REACT_APP_API_URL + "account/password/change",
+        process.env.REACT_APP_SUB_API_URL + "account/password/change",
         qs.stringify(data),
         customConfig
       )

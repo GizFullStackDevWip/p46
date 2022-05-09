@@ -3,7 +3,8 @@ import FooterInfo from "../Basic/FooterInfo";
 import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
 import investorBanner from "../../images/piecapital.png";
 import "./Footer.css";
-
+import logo from '../../images/logo.png'
+import { pick } from "query-string";
 const Footer = () => {
   const history = useHistory();
   const location = useLocation();
@@ -22,10 +23,10 @@ const Footer = () => {
               <div className="footerLogo">
                 <img
                   src={
-                    "https://gizmeon.s.llnwi.net/vod/happitv-static-files/logo/fav.png"
+                    logo
                   }
                   style={{ cursor: "pointer" }}
-                  width={60}
+                  width={150}
                 />
               </div>
             </Link>
@@ -109,7 +110,7 @@ const Footer = () => {
                 <li>
                   {" "}
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       functionOnclick("/aboutus");
                     }}
@@ -123,7 +124,7 @@ const Footer = () => {
                 {/* <li> <a rel="noopener" target="_self" className="linkButton">Careers</a></li> */}
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     rel="noopener"
                     target="_self"
                     onClick={() => {
@@ -141,7 +142,7 @@ const Footer = () => {
                 <li className="footerMenuHead">SUPPORT</li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     className="linkButton"
                     onClick={() => {
                       functionOnclick("/contactsupport");
@@ -160,7 +161,7 @@ const Footer = () => {
                 <li className="footerMenuHead">PARTNERS</li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     rel="noopener"
                     target="_self"
                     onClick={() => {
@@ -173,7 +174,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     className="linkButton"
                     onClick={() => {
                       functionOnclick("/contactsupport");
@@ -189,7 +190,7 @@ const Footer = () => {
                 <li className="footerMenuHead">GET THE APPS</li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       window.open(
                         "https://apps.apple.com/in/app/happitv/id1535463535"
@@ -204,7 +205,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       window.open(
                         "https://play.google.com/store/apps/details?id=com.happi.android"
@@ -219,7 +220,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       window.open(
                         "https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv"
@@ -234,7 +235,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       window.open(
                         "https://www.amazon.com/gp/product/B08LQV7MD1"
@@ -249,7 +250,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       window.open(
                         "https://play.google.com/store/apps/details?id=com.happi.androidtv"
@@ -269,7 +270,7 @@ const Footer = () => {
                 <li className="footerMenuHead">PRESS</li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -279,7 +280,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -294,7 +295,7 @@ const Footer = () => {
                 <li className="footerMenuHead">LEGAL</li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       functionOnclick("/privacypolicy");
                     }}
@@ -305,7 +306,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "#fff" }}
+                    style={{ color: "brown" }}
                     onClick={() => {
                       functionOnclick("/termsandconditions");
                     }}

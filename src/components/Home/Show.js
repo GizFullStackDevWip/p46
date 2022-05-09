@@ -94,12 +94,12 @@ const Show = ({ param, update }) => {
                                     </div>
                                     {
                                         show.logo &&
-                                        <div className='athira'>
+                                       
                                         <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
                                             <div className="FeNml">
                                             </div>
                                         </div>
-                                        </div>
+                                       
                                     }
 
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>

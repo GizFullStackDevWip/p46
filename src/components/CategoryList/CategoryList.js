@@ -153,7 +153,7 @@ const CategoryList = () => {
                                                             show.logo &&
                                                             
                                                             <div className="moviePoster"
-                                                                style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }}>
+                                                                style={{ height: '50px' , backgroundImage: `url(${showsImageUrl + show.logo})` }}>
                                                                 <div className="FeNml"></div>
                                                             </div>
                                                            
