@@ -15,7 +15,8 @@ article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,secti
 
 audio,canvas,progress,video {
     display: inline-block;
-    vertical-align: baseline
+    vertical-align: baseline;
+    border-radius: 22px;
 }
 
 audio:not([controls]) {

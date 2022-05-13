@@ -528,7 +528,7 @@ const SignIn = () => {
           if (sessionStorage.getItem("tvActivateFlag") == "true") {
             history.push("/tv");
           } else {
-            window.location.href = "/";
+            window.location.href = "/home";
           }
         } else {
           setMsgErrorVerify("Invalid OTP");

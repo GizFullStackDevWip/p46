@@ -163,9 +163,9 @@
   .subscribe-btn{
       background:none;
   /* color:#f2110f; */
-  color: rgba(195 ,5 ,102,  63%);
+  color: rgb(255, 255, 255);
 
-  border:1px solid rgba(224, 85, 156, 0.63);
+  border:1px solid rgb(250, 60, 60);
 
   width:170px;
   height:50px;
@@ -177,7 +177,7 @@
   margin-left: 25px;
   }
   .subscribe-btn:hover{
-  background:rgba(224, 85, 156, 0.63)!important;
+  background:rgb(248, 55, 55)!important;
   color:#fff!important;
   }
   .mytitle {
@@ -313,9 +313,9 @@
       background:none;
   /* color:#f2110f;
   border:1px solid #F2110F; */
-  color: rgba(195, 5 ,102 , 63%);
+  color: rgb(255, 255, 255);
 
-  border:1px solid rgba(224, 85, 156, 0.63);
+  border:1px solid rgb(248, 50, 50);
   width:170px;
   height:50px;
   outline: none;
@@ -326,7 +326,7 @@
   margin-left: 25px;
   }
   .subscribe-btn:hover{
-  background:  rgba(224, 85, 156, 0.63);
+  background:  rgb(253, 38, 38);
 
  
   color:#fff!important;

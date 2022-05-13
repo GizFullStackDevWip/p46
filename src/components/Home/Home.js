@@ -220,7 +220,7 @@ const Home = () => {
               <div className="container" onClick={loadMoreCategory}>
                 <div className="row loadMoreContainer">
                   <button className="button buttonLarge buttonSecondary">
-                    <div className="buttonBg"></div>
+                    <div className="buttonBg" style={{background: 'white'}}></div>
                     <div className="buttonContent">Load More</div>
                   </button>
                 </div>

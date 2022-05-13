@@ -65,11 +65,13 @@ const CategoryList = () => {
             });
           }
         else {
+            console.log("categoryid",parsed.category_name);
             service.showsByCategory(parsed.category_id).then(response => {
 
                 console.log('catlistresponse', response)
                 setShowName(parsed.category_name);
-                setShowList(response.data.shows);
+                
+                // setShowList(response.data.shows);
                
             })
         }
@@ -144,7 +146,8 @@ const CategoryList = () => {
                                                         <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
                                                             className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                                             <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
-                                                                onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>
+                                                                // onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }
+                                                            >
                                                                 <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                                             </svg>
@@ -184,7 +187,13 @@ const CategoryList = () => {
                                                         <div className="movieTextFlex">
                                                             <h3>
                                                                 {
-                                                                    show.show_name &&
+                                                                    <div className="_2GgQ0 epi_desc">
+                                                                    {show.show_name.substring(
+                                                                      0,
+                                                                      8
+                                                                    ) + "..."}
+                                                                  </div>
+                                                                     &&
                                                                     <div className="linkButton movieTextHeading" 
                                                                         onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name}</div>
                                                                 }

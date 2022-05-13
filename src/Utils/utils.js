@@ -1,4 +1,5 @@
 import moment from "moment";
+import React from 'react';
 import { service } from "../network/service";
 export const playerController = (position, playerId) => {
   let screenPosition = document.documentElement.scrollTop;
@@ -8,6 +9,8 @@ export const playerController = (position, playerId) => {
   console.log("playerstream",playerStream);
   if (playerStream !== null && playerStream !== "undefined") {
     if (screenPosition > position) {
+      console.log("screenPosition",screenPosition);
+  console.log("position",position);
       playerStream.pause();
     } else if (screenPosition < position) {
       if (playerStream != null) {

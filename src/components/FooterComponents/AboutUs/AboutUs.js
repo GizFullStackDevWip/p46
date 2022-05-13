@@ -26,9 +26,8 @@ const AboutUs = () => {
 																<div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
 																<div className="header-content">
 																	{/*  digital platform dedicated to streaming content of interest made by and for the LGBTQ+ community.  */}
-																	<h1>HappiTV<span>
-																	HappiTV is streaming service dedicated to sharing empowering and captivating stories showcasing the LGBTQ+ experience. Featuring a wide-reaching carefully curated collection of inclusive feature films and TV series, visionary documentary style and short form content, happiTV serves as an anchor for positive models and messages for the queer population. happiTV is a place where our community can find powerful entertainment and educational resources that will better their lives. We are a 100% minority owned and operated enterprise (LGBTQ+ and Latino) based in the United States of America. Please help support our sponsors and enjoy the amazing work of our partners and creatives. We can bring big smiles to those around the world. That's what we are all about. We are happiTV.
-																		</span></h1> </div>
+																	<h1>RunwayTV<span>
+																	RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world. Book a talent to come work for you, read about the newest celebrity news and see our picks from the world's top runway collections and read up on beauty & fashion tips all in one place.																		</span></h1> </div>
 															</div>
 														</div>
 													</div>
@@ -83,12 +82,12 @@ const AboutUs = () => {
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
 															<div className="wpb_text_column wpb_content_element  normal w_780  vc_custom_1581604390850 container happi-content">
-																<div className="wpb_wrapper">
+																{/* <div className="wpb_wrapper">
 																	<h3 style={{ textAlign: 'center' }}>Leadership</h3>
 																	<div id="gtx-trans" style={{ position: 'absolute', left: '-14px', top: '39.4375px' }}>
 																		<div className="gtx-trans-icon"></div>
 																	</div>
-																</div>
+																</div> */}
 															</div>
 														</div>
 													</div>
@@ -98,7 +97,7 @@ const AboutUs = () => {
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
-															<div className="happi-service-list-wrapper ">
+															{/* <div className="happi-service-list-wrapper ">
 																<div className="wpb_text_column wpb_content_element  small w_870 b-border  leadership container happi-service-list">
 																	<div className="wpb_wrapper">
 																		<div className="service-item "> <img src={require("../../../images/aboutus/DanielBort.jpg")} alt="" style={{ width: '100%' }} />
@@ -117,7 +116,7 @@ const AboutUs = () => {
 																		</div>
 																	</div>
 																</div>
-															</div>
+															</div> */}
 														</div>
 													</div>
 												</div>
@@ -129,7 +128,7 @@ const AboutUs = () => {
 															<div className="wpb_text_column wpb_content_element    container happi-footer">
 																<div className="wpb_wrapper">
 																	<hr />
-																	<p>The provided agreements on HappiTv are for informational purposes only and do not constitute legal advice.</p>
+																	<p>The provided agreements on RunwayTV are for informational purposes only and do not constitute legal advice.</p>
 																</div>
 															</div>
 														</div>
