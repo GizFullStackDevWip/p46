@@ -559,7 +559,10 @@ textarea {
 ## Links
 --------------------------------------------------------------*/
 a {
-    color: royalblue;
+    color: rgb(138, 10, 10);
+}
+a:hover{
+    color: red;
 }
 
 a:visited {

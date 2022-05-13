@@ -237,7 +237,7 @@ body {
     display: inline-block;
     position: relative;
     transition: opacity .3s;
-    color: #000;
+    color: rgb(0, 0, 0);
     line-height: 1.5;
     cursor: pointer
 }
@@ -306,8 +306,11 @@ body {
     transition: all .2s cubic-bezier(.75,0,.28,1);
     border-radius: 2px;
     background: #b81313;
+    transform: scale(1.06667,1.05);
+    border-radius: 5px;
     /* background: #e0559c70; */
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05)
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05);
+
 }
 
 .buttonBg:not(:root:root) {
@@ -315,8 +318,8 @@ body {
 }
 
 .button:hover .buttonBg {
-    transform: scale(1.06667,1.05);
-    box-shadow: 0 8px 20px 0 rgba(0,0,0,.08);
+    /* transform: scale(1.06667,1.05);
+    box-shadow: 0 8px 20px 0 rgba(0,0,0,.08); */
     cursor: pointer
 }
 
@@ -355,7 +358,7 @@ body {
 }
 
 .buttonSecondary .buttonBg {
-    background: black
+    background: #d31111
 }
 
 .buttonSecondary.buttonInverse {
@@ -471,7 +474,7 @@ body {
 }
 
 .carouselNoMask .carouselContent {
-    overflow: hidden
+    overflow: visible;
 }
 
 .carousel .carouselRow {
@@ -2381,7 +2384,7 @@ body {
 }
 
 .inputActive,.inputActive:hover {
-    border: 1px solid #e0559c
+    border: 1px solid #e61a1a
 }
 
 .Input--errored {
@@ -2389,12 +2392,12 @@ body {
 }
 
 .Input--errored,.Input--errored:hover {
-    border: 1px solid #ae16ff
+    border: 1px solid #ff1629
 }
 
 .Input--errored .inputLabel {
     opacity: 1;
-    color: #ae16ff
+    color: #ff1616
 }
 
 .inputFixed {
@@ -2584,7 +2587,7 @@ html.is-ps5 {
 
 .headerMenu {
     transition: transform .3s;
-    z-index: 99;
+    z-index: 9999;
     position: fixed;
     left: 0;
     top: 0;
@@ -2597,7 +2600,8 @@ html.is-ps5 {
 
 .headerMenu.headerGradient {
     /* background: linear-gradient(rgba(44, 2, 2, 0.9) 1%,rgba(80, 15, 15, 0.8) 15%,rgba(95, 40, 40, 0.7) 30%,rgba(143, 73, 73, 0.6) 45%,rgba(156, 102, 102, 0.5) 60%,rgba(218, 172, 172, 0.3) 75%,transparent) */
-background: rgb(255, 255, 255);
+background: rgb(0, 0, 0);
+border-bottom: 1px solid red;
 }
 
 .headerMenu.hideHeader {
@@ -2774,7 +2778,7 @@ background: rgb(255, 255, 255);
 }
 
 .headerMenu.headerWhite {
-    background: #fff;
+    background: rgb(0, 0, 0);
     border-bottom: 1px solid rgba(38,38,45,.1)
 }
 
@@ -2843,7 +2847,7 @@ background: rgb(255, 255, 255);
     position: relative;
     width: 22px;
     height: 2px;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
     bottom: 2px
 }
 
@@ -2852,7 +2856,7 @@ background: rgb(255, 255, 255);
     width: 100%;
     height: 2px;
     position: absolute;
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
     right: 0
 }
 
@@ -2988,7 +2992,7 @@ background: rgb(255, 255, 255);
         width: 50%
     }
     .menuWrapper .menuBGcolor {
-        background-color: #f0f3f5
+        background-color: #f8f8f8
     }
     .menuCol .menuListItems {
     height: 100%;
@@ -3010,7 +3014,7 @@ background: rgb(255, 255, 255);
 
 .menuCol {
     width: 100%;
-    border-top: 1px solid rgba(32,32,38,.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 16px 20px 24px
 }
 
@@ -3020,7 +3024,7 @@ background: rgb(255, 255, 255);
     line-height: 16px;
     letter-spacing: .5px;
     line-height: 2.18;
-    color: rgb(224, 85, 156);
+    color: rgb(219, 43, 43);
     text-transform: uppercase;
     padding-bottom: 4px
 }
@@ -3029,7 +3033,7 @@ a.headerMenuItems {
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
-    color: rgb(224, 85, 156) !important;
+    color: rgb(202, 28, 28) !important;
     line-height: 1.71;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -3209,7 +3213,7 @@ a.headerMenuItems:hover {
 
 .loginButtonContainer ul>li .headerSignInButton {
     color: rgb(182, 17, 17);
-    border: #666;
+    border: rgb(98, 3, 3);
     border-style: solid;
   border-width: 2px;
   border-radius: 5px;
@@ -3220,15 +3224,15 @@ a.headerMenuItems:hover {
 }
 
 .headerWhite .loginButtonContainer ul>li .headerSignInButton {
-    color: #202026
+    color: #d31111
 }
 .headerWhite .menuIcon .hamburger,
 .headerWhite .menuIcon .hamburger:after, 
 .headerWhite .menuIcon .hamburger:before {
-    background-color: #000;
+    background-color: rgb(255, 255, 255);
 }
 .headerWhite .buttonSecondary .buttonBg{
-   background: #26262d; 
+   background: #d11a1a; 
 }
 .headerWhite .buttonSecondary{
     color: #fff;
@@ -3240,7 +3244,8 @@ a.headerMenuItems:hover {
     color: #fff;
     font-weight: 700;
     letter-spacing: .5px;
-    line-height: 40px
+    line-height: 40px;
+    height: 121%;
 }
 
 @media (min-width: 768px) {
@@ -3394,7 +3399,7 @@ a.headerMenuItems:hover {
 }
 
 .movieTilePlayIcon:hover {
-    color: #e0559c
+    color: #ec1c1c
 }
 
 .kids-mode .movieTilePlayIcon:hover {
@@ -3596,7 +3601,7 @@ a.headerMenuItems:hover {
 }
 
 .vpMiddleInfoSection .x00rZ.AflDM:hover {
-    color: #e0559c
+    color: #fa2424
 }
 
 .kids-mode .vpMiddleInfoSection .x00rZ.AflDM:hover {
@@ -3687,7 +3692,8 @@ a.headerMenuItems:hover {
 .vpCategoryFlex {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap
+    flex-wrap: wrap;
+    margin-left: 60px;
 }
 
 .movieCategory {
@@ -3926,7 +3932,7 @@ a.headerMenuItems:hover {
 }
 
 .hpbContent .hpbBannerTextWrapper .hpbBannerCol .hpbBannerText .hpbBannerHeading ._33NIK:hover {
-    color: #e0559c
+    color: #db1919
 }
 
 .kids-mode .hpbContent .hpbBannerTextWrapper .hpbBannerCol .hpbBannerText .hpbBannerHeading ._33NIK:hover {
@@ -4195,7 +4201,7 @@ a.headerMenuItems:hover {
 }
 
 .categoryWrapper .categoryLinkWrapper .categoryHeading ._2hvCx ._1mK3G:hover {
-    color: #e0559c
+    color: #ee2222
 }
 
 .kids-mode .categoryWrapper .categoryLinkWrapper .categoryHeading ._2hvCx ._1mK3G:hover {
@@ -4210,7 +4216,7 @@ a.headerMenuItems:hover {
 }
 
 .categoryWrapper .categoryLinkWrapper .categoryDotsWrapper:hover {
-    color: #e0559c
+    color: #d82323
 }
 
 .kids-mode .categoryWrapper .categoryLinkWrapper .categoryDotsWrapper:hover {
@@ -4295,7 +4301,7 @@ a.headerMenuItems:hover {
 }
 
 .seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay:hover {
-    color: #e0559c
+    color: #eb1c1c
 }
 
 .kids-mode .seasonTileWrapper .seasonTileImgWrapper .seasonTilePlay:hover {
@@ -4550,7 +4556,7 @@ a.headerMenuItems:hover {
 }
 
 .movieTile .movieTileImage .movieTileIcon:hover {
-    color: #e0559c
+    color: #d62121
 }
 
 .kids-mode .movieTile .movieTileImage .movieTileIcon:hover {
@@ -4576,8 +4582,8 @@ a.headerMenuItems:hover {
 }
 
 .movieTile .movieTileImage .moviePoster {
-    width: 100%;
-    padding: 28.75% 0;
+    width: 93%;
+    padding: 25.75% 0;
     background-size: 100% ;
     background-position: 50% 50%;
     background-repeat: no-repeat;
@@ -4762,7 +4768,7 @@ a.headerMenuItems:hover {
 }
 
 .wishlistButton .wishlistTextWrapper .wishlistText:hover {
-    color: #e0559c
+    color: #d80e0e
 }
 
 .kids-mode .wishlistButton .wishlistTextWrapper .wishlistText:hover {
@@ -4814,7 +4820,7 @@ a.headerMenuItems:hover {
 }
 
 .movieTextWrapper {
-    width: 100%;
+    width: 92%;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between
@@ -4832,7 +4838,7 @@ a.headerMenuItems:hover {
 
 .movieTextWrapper .movieTextFlex {
     overflow: hidden;
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     padding-top: 6px;
@@ -4865,7 +4871,7 @@ a.headerMenuItems:hover {
 }
 
 .movieTextWrapper .movieTextFlex h3 .movieTextHeading:hover {
-    color: #e0559c
+    color: #ff3b3b
 }
 
 .kids-mode .movieTextWrapper .movieTextFlex h3 .movieTextHeading:hover {
@@ -4914,7 +4920,7 @@ a.headerMenuItems:hover {
 }
 
 .socialLinkContainer,.socialLinkContainer a {
-    color: #110d0d
+    color: #ffffff
 }
 
 .socialLinkContainer .footerSLWrapper {
@@ -4944,13 +4950,14 @@ a.headerMenuItems:hover {
 
 .footer {
     /* background: linear-gradient(rgba(102, 76, 76, 0.9) 1%,rgba(105, 76, 76, 0.8) 15%,rgba(77, 31, 31, 0.7) 30%,rgba(73, 24, 24, 0.6) 45%,rgba(48, 5, 5, 0.5) 60%,rgba(17, 1, 1, 0.3) 75%,transparent); */
-    background: whitesmoke;
+    background: rgb(0, 0, 0);
     
     width: 100%;
     padding-top: 46px;
-    color: #666;
+    color: rgb(255, 0, 0);
     position: relative;
-    min-height: 100%
+    min-height: 100%;
+    border-top: 2px solid red;
 }
 
 .footer li {
@@ -5040,7 +5047,7 @@ a.headerMenuItems:hover {
 .footer .footerMenu .footerMenuContainer .footerMenuHead {
     display: inline-block;
     margin-bottom: 1.5rem;
-    color: #040404;
+    color: #ff0000;
     font-weight: 700;
     letter-spacing: .7px
 }
@@ -5520,7 +5527,7 @@ a.headerMenuItems:hover {
 }
 
 .vpContent .vpContainer .vpLeftSection {
-    width: 103%
+    width: 129%
 }
 
 .vpContent .vpContainer .vpLeftSection .vpPoster {
@@ -5643,7 +5650,8 @@ a.headerMenuItems:hover {
 @media (min-width: 960px) {
     .vpContent .vpContainer .vpInfoPadding {
         padding-bottom:35px!important;
-        padding-top: 35px!important
+        padding-top: 35px!important;
+        /* padding-left: 68px; */
     }
 }
 
@@ -5658,6 +5666,7 @@ a.headerMenuItems:hover {
     .vpContent .vpContainer .vpMiddleDesc {
         padding-bottom: 0;
         margin-bottom: 0px;
+        /* padding-left: 68px; */
     }
 }
 
@@ -7314,7 +7323,7 @@ a.headerMenuItems:hover {
 }
 
 .devicesFlexWrapper .devicesHeaderText.devicesHeaderTextActive {
-    color: #e0559c
+    color: #ec1111
 }
 
 .kids-mode .devicesFlexWrapper .devicesHeaderText.devicesHeaderTextActive {
@@ -7810,7 +7819,7 @@ a.headerMenuItems:hover {
     }
 }
 .searchPageMain {
-    background: #26262d;
+    background: #000000;
     /* background: black; */
 }
 
@@ -8178,7 +8187,7 @@ h2.plHeading {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(234, 101, 182, 0.6));
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgb(204, 19, 19));
 	z-index: -1;
 	transition: opacity 0.3s linear;
 	opacity: 0;
@@ -8464,8 +8473,8 @@ a:hover {
             -webkit-transform-style: preserve-3d;
             transform-style: preserve-3d;
             -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            width: 200px !important;
+            backface-visibility: visible;
+            width: 340px !important;
         }
     }
     .eyeIcon{
@@ -9055,7 +9064,7 @@ div {
       height: calc((100vw - 20vw) * 0.3625);
   }
 .hover:hover{
- color: #e0559c;
+ color: #db1414;
 }
 .hover{
     cursor: pointer;

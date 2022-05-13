@@ -1820,9 +1820,9 @@ const onEpisodePlay = (video) => {
                                             preserveAspectRatio="xMidYMid meet"
                                             viewBox="0 0 62 62"
                                             style={{ fill: "currentcolor" }}
-                                            onClick={() => {
-                                              functionOnclick(show);
-                                            }}
+                                            // onClick={() => {
+                                            //   functionOnclick(show);
+                                            // }}
                                           >
                                             <circle
                                               r="30"

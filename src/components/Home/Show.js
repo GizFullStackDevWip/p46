@@ -3,7 +3,13 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { Link, useHistory } from 'react-router-dom';
 import { service } from '../../network/Home/service';
-import { convertTime } from '../../Utils/utils';
+// import { convertTime } from '../../Utils/utils';
+import {
+    convertTime,
+    deviceDetect,
+    playerController,
+    convertSecondsToMin,
+  } from "../../Utils/utils";
 import { useSelector, useDispatch } from 'react-redux';
 import freeImg from '../../images/free.png'
 import premium from '../../images/Image.png';
@@ -86,7 +92,8 @@ const Show = ({ param, update }) => {
                                         className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
 
                                         <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }}
-                                            onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>
+                                            // onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
+                                            >
                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                         </svg>
@@ -130,9 +137,20 @@ const Show = ({ param, update }) => {
                                     <div className="movieTextFlex">
                                         <h3>
                                             {
-                                                show.show_name &&
+                                                <div className="_2GgQ0 epi_desc">
+                                                    {/* {console.log("showww",show.show_name)} */}
+                                                {show.show_name.substring(
+                                                  0,
+                                                  35
+                                                ) + "..."}
+                                              </div>
+
+                                                 &&
                                                 <div className="linkButton movieTextHeading" style={{display:"flex"}}
-                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name}
+                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name.substring(
+                                                        0,
+                                                        35
+                                                      ) + "..."}
                                                 </div>
                                             }
 

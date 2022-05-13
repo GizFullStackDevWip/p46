@@ -1071,9 +1071,9 @@ const VideoDetails = (categoryId, episode) => {
                                                 viewBox="0 0 62 62"
                                                 style={{ fill: "currentcolor" }}
                                                 // onClick={() => { functionOnclick(show) }}
-                                                onClick={() => {
-                                                  onWatchClick(show);
-                                                }}
+                                                // onClick={() => {
+                                                //   onWatchClick(show);
+                                                // }}
                                               >
                                                 <circle
                                                   r="30"
@@ -1409,9 +1409,9 @@ const VideoDetails = (categoryId, episode) => {
                                             preserveAspectRatio="xMidYMid meet"
                                             viewBox="0 0 62 62"
                                             style={{ fill: "currentcolor" }}
-                                            onClick={() => {
-                                              functionOnclick(show);
-                                            }}
+                                            // onClick={() => {
+                                            //   functionOnclick(show);
+                                            // }}
                                           >
                                             <circle
                                               r="30"

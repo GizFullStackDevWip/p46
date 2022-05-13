@@ -386,7 +386,7 @@ const Header = () => {
                                                         history.push({
                                                             pathname: '/signin'
                                                         });
-                                                    }} style={{ cursor: 'pointer' ,color:"gray"}} className="headerSignInButton" >Sign In</a></li>
+                                                    }} style={{ cursor: 'pointer' ,color:"#ff3a3a"}} className="headerSignInButton" >Sign In</a></li>
                                                 </ul>
                                                 : (currentPath === '/signin' ?
 
@@ -410,7 +410,7 @@ const Header = () => {
                                                                 history.push({
                                                                     pathname: '/signin'
                                                                 });
-                                                            }} style={{ cursor: 'pointer',color:"gray" }} >Sign In</a></li>
+                                                            }} style={{ cursor: 'pointer',color:"#ff3a3a" }} >Sign In</a></li>
                                                     </ul>
                                                     :
                                                     <ul>
@@ -432,7 +432,7 @@ const Header = () => {
                                                             history.push({
                                                                 pathname: '/signin'
                                                             });
-                                                        }} style={{ cursor: 'pointer' ,color:"gray"}} >Sign In</a></li>
+                                                        }} style={{ cursor: 'pointer' ,color:"#ff3a3a"}} >Sign In</a></li>
                                                     </ul>
                                                 )
                                         )
@@ -644,7 +644,7 @@ const Header = () => {
 
                                     <div style={{
                                         position: 'absolute',
-                                        top: '10px',
+                                     
                                         left: '-200px'
                                     }}>
                                         <ul style={{
@@ -655,14 +655,14 @@ const Header = () => {
                                             color: '#fff',
                                             listStyleType: 'none'
                                         }}>
-                                            <a href="/home"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px'}}>Home</li></a>
-                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{ padding: '0px 6px' , fontSize: '14px', color: 'black'}}>Movies</li></a>
-                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{ padding: '0px 6px' , fontSize: '14px' , color: 'black'}}>Shows</li></a>
+                                            <a href="/home"><li style={{ padding: '0px 6px'  , fontSize: '14px'}}>Home</li></a>
+                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{ padding: '0px 6px' , fontSize: '14px'}}>Movies</li></a>
+                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{ padding: '0px 6px' , fontSize: '14px' }}>Shows</li></a>
                                             {/* <a href="/home/categorylist?category_id=playlist&category_name=My%20List"><li style={{padding: '0px 6px'}}>My List</li></a> */}
-                                            <a href="/home/recentlyadded"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px'}}>New Releases</li></a>
+                                            <a href="/home/recentlyadded"><li style={{ padding: '0px 6px'  , fontSize: '14px'}}>New Releases</li></a>
                                             <li style={{ padding: '0px 2px' }}>
                                                 <div className="dropdown">
-                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px', color: 'black' }}>Devices</span>
+                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px' }}>Devices</span>
                                                     <div className="dropdown-content" style={{ color: 'black', fontWeight: '600', lineHeight: '2px' }}>
                                                         <a href="https://apps.apple.com/in/app/happitv/id1535463535" target="_blank">iOS</a>
                                                         <a href="https://play.google.com/store/apps/details?id=com.happi.android" target="_blank">Android</a>
@@ -672,11 +672,11 @@ const Header = () => {
                                                     </div>
                                                 </div>
                                             </li>
-                                            <a href="/tv"><li style={{ padding: '0px 6px' , color: 'black' , fontSize: '14px' }}>Link TV App</li></a>
+                                            <a href="/tv"><li style={{ padding: '0px 6px' , fontSize: '14px' }}>Link TV App</li></a>
                                             <li style={{ padding: '0px 0px' }}>
                                                 <div className="dropdown">
-                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px', color: 'black' }}>Account</span>
-                                                    <div className="dropdown-content" style={{ color: '#000', fontWeight: '600', lineHeight: '2px' }}>
+                                                    <span className="dropbtn" style={{ marginLeft: '6px', fontSize: '14px'}}>Account</span>
+                                                    <div className="dropdown-content" style={{  fontWeight: '600', lineHeight: '2px' }}>
                                                         <a href="/account">My Info</a>
                                                         <a href="/home/categorylist?category_id=playlist&category_name=My%20List">My Listing</a>
                                                         <a href="/aboutus">About Us</a>
@@ -725,7 +725,7 @@ const Header = () => {
                                                     history.push({
                                                         pathname: '/signin'
                                                     });
-                                                }} style={{ cursor: 'pointer' }} className="headerSignInButton" >Sign In</a></li>
+                                                }} style={{ cursor: 'pointer' , color:'#ff3a3a' }} className="headerSignInButton" >Sign In</a></li>
                                             </ul>
                                             : (currentPath === '/signin' ?
 
@@ -771,7 +771,7 @@ const Header = () => {
                                                         history.push({
                                                             pathname: '/signin'
                                                         });
-                                                    }} style={{ cursor: 'pointer',color:"gray" }} >Sign In</a></li>
+                                                    }} style={{ cursor: 'pointer',color:"#ff3a3a" }} >Sign In</a></li>
                                                 </ul>
                                             )
                                     )

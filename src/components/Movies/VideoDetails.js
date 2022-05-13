@@ -840,8 +840,8 @@ const VideoDetails = (categoryId, episode) => {
                                 addtoMylistFunction(showDetails);
                               }}
                             >
-                              <div className="buttonBg"></div>
-                              <div className="buttonContent">
+                              <div className="buttonBg" style={{background:'white'}}></div>
+                              <div className="buttonContent" >
                                 Add to My List
                               </div>
                             </button>
@@ -963,9 +963,9 @@ const VideoDetails = (categoryId, episode) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col col-3-5 movieTagsMob">
+                  <div className="col col-3-5 movieTagsMob"  style={{marginLeft: '59px' , textAlign: 'center'}}> 
                     <div className="vpMiddleInfoSection vpInfoPadding">
-                      <div className="vpLengthCensor">
+                      <div className="vpLengthCensor" style={{marginRight: '132px'}}>
                         <div className="vpLengthYear">
                           {showDetails.video_duration && (
                             <div className="movieLength">
@@ -1048,6 +1048,7 @@ const VideoDetails = (categoryId, episode) => {
                           {showDetails.synopsis}
                         </div>
                       ) : (
+                        
                         <div
                           className={
                             showDetails.teaser ? "vpMiddleDesc" : "noteaser"
@@ -1524,9 +1525,7 @@ const VideoDetails = (categoryId, episode) => {
                                             preserveAspectRatio="xMidYMid meet"
                                             viewBox="0 0 62 62"
                                             style={{ fill: "currentcolor" }}
-                                            onClick={() => {
-                                              functionOnclick(show);
-                                            }}
+                                            // onClick={() => {functionOnclick(show);}}
                                           >
                                             <circle
                                               r="30"

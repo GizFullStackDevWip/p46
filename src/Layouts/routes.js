@@ -53,7 +53,7 @@ const routes = () => {
            <Cookie />
            <div className="closeMenuWrapper">
                <Switch>
-                   <PublicRoutes restricted={true} path="/" exact component={Landing} />
+                   <PublicRoutes restricted={true} path="/" exact component={Home} />
                    <PublicRoutes restricted={false} path="/signin" exact component={SignIn} />
                    <PublicRoutes restricted={false} path="/register" exact component={Register} />
                    <PublicRoutes restricted={false} path="/aboutus" exact component={AboutUs} />
