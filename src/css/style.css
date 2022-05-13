@@ -2821,12 +2821,16 @@ border-bottom: 1px solid red;
     color: #3d6ac3
 }
 
+/* .tumblrICON{
+    background: url("./TumblrLogo.png");
+} */
+
 .iconColor {
     color: #fff
 }
 
 .iconColor._2RkTI {
-    color: #e0559c
+    color: #ff3333
 }
 
 .kids-mode .iconColor._2RkTI {
@@ -3056,7 +3060,7 @@ a.headerMenuItems:hover {
     border-radius: 40px;
     position: relative;
     display: block;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 0, 0);
     margin-bottom:15px ;
 }
 
@@ -3094,7 +3098,7 @@ a.headerMenuItems:hover {
     display: inline-block;
     vertical-align: middle;
     width: 100%;
-    border: none;
+    /* border: none; */
     height: 35px;
     font-size: 11px;
     outline: 0;
@@ -8853,7 +8857,7 @@ div {
     align-items: center;
     cursor: pointer;
     z-index: 10000;
-    color: rgb(71, 9, 9);
+    color: rgb(255, 41, 41);
     font-weight: 600;
 }
 ._1-UPh {

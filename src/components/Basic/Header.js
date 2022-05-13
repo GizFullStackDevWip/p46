@@ -155,7 +155,7 @@ const Header = () => {
                             <div className="logosection" style={{ padding: '4px' }}>
                                 <div className="logoContain" style={{ width: '174px' }}>
                                     <span style={{ fontSize: '16px', fontWeight: '700' }}>HappiTV - Watch Movies & TV Shows<br />
-                                        <span style={{ fontSize: '10px', fontWeight: '600' }} >Open in the HappiTV app</span></span>
+                                        <span style={{ fontSize: '10px', fontWeight: '600' }} >Open in the RunwayTV app</span></span>
                                 </div>
                             </div>
                             <div>
@@ -198,11 +198,11 @@ const Header = () => {
                                                 {/* {
                                                     login === true ? */}
                                                 <div>
-                                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
+                                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' , color: "red"}}>
                                                         <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                                                     </svg>
                                                     <form onSubmit={submitSearch}>
-                                                        <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler}
+                                                        <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler} style={{backgroundColor:"#f1e8e817"}}
                                                             value={parsed.show_id ? typing === true ? input : '' : input} />
                                                     </form>
                                                     <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
@@ -333,11 +333,11 @@ const Header = () => {
                                         {
                                             login === true ?
                                                 <div>
-                                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
+                                                    <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' , color: "red"}}>
                                                         <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                                                     </svg>
                                                     <form onSubmit={submitSearch}>
-                                                        <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler}
+                                                        <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler} style={{backgroundColor:"#f1e8e817" , border: "1px solid red"}}
                                                             value={parsed.show_id ? typing === true ? input : '' : input} />
                                                     </form>
 
@@ -480,11 +480,11 @@ const Header = () => {
                                             {
                                                 login === true ?
                                                     <div>
-                                                        <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' }}>
+                                                        <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor' , color: "red"}}>
                                                             <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                                                         </svg>
                                                         <form onSubmit={submitSearch}>
-                                                            <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler}
+                                                            <input className="searchInput" id="searchInput" type="search" placeholder="Search" required="" onChange={onChangeHandler} style={{backgroundColor:"#f1e8e817" , border: "1px solid red"}}
                                                                 value={parsed.show_id ? typing === true ? input : '' : input} />
                                                         </form>
 
@@ -628,12 +628,12 @@ const Header = () => {
                                     {
                                         login === true ?
                                             <div>
-                                                <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor', marginLeft: '380px' }}>
+                                                <svg className="svgIcon searchIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 18.07 18.07" style={{ fill: 'currentcolor', marginLeft: '380px' , color: "red"}}>
                                                     <path fill="currentColor" d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"></path>
                                                 </svg>
                                                 <form onSubmit={submitSearch}>
                                                     <input className="searchInput" id="searchInput" type="search" placeholder="Find movies, TV shows and more" required="" onChange={onChangeHandler}
-                                                        value={parsed.show_id ? typing === true ? input : '' : input} style={{ marginLeft: '380px', background: 'transparent', border: '1px solid black', width: '65%', height: '30px', marginBottom: '-17px' , color: 'black'}} />
+                                                        value={parsed.show_id ? typing === true ? input : '' : input} style={{ marginLeft: '380px', background: '#f1e8e817', border: '1px solid red', width: '65%', height: '30px', marginBottom: '-17px' , color: '#ffffff'}} />
                                                 </form>
                                                 <svg className="svgIcon searchClose" preserveAspectRatio="xMidYMid meet" viewBox="0 0 13 13" style={{ fill: 'currentcolor' }}>
                                                     <path fill="currentColor" fillRule="evenodd" d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"></path>
@@ -644,7 +644,8 @@ const Header = () => {
 
                                     <div style={{
                                         position: 'absolute',
-                                     
+                                        marginTop: "-17px",
+                                        
                                         left: '-200px'
                                     }}>
                                         <ul style={{
@@ -656,8 +657,8 @@ const Header = () => {
                                             listStyleType: 'none'
                                         }}>
                                             <a href="/home"><li style={{ padding: '0px 6px'  , fontSize: '14px'}}>Home</li></a>
-                                            <a href="/home/categorylist?category_id=211&category_name=Movies"><li style={{ padding: '0px 6px' , fontSize: '14px'}}>Movies</li></a>
-                                            <a href="/home/categorylist?category_id=254&category_name=Shows"><li style={{ padding: '0px 6px' , fontSize: '14px' }}>Shows</li></a>
+                                            {/* <a href="/home/categorylist?category_id=544&category_name=Cover Shoot"><li style={{ padding: '0px 6px' , fontSize: '14px'}}>Cover Shoot</li></a> */}
+                                            <a href="/home/categorylist?category_id=541 &category_name=Shows"><li style={{ padding: '0px 6px' , fontSize: '14px' }}>Shows</li></a>
                                             {/* <a href="/home/categorylist?category_id=playlist&category_name=My%20List"><li style={{padding: '0px 6px'}}>My List</li></a> */}
                                             <a href="/home/recentlyadded"><li style={{ padding: '0px 6px'  , fontSize: '14px'}}>New Releases</li></a>
                                             <li style={{ padding: '0px 2px' }}>

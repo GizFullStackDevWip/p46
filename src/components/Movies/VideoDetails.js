@@ -570,8 +570,8 @@ const VideoDetails = (categoryId, episode) => {
   const onEpisodePlay = (show) => {
     let user_id = service.getCookie("userId");
     let isLoggedIn = localStorage.getItem("isLoggedIn");
-    console.log("show.subscriptions.length",show.subscriptions.length);
-    if (show.subscriptions.length === 0) {
+    console.log("show.subscriptions.length",show);
+    if (show.videos[0].subscriptions.length === 0) {
       if (isLoggedIn) {
         history.push({
           pathname: "/videoplayer",

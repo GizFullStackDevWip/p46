@@ -18,7 +18,7 @@ const AdvertiseWithUs = () => {
                                                 <div className="happi-header">
                                                     <div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
                                                     <div className="header-content">
-                                                        <h1>Let your Brand Stand Out with HappiTV<span>
+                                                        <h1>Let your Brand Stand Out with RunwayTV<span>
                                                             The Future of TV is Free. Align your brand with the millions of highly engaged viewers discovering free streaming.</span></h1>
                                                     </div>
                                                 </div>

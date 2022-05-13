@@ -71,7 +71,7 @@ const CategoryList = () => {
                 console.log('catlistresponse', response)
                 setShowName(parsed.category_name);
                 
-                // setShowList(response.data.shows);
+                setShowList(response.data.shows);
                
             })
         }
