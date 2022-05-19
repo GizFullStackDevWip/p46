@@ -96,7 +96,7 @@ if (screenWidth <= 365) {
       <div key={i}>
         <div className="movieTile mytitle" >
           <div>
-            <div className="moviePoster" style={{ padding: "20% 0" }}>
+            <div className="moviePoster" style={{ padding: "0% 0" }}>
               <div className="FeNml"></div>
               {
                 item.cancel_status ? (

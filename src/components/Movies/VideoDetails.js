@@ -68,7 +68,9 @@ const VideoDetails = (categoryId, episode) => {
       (navigator.userAgent.includes("Mac") && "ontouchend" in document);
     window.scrollTo(0, 0);
     // window.addEventListener('scroll', debounce(handleScroll, 200))
+    console.log(`detailpage api call param catid:` , categoryId.categoryId.show_id);
     service.getShowDetails(categoryId.categoryId.show_id).then((response) => {
+      
       // var data = response.data ? response.data : [];
       var data = response.data;
       setEpisodeLength(response.data.videos.length);
@@ -121,6 +123,7 @@ const VideoDetails = (categoryId, episode) => {
       //   );
       // });
       details = videoDetail;
+      console.log(`details are:`, details);
       service.similarShow(videoDetail.show_id).then((response) => {
         if (response.success === true && response.data.length > 0) {
           setSimilarShows(response.data);
@@ -474,104 +477,16 @@ const VideoDetails = (categoryId, episode) => {
     });
   };
 
-  // const onEpisodePlay = (show) => {
-  //   let user_id = service.getCookie("userId");
-  //   if (show.subscriptions.length > 0) {
-  //     service.videoSubscription(show.video_id).then((response) => {
-  //       let videoDetails = response.data;
-  //       let subFlag = true;
-  //       let uId = 74961;
-  //       let user_id = service.getCookie("userId");
-  //       // if (videoDetails.length == 0) {
-  //       //     history.push(
-  //       //         { pathname: '/videoplayer', search: encodeURI(`show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${show.video_id}`) }
-  //       //     );
-  //       //     return
-  //       // } else
-  //       if (user_id == null || user_id == service.getCookie("guestUserId")) {
-  //         // service.setCookie("showId", showDetails.show_id, 10);
-  //         // history.push({
-  //         //   pathname: "/signin",
-  //         // });
-  //         // return;
-  //       }
-  //       if (user_id) {
-  //         uId = user_id;
-  //       }
-  //       service.userSubscription(uId).then((useResponse) => {
-  //         if (useResponse.login_needed) {
-  //           history.push({
-  //             pathname: "/signin",
-  //           });
-  //         }
 
-  //         var userData = useResponse.data;
-  //         videoDetails.map(function (subscription, index) {
-  //           // if (useResponse.forcibleLogout === false) {
-  //           if (useResponse.data.length == 0 && subFlag) {
-  //             subFlag = false;
-  //             service.setCookie("showId", showDetails.show_id, 10);
-  //             service.setCookie("videoId", show.video_id, 10);
-  //             history.push({
-  //               pathname: "/subscription",
-  //               state: {
-  //                 videoData: show.video_id,
-  //               },
-  //             });
-  //           } else {
-  //             let subscribedVideo = userData.filter(
-  //               (e) => e.sub_id == subscription.publisher_subscription_id
-  //             );
-  //             if (
-  //               subscribedVideo.length == 0 &&
-  //               index + 1 < videoDetails.length
-  //             ) {
-  //               return;
-  //             }
-  //             if (
-  //               subscribedVideo.length == 0 &&
-  //               subFlag &&
-  //               index + 1 == videoDetails.length
-  //             ) {
-  //               subFlag = false;
-  //               service.setCookie("showId", showDetails.show_id, 10);
-  //               service.setCookie("videoId", show.video_id, 10);
-  //               history.push({
-  //                 pathname: "/subscription",
-  //                 state: {
-  //                   videoData: show.video_id,
-  //                 },
-  //               });
-  //             } else if (subFlag) {
-  //               subFlag = false;
-  //               history.push({
-  //                 pathname: "/videoplayer",
-  //                 search: encodeURI(
-  //                   `show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${show.video_id}`
-  //                 ),
-  //               });
-  //             }
-  //           }
-  //         });
-  //       });
-  //     });
-  //   } else {
-  //     history.push({
-  //       pathname: "/videoplayer",
-  //       search: encodeURI(
-  //         `show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${show.video_id}`
-  //       ),
-  //     });
-  //   }
-
-  //   service.onVideoPlayFunction(details).then((response) => {});
-  // };
 
   const onEpisodePlay = (show) => {
+    debugger
     let user_id = service.getCookie("userId");
     let isLoggedIn = localStorage.getItem("isLoggedIn");
     console.log("show.subscriptions.length",show);
-    if (show.videos[0].subscriptions.length === 0) {
+    // console.log(`the show is :`, show);
+    if (show.subscriptions.length === 0) {
+      
       if (isLoggedIn) {
         history.push({
           pathname: "/videoplayer",
@@ -806,8 +721,8 @@ const VideoDetails = (categoryId, episode) => {
                               onEpisodePlay(episodeList[0]);
                             }}
                           >
-                            <div className="buttonBg"></div>
-                            <div className="buttonContent">
+                            <div className="watchButton"></div>
+                            <div className="buttonText">
                               {showDetails.single_video === 0 ? (
                                 <div className="vpWatchSeasonText">
                                   Watch S01:E01
@@ -827,8 +742,8 @@ const VideoDetails = (categoryId, episode) => {
                                 removeFromMylistFunction(showDetails);
                               }}
                             >
-                              <div className="buttonBg"></div>
-                              <div className="buttonContent">
+                              <div className="watchButton"></div>
+                              <div className="buttonText">
                                 Remove from My List
                               </div>
                             </button>
@@ -840,8 +755,8 @@ const VideoDetails = (categoryId, episode) => {
                                 addtoMylistFunction(showDetails);
                               }}
                             >
-                              <div className="buttonBg" style={{background:'white'}}></div>
-                              <div className="buttonContent" >
+                              <div className="watchButton" style={{background:'white'}}></div>
+                              <div className="buttonText" >
                                 Add to My List
                               </div>
                             </button>
@@ -854,7 +769,7 @@ const VideoDetails = (categoryId, episode) => {
                               }}
                             >
                               <div className="buttonBg"></div>
-                              <div className="buttonContent">
+                              <div className="buttonText">
                                 <span>Share</span>
                               </div>
                             </button>
@@ -866,7 +781,7 @@ const VideoDetails = (categoryId, episode) => {
                               }}
                             >
                               <div className="buttonBg"></div>
-                              <div className="buttonContent">
+                              <div className="buttonText">
                                 <div className="vpReport"></div>
                               </div>
                             </button>
@@ -963,9 +878,9 @@ const VideoDetails = (categoryId, episode) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col col-3-5 movieTagsMob"  style={{marginLeft: '59px' , textAlign: 'center'}}> 
-                    <div className="vpMiddleInfoSection vpInfoPadding">
-                      <div className="vpLengthCensor" style={{marginRight: '132px'}}>
+                  <div className="movieTagsMob"  style={{marginLeft: '' , textAlign: 'center'}}> 
+                    <div className="vpMiddleInfoSection vpInfoPadding" style={{marginLeft: '' , textAlign: 'left'}}>
+                      <div className="vpLengthCensor" >
                         <div className="vpLengthYear">
                           {showDetails.video_duration && (
                             <div className="movieLength">
@@ -979,7 +894,7 @@ const VideoDetails = (categoryId, episode) => {
                             className="svgIcon vpCCicon"
                             preserveAspectRatio="xMidYMid meet"
                             viewBox="0 0 28 18"
-                            style={{ fill: "currentcolor" }}
+                            style={{ fill: "currentcolor"}}
                           >
                             <g fill="currentColor" fillRule="evenodd">
                               <path

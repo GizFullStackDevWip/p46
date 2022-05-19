@@ -42,6 +42,8 @@ const VideoPlayer = ({history}) => {
                 details = show_details;
                 console.log("show_details55",show_details);
                 service.playerToken().then(tokenResponse => {
+                    console.log(`the response data is :`);
+                    console.log(response.data);
                     let arr = response.data.videos[0].video_name.split('/');
                     let newURL = 'https://poppo.tv/playlist/playlist.m3u8?id=' + arr[arr.length - 2] + '&token=' + tokenResponse.data.data + '&type=video';
                     let videoElem = 'content_video' + show_details.video_id + new Date().valueOf();

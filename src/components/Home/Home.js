@@ -50,18 +50,18 @@ const Home = () => {
     //     setFreeCategory([]);
     //   }
     // });
-    service.getRecentlyAddedShows().then((response) => {
-      if (response.data && response.data.length > 0) {
-        let freeObj = {};
-        freeObj.category_id = 191;
-        freeObj.category_name = "New Releases";
-        freeObj.shows = response.data;
-        newArray.push(freeObj);
-        setNewRelease(newArray);
-      } else {
-        setNewRelease([]);
-      }
-    });
+    // service.getRecentlyAddedShows().then((response) => {
+    //   if (response.data && response.data.length > 0) {
+    //     let freeObj = {};
+    //     freeObj.category_id = 191;
+    //     freeObj.category_name = "New Releases";
+    //     freeObj.shows = response.data;
+    //     newArray.push(freeObj);
+    //     setNewRelease(newArray);
+    //   } else {
+    //     setNewRelease([]);
+    //   }
+    // });
 
   }, [login]);
 

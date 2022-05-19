@@ -1,8 +1,10 @@
 .happi-header > .main-bg:after {
     background-image: url(../images/advertise/main-bg.JPG);
+		z-index: 9998;
 }
 .happi-header {
     height: 810px;
+		z-index: 99;
 }
 .happi-header .header-content h1 {
     max-width: 100%;

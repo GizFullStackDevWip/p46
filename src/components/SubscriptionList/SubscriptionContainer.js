@@ -18,22 +18,22 @@ const SubscriptionContainer = (param, androidData, isAndroid) => {
                         <div className="subscribe-box">
                             <p style={{ fontSize: '15px', color: '#fff' }}><span style={{ fontSize: '15px', color: '#fff' }}><span style={{ fontSize: '15px', color: '#fff' }} ><span
                             ><p style={{ fontSize: '21px', color: 'rgb(195 5 102)', textAlign: 'center' }}><b>Subscribe now to get unlimited access to stream from thousands of
-                    hours of premium films and series.</b></p></span>- Payment will be charged through your stripe or PayPal account on
-                purchase confirmation<br /></span></span><span >- Subscription will
-                                auto-renew every month/year based on the package you have purchased unless you cancel at least 24 hours be
-              for the end of the current subscription period.<br /></span><span >- You can
-                                manage your subscription package and payments by going to your stripe/PayPal account settings after
-              purchase.<br /></span><span>- Any unused portion of a cancelled subscription
-              is not subject to refund.<br /></span></p>
+                                hours of premium films and series.</b></p></span>- Payment will be charged through your stripe or PayPal account on
+                                purchase confirmation<br /></span></span><span >- Subscription will
+                                    auto-renew every month/year based on the package you have purchased unless you cancel at least 24 hours be
+                                    for the end of the current subscription period.<br /></span><span >- You can
+                                        manage your subscription package and payments by going to your stripe/PayPal account settings after
+                                        purchase.<br /></span><span>- Any unused portion of a cancelled subscription
+                                            is not subject to refund.<br /></span></p>
                         </div>
 
                     </div>
                 </div>
                 <Subscription param={param.param}
-                androidData={androidData}
-                isAndroid={isAndroid} />
+                    androidData={androidData}
+                    isAndroid={isAndroid} />
             </div>
-            
+
         </section>
     );
 };

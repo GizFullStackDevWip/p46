@@ -79,7 +79,7 @@ const Subscription = ({ param, msgHandler }) => {
       <div>
         <div className="movieTile mytitle" key={index}>
           <div>
-            <div className="moviePoster" style={{ padding: "20% 0" }}>
+            <div className="moviePoster" style={{ padding: "0% 0" }}>
               <div className="FeNml"></div>
               <button
                 type="button"

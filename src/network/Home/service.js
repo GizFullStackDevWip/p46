@@ -72,7 +72,7 @@ function getshowsbyCategory() {
     },
   };
   return axios
-    .get(process.env.REACT_APP_SUB_API_URL + "show/list", customConfig)
+    .get("https://staging.poppo.tv/test/api/show/list", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -155,7 +155,7 @@ function getRecentlyAddedShows() {
     // },
   };
   return axios
-    .get(process.env.REACT_APP_SUB_API_URL + "show/newarrivals/list", customConfig)
+    .get(process.env.REACT_APP_SUB_API_URL + "show/newarrivals/list?offset=4", customConfig)
     .then((response) => {
       return response.data;
     })

@@ -133,12 +133,12 @@ h5 {
 
 .account-section-link {
   text-decoration: none;
-  color: rgb(195, 5 ,102 , 63%) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 .account-section-link:hover {
   text-decoration: underline;
-  color: rgb(195, 5 ,102 , 63%) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 ul {

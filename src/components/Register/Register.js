@@ -499,7 +499,7 @@ const Register = (state) => {
                           <button className="button buttonLarge buttonBlock registerFacebook">
                             <div className="buttonBg"></div>
                             <FacebookLogin
-                              appId="677536043137548"
+                              appId="3330890933834435"
                               fields="name,email,picture,first_name"
                               callback={responseFacebook}
                               cssClass="button buttonLarge buttonBlock registerFacebook"

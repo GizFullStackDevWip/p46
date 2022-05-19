@@ -100,9 +100,9 @@ const Show = ({ param, update }) => {
 
                                     </div>
                                     {
-                                        show.logo &&
+                                        show.logo_thumb &&
                                        
-                                        <div className="moviePoster" style={{ backgroundImage: `url(${showsImageUrl + show.logo})` }} >
+                                        <div className="moviePoster" style={{ backgroundImage: `url(${show.logo_thumb})` }} >
                                             <div className="FeNml">
                                             </div>
                                         </div>
@@ -138,8 +138,8 @@ const Show = ({ param, update }) => {
                                         <h3>
                                             {
                                                 <div className="_2GgQ0 epi_desc">
-                                                    {/* {console.log("showww",show.show_name)} */}
-                                                {show.show_name.substring(
+                                                    {console.log("showww",show)}
+                                                {show.show_name && show.show_name.substring(
                                                   0,
                                                   35
                                                 ) + "..."}
@@ -147,7 +147,7 @@ const Show = ({ param, update }) => {
 
                                                  &&
                                                 <div className="linkButton movieTextHeading" style={{display:"flex"}}
-                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name.substring(
+                                                    onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name && show.show_name.substring(
                                                         0,
                                                         35
                                                       ) + "..."}

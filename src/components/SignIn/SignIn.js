@@ -617,7 +617,7 @@ const SignIn = () => {
                       <div className="buttonBg"></div>
                       <FacebookLogin
                         // appId="653161942064655"
-                        appId="677536043137548"
+                        appId="3330890933834435"
                         isMobile={false}
                         fields="name,email,picture,first_name,last_name"
                         callback={responseFacebook}

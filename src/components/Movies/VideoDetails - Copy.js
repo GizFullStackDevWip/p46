@@ -307,7 +307,7 @@ const VideoDetails = (categoryId, episode) => {
                                                         { pathname: '/videoplayer',search: encodeURI(`show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${showDetails.video_id}`)}
                                                     )
                                                 }}>
-                                                    <div className="buttonBg"></div>
+                                                    <div className="watchButton"></div>
                                                     <div className="buttonContent">
                                                         {
                                                             showDetails.single_video === 0 ?
