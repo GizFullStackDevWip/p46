@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useRef , lazy , FC , Suspense } from "react";
 import CategoryContainer from "./CategoryContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { service } from "../../network/Home/service";
@@ -9,9 +9,11 @@ import CommunityContainer from "./CommunityContainer";
 import Notification from "../../common/Notification";
 import { useHistory, Redirect, Link } from "react-router-dom";
 import $ from "jquery";
+
 import Banner from "./Banner";
 
 const Home = () => {
+  const [isFetching, setIsFetching] = useState(false);
   const [category, setCategory] = useState([]);
   const [loadMore, setLoadMore] = useState(false);
   const [categoryOrgLength, setCategoryOrgLength] = useState([]);
@@ -19,24 +21,38 @@ const Home = () => {
   const [newRelease, setNewRelease] = useState([]);
   const signInBlock = useSelector((state) => state.signInBlock);
   const login = useSelector((state) => state.login);
+  const [load, setLoad] = useState()
+
+  const [page, setPage] = useState(1);
+  const [listItems, setListItems] = useState([]);
+  const [maindata, setmaindata] = useState([])
+
+
   useEffect(() => {
+    
+    
     window.scrollTo(0, 0);
     $(".menuItemContainer").addClass("menuClose");
     var singleObj = [];
     var freeArray = [];
     var newArray = [];
-    service.getshowsbyCategory().then((response) => {
-      if (response.success === true && response.data.length > 0) {
-        setCategoryOrgLength(response.data.length);
-        var data = response.data;
-        data.map((item, index) => {
-          if (index < 4) {
-            singleObj.push(item);
-          }
-        });
-        setCategory(singleObj);
-      }
-    });
+
+
+      service.getshowsbyCategory().then((response) => {
+        if (response.success === true && response.data.length > 0) {
+          setCategoryOrgLength(response.data.length);
+          var data = response.data;
+          data.map((item, index) => {
+            if (index < 4) {
+              singleObj.push(item);
+            }
+          });
+          setCategory(singleObj);
+          
+        }
+      });
+
+    
 
     // service.freeVideos().then((response) => {
     //   if (response.data && response.data.length > 0) {
@@ -64,6 +80,58 @@ const Home = () => {
     // });
 
   }, [login]);
+
+  useEffect(() => {
+		fetchData();
+		window.addEventListener('scroll', handleScroll);
+	}, []);
+
+  const handleScroll = () => {
+		if (
+			Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight ||
+			isFetching
+		)
+			return;
+		setIsFetching(true);
+		console.log('isFetching', isFetching);
+	};
+
+  
+
+  const fetchData = async () => {
+		setTimeout(async () => {
+			service.getshowsbyCategory().then((response) => {
+        if (response.success === true && response.data.length > 0) {
+          setCategoryOrgLength(response.data.length);
+          var data = response.data;
+          
+          setmaindata([...listItems, ...data])
+          console.log(`inside fetch data`)
+          
+        }
+      });
+			
+			setPage(page + 1);
+			setListItems(() => {
+				return maindata
+			});
+		}, 1000);
+	};
+
+  useEffect(() => {
+		if (!isFetching) return;
+		fetchMoreListItems();
+	}, [isFetching]);
+
+	const fetchMoreListItems = () => {
+		fetchData();
+		setIsFetching(false);
+	};
+
+  console.log('maindata', maindata)
+  console.log(`cats are: ` , category)
+
+
 
   // const loadMoreCategory = () => {
   //   setLoadMore(true);
@@ -221,11 +289,14 @@ const Home = () => {
                 <div className="row loadMoreContainer">
                   <button className="button buttonLarge buttonSecondary">
                     <div className="buttonBg" style={{background: 'white'}}></div>
-                    <div className="buttonContent">Load More</div>
+                    <div className="buttonContent">Loading...</div>
                   </button>
+                  
                 </div>
               </div>
             )}
+
+            {/* <Suspense fallback={<h2>Loading...</h2>} >{loadMoreCategory}</Suspense> */}
           </div>
         </div>
       </div>

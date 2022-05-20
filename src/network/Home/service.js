@@ -27,11 +27,11 @@ function fetchHomeBannerDetails() {
       'pubid': process.env.REACT_APP_PUBID,
       'country_code': countryCode,
     },
-    // params: {
-    //   uid: uId,
-    //   pubid: process.env.REACT_APP_PUBID,
-    //   country_code: countryCode,
-    // },
+      params: {
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+    },
   };
   return axios
     .get(process.env.REACT_APP_SUB_API_URL + "video/featured", customConfig)

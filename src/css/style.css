@@ -8017,7 +8017,7 @@ a.headerMenuItems:hover {
         display: flex;
         flex: auto;
         margin-top: 20px;
-        margin-left: 59px;
+        margin-left: -59px;
         /* padding: 20px; */
     }
     .vpLeftButtonWrapper .vpLeftButtons {

@@ -9,7 +9,7 @@ import {
     deviceDetect,
     playerController,
     convertSecondsToMin,
-  } from "../../Utils/utils";
+} from "../../Utils/utils";
 import { useSelector, useDispatch } from 'react-redux';
 import freeImg from '../../images/free.png'
 import premium from '../../images/Image.png';
@@ -20,6 +20,7 @@ const Show = ({ param, update }) => {
     const dispatch = useDispatch();
 
     const [shows, setShows] = useState([]);
+    const [liveLink, setLiveLink] = useState(false)
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
 
@@ -75,6 +76,10 @@ const Show = ({ param, update }) => {
         }
 
     }
+    useEffect(()=>{
+        console.log(liveLink,"now");
+    }
+    ,[liveLink])
     return (
         <div className="carouselContent">
             <Carousel responsive={responsive}>
@@ -86,27 +91,34 @@ const Show = ({ param, update }) => {
                                 <div className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                     onMouseOver={() => { hoverFunction(true, index) }}
                                     onMouseLeave={() => { hoverFunction(false, index) }}>
-                                { show.is_free_video == false && <img src={premium} style={{position: 'absolute',display:"flex", top: '0px', zIndex: '2',width:"35px",paddingTop:"4px", paddingLeft:"4px"}} />}
+                                    {show.is_free_video == false && <img src={premium} style={{ position: 'absolute', display: "flex", top: '0px', zIndex: '2', width: "35px", paddingTop: "4px", paddingLeft: "4px" }} />}
 
-                                    <div onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
+                                    <div onClick={() => { 
+                                        // if (show.type==="UPCOMING_EVENT") {
+                                        //     setLiveLink(show.)
+                                        //     console.log(`live value:` , liveLink);
+                                        // }
+                                        
+                                        history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
                                         className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
 
-                                        <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ color: 'white' , fill: 'currentcolor' }}
-                                            // onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
-                                            >
+                                        <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ color: 'white', fill: 'currentcolor' }}
+                                        // onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}
+                                        >
                                             <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                             <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                         </svg>
+                                        
 
                                     </div>
                                     {
                                         show.logo_thumb &&
-                                       
+
                                         <div className="moviePoster" style={{ backgroundImage: `url(${show.logo_thumb})` }} >
                                             <div className="FeNml">
                                             </div>
                                         </div>
-                                       
+
                                     }
 
                                     <div className={hover === true && focusedId === index ? "wishlistPosition wishlistTranslate wishlistParentOpen" : "wishlistPosition wishlistTranslate wishlistParentClose"}>
@@ -138,19 +150,19 @@ const Show = ({ param, update }) => {
                                         <h3>
                                             {
                                                 <div className="_2GgQ0 epi_desc">
-                                                    {console.log("showww",show)}
-                                                {show.show_name && show.show_name.substring(
-                                                  0,
-                                                  35
-                                                ) + "..."}
-                                              </div>
+                                                    {console.log("showww", show)}
+                                                    {show.show_name && show.show_name.substring(
+                                                        0,
+                                                        35
+                                                    ) + "..."}
+                                                </div>
 
-                                                 &&
-                                                <div className="linkButton movieTextHeading" style={{display:"flex"}}
+                                                &&
+                                                <div className="linkButton movieTextHeading" style={{ display: "flex" }}
                                                     onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}&is_fr=${show.is_free_video}`) }) }}>{show.show_name && show.show_name.substring(
                                                         0,
                                                         35
-                                                      ) + "..."}
+                                                    ) + "..."}
                                                 </div>
                                             }
 
