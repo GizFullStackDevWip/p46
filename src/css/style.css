@@ -328,6 +328,22 @@ body {
     position: relative;
     align-items: center;
     justify-content: center
+    
+}
+
+.buttonText {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center
+    
+}
+
+@media (max-width: 465px) {
+    .buttonContent{
+        margin-top: -20px;
+    }
+    
 }
 
 .buttonLarge {
@@ -358,7 +374,7 @@ body {
 }
 
 .buttonSecondary .buttonBg {
-    background: #d31111
+    /* background: #d31111 */
 }
 
 .buttonSecondary.buttonInverse {
@@ -2821,12 +2837,16 @@ border-bottom: 1px solid red;
     color: #3d6ac3
 }
 
+/* .tumblrICON{
+    background: url("./TumblrLogo.png");
+} */
+
 .iconColor {
     color: #fff
 }
 
 .iconColor._2RkTI {
-    color: #e0559c
+    color: #ff3333
 }
 
 .kids-mode .iconColor._2RkTI {
@@ -3056,7 +3076,7 @@ a.headerMenuItems:hover {
     border-radius: 40px;
     position: relative;
     display: block;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 0, 0);
     margin-bottom:15px ;
 }
 
@@ -3094,7 +3114,7 @@ a.headerMenuItems:hover {
     display: inline-block;
     vertical-align: middle;
     width: 100%;
-    border: none;
+    /* border: none; */
     height: 35px;
     font-size: 11px;
     outline: 0;
@@ -3399,14 +3419,16 @@ a.headerMenuItems:hover {
 }
 
 .movieTilePlayIcon:hover {
-    color: #ec1c1c
+    color: #ec1c1c;
+    fill: #ec1c1c;
 }
 
 .kids-mode .movieTilePlayIcon:hover {
-    color: #fea534
+    color: #fc2424;
 }
 
 .movieTilePlayIcon:hover circle {
+    color: #ec1c1c;
     r: 28px
 }
 
@@ -3566,7 +3588,8 @@ a.headerMenuItems:hover {
     flex-direction: column;
     justify-content: flex-end;
     padding: 0 0 20px 5px;
-    letter-spacing: .5px
+    letter-spacing: .5px;
+    margin-left: 70px;
 }
 
 .vpMiddleInfoSection ._2AdKe {
@@ -3642,7 +3665,7 @@ a.headerMenuItems:hover {
 
 .vpLengthCensor,.vpLengthCensor .vpLengthYear,.vpLengthCensor .POOsG {
     display: flex;
-    justify-content: space-between
+    /* justify-content: space-between */
 }
 
 .vpLengthCensor .vpLengthYear .vpYearBreak,.vpLengthCensor .POOsG .vpYearBreak {
@@ -3659,7 +3682,18 @@ a.headerMenuItems:hover {
 .vpLengthCensor .vpCCwrapper .vpCCicon {
     height: 18px;
     width: 28px;
-    margin-right: 10px
+    margin-right: 10px;
+    margin-top: -14px;
+}
+
+@media (max-width: 969px) {
+    .vpLengthCensor .vpCCwrapper .vpCCicon {
+        height: 18px;
+        width: 28px;
+        margin-right: 10px;
+        margin-top: 0px;
+    }
+    
 }
 
 .vpMovieCategory {
@@ -3692,8 +3726,8 @@ a.headerMenuItems:hover {
 .vpCategoryFlex {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    margin-left: 60px;
+    /* flex-wrap: wrap; */
+    /* margin-left: 60px; */
 }
 
 .movieCategory {
@@ -3782,7 +3816,25 @@ a.headerMenuItems:hover {
     padding: 5px 10px 2px;
     line-height: 12px;
     font-size: 11px;
-    white-space: nowrap
+    white-space: nowrap;
+    margin-top: -18px;
+}
+
+@media (max-width: 969px) {
+    .movieCensorBox {
+        border-radius: 2px;
+        background-color: hsla(0,0%,100%,.2);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        padding: 5px 10px 2px;
+        line-height: 12px;
+        font-size: 11px;
+        white-space: nowrap;
+        margin-top: 0px;
+    }
+    
+    
 }
 
 .movieCensorBox.vpMovieType {
@@ -4633,7 +4685,8 @@ a.headerMenuItems:hover {
 .movieTile .movieTextWrapperPadding {
     color: #fff;
     z-index: 1;
-    padding: 8px 0 6px
+    /* padding: 8px 0 6px; */
+    height: 82px;
 }
 
 .movieTile .movieTextWrapperPadding h3 {
@@ -4842,7 +4895,8 @@ a.headerMenuItems:hover {
     display: flex;
     flex-direction: column;
     padding-top: 6px;
-    overflow: auto;
+    /* overflow: auto; */
+    height: auto;
 }
 
 .movieTextWrapper .movieTextFlex h3 {
@@ -5154,8 +5208,37 @@ a.headerMenuItems:hover {
     }
 }
 
+@media (max-width: 468px) {
+    .buttonBg {
+        margin-top: -13px;
+    }
+}
+
 .registerFacebook .buttonBg {
     background-color: #3d6ac3
+    
+}
+
+.watchButton{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all .2s cubic-bezier(.75,0,.28,1);
+    border-radius: 2px;
+    background: #b81313;
+    -webkit-transform: scale(1.06667,1.05);
+    transform: scale(1.06667,1.05);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 5%);
+
+}
+
+@media (max-width: 464px) {
+    .registerFacebook .buttonBg {
+        margin-top: 10px;
+    }
 }
 
 .registerFacebook svg {
@@ -5652,6 +5735,7 @@ a.headerMenuItems:hover {
         padding-bottom:35px!important;
         padding-top: 35px!important;
         /* padding-left: 68px; */
+        
     }
 }
 
@@ -5659,14 +5743,18 @@ a.headerMenuItems:hover {
     font-size: 14px;
     font-weight: 400;
     line-height: 24px;
-    letter-spacing: .5px
+    letter-spacing: .5px;
+    text-align: left;
+    margin-left: 77px;
 }
 
-@media (min-width: 960px) {
+@media (max-width: 521px) {
     .vpContent .vpContainer .vpMiddleDesc {
         padding-bottom: 0;
         margin-bottom: 0px;
         /* padding-left: 68px; */
+        /* margin-top: 77px; */
+
     }
 }
 
@@ -5689,7 +5777,7 @@ a.headerMenuItems:hover {
     padding: 5px 7px 4px;
     border-radius: 40px;
     background: #fff;
-    color: #e0559c;
+    color: #ff1515;
     font-size: 10px;
     text-shadow: none;
     box-shadow: 0 2px 4px 0 rgba(255,80,26,.1)
@@ -7762,7 +7850,7 @@ a.headerMenuItems:hover {
 
 .privacyTermsWrapper {
     flex: 0 1 auto;
-    max-width: 650px
+    max-width: 650px;
 }
 
 .privacyTermsWrapper ul {
@@ -7929,6 +8017,7 @@ a.headerMenuItems:hover {
         display: flex;
         flex: auto;
         margin-top: 20px;
+        margin-left: -59px;
         /* padding: 20px; */
     }
     .vpLeftButtonWrapper .vpLeftButtons {
@@ -7984,7 +8073,7 @@ a.headerMenuItems:hover {
         line-height: 24px;
         letter-spacing: .5px;
         position: absolute;
-        left: 72vw;
+        /* left: 72vw; */
     }
     .vpLeftButtonWrapper .vpWatchSeason {
         margin-bottom: 10px;
@@ -8853,7 +8942,7 @@ div {
     align-items: center;
     cursor: pointer;
     z-index: 10000;
-    color: rgb(71, 9, 9);
+    color: rgb(255, 41, 41);
     font-weight: 600;
 }
 ._1-UPh {
@@ -8864,6 +8953,7 @@ div {
 .y_hxB ._3tRfC {
     display: flex;
     flex-direction: row;
+    color: rgb(253, 27, 27);
 }
 .U7IH3 {
     transition: transform .3s;
@@ -8881,6 +8971,7 @@ div {
     position: relative;
     padding-right: 10px;
     margin-right: 12px;
+    color: rgb(252, 26, 26);
 }
 .y_hxB._1glLO ._3tRfC ._4wVtj:after, .y_hxB.IgZc0 ._3tRfC ._4wVtj:after {
     transform: rotate(180deg);

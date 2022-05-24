@@ -72,7 +72,7 @@ const Subscription = ({ param, msgHandler }) => {
 
                         <div className="movieTile mytitle" key={index} >
                             <div>
-                                <div className="moviePoster" style={{ padding: '20% 0' }}  >
+                                <div className="moviePoster" style={{ padding: '0% 0' }}  >
                                     <div className="FeNml"></div>
                                     <button type="button" onClick={() => onUnsubscribeHandler(param)} className="subscribe-btn" style={{ cursor: 'pointer' }}>Unsubscribe</button>
                                 </div>

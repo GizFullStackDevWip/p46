@@ -27,11 +27,11 @@ function fetchHomeBannerDetails() {
       'pubid': process.env.REACT_APP_PUBID,
       'country_code': countryCode,
     },
-    // params: {
-    //   uid: uId,
-    //   pubid: process.env.REACT_APP_PUBID,
-    //   country_code: countryCode,
-    // },
+      params: {
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+    },
   };
   return axios
     .get(process.env.REACT_APP_SUB_API_URL + "video/featured", customConfig)
@@ -72,7 +72,7 @@ function getshowsbyCategory() {
     },
   };
   return axios
-    .get(process.env.REACT_APP_SUB_API_URL + "show/list", customConfig)
+    .get("https://staging.poppo.tv/test/api/show/list", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -155,7 +155,7 @@ function getRecentlyAddedShows() {
     // },
   };
   return axios
-    .get(process.env.REACT_APP_SUB_API_URL + "show/newarrivals/list", customConfig)
+    .get(process.env.REACT_APP_SUB_API_URL + "show/newarrivals/list?offset=4", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -548,6 +548,7 @@ function showsByCategory(id) {
     uId = user_id;
   }
   const customConfig = {
+    
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
@@ -566,6 +567,7 @@ function showsByCategory(id) {
     .get(
       process.env.REACT_APP_SUB_API_URL + "category/" + id + "/shows/list ",
       customConfig
+
     )
     .then((response) => {
       return response.data;
@@ -573,6 +575,7 @@ function showsByCategory(id) {
     .catch((error) => {
       return [];
     });
+
 }
 
 

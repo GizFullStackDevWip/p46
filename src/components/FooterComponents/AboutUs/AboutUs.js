@@ -12,17 +12,17 @@ const AboutUs = () => {
 			<div className="pageWrapper">
 				<div className="topContainer">
 				{/* <Header /> */}
-					<div className="menuCloseJS closeMenuWrapper">
+					<div className="menuCloseJS closeMenuWrapper" style={{background: 'black'}}> 
 						<div id="content" className="site-content">
 							<div id="primary" className="content-area">
 								<main id="main" className="site-main">
 									<article id="post-39" className="post-39 page type-page status-publish hentry">
-										<div className="entry-content">
+										<div className="entry-content" style={{background:'black'}}>
 											<div className="vc_row wpb_row vc_row-fluid vc_custom_1584031025503 bb_custom_1584031025503">
 												<div className="wpb_column vc_column_container vc_col-sm-12">
 													<div className="vc_column-inner">
 														<div className="wpb_wrapper">
-															<div className=" happi-header">
+															<div className=" happi-header" style={{zIndex: "999"}}>
 																<div id="main-bg" className="main-bg" style={{ top: '0px' }}></div>
 																<div className="header-content">
 																	{/*  digital platform dedicated to streaming content of interest made by and for the LGBTQ+ community.  */}
@@ -128,7 +128,7 @@ const AboutUs = () => {
 															<div className="wpb_text_column wpb_content_element    container happi-footer">
 																<div className="wpb_wrapper">
 																	<hr />
-																	<p>The provided agreements on RunwayTV are for informational purposes only and do not constitute legal advice.</p>
+																	<p style={{color: 'white'}}>The provided agreements on RunwayTV are for informational purposes only and do not constitute legal advice.</p>
 																</div>
 															</div>
 														</div>

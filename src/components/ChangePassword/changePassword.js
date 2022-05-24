@@ -98,7 +98,7 @@ const ChangePassword = () => {
       service
         .changePassword(currentPassword, newPassword, checked)
         .then((response) => {
-          debugger;
+          
           if (response.success == false) {
             setErrors({ errorMessage: response.message });
             setErrorMsg(response.message);
