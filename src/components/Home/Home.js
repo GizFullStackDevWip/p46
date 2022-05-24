@@ -22,11 +22,13 @@ const Home = () => {
   const signInBlock = useSelector((state) => state.signInBlock);
   const login = useSelector((state) => state.login);
   const [load, setLoad] = useState()
+  const loadRef = useRef()
+  const [inHight, setinHight] = useState('0')
 
   const [page, setPage] = useState(1);
   const [listItems, setListItems] = useState([]);
   const [maindata, setmaindata] = useState([])
-
+  
 
   useEffect(() => {
     
@@ -90,14 +92,33 @@ const Home = () => {
 		if (
 			Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight ||
 			isFetching
+      
 		)
-			return;
+    
+			setinHight(window.innerHeight + document.documentElement.scrollTop)
 		setIsFetching(true);
 		console.log('isFetching', isFetching);
+    console.log(`inner hyt:` ,window.innerHeight + document.documentElement.scrollTop);
+    console.log(`offset hyt:` ,  document.documentElement.offsetHeight);
 	};
 
-  
+  // if (window.innerHeight + document.documentElement.scrollTop > 1930) {
 
+  //   // console.log("u will get it");
+  //   setLoadMore(true);
+  //   service.getshowsbyCategory().then((response) =>{
+  //     if (response.success === true && response.data.length > 0) {
+  //       setCategoryOrgLength(0);
+  //       var data = response.data;
+  //       setCategory(data);
+  //     }
+  //   })
+    
+      
+    
+  // }
+  
+  
   const fetchData = async () => {
 		setTimeout(async () => {
 			service.getshowsbyCategory().then((response) => {
@@ -106,7 +127,7 @@ const Home = () => {
           var data = response.data;
           
           setmaindata([...listItems, ...data])
-          console.log(`inside fetch data`)
+          console.log(`inside fetch data`, data)
           
         }
       });
@@ -144,6 +165,7 @@ const Home = () => {
   //   });
   // };
   const loadMoreCategory = () => {
+    console.log('in load more')
     setLoadMore(true);
     service.getshowsbyCategory().then((response) => {
       if (response.success === true && response.data.length > 0) {
@@ -283,18 +305,20 @@ const Home = () => {
                 }
               })}
            
-          
+              
             {categoryOrgLength > 4 && (
-              <div className="container" onClick={loadMoreCategory}>
+              
+              <div className="container" id="containerLoad" ref={loadRef} onClick={loadMoreCategory}>
                 <div className="row loadMoreContainer">
                   <button className="button buttonLarge buttonSecondary">
                     <div className="buttonBg" style={{background: 'white'}}></div>
-                    <div className="buttonContent">Loading...</div>
+                    <div className="buttonContent" >Loading...</div>
                   </button>
                   
                 </div>
               </div>
             )}
+            
 
             {/* <Suspense fallback={<h2>Loading...</h2>} >{loadMoreCategory}</Suspense> */}
           </div>

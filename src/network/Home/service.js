@@ -548,6 +548,7 @@ function showsByCategory(id) {
     uId = user_id;
   }
   const customConfig = {
+    
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
@@ -566,6 +567,7 @@ function showsByCategory(id) {
     .get(
       process.env.REACT_APP_SUB_API_URL + "category/" + id + "/shows/list ",
       customConfig
+
     )
     .then((response) => {
       return response.data;
@@ -573,6 +575,7 @@ function showsByCategory(id) {
     .catch((error) => {
       return [];
     });
+
 }
 
 

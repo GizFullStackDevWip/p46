@@ -65,7 +65,7 @@ const CategoryList = () => {
             });
           }
         else {
-            console.log("categoryid",parsed.category_name);
+            console.log("categoryid",parsed.category_id);
             service.showsByCategory(parsed.category_id).then(response => {
 
                 console.log('catlistresponse', response)
