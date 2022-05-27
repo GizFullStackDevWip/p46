@@ -92,7 +92,7 @@ const Payment = (state) => {
               <p className="text-head">Payment Gateway</p>
               <fieldset className="myFieldSet">
                 <legend className="payment-box" >Select a payment gateway</legend>
-                <img
+                {/* <img
                   className="cards1"
                   style={{ marginLeft: "15px" }}
                   src={mastercard}
@@ -109,9 +109,11 @@ const Payment = (state) => {
                   style={{ marginLeft: "15px" }}
                   src={american}
                   onClick={handleClick}
-                ></img>
-                {/* <a href={paypalLink}>
-                  <img className="cards" src={require('../../images/paypal2.png')} ></img></a> */}
+                >
+
+                </img> */}
+                <a href={paypalLink}>
+                  <img className="cards" src={require('../../images/paypal2.png')} ></img></a>
 
               </fieldset>
               <SubscriptionContainer param={subscription} />

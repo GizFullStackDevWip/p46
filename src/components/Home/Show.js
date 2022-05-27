@@ -56,6 +56,7 @@ const Show = ({ param, update }) => {
         let isLoggedIn = localStorage.getItem('isLoggedIn');
         let userId = service.getCookie("userId");
         if (isLoggedIn === "true" && userId) {
+            console.log(`in my list`);
             service.addToMyPlayList(show.show_id, 1).then(response => {
                 update.clickHandler();
             })
@@ -138,7 +139,7 @@ const Show = ({ param, update }) => {
                                                         (
                                                             <div className="wishlistTextWrapper">
                                                                 <div className="wishlistText"
-                                                                    onClick={() => { addtoMylistFunction(show) }}>Add to My List</div>
+                                                                    onClick={() => { addtoMylistFunction(show); }}>Add to My List</div>
                                                             </div>
                                                         ) : null
                                             }
@@ -150,7 +151,7 @@ const Show = ({ param, update }) => {
                                         <h3>
                                             {
                                                 <div className="_2GgQ0 epi_desc">
-                                                    {console.log("showww", show)}
+                                                    {/* {console.log("showww", show)} */}
                                                     {show.show_name && show.show_name.substring(
                                                         0,
                                                         35

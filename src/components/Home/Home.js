@@ -1,208 +1,76 @@
-import React, { useState, useEffect , useRef , lazy , FC , Suspense } from "react";
+import React, { useState, useEffect, useRef, lazy, FC, Suspense } from "react";
 import CategoryContainer from "./CategoryContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { service } from "../../network/Home/service";
 import LiveContainer from "./LiveContainer";
 import LiveSchedule from "./LiveSchedule";
-import PartnerContainer from "./PartnerContainer";
-import CommunityContainer from "./CommunityContainer";
 import Notification from "../../common/Notification";
-import { useHistory, Redirect, Link } from "react-router-dom";
 import $ from "jquery";
-
 import Banner from "./Banner";
 
 const Home = () => {
-  const [isFetching, setIsFetching] = useState(false);
   const [category, setCategory] = useState([]);
-  const [loadMore, setLoadMore] = useState(false);
-  const [categoryOrgLength, setCategoryOrgLength] = useState([]);
-  const [freeCategory, setFreeCategory] = useState([]);
-  const [newRelease, setNewRelease] = useState([]);
   const signInBlock = useSelector((state) => state.signInBlock);
   const login = useSelector((state) => state.login);
-  const [load, setLoad] = useState()
-  const loadRef = useRef()
-  const [inHight, setinHight] = useState('0')
-
-  const [page, setPage] = useState(1);
-  const [listItems, setListItems] = useState([]);
-  const [maindata, setmaindata] = useState([])
-  
+  let offset = 0
+  let scrollHeight = 100
+  let loadedRows = []
 
   useEffect(() => {
-    
-    
     window.scrollTo(0, 0);
     $(".menuItemContainer").addClass("menuClose");
     var singleObj = [];
-    var freeArray = [];
-    var newArray = [];
-
-
-      service.getshowsbyCategory().then((response) => {
-        if (response.success === true && response.data.length > 0) {
-          setCategoryOrgLength(response.data.length);
-          var data = response.data;
-          data.map((item, index) => {
-            if (index < 4) {
-              singleObj.push(item);
-            }
-          });
-          setCategory(singleObj);
-          
-        }
-      });
-
-    
-
-    // service.freeVideos().then((response) => {
-    //   if (response.data && response.data.length > 0) {
-    //     let freeObj = {};
-    //     freeObj.category_id = 140;
-    //     freeObj.category_name = "Watch for free";
-    //     freeObj.shows = response.data;
-    //     freeArray.push(freeObj);
-    //     setFreeCategory(freeArray);
-    //   } else {
-    //     setFreeCategory([]);
-    //   }
-    // });
-    // service.getRecentlyAddedShows().then((response) => {
-    //   if (response.data && response.data.length > 0) {
-    //     let freeObj = {};
-    //     freeObj.category_id = 191;
-    //     freeObj.category_name = "New Releases";
-    //     freeObj.shows = response.data;
-    //     newArray.push(freeObj);
-    //     setNewRelease(newArray);
-    //   } else {
-    //     setNewRelease([]);
-    //   }
-    // });
-
+    service.getshowsbyCategory().then((response) => {
+      if (response.success === true && response.data.length > 0) {
+        var data = response.data;
+        data.map((item, index) => {
+          singleObj.push(item);
+        });
+        setCategory(singleObj);
+        loadedRows = singleObj
+      }
+    });
   }, [login]);
 
   useEffect(() => {
-		fetchData();
-		window.addEventListener('scroll', handleScroll);
-	}, []);
 
-  const handleScroll = () => {
-		if (
-			Math.ceil(window.innerHeight + document.documentElement.scrollTop) !== document.documentElement.offsetHeight ||
-			isFetching
-      
-		)
-    
-			setinHight(window.innerHeight + document.documentElement.scrollTop)
-		setIsFetching(true);
-		console.log('isFetching', isFetching);
-    console.log(`inner hyt:` ,window.innerHeight + document.documentElement.scrollTop);
-    console.log(`offset hyt:` ,  document.documentElement.offsetHeight);
-	};
-
-  // if (window.innerHeight + document.documentElement.scrollTop > 1930) {
-
-  //   // console.log("u will get it");
-  //   setLoadMore(true);
-  //   service.getshowsbyCategory().then((response) =>{
-  //     if (response.success === true && response.data.length > 0) {
-  //       setCategoryOrgLength(0);
-  //       var data = response.data;
-  //       setCategory(data);
-  //     }
-  //   })
-    
-      
-    
-  // }
-  
-  
-  const fetchData = async () => {
-		setTimeout(async () => {
-			service.getshowsbyCategory().then((response) => {
-        if (response.success === true && response.data.length > 0) {
-          setCategoryOrgLength(response.data.length);
-          var data = response.data;
-          
-          setmaindata([...listItems, ...data])
-          console.log(`inside fetch data`, data)
-          
-        }
-      });
-			
-			setPage(page + 1);
-			setListItems(() => {
-				return maindata
-			});
-		}, 1000);
-	};
-
-  useEffect(() => {
-		if (!isFetching) return;
-		fetchMoreListItems();
-	}, [isFetching]);
-
-	const fetchMoreListItems = () => {
-		fetchData();
-		setIsFetching(false);
-	};
-
-  console.log('maindata', maindata)
-  console.log(`cats are: ` , category)
-
-
-
-  // const loadMoreCategory = () => {
-  //   setLoadMore(true);
-  //   service.getshowsbyCategory().then((response) => {
-  //     if (response.status == 100 && response.data.length > 0) {
-  //       setCategoryOrgLength(0);
-  //       var data = response.data;
-  //       setCategory(data);
-  //     }
-  //   });
-  // };
-  const loadMoreCategory = () => {
-    console.log('in load more')
-    setLoadMore(true);
-    service.getshowsbyCategory().then((response) => {
-      if (response.success === true && response.data.length > 0) {
-        setCategoryOrgLength(0);
-        var data = response.data;
-        setCategory(data);
+    let prevPosition = 0
+    let newPosition = 0
+    let currentPosition = 0
+    window.addEventListener('scroll', (e) => {
+      newPosition = window.pageYOffset;
+      currentPosition += 1;
+      if (prevPosition < newPosition && currentPosition > scrollHeight) {
+        currentPosition = 0
+        offset += 10
+        fetchData();
+      } else if (prevPosition > newPosition) {
       }
+      prevPosition = newPosition;
     });
-  };
-  const updateFuction = () => {
-    if (loadMore === true) {
-      service.getshowsbyCategory().then((response) => {
-        if (response.status == true && response.data.length > 0) {
-          setCategoryOrgLength(0);
+  }, []);
+
+  const fetchData = async () => {
+    setTimeout(async () => {
+      service.getshowsbyCategory(offset).then((response) => {
+        if (response.success === true && response.data.length > 0) {
           var data = response.data;
-          setCategory(data);
-        }
-      });
-    } else {
-      var singleObj = [];
-      service.getshowsbyCategory().then((response) => {
-        if (response.status === true && response.data.length > 0) {
-          setCategoryOrgLength(response.data.length);
-          var data = response.data;
+          let singleObj = []
           data.map((item, index) => {
-            if (index < 4) {
-              singleObj.push(item);
-            }
+            singleObj.push(item);
           });
-          setCategory(singleObj);
+          let updatedRows = [...loadedRows, ...singleObj]
+          loadedRows = updatedRows
+          setCategory(updatedRows);
         }
       });
-    }
+    }, 1000);
   };
+
+
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
-  }
+  };
   return (
     <div className="pageWrapper searchPageMain">
       <div className="topContainer">
@@ -211,116 +79,18 @@ const Home = () => {
           <LiveContainer />
           <LiveSchedule />
           <Banner />
-         
           <div className="allCategoryContainer">
-
-          {/* {freeCategory && (
-            <div className="free__videos">
-              {freeCategory.length > 0 ? (
-                <CategoryContainer
-                        param={freeCategory[0]}
-                        clickHandler={updateFuction}
-                      />
-              ) : null}
-            </div>
-          )} */}
-           {newRelease && (
-            <div className="free__videos">
-              {newRelease.length > 0 ? (
-                
-                <CategoryContainer
-                        param={newRelease[0]}
-                        clickHandler={updateFuction}
-                      />
-              ) : null}
-            </div>
-          )}
-          {category &&
-              category.map((category, index) => {
-                if (category.show_count !== "0" && index <= 0) {
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
-                }
-              })}
-           <PartnerContainer />
-           {/* {category &&
-              category.map((category, index) => {
-                if (category.show_count !== "0" && index >= 0) {
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
-                }
-              })} */}
-               {category && category.show_count !== "0" &&
-              category.map((category, index) => {
-                if ( index >= 1 && index <= 2) {
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
-                }
-              })}
-       
-            {/* {category &&
-              category.map((category, index) => {
-                if (category.show_count !== "0" && index == 2) {
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
-                }
-              })} */}
-              
-              <CommunityContainer />
             {category &&
+              category.show_count !== "0" &&
               category.map((category, index) => {
-                if (category.show_count !== "0" && index >= 3) {
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
-                }
+                return (
+                  <div key={index}>
+                    <CategoryContainer
+                      param={category}
+                    />
+                  </div>
+                );
               })}
-           
-              
-            {categoryOrgLength > 4 && (
-              
-              <div className="container" id="containerLoad" ref={loadRef} onClick={loadMoreCategory}>
-                <div className="row loadMoreContainer">
-                  <button className="button buttonLarge buttonSecondary">
-                    <div className="buttonBg" style={{background: 'white'}}></div>
-                    <div className="buttonContent" >Loading...</div>
-                  </button>
-                  
-                </div>
-              </div>
-            )}
-            
-
-            {/* <Suspense fallback={<h2>Loading...</h2>} >{loadMoreCategory}</Suspense> */}
           </div>
         </div>
       </div>

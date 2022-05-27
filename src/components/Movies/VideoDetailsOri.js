@@ -330,7 +330,7 @@ const VideoDetails = (categoryId, episode) => {
   };
 
   const onWatchClick = (showDetails) => {
-    debugger
+    
     console.log("showDetails", showDetails);
     let user_id = service.getCookie("userId");
 
@@ -434,7 +434,7 @@ const VideoDetails = (categoryId, episode) => {
   
 
   const subscriptionChecking = (showDetails) => {
-    debugger
+    
     service.videoSubscription(showDetails.video_id).then((response) => {
       let videoDetails = response.data;
       let subFlag = true;
@@ -574,7 +574,7 @@ const VideoDetails = (categoryId, episode) => {
         if (user_id) {
           uId = user_id;
         }
-debugger
+
         service.userSubscription(uId).then((useResponse) => {
           var userData = useResponse.data;
           videoDetails.map(function (subscription, index) {

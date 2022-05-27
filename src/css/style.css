@@ -4799,7 +4799,7 @@ a.headerMenuItems:hover {
     bottom: -11px;
     left: -4px;
     height: 150%;
-    width: calc(100% + 8px)
+    width: calc(92% + 8px)
 }
 
 .wishlistButton .wishlistTextWrapper {
@@ -8345,7 +8345,7 @@ h2.plHeading {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0 12px;
+    padding: 50px 12px;
 }
 .hpWrapperVideo .movieTextWrapper.vpRelatedMargin {
     display: flex;
