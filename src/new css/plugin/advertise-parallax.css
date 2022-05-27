@@ -1,0 +1,360 @@
+.paralax-header {
+	position: relative;
+	width: 100%;
+	height: 810px;
+	overflow: hidden;
+}
+
+.paralax-header a.scroll {
+	display: block;
+	position: absolute;
+	bottom: 40px;
+	left: 50%;
+	margin-left: -20px;
+	width: 40px;
+	height: 40px;
+	background-image: url("../../images/advertise/arrow-d.png");
+	background-color: #fff;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 20px;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+@media screen and (max-width: 767px) {
+	.paralax-header {
+		height: 608px;
+		background-position: 43% 0;
+	}
+}
+
+.paralax-header > .main-bg {
+	position: absolute;
+	overflow-x: hidden;
+	overflow-y: auto;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.paralax-header > .main-bg:after {
+	content: "";
+	position: absolute;
+	background-image: url("../../images/advertise/paralax-header-main-bg.png");
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-size: cover;
+	background-position: center;
+}
+
+.paralax-header h1 {
+	color: #fff;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	padding: 0 30px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -20%);
+	letter-spacing: -0.3rem;
+	animation: fadein2 1s;
+}
+
+@media screen and (max-width: 767px) {
+	.paralax-header h1 {
+		letter-spacing: 0.05rem;
+	}
+}
+
+.paralax-header h1 span {
+	padding-top: 30px;
+	animation: fadein2 1s;
+	letter-spacing: normal;
+	max-width: 650px;
+	margin: auto;
+}
+
+.paralax-header .p-wrapper {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+
+.paralax-header .p-wrapper > span {
+	display: block;
+	position: absolute;
+	background-repeat: no-repeat;
+}
+
+.paralax-header .p-wrapper > span > span {
+	display: none;
+	font-size: 95px;
+	font-weight: bold;
+	color: #fff;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.2);
+	justify-content: center;
+	align-items: center;
+	text-shadow: 4px 4px 2px #969696;
+}
+
+.paralax-header.ph1 .p-wrapper#phc1 {
+	animation: fadein_p1 1s;
+}
+
+.paralax-header.ph1 .p-wrapper#phc2 {
+	animation: fadein_p2 2s;
+}
+
+.paralax-header.ph1 .p-wrapper > span#c1 {
+	width: 579px;
+	height: 463px;
+	left: 60px;
+	top: -100px;
+	background-image: url("../../images/advertise/1.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c2 {
+	width: 583px;
+	height: 523px;
+	left: -130px;
+	bottom: -220px;
+	background-image: url("../../images/advertise/2.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c3 {
+	width: 167px;
+	height: 212px;
+	left: 320px;
+	bottom: -90px;
+	background-image: url("../../images/advertise/3.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c4 {
+	width: 149px;
+	height: 194px;
+	left: -50px;
+	bottom: -42px;
+	background-image: url("../../images/advertise/4.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c5 {
+	width: 579px;
+	height: 487px;
+	right: -160px;
+	bottom: -100px;
+	background-image: url("../../images/advertise/5.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c6 {
+	width: 579px;
+	height: 476px;
+	right: -215px;
+	bottom: 138px;
+	background-image: url("../../images/advertise/6.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c7 {
+	width: 579px;
+	height: 409px;
+	right: -20px;
+	top: -30px;
+	background-image: url("../../images/advertise/7.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c8 {
+	width: 579px;
+	height: 409px;
+	right: -170px;
+	bottom: -30px;
+	background-image: url("../../images/advertise/8.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c9 {
+	width: 332px;
+	height: 422px;
+	left: -110px;
+	bottom: 110px;
+	background-image: url("../../images/advertise/9.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c10 {
+	width: 368px;
+	height: 458px;
+	right: 230px;
+	bottom: -180px;
+	background-image: url("../../images/advertise/10.png");
+}
+
+.paralax-header.ph1 .p-wrapper > span#c11 {
+	width: 579px;
+	height: 495px;
+	right: -20px;
+	top: -110px;
+	background-image: url("../../images/advertise/11.png");
+}
+
+@media screen and (max-width: 767px) {
+	.paralax-header.ph1 .p-wrapper > span#c4, .paralax-header.ph1 .p-wrapper > span#c3, .paralax-header.ph1 .p-wrapper > span#c10, .paralax-header.ph1 .p-wrapper > span#c7, .paralax-header.ph1 .p-wrapper > span#c5 {
+		display: none;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c1 {
+		left: -270px;
+		top: -200px;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c2 {
+		left: -170px;
+		bottom: -300px;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c6 {
+		right: -305px;
+		bottom: 242px;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c8 {
+		right: -460px;
+		bottom: -115px;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c9 {
+		left: -190px;
+		bottom: -230px;
+	}
+
+	.paralax-header.ph1 .p-wrapper > span#c11 {
+		right: -140px;
+		top: -220px;
+	}
+}
+
+body.compose-mode .paralax-header .p-wrapper > span > span {
+	display: flex;
+}
+
+body.compose-mode .paralax-header .p-wrapper > span:active {
+	display: none;
+}
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+		margin-top: 100px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 50px;
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+	from {
+		opacity: 0;
+		margin-top: 100px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 50px;
+	}
+}
+
+@keyframes fadein2 {
+	from {
+		opacity: 0;
+		margin-top: 80px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein2 {
+	from {
+		opacity: 0;
+		margin-top: 80px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+@keyframes fadein_p1 {
+	from {
+		opacity: 0;
+		margin-top: 100px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein_p1 {
+	from {
+		opacity: 0;
+		margin-top: 100px;
+	}
+
+	to {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+@keyframes fadein_p2 {
+	0% {
+		opacity: 0;
+		margin-top: 50px;
+	}
+
+	30% {
+		opacity: 0;
+		margin-top: 50px;
+	}
+
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein_p2 {
+	0% {
+		opacity: 0;
+		margin-top: 50px;
+	}
+
+	50% {
+		opacity: 0;
+		margin-top: 10px;
+	}
+
+	100% {
+		opacity: 1;
+		margin-top: 0;
+	}
+}

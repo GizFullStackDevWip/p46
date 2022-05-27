@@ -27,7 +27,7 @@ function fetchHomeBannerDetails() {
       'pubid': process.env.REACT_APP_PUBID,
       'country_code': countryCode,
     },
-      params: {
+    params: {
       uid: uId,
       pubid: process.env.REACT_APP_PUBID,
       country_code: countryCode,
@@ -45,8 +45,7 @@ function fetchHomeBannerDetails() {
 
 
 
-function getshowsbyCategory() {
-  console.log("getshowsbyCategory123",getshowsbyCategory);
+function getshowsbyCategory(offset = null) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -63,16 +62,19 @@ function getshowsbyCategory() {
       crossorigin: true,
       "access-token": token,
       'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
+      // 'pubid': process.env.REACT_APP_PUBID,
+      'pubid': 50035,
       'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
+      // 'channelid': process.env.REACT_APP_CHANNELID,
+      'channelid': 372,
       'dev_id': deviceId,
       'ip': ipaddress,
       'device_type': "web",
     },
   };
+
   return axios
-    .get("https://staging.poppo.tv/test/api/show/list", customConfig)
+    .get(`https://staging.poppo.tv/test/api/show/list?offset=${offset}`, customConfig)
     .then((response) => {
       return response.data;
     })
@@ -447,7 +449,7 @@ function addToMyPlayList(id, flag) {
   };
   return axios
     // .get(process.env.REACT_APP_SUB_API_URL + "watchlist/show/", customConfig)
-    .get(process.env.REACT_APP_SUB_API_URL+'watchlist/show/' + id + '/' + flag , customConfig)
+    .get(process.env.REACT_APP_SUB_API_URL + 'watchlist/show/' + id + '/' + flag, customConfig)
     .then((response) => {
       return response.data;
     })
@@ -548,7 +550,6 @@ function showsByCategory(id) {
     uId = user_id;
   }
   const customConfig = {
-    
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
@@ -567,7 +568,6 @@ function showsByCategory(id) {
     .get(
       process.env.REACT_APP_SUB_API_URL + "category/" + id + "/shows/list ",
       customConfig
-
     )
     .then((response) => {
       return response.data;
@@ -575,7 +575,6 @@ function showsByCategory(id) {
     .catch((error) => {
       return [];
     });
-
 }
 
 
