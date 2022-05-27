@@ -14,6 +14,7 @@ const Home = () => {
   const login = useSelector((state) => state.login);
   let offset = 0
   let scrollHeight = 100
+  let maxScrollExceed = false;
   let loadedRows = []
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const Home = () => {
     window.addEventListener('scroll', (e) => {
       newPosition = window.pageYOffset;
       currentPosition += 1;
-      if (prevPosition < newPosition && currentPosition > scrollHeight) {
+      if (!maxScrollExceed && prevPosition < newPosition && currentPosition > scrollHeight) {
         currentPosition = 0
         offset += 10
         fetchData();
@@ -59,9 +60,10 @@ const Home = () => {
           data.map((item, index) => {
             singleObj.push(item);
           });
-          let updatedRows = [...loadedRows, ...singleObj]
-          loadedRows = updatedRows
-          setCategory(updatedRows);
+          loadedRows = [...loadedRows, ...singleObj]
+          setCategory(loadedRows);
+        } else if (response.data.length == 0) {
+          maxScrollExceed = true;
         }
       });
     }, 1000);
