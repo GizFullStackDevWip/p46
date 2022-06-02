@@ -34,7 +34,7 @@ const Cookie = () => {
                 declineButtonStyle={buttonStyle}
                 onAccept={onAcceptFunction}
                 declineButtonText="Decline"
-                cookieName="happitvCookie"
+                cookieName="BoondockCookie"
                 style={{ background: "#2B373B", borderRadius: '5px', fontWeight: '600' }}
                 buttonStyle={buttonStyle}
                 expires={150}

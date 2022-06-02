@@ -27,7 +27,7 @@ canvas,
 progress,
 video {
 	display: inline-block;
-	vertical-align: baseline;
+	vertical-align: initial;
 	border-radius: 22px;
 }
 audio:not([controls]) {

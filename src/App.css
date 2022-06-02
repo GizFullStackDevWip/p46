@@ -23,6 +23,33 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* .marginAdjust {
+  padding-top: 100px !important;
+} */
+
+/* :root {
+  --primarybg-color: rgb(203, 10, 61);
+  --primary-color: rgb(203, 10, 61);
+  --selectionbgColor: rgb(203, 10, 61);
+  --primarybg-color-30per: rgba(203, 10, 61, 0.3);
+  --selectionTextColor: #ffffff;
+  --success-color: #82ce34;
+  --error-color: #f2110f;
+} */
+:root {
+  --primarybg-color: rgb(253, 27, 27);
+  --primary-color: rgb(253, 27, 27);
+  --selectionbgColor: rgb(253, 27, 27);
+  --primarybg-color-30per: rgb(253, 27, 27);
+  --selectionTextColor: #ffffff;
+  --success-color: #82ce34;
+  --error-color: rgb(253, 27, 27);
 }

@@ -1,7 +1,18 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
+node_modules
+.build
 /node_modules
+/build
+build
+/build.tar
+/package-lock.json
+package-lock.json
+
+#.env file
+# .env
+# /.env
 
 # testing
 /coverage

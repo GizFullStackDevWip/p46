@@ -1,0 +1,24 @@
+.closingButton {
+  text-align-last: right;
+  position: absolute;
+  top: 18px;
+  z-index: 10;
+  right: 35px;
+}
+
+.closingButton .close-video-button:hover {
+  width: 37px;
+  opacity: 1 !important;
+  transition: 0.5s ease-out;
+  background: var(--primarybg-color);
+}
+
+@media (max-width: 768px) {
+  .closingButton {
+    top: 4px;
+    right: 2px;
+  }
+  .close-video-button {
+    width: 28px !important;
+  }
+}

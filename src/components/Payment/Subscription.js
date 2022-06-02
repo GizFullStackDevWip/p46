@@ -34,7 +34,7 @@ const Subscription = ({ param, msgHandler }) => {
     ) {
       service.unsubscribe(param.receiptid, param.sub_id).then((response) => {
         if (response.success == true) {
-          msgHandler("true" , response.message);
+          msgHandler("true", response.message);
         } else {
           msgHandler("false", response.message);
         }
@@ -53,7 +53,7 @@ const Subscription = ({ param, msgHandler }) => {
     } else {
       subscription = {
         display: "inline-flex",
-        marginLeft: "-58px",
+        marginLeft: "0px",
       };
     }
     return subscription;
@@ -78,13 +78,19 @@ const Subscription = ({ param, msgHandler }) => {
   param.map((item, index) => {
     let subItem = (
       <div key={i}>
-        <div className="movieTile mytitle" >
+        <div className="movieTile mytitle">
           <div>
-            <div className="moviePoster" style={{ padding: "0% 0" }}>
+            <div className="moviePoster" style={{ padding: "20% 0" }}>
               <div className="FeNml"></div>
-              {
-                item.cancel_status ? (
-                  <button
+              <button
+                type="button"
+                className="subscribe-btn"
+                style={{ cursor: "pointer" }}
+              >
+                Purchased
+              </button>
+              {/* {item.cancel_status ? (
+                <button
                   type="button"
                   disabled
                   className="subscribe-btn"
@@ -92,9 +98,8 @@ const Subscription = ({ param, msgHandler }) => {
                 >
                   Unsubscribed
                 </button>
-                ) : 
-                (
-                  <button
+              ) : (
+                <button
                   type="button"
                   onClick={() => onUnsubscribeHandler(item)}
                   className="subscribe-btn"
@@ -102,9 +107,7 @@ const Subscription = ({ param, msgHandler }) => {
                 >
                   Unsubscribe
                 </button>
-                )
-              }
-             
+              )} */}
             </div>
 
             <div className="wishlistPosition wishlistTranslate wishlistParentClose">
@@ -142,7 +145,7 @@ const Subscription = ({ param, msgHandler }) => {
       </div>
     );
     subItems.push(subItem);
-    if ((index + 1) % 4 == 0 || (index + 1) == param.length) {
+    if ((index + 1) % 4 == 0 || index + 1 == param.length) {
       let mainItem = (
         <div key={j}>
           <div className="carouselContent" style={subscriptionForMob()}>
@@ -156,8 +159,6 @@ const Subscription = ({ param, msgHandler }) => {
     }
     i++;
   });
-  return (
-      mainItems
-  );
+  return mainItems;
 };
 export default Subscription;

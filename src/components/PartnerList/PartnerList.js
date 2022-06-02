@@ -32,7 +32,7 @@ const PartnerList = () => {
                     <div className="container searchWrapper">
                         <div className="_1py48"></div>
                         <div className="searchResult">
-                            <h1 className="SearchResultText">Content Creators</h1>
+                            <h1 className="SearchResultText">Partners</h1>
                         </div>
                         <div className="searchResultMargin">
                             <div className="row">

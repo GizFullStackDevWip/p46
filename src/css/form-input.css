@@ -316,7 +316,7 @@ div.form-field{
 		}
 
 	}
-	.happi-select {
+	.discover-select {
 		position: relative;
 		background-color: $white;
 		display: inline-block;
@@ -427,7 +427,7 @@ div.form-field{
 		label.error{
 			color: $violet;
 		}
-		.happi-select {
+		.discover-select {
 			& > .select-selected {
 				color: $white;
 				border: solid 1px $violet;

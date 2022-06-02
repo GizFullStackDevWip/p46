@@ -18,9 +18,9 @@ import './css/style.5.4.2.css';
 
 import './css/style.min.5.4.2.css';
 import './css/style1.3.3.css';
-import './css/happi-grid-content.css'
-// import './css/happi-header.css';
-import './css/happitv.css';
+import './css/discover-grid-content.css'
+// import './css/discover-header.css';
+import './css/discovertv.css';
 // import './css/plugin/slick.css';
 // import './js/plugin/jquery-3.5.1.min.js';
 import './js/main.js';
@@ -34,8 +34,10 @@ import "slick-carousel/slick/slick-theme.css";
 import 'react-multi-carousel/lib/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import './css/stylebanner.css';
 import './css/style.css';
 import './css/newstyles.css';
+
 // import './js/landingRevry';
 
 import registerServiceWorker from './registerServiceWorker';

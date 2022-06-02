@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { service } from '../../network/Home/service';
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
-import './PartnerContainer.css'
 
 var bannerShowUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 const LiveContainer = () => {
@@ -15,11 +14,11 @@ const LiveContainer = () => {
     const responsive = {
         superLargeDesktop: {
             breakpoint: { max: 4000, min: 3000 },
-            items: 3
+            items: 5
         },
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 3
+            items: 5
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
@@ -40,26 +39,23 @@ const LiveContainer = () => {
                         <div className="categoryLinkWrapper">
                             <div className="categoryHeading">
                                 <Link to="/partnerList">
-                                    <div className="_2hvCx"><h2 className="_1mK3G">Content Creators</h2>
+                                    <div className="_2hvCx"><h2 className="_1mK3G">Partners</h2>
                                     </div>
                                 </Link>
                             </div>
                         </div>
                     </section>
-                    <div className="liveTvGuide">
-                        <div className="vpRightWrapper partnerWrapper landscapeContainerWrapper">
-                            <Carousel responsive={responsive} autoPlay={true} infinite={true} centerMode={true}
+                    <div className="liveTvGuide partnerPaddingWrapper" >
+                        <div className="vpRightWrapper partnerWrapper">
+                            <Carousel responsive={responsive} autoPlay={true} infinite={true}
                                 autoPlaySpeed={3000} >
                                 {
                                     partner &&
                                     partner.map((item, index) => {
-                                        // console.log('partneritem', item)
                                         return (
                                             <Link key={index} to={{ pathname: '/home/partnershows', search: encodeURI(`partner_id=${item.partner_id}&partner_name=${item.name}`) }}>
-                                                <div className="vpRelatedImage " style={{margin: '0px 10px',height:"490px", width:"256px" }}>
-                                                
-                                                <img className="hiIconScreen" alt={item.name} src={bannerShowUrl + item.image} width="100%" style={{ borderRadius: '1.5px', cursor: 'pointer', background: '#fff' }} />
-                                                    {/* <img className="hiIconScreen" alt={item.name} src="https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/1603334959.jpg" width="100%" style={{ borderRadius: '1.5px', cursor: 'pointer', height: '225px' }} /> */}
+                                                <div className="vpRelatedImage partnerItem">
+                                                    <img className="hiIconScreen" alt={item.name} src={bannerShowUrl + item.image} width="100%" style={{ borderRadius: '1.5px', cursor: 'pointer' }} />
                                                     <section className="movieTextWrapper movieTextWrapperPadding" style={{ paddingBottom: '44px' }}>
                                                         <div className="movieTextFlex">
                                                             <h3 style={{
@@ -69,14 +65,15 @@ const LiveContainer = () => {
                                                                 {
                                                                     item.name && <div className="linkButton movieTextHeading" style={{ fontSize: '16px', textAlign: 'left' }} >{item.name}</div>
                                                                 }
-                                                               
                                                             </h3>
                                                             <h3>
                                                                 {
-                                                                    item.description && <div className="linkButton movieTextHeading" style={{ fontSize: '12px', textAlign: 'left', padding: '5px' }} >{item.description && item.description.slice(0, 90) + '...'}</div>
+                                                                    item.description && <div className="linkButton movieTextHeading" style={{ fontSize: '12px', textAlign: 'left', padding: '5px' }} >{item.description.slice(0, 90) + '...'}</div>
                                                                 }
                                                             </h3>
-                                                            
+                                                            {/* <h3 style={{paddingBottom: '0px', marginBottom: '0px'}}>
+                                                            <div className="linkButton movieTextHeading" style={{fontSize: '14px', textAlign: 'center'}} >{item.name}</div>
+                                                        </h3> */}
                                                         </div>
                                                     </section>
                                                 </div>

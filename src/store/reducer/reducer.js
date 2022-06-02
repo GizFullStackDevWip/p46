@@ -15,11 +15,6 @@ const reducer = (state = initial_state, action) => {
         ...state,
         login: true,
       };
-    case actionTypes.SET_ANDROID:
-      return {
-        ...state,
-        isAndroid: true,
-      };
     case actionTypes.LOGOUT:
       return {
         ...state,
@@ -39,6 +34,11 @@ const reducer = (state = initial_state, action) => {
       return {
         ...state,
         signInBlock: !state.signInBlock,
+      };
+    case actionTypes.SET_ANDROID:
+      return {
+        ...state,
+        isAndroid: true,
       };
     default:
       return state;

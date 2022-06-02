@@ -7,13 +7,12 @@ const PublicRoute = ({component: Component, restricted, ...rest}) => {
     const isLogin = useSelector((state) => state.login);
     let isLoggedIn = localStorage.getItem('isLoggedIn');
 
+    localStorage.setItem("location", '/');
     return (
         // restricted = false meaning public route
         // restricted = true meaning restricted route
         <Route {...rest} render={props => (
-            isLoggedIn && restricted ?
-                <Redirect to="/home" />
-            : <Component {...props} />
+           <Component {...props} />
         )} />
     );
 };

@@ -1,4 +1,3 @@
-
 const axios = require("axios");
 const qs = require("querystring");
 
@@ -18,19 +17,19 @@ function getAccountDetails() {
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
       "access-token": token,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
     },
   };
   //process.env.REACT_APP_API_URL +
   //
   return axios
-    .get(process.env.REACT_APP_SUB_API_URL + "/account/details", customConfig)
+    .get(process.env.REACT_APP_API_URL + "account/details", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -56,13 +55,13 @@ function unsubscribe(sub_id) {
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
       "access-token": token,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
     },
   };
   const data = {
@@ -73,15 +72,16 @@ function unsubscribe(sub_id) {
   };
   return axios
     .post(
-      process.env.REACT_APP_SUB_API_URL + "subscription/cancel",
+      process.env.REACT_APP_API_URL + "subscription/cancel",
       qs.stringify(data),
       customConfig
     )
     .then((response) => {
-      console.log("unsubscribe", response);
-      return response;
+      console.log("unsubscribe success", response);
+      return response.data;
     })
     .catch((error) => {
+      console.log("unsubscribe error", error, error.response);
       return error.response.data;
     });
 }
@@ -111,13 +111,13 @@ function NewsLetterAdd(email) {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
       "access-token": token,
     },
   };
@@ -125,13 +125,11 @@ function NewsLetterAdd(email) {
     email: email,
   };
   return axios
-    // .post(
-    //   process.env.REACT_APP_API_URL + "account/newsletter/subscribe",
-    //   qs.stringify(data),
-    //   customConfig
-    // )
-    // .post("https://api.gizmott.com/staging/api/account/newsletter/subscribe", qs.stringify(data),customConfig)
-    .post(process.env.REACT_APP_SUB_API_URL +"account/newsletter/subscribe", qs.stringify(data),customConfig)
+    .post(
+      process.env.REACT_APP_API_URL + "account/newsletter/subscribe",
+      qs.stringify(data),
+      customConfig
+    )
     .then((response) => {
       console.log(response);
       return response.data;
@@ -156,13 +154,13 @@ function NewsLetterRemove(email) {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
       "access-token": token,
     },
   };
@@ -171,7 +169,7 @@ function NewsLetterRemove(email) {
   };
   return axios
     .post(
-      process.env.REACT_APP_SUB_API_URL + "account/newsletter/unsubscribe",
+      process.env.REACT_APP_API_URL + "account/newsletter/unsubscribe",
       qs.stringify(data),
       customConfig
     )
@@ -199,13 +197,13 @@ function addPhoneNumber(cCode, phoneNumber) {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
       "access-token": token,
     },
   };
@@ -215,7 +213,7 @@ function addPhoneNumber(cCode, phoneNumber) {
   };
   return axios
     .post(
-      process.env.REACT_APP_SUB_API_URL + "account/phone/change",
+      process.env.REACT_APP_API_URL + "account/phone/change",
       qs.stringify(data),
       customConfig
     )
@@ -243,13 +241,13 @@ function deletePhoneNumber(cCode, phoneNumber) {
       "Content-Type": "application/x-www-form-urlencoded",
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
       "access-token": token,
     },
   };
@@ -259,7 +257,7 @@ function deletePhoneNumber(cCode, phoneNumber) {
   };
   return axios
     .post(
-      process.env.REACT_APP_SUB_API_URL + "account/phone/delete",
+      process.env.REACT_APP_API_URL + "account/phone/delete",
       "",
       customConfig
     )

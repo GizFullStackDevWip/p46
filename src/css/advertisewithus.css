@@ -1,15 +1,13 @@
-.happi-header > .main-bg:after {
+.discover-header > .main-bg:after {
     background-image: url(../images/advertise/main-bg.JPG);
-		z-index: 9998;
 }
-.happi-header {
+.discover-header {
     height: 810px;
-		z-index: 99;
 }
-.happi-header .header-content h1 {
+.discover-header .header-content h1 {
     max-width: 100%;
 }
-.happi-header .header-content h1 span {
+.discover-header .header-content h1 span {
     max-width: 650px;
     margin: 0 auto;
 }
@@ -17,7 +15,7 @@
     margin-bottom: 4.2vw !important;
 }
 @media screen and (max-width: 768px) {
-    .happi-header {
+    .discover-header {
         height: 608px;
     }    
 }
@@ -66,7 +64,7 @@
     margin-bottom: 90px !important;
 }
 
-.happi_images_carousel_wrapper figcaption {
+.discover_images_carousel_wrapper figcaption {
 	font-size:1.5rem;
 	font-style:normal;
 	color:#000;
@@ -76,17 +74,17 @@
 #page {
 	padding-top:0;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item img, #content .happi-service-list .wpb_wrapper .service-item img {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item img, #content .discover-service-list .wpb_wrapper .service-item img {
 	max-width:none;
 }
-#content .happi-service-list-wrapper .happi-service-list.small h5 {
+#content .discover-service-list-wrapper .discover-service-list.small h5 {
 	line-height:1.1;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item.copy-over-image {
 	padding:0 !important;
 	padding-bottom:22px !important;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-bottom > div {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item.copy-over-image.vertical-bottom > div {
 	top:80%;
 	left:unset;
 	padding:0;
@@ -94,7 +92,7 @@
 -ms-transform: none;
 transform: none;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-middle > div {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item.copy-over-image.vertical-middle > div {
 	top:45%;
 	left:unset;
 	padding:0;
@@ -102,7 +100,7 @@ transform: none;
 -ms-transform: none;
 transform: none;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image.vertical-top > div {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item.copy-over-image.vertical-top > div {
 	top:5%;
 	left:unset;
 	padding:0;
@@ -110,7 +108,7 @@ transform: none;
 -ms-transform: none;
 transform: none;
 }
-#content .happi-service-list-wrapper .happi-service-list .wpb_wrapper .service-item.copy-over-image > div h5 {
+#content .discover-service-list-wrapper .discover-service-list .wpb_wrapper .service-item.copy-over-image > div h5 {
 	color:#fff !important;
 }
 .b-close {
@@ -125,7 +123,7 @@ height: 30px;
 .mega-model-popup img {
 	display:none;
 }
-.happi-press.list #press-wrapper .file-item h6 {
+.discover-press.list #press-wrapper .file-item h6 {
 	padding-bottom:15px;
 }
 .page-id-50 .press-subheading {
@@ -155,10 +153,10 @@ align-items: initial !important;
 	margin-top:-125px;
 	margin-bottom:175px;
 }
-.page-id-216 .happi-text-banner a.btn {
+.page-id-216 .discover-text-banner a.btn {
 	display:none !important;
 }
-.page-id-216 .happi-text-banner.small {
+.page-id-216 .discover-text-banner.small {
 	padding: 35px 40px 60px;
 }
 .page-id-41 .model-popup-btn {
@@ -174,10 +172,10 @@ border: none;
 	max-width:900px;
 	height:auto;
 }
-.content-grid .grid-list li .happi-quotes.quote-right .quote {
+.content-grid .grid-list li .discover-quotes.quote-right .quote {
 	padding: 50px 0 0 50px;
 }
-.content-grid .grid-list li .happi-quotes.quote-left .quote {
+.content-grid .grid-list li .discover-quotes.quote-left .quote {
 	background-position: 0 0;
 }
 .post-thumbnail {
@@ -186,10 +184,10 @@ border: none;
 .video-slider {
 	max-width:1000px;
 }
-.page-id-40 div.form-field .happi-select > .select-selected {
+.page-id-40 div.form-field .discover-select > .select-selected {
 	/*margin-top:-2px;*/
 }
-.page-id-20 div.form-field .happi-select > .select-selected.select-arrow-active, .page-id-50 div.form-field .happi-select > .select-selected.select-arrow-active {
+.page-id-20 div.form-field .discover-select > .select-selected.select-arrow-active, .page-id-50 div.form-field .discover-select > .select-selected.select-arrow-active {
 	margin-bottom:1px;
 }
 p a {
@@ -201,20 +199,20 @@ p a {
 #disclaimer .btn {
 	display:none;
 }
-.container.happi-text-banner {
+.container.discover-text-banner {
 	max-width:1220px;
 }
-.happi-brand-assets .file-item h6 > span > span.ext, .happi-brand-assets .file-item h6 > span > span {
+.discover-brand-assets .file-item h6 > span > span.ext, .discover-brand-assets .file-item h6 > span > span {
 color:#707C86;
 
 }
 .file-field label.slate-grey {
 	padding-bottom:0;
 }
-.happi-check-list .wpb_wrapper .check-item {
+.discover-check-list .wpb_wrapper .check-item {
 	padding:20px 0;
 }
-.happi-check-list .wpb_wrapper .check-item > div h6 + p {
+.discover-check-list .wpb_wrapper .check-item > div h6 + p {
 	padding-top:0;
 }
 a:visited {
@@ -234,10 +232,10 @@ a.btn.white span {
 		margin-top:-125px;
 		margin-bottom:125px;
 	}
-	.content-grid .grid-list li .happi-quotes.quote-right .quote {
+	.content-grid .grid-list li .discover-quotes.quote-right .quote {
 	padding: 50px 0 20px 0px;
 }
-	#content .happi-service-list.b-border .wpb_wrapper .service-item:last-child:after {
+	#content .discover-service-list.b-border .wpb_wrapper .service-item:last-child:after {
 		content: "";
 display: block;
 position: absolute;
@@ -248,12 +246,12 @@ bottom: -20px;
 border-radius: 2px;
 -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02);
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02);
-background-image: -webkit-gradient(linear, left top, right top, from(#bc067b), color-stop(69%, #fe322a), to(#ff501a);
-background-image: -o-linear-gradient(left, #bc067b, #fe322a 69%, #ff501a;
-background-image: linear-gradient(to right, #bc067b, #fe322a 69%, #ff501a;
+background-image: -webkit-gradient(linear, left top, right top, from(#bc067b), color-stop(69%, #fe322a), to(red);
+background-image: -o-linear-gradient(left, #bc067b, #fe322a 69%, red;
+background-image: linear-gradient(to right, #bc067b, #fe322a 69%, red;
 	}
 }
-#content .happi-service-list .wpb_wrapper .service-item img {
+#content .discover-service-list .wpb_wrapper .service-item img {
 	max-width:200px;
 }
 .leadership .service-item img {

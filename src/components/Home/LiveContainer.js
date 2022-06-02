@@ -6,13 +6,13 @@ import {
   convertTimeToLocal,
   deviceDetect,
   playerController,
-  ssaiAdParam,
+//   ssaiAdParam,
 } from "../../Utils/utils";
 var liveThumbnailUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/images/";
 var details = [];
 var pause = false;
 var isSafari = false;
-const LiveContainer = () => {
+const LiveContainer = (param) => {
   const [channels, setChannels] = useState([]);
   const [logo, setLogo] = useState("");
   const [videoPlayer, setVideoPlayer] = useState();
@@ -31,44 +31,106 @@ const LiveContainer = () => {
       "iPod",
     ].includes(navigator.platform) ||
     (navigator.userAgent.includes("Mac") && "ontouchend" in document);
-    service.getLiveChannels().then((response) => {
-      if (response.data) {
-        setLogo(response.data[0].image);
-        setChannels(response.data[0]);
-        details = response.data[0];
-        // console.log('aaadetails', details.ssai_enabled)
-        if (!details.ssai_enabled) {
-          setVideoPlayer(
-            <ReactHlsPlayer
-              id="singleVideo_html5_api"
-              url={response.data[0].live_link}
-              autoplay={true}
-              controls={true}
-              width={"75%"}
-              height={"100%"}
-              
-              playsinline
-              onPlayerReady={window.onPlayerReady}
-              onReady={window.onPlayerReady}
-              onPlay={window.onVideoPlay}
-              onPlaying={window.onPlayingFunction}
-              onPause={window.onVideoPause}
-              onEnded={window.onVideoEnd}
-            />
-          );
-        } else {
-          // let videoElem = "live_video" + new Date().valueOf();
-          lplayerId = "live_video" + new Date().valueOf();
-          setLivePlayerId(lplayerId);
-          setIsSSAI(true);
-          ssaiAdParam(response.data[0]).then((params) => {
-            window.playLivePlayer(lplayerId, response.data[0], params);
-          });
+    if (param.param) {
+      setVideoPlayer(
+        <ReactHlsPlayer
+          id="singleVideo_html5_api"
+          url={param.param}
+          autoplay={true}
+          controls={true}
+          width={"75%"}
+          height={"100%"}
+          
+          body
+          playsinline
+          onPlayerReady={window.onPlayerReady}
+          onReady={window.onPlayerReady}
+          onPlay={window.onVideoPlay}
+          onPlaying={window.onPlayingFunction}
+          onPause={window.onVideoPause}
+          onEnded={window.onVideoEnd}
+        />
+      );
+    }
+    else
+    {
+      service.getLiveChannels().then((response) => {
+        if (response.data) {
+          setLogo(response.data[0].image);
+          setChannels(response.data[0]);
+          details = response.data[0];
+          // console.log('aaadetails', details.ssai_enabled)
+          if (!details.ssai_enabled) {
+            setVideoPlayer(
+              <ReactHlsPlayer
+                id="singleVideo_html5_api"
+                url={response.data[0].live_link}
+                autoplay={true}
+                controls={true}
+                width={"75%"}
+                height={"100%"}
+                body
+                playsinline
+                onPlayerReady={window.onPlayerReady}
+                onReady={window.onPlayerReady}
+                onPlay={window.onVideoPlay}
+                onPlaying={window.onPlayingFunction}
+                onPause={window.onVideoPause}
+                onEnded={window.onVideoEnd}
+              />
+            );
+          } else {
+            // let videoElem = "live_video" + new Date().valueOf();
+            lplayerId = "live_video" + new Date().valueOf();
+            setLivePlayerId(lplayerId);
+            setIsSSAI(true);
+            // ssaiAdParam(response.data[0]).then((params) => {
+            //   window.playLivePlayer(lplayerId, response.data[0], params);
+            // });
+          }
         }
-      }
-    });
+      });
+    }
+
+    // service.getLiveChannels().then((response) => {
+    //   if (response.data) {
+    //     setLogo(response.data[0].image);
+    //     setChannels(response.data[0]);
+    //     details = response.data[0];
+    //     // console.log('aaadetails', details.ssai_enabled)
+    //     if (!details.ssai_enabled) {
+    //       setVideoPlayer(
+    //         <ReactHlsPlayer
+    //           id="singleVideo_html5_api"
+    //           url={response.data[0].live_link}
+    //           autoplay={true}
+    //           controls={true}
+    //           className="liveVideoPlayer"
+    //           // width={"50%"}
+    //           // height={"55%"}
+    //           // style={{marginTop:"10%",marginLeft:"25%"}}
+    //           playsinline
+    //           onPlayerReady={window.onPlayerReady}
+    //           onReady={window.onPlayerReady}
+    //           onPlay={window.onVideoPlay}
+    //           onPlaying={window.onPlayingFunction}
+    //           onPause={window.onVideoPause}
+    //           onEnded={window.onVideoEnd}
+    //         />
+    //       );
+    //     } else {
+    //       // let videoElem = "live_video" + new Date().valueOf();
+    //       lplayerId = "live_video" + new Date().valueOf();
+    //       setLivePlayerId(lplayerId);
+    //       setIsSSAI(true);
+    //     //   ssaiAdParam(response.data[0]).then((params) => {
+    //     //     window.playLivePlayer(lplayerId, response.data[0], params);
+    //     //   });
+    //     }
+    //   }
+    // });
     window.addEventListener("scroll", handleScroll);
-  }, []);
+  }, [param]);
   window.onPlayingFunction = () => {
     setInterval(() => {
       if (pause === false) {
@@ -113,9 +175,9 @@ const LiveContainer = () => {
   return (
     <div className="entireBanner" id="live">
       <div className="hpLiveBanner">
-        <div className="liveVideoWrapper">
+        <div className="liveVideoWrapper" style={{marginTop:'80px' , display: 'flex' , justifyContent: 'center'}}>
           {!isSSAI ? (
-            <div style={{marginLeft:'', display:'flex' , justifyContent:'center' ,marginTop: '80px'}}>{videoPlayer}</div> 
+            videoPlayer
             
           ) : (
             <video
@@ -126,7 +188,6 @@ const LiveContainer = () => {
               preload="auto"
               autoPlay
               playsinline
-              style={{width:'800px'}}
             ></video>
           )}
           {/* <div className="hpWrapperVideo" style={{ height: "88px"}}>
