@@ -1,56 +1,40 @@
 import React, { useState, useEffect, useRef } from "react";
-import { service } from "./service";
+import { service } from "../../network/service";
 import { Link, useHistory, Redirect } from "react-router-dom";
 import Countdown from "react-countdown";
-import "./activate.css";
 
 const Activate = () => {
-  const history = useHistory();
-  let isLoggedIn = service.getCookie("isLoggedIn");
+  let isLoggedIn = localStorage.getItem("isLoggedIn");
+  let userId = service.getCookie("userId");
+  localStorage.setItem("location", "/tv");
+  console.log("isLoggedIn", isLoggedIn);
   const [value, setValue] = useState("");
   const [timeOut, setTimeOut] = useState(false);
-  const [invalid, setInvalid] = useState(false);
   const countDown = useRef();
 
   useEffect(() => {
-    document.getElementById("scroll-top").scroll(0, 0);
-    if (isLoggedIn === "true") {
-      console.log("hihsidhasih");
-      sessionStorage.removeItem("tvActivateFlag");
+    window.scrollTo(0, 0);
+    useEffectFunction();
+    localStorage.removeItem("location");
+  }, [useEffectFunction]);
+
+  const useEffectFunction = () => {
+    if (isLoggedIn === "true" && userId) {
       countDown.current.getApi().start();
       service.generateTvLink().then((response) => {
-        if (response === false) {
-          setTimeout(() => {
-            history.push("/signIn");
-          }, 3000);
-
-          setTimeOut({}, 3000);
-          setInvalid(true);
-        } else {
+        console.log("response", response);
+        if (response) {
           setValue(response.code);
         }
       });
     }
-  }, []);
-
-  const InvalidMessage = () => {
-    return (
-      <div className="styles-inputBoxContainer">
-        <div className="styles-enterCodeWrap">
-          <span className="styles-enterCodetext">
-            No TV Subscription Found!
-          </span>
-        </div>
-      </div>
-    );
   };
-
   const Completionist = () => (
     <div className="styles-inputBoxContainer">
       <div className="styles-enterCodeWrap">
         <div className="styles-linkTvTitle">Link TV App</div>
         <span className="styles-enterCodetext">
-          Enter this code on your Roku TV, Fire TV or Android TV
+          Enter this code on your smart TV
         </span>
       </div>
       <input
@@ -85,7 +69,7 @@ const Activate = () => {
           <div className="styles-enterCodeWrap">
             <div className="styles-linkTvTitle">Link TV App</div>
             <span className="styles-enterCodetext">
-              Enter this code on your Roku TV, Fire TV or Android TV
+              Enter this code on your smart TV
             </span>
           </div>
           <input
@@ -114,35 +98,28 @@ const Activate = () => {
       }
     });
   };
-  if (isLoggedIn == "false" || isLoggedIn === null || isLoggedIn === "") {
-    sessionStorage.setItem("tvActivateFlag", true);
-    return <Redirect to="/signin" />;
+  if (isLoggedIn === "false") {
+    return <Redirect to="/register" />;
   } else {
     return (
-      <>
-        <div className="pageWrapper" id="scroll-top" style={{background: 'rgb(26 28 33)'}}>
-          <div className="topContainer">
-            <div className="menuCloseJS closeMenuWrapper">
-              <div className="activateContainer">
-                <div className="activate-style">
-                  <div className="styles-box">
-                    {invalid === true ? (
-                      <InvalidMessage />
-                    ) : (
-                      <Countdown
-                        date={Date.now() + 5 * 6 * 10000}
-                        renderer={renderer}
-                        ref={(count) => (countDown.current = count)}
-                        autoStart={false}
-                      />
-                    )}
-                  </div>
+      <div className="pageWrapper searchPageMain">
+        <div className="topContainer">
+          <div className="menuCloseJS closeMenuWrapper">
+            <div className="activateContainer">
+              <div className="activate-style">
+                <div className="styles-box">
+                  <Countdown
+                    date={Date.now() + 5 * 6 * 10000}
+                    renderer={renderer}
+                    ref={(count) => (countDown.current = count)}
+                    autoStart={false}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 };

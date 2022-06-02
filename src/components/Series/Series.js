@@ -14,7 +14,7 @@ const Series = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         service.getShowDetails(parsed.show_id).then(response => {
-            if (response.status == 100 && response.data.length > 0) {
+            if (response.success == true && response.data.length > 0) {
                 setEpisodes(response.data);
                 setShowDetails(response.data[0]);
             }

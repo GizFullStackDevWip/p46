@@ -1,0 +1,10 @@
+.progressbar__div {
+  /* margin: 0 -16px -12px -16px; */
+}
+.progressbar-border {
+  /* border: 1px solid #ccc !important; */
+}
+.progressbar-grey {
+  color: #000 !important;
+  background-color: red !important;
+}

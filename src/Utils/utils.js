@@ -1,16 +1,11 @@
 import moment from "moment";
-import React from 'react';
 import { service } from "../network/service";
+
 export const playerController = (position, playerId) => {
   let screenPosition = document.documentElement.scrollTop;
   let playerStream = document.getElementById(playerId);
-  console.log("screenPosition",screenPosition);
-  console.log("position",position);
-  console.log("playerstream",playerStream);
   if (playerStream !== null && playerStream !== "undefined") {
     if (screenPosition > position) {
-      console.log("screenPosition",screenPosition);
-  console.log("position",position);
       playerStream.pause();
     } else if (screenPosition < position) {
       if (playerStream != null) {
@@ -184,46 +179,55 @@ export const checkOperatingSystem = () => {
   }
   return "none";
 };
+
 export const convertAdUrl = (videoDetails) => {
-  console.log("convertAdUrlvideoDetails", videoDetails);
-// debugger
-  let categories = "";
-  videoDetails.categories.map((item, index) => {
-    categories = categories ? categories + ", " + item : item;
-  });
   const adUrl = videoDetails.ad_link;
-  // const adUrl = "https://search.spotxchange.com/vast/2.00/85394?VPI=MP4&app[bundle]=[REPLACE_ME]&app[name]=[REPLACE_ME]&app[cat]=[REPLACE_ME]&app[domain]=[REPLACE_ME]&app[privacypolicy]=[REPLACE_ME]&app[storeurl]=[REPLACE_ME]&app[ver]=[REPLACE_ME]&cb=[REPLACE_ME]&device[devicetype]=[REPLACE_ME]&device[ifa]=[REPLACE_ME]&device[make]=[REPLACE_ME]&device[model]=[REPLACE_ME]&device[dnt]=[REPLACE_ME]&player_height=[REPLACE_ME]&player_width=[REPLACE_ME]&ip_addr=[REPLACE_ME]&device[ua]=[REPLACE_ME]]&schain=[REPLACE_ME]"
   const currentLocation = JSON.parse(localStorage.getItem("currentLocation"));
-  let uId = 74961;
+
+  let categoriesList = "";
+  videoDetails.category_id &&
+    videoDetails.category_id.map((item, index) => {
+      if (index === videoDetails.category_id.length - 1) {
+        categoriesList = categoriesList + item;
+      } else {
+        categoriesList = categoriesList + item + ",";
+      }
+    });
+
+  let uId = 291;
   let user_id = service.getCookie("userId");
   if (user_id) {
     uId = user_id;
   }
+
   const width = window.innerWidth;
   const height = window.innerHeight;
   const dnt = 0;
-  const ipAddress = currentLocation && currentLocation.IPv4;
-  const latitude = currentLocation && currentLocation.latitude;
-  const longitude = currentLocation && currentLocation.longitude;
+  const ipAddress = currentLocation.IPv4;
+  const latitude = currentLocation.latitude;
+  const longitude = currentLocation.longitude;
   const userAgent = navigator.userAgent;
   const deviceIfa = "";
   const uuid = "";
-  const country = currentLocation && currentLocation.country_name;
-  const city = currentLocation && currentLocation.city;
-  const state = currentLocation && currentLocation.state;
+  const country = currentLocation.country_name;
   const deviceId = localStorage.getItem("deviceId");
-  const keyword = videoDetails.category_name;
+  const keyword =
+    videoDetails.category_name && videoDetails.category_name[0].length > 0
+      ? videoDetails.category_name[0]
+      : "";
   const deviceModel = navigator.userAgent;
   const deviceMake = navigator.userAgent;
-  const channelId = videoDetails.channel_id;
+  const channelId = process.env.REACT_APP_CHANNELID;
   const userId = uId;
   const videoId = videoDetails.video_id;
-  const showId = videoDetails.show_id;
   const bundleId = "";
-  const appName = "happitv";
-  const duration = videoDetails.video_duration;
+  const appName = "outdoormax.tv";
+  const duration = Math.floor(videoDetails.video_duration); //videoduration
   const appstoreUrl = window.location.href;
-  const content_type = videoDetails.show_name;
+  const city = currentLocation.city;
+  const region = currentLocation.state;
+  const showId = videoDetails.show_id;
+  const categories = categoriesList;
 
   const finalAdurl = adUrl
     .replace("[WIDTH]", width)
@@ -236,8 +240,6 @@ export const convertAdUrl = (videoDetails) => {
     .replace("[DEVICE_IFA]", deviceIfa)
     .replace("[UUID]", uuid)
     .replace("[COUNTRY]", country)
-    .replace("[CITY]", city)
-    .replace("[REGION]", state)
     .replace("[DEVICE_ID]", deviceId)
     .replace("[KEYWORDS]", keyword)
     .replace("[DEVICE_MODEL]", deviceModel)
@@ -245,47 +247,34 @@ export const convertAdUrl = (videoDetails) => {
     .replace("[CHANNEL_ID]", channelId)
     .replace("[USER_ID]", userId)
     .replace("[VIDEO_ID]", videoId)
-    .replace("[SHOW_ID]", showId)
-    .replace("[CATEGORIES]", categories)
     .replace("[BUNDLE]", bundleId)
     .replace("[APP_NAME]", appName)
     .replace("[DURATION]", duration)
     .replace("[APP_STORE_URL]", appstoreUrl)
-    .replace("[CONTENT_TITLE]", content_type);
+    .replace("[CITY]", city)
+    .replace("[REGION]", region)
+    .replace("[SHOW_ID]", showId)
+    .replace("[CATEGORIES]", categories);
 
-  console.log("finalAdurl", finalAdurl);
+  console.log("ad-link", finalAdurl);
   return finalAdurl;
 };
 
-export const ssaiAdParam = async (videoDetails) => {
-  const currentLocation = JSON.parse(localStorage.getItem("currentLocation"));
-
-  var adParams = {
-    adsParams: {
-      advid: "",
-      appname: videoDetails.channel_name,
-      bundleid: "https://gethappi.tv/",
-      channelid: String(videoDetails.channel_id),
-      country: currentLocation && currentLocation.country_code,
-      description_url: "HappiTV",
-      device_make: navigator.userAgent,
-      device_model: navigator.userAgent,
-      device_type: navigator.userAgent,
-      deviceid: localStorage.getItem("deviceId"),
-      dnt: "true",
-      height: String(window.innerHeight),
-      ip: currentLocation && currentLocation.IPv4,
-      kwds: "HappiTV",
-      lat: currentLocation && String(currentLocation.latitude),
-      lon: currentLocation && String(currentLocation.longitude),
-      totalduration: "",
-      ua: navigator.userAgent,
-      userid: String(localStorage.getItem("userId")),
-      uuid: "",
-      videoid: videoDetails.video_id && String(videoDetails.video_id),
-      width: String(window.innerWidth),
-    },
-  };
-
-  return adParams;
+export const clearUserData = () => {
+  localStorage.removeItem("userName");
+  localStorage.removeItem("userId");
+  localStorage.removeItem("deviceAnalytics");
+  // service.setCookie("isLoggedIn", false, 30);
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("showId");
+  eraseCookie("isLoggedIn");
+  eraseCookie("showId");
+  eraseCookie("videoId");
+  eraseCookie("userName");
+  eraseCookie("userId");
+  eraseCookie("userEmail");
+  eraseCookie("subscriptionId");
+};
+const eraseCookie = (name) => {
+  document.cookie = name + "=; Max-Age=-99999999;";
 };

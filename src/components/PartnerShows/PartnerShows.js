@@ -22,14 +22,6 @@ const PartnerShows = () => {
                 setPartnerDetails(response.data);
                 setPartnerCategory(response.data.shows);
             }
-            // if (response.status === 'success') {
-            //     setPartnerDetails(response.data);
-            //     setPartnerCategory(response.data.shows);
-               
-            // } else {
-            //     history.goBack();
-            // }
-
 
         })
 
@@ -51,7 +43,7 @@ const PartnerShows = () => {
                         ></div>
                         <div className="moviePageContainer">
                             <div className="vpContent">
-                                <div className="container vpContainer" style={{maxWidth:"1400px", paddingRight:"5px", paddingLeft:"10px"}}>
+                                <div className="container vpContainer">
                                     <div className="row vp3Section">
                                         <div className="col col-5-5">
                                             <div className="vpLeftSection partnerDetailLeftSection" >
@@ -80,14 +72,12 @@ const PartnerShows = () => {
                                                             <div className="col">
                                                                 <div>
                                                                     {
-                                                                        item.show_name && <div className="heading hover" 
-                                                                        onClick={() => { history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${item.show_id}`) }) }}
-                                                                        style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.show_name}</div>
+                                                                        item.show_name && <div className="heading" style={{ fontWeight: '800', paddingBottom: '7px', fontSize: '15pt' }}>{item.show_name}</div>
                                                                     }
                                                                     <div className="carousel carouselNoMask">
                                                                         <div className="carouselContent">
                                                                             {
-                                                                                item.videos && <PartnerCategoryContainer param={item}/>
+                                                                                item.videos && <PartnerCategoryContainer param={item.videos} />
                                                                             }
                                                                         </div>
                                                                     </div>

@@ -1,19 +1,19 @@
 /*!
-Theme Name: happiTV
+Theme Name: discoverTV
 Theme URI: http://underscores.me/
 Author: HyQuality
 Author URI: http://underscores.me/
-Description: Custom theme: happiTV, developed by HyQuality
+Description: Custom theme: discoverTV, developed by HyQuality
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: LICENSE
-Text Domain: happi
+Text Domain: discover
 Tags: custom-background, custom-logo, custom-menu, featured-images, threaded-comments, translation-ready
 
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 
-happiTV is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
+discoverTV is based on Underscores https://underscores.me/, (C) 2012-2017 Automattic, Inc.
 Underscores is distributed under the terms of the GNU GPL v2 or later.
 
 Normalizing styles have been helped along thanks to the fine work of
@@ -559,10 +559,7 @@ textarea {
 ## Links
 --------------------------------------------------------------*/
 a {
-    color: rgb(138, 10, 10);
-}
-a:hover{
-    color: red;
+    color: royalblue;
 }
 
 a:visited {

@@ -4,12 +4,11 @@ import { service } from "../../network/Home/service";
 import { convertTime } from "../../Utils/utils";
 import { useSelector, useDispatch } from "react-redux";
 import Notification from "../../common/Notification";
-import premium from "../../images/Image.png";
 import $ from "jquery";
+import freeTag from "../../images/free1.png";
 const queryString = require("query-string");
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
-var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 
 const Search = ({ history }) => {
   var { search } = useLocation();
@@ -66,26 +65,26 @@ const Search = ({ history }) => {
   };
 
   const functionOnClick = (show) => {
-    console.log("show222222", show);
-    if (show.video_id) {
-      // history.push({
-      //   pathname: "/videoplayer",
-      //   search: encodeURI(
-      //     `show_id=${show.show_id}&single_video=${show.single_video}&video_id=${show.video_id}`
-      //   ),
-      // });
-      history.push({
-        pathname: "/home/movies",
-        search: encodeURI(
-          `show_id=${show.show_id}&is_fr=${show.is_free_video}`
-        ),
-      });
-    } else {
+    if (show.show_id) {
       history.push({
         pathname: "/home/movies",
         search: encodeURI(`show_id=${show.show_id}`),
+        state: { showId: show.show_id },
       });
     }
+
+    // const shows = { ...show, video_id: 7832 };
+
+    // history.push({
+    //   pathname: "/videoplayer",
+    //   state: { show_details: shows, singleVideo: 0, showId: 3629 },
+    // });
+
+    // if (show.video_id) {
+    //     history.push({ pathname: '/videoplayer', state: { show_details: show, singleVideo: show.single_video, showId: show.show_id } })
+    // } else {
+    //     history.push({ pathname: '/home/movies', search: encodeURI(`show_id=${show.show_id}`), state: { showId: show.show_id } })
+    // }
   };
 
   return (
@@ -111,7 +110,7 @@ const Search = ({ history }) => {
                   show.map((show, index) => {
                     return (
                       <div
-                        className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2"
+                        className="col col-12 col-lg-4 col-xl-2-5 col-xxl-2"
                         key={index}
                       >
                         <div className="movieTileMargin movieTile">
@@ -129,21 +128,6 @@ const Search = ({ history }) => {
                               hoverFunction(false, index);
                             }}
                           >
-                            {" "}
-                            {show.is_free_video == false && (
-                              <img
-                                src={premium}
-                                style={{
-                                  position: "absolute",
-                                  display: "flex",
-                                  top: "0px",
-                                  zIndex: "2",
-                                  width: "35px",
-                                  paddingTop: "4px",
-                                  paddingLeft: "4px",
-                                }}
-                              />
-                            )}
                             <div
                               onClick={() => {
                                 functionOnClick(show);
@@ -177,20 +161,9 @@ const Search = ({ history }) => {
                                 ></path>
                               </svg>
                             </div>
-                            {show.single_video === 0 ? (
+                            {show.logo && (
                               <div
-                                className="moviePoster"
-                                style={{
-                                  backgroundImage: `url(${
-                                    videoImageUrl + show.thumbnail
-                                  })`,
-                                }}
-                              >
-                                <div className="FeNml"></div>
-                              </div>
-                            ) : (
-                              <div
-                                className="moviePoster"
+                                className="moviePoster imageSizeAdj thumbImage"
                                 style={{
                                   backgroundImage: `url(${
                                     showsImageUrl + show.logo
@@ -200,6 +173,7 @@ const Search = ({ history }) => {
                                 <div className="FeNml"></div>
                               </div>
                             )}
+
                             <div
                               className={
                                 hover === true && focusedId === index
@@ -247,6 +221,11 @@ const Search = ({ history }) => {
                                 ) : null}
                               </div>
                             </div>
+                            {show.is_free_video == false ? (
+                              <div className="freeTagWrapper">
+                                <img src={freeTag} />
+                              </div>
+                            ) : null}
                           </div>
                           <section className="movieTextWrapper movieTextWrapperPadding">
                             <div className="movieTextFlex">
@@ -257,47 +236,96 @@ const Search = ({ history }) => {
                                     onClick={() => {
                                       functionOnClick(show);
                                     }}
-                                    style={{ display: "flex" }}
                                   >
-                                    {show.show_name}&nbsp;
-                                    {show.single_video === 0 ? (
-                                      <div>
-                                        (
-                                        {show.video_title &&
-                                        show.video_title.length > 26
-                                          ? show.video_title.slice(0, 26) + ".."
-                                          : show.video_title}
-                                        )
-                                      </div>
-                                    ) : null}
+                                    {show.show_name}
                                   </div>
                                 )}
+                                {show.single_video === 0 ? (
+                                  <div
+                                    className="linkButton movieTextHeading"
+                                    onClick={() => {
+                                      functionOnClick(show);
+                                    }}
+                                  >
+                                    ({show.video_title})
+                                  </div>
+                                ) : null}
                               </h3>
                               <div className="movieCatYear">
                                 <div style={{ width: "130px" }}>
-                                  {show.teaser_duration && (
-                                    <div className="movieYear">
-                                      <div className="_1MmGl">
-                                        {convertTime(show.teaser_duration)}
+                                  <div className="movieYear">
+                                    {show.duration_text && show.year ? (
+                                      <div className="movieYear">
+                                        <div className="_1MmGl">
+                                          ({show.year}) . {show.duration_text}
+                                        </div>
                                       </div>
-                                    </div>
-                                  )}
-
+                                    ) : show.duration_text ? (
+                                      <div className="movieYear">
+                                        <div className="_1MmGl">
+                                          {show.duration_text}
+                                        </div>
+                                      </div>
+                                    ) : show.year ? (
+                                      <div className="movieYear">
+                                        <div className="_1MmGl">
+                                          ({show.year})
+                                        </div>
+                                      </div>
+                                    ) : null}
+                                  </div>
                                   <div className="movieCategory mcMargin">
-                                    {show.category_name &&
-                                      show.category_name.map((item, index) => {
+                                    {show.category_names && show.category_names}
+                                    {show.categories &&
+                                      show.categories.map((item, index) => {
                                         if (
                                           index ===
-                                          show.category_name.length - 1
+                                          show.categories.length - 1
                                         ) {
-                                          return <div key={index}>{item}</div>;
+                                          return item.category_name;
+                                          {
+                                            /* return (
+                                            <div
+                                              key={index}
+                                              style={{ cursor: "pointer" }}
+                                              className="linkhover"
+                                              onClick={() => {
+                                                history.push({
+                                                  pathname:
+                                                    "/home/categorylist",
+                                                  search: encodeURI(
+                                                    `category_id=${item.category_id}&category_name=${item.category_name}`
+                                                  ),
+                                                });
+                                              }}
+                                            >
+                                              {item.category_name}
+                                            </div>
+                                          ); */
+                                          }
                                         } else {
-                                          return (
-                                            <div key={index}>
-                                              {item}
+                                          return item.category_name + ",";
+                                          {
+                                            /* return (
+                                            <div
+                                              style={{ cursor: "pointer" }}
+                                              className="linkhover"
+                                              onClick={() => {
+                                                history.push({
+                                                  pathname:
+                                                    "/home/categorylist",
+                                                  search: encodeURI(
+                                                    `category_id=${item.category_id}&category_name=${item.category_name}`
+                                                  ),
+                                                });
+                                              }}
+                                              key={index}
+                                            >
+                                              {item.category_name}
                                               {","}&nbsp;
                                             </div>
-                                          );
+                                          ); */
+                                          }
                                         }
                                       })}
                                   </div>

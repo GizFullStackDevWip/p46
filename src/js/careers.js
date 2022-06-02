@@ -1,7 +1,7 @@
 import $ from 'jquery';
 $(document).ready(function(){
     // CAREERS WORK TOGETHER SECTION CAROUSEL
-    $('.happi_images_carousel').slick({
+    $('.discover_images_carousel').slick({
       infinite: true,
       speed: 300,
       dots: false,

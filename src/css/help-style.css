@@ -522,10 +522,9 @@ ul {
 
 /***** Footer *****/
 .footer {
-  border-top: 1px solid rgb(0, 0, 0);
+  border-top: 1px solid #ddd;
   margin-top: 60px;
   padding: 30px 0;
-  border-top: 2px solid red;
 }
 
 .footer a {
@@ -653,7 +652,7 @@ ul {
   width: 100%;
 }
 
-.happiTitle {
+.discoverTitle {
   color: #000000;
   font-size: 35px;
   font-weight: 400;

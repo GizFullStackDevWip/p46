@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { service } from "../../network/service";
+import { service } from "../../Network/service";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
@@ -79,7 +79,7 @@ const Subscription = ({ param, msgHandler }) => {
       <div>
         <div className="movieTile mytitle" key={index}>
           <div>
-            <div className="moviePoster" style={{ padding: "0% 0" }}>
+            <div className="moviePoster" style={{ padding: "20% 0" }}>
               <div className="FeNml"></div>
               <button
                 type="button"
@@ -126,7 +126,7 @@ const Subscription = ({ param, msgHandler }) => {
       </div>
     );
     subItems.push(subItem);
-    if ((index + 1) % 4 == 0 || (index + 1) == param.length) {
+    if ((index + 1) % 4 == 0 || index + 1 == param.length) {
       let mainItem = (
         <div>
           <div className="carouselContent" style={subscriptionForMob()}>
@@ -138,8 +138,6 @@ const Subscription = ({ param, msgHandler }) => {
       subItems = [];
     }
   });
-  return (
-      {mainItems}
-  );
+  return { mainItems };
 };
 export default Subscription;

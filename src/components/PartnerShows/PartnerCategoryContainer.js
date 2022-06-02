@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Carousel from 'react-multi-carousel';
-import ReadMoreAndLess from 'react-read-more-less';
 import { convertSecondsToMin } from '../../Utils/utils';
 
 var imageUrl = 'https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/';
 
 const PartnerCategoryContainer = ({ param }) => {
-    const [similarShows, setSetimilarShows] = useState(param.videos);
+    const [similarShows, setSetimilarShows] = useState(param);
     const history = useHistory();
     const [hover, setHover] = useState(false);
     const [focusedId, setFocusedId] = useState(-1);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        console.log('param',param);
     }, []);
 
     const responsive = {
@@ -38,7 +36,7 @@ const PartnerCategoryContainer = ({ param }) => {
 
     const functionOnclick = (show) => {
         history.push(
-            { pathname: '/videoplayer',search: encodeURI(`show_id=${show.show_id}&single_video=${param.single_video}&video_id=${show.video_id}`)}
+            { pathname: '/videoplayer', state: { show_details: show } }
         )
     }
     const hoverFunction = (flag, index) => {
@@ -51,16 +49,14 @@ const PartnerCategoryContainer = ({ param }) => {
                 similarShows &&
                 similarShows.map((show, index) => {
                     return (
-                        <div className="col col-3" key={index}>
+                        <div className="col col-5" key={index}>
                             <div className="movieTile">
                                 <div className="movieTileImage" className={hover === true && focusedId === index ? "movieTileImage movieTileImageOpen" : "movieTileImage"} id={index}
                                     onMouseOver={() => { hoverFunction(true, index) }}
                                     onMouseLeave={() => { hoverFunction(false, index) }}>
                                     <div onClick={() => { functionOnclick(show) }} className={hover === true && focusedId === index ? "movieTileIcon " : "movieTileIcon  movieTileHoverOpened"}>
                                         {hover === true && focusedId === index ?
-                                            <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} 
-                                            // onClick={() => { functionOnclick(show) }}
-                                            >
+                                            <svg className="svgIcon movieTilePlayIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 62 62" style={{ fill: 'currentcolor' }} onClick={() => { functionOnclick(show) }}>
                                                 <circle r="30" stroke="currentColor" fill="none" strokeWidth="2" cx="31" cy="31"></circle>
                                                 <path fill="currentColor" d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"></path>
                                             </svg>
@@ -100,15 +96,8 @@ const PartnerCategoryContainer = ({ param }) => {
 
                                                 {
                                                     show.video_description &&
-                                                    <div className="movieCategory mcMargin">
-                                                        <ReadMoreAndLess
-                                                            className="read-more-content"
-                                                            charLimit={85}
-                                                            readMoreText="Read more"
-                                                            readLessText="Read less"
-                                                        >
-                                                            {show.video_description}
-                                                        </ReadMoreAndLess>
+                                                    <div className="movieCategory mcMargin" >
+                                                        {show.video_description.slice(0, 90) + '...'}
                                                     </div>
                                                 }
                                             </div>

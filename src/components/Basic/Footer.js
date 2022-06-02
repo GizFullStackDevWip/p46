@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FooterInfo from "../Basic/FooterInfo";
 import { Link, useHistory, Redirect, useLocation } from "react-router-dom";
-import investorBanner from "../../images/piecapital.png";
-import "./Footer.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import logo from '../../images/logo.png'
-import { pick } from "query-string";
+import appLogo from "../../images/logo.png";
+
 const Footer = () => {
   const history = useHistory();
   const location = useLocation();
@@ -18,34 +15,29 @@ const Footer = () => {
   } else {
     return (
       <div className="footer">
+   
         <div className="container">
           <div className="row footerLogoSocial">
             <Link to="/home">
               <div className="footerLogo">
-                <img
-                  src={
-                    logo
-                  }
-                  style={{ cursor: "pointer" }}
-                  width={150}
-                />
+                <img src={appLogo} style={{ cursor: "pointer" }} width={70} />
               </div>
             </Link>
             <div className="_23TJ8"></div>
             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 socialTray">
               <div className="socialLinkContainer">
                 <div className="footerSLWrapper">
-                  <a
+                <a
                     href="https://www.Facebook.com/runwaytv"
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerFacebook"
                   >
-                    <svg
+                    <svg style={{color:'red'}}
                       className="svgIcon facebookIcon"
                       preserveAspectRatio="xMidYMid meet"
                       viewBox="0 0 20 20"
-                      style={{ fill: "currentcolor" }}
+                      
                     >
                       <path
                         fill="currentColor"
@@ -60,11 +52,11 @@ const Footer = () => {
                     target="_blank"
                     className="linkButton footerInsta"
                   >
-                    <svg
+                    <svg style={{color:'red'}}
                       className="svgIcon"
                       preserveAspectRatio="xMidYMid meet"
                       viewBox="0 0 20 20"
-                      style={{ fill: "currentcolor" }}
+                      
                     >
                       <g fill="currentColor" fillRule="evenodd">
                         <path d="M10 0C7.284 0 6.944.012 5.877.06 4.813.11 4.087.278 3.45.525c-.658.256-1.216.598-1.772 1.153C1.123 2.234.78 2.792.525 3.45.278 4.086.11 4.812.06 5.877.012 6.944 0 7.284 0 10s.012 3.057.06 4.123c.05 1.065.218 1.79.465 2.428.256.658.598 1.216 1.153 1.77.556.558 1.114.9 1.772 1.155.636.248 1.363.417 2.427.464 1.067.048 1.407.06 4.123.06s3.057-.012 4.123-.06c1.064-.048 1.79-.217 2.428-.465.658-.255 1.216-.597 1.77-1.154.558-.554.9-1.112 1.155-1.77.248-.636.417-1.362.464-2.427.048-1.066.06-1.407.06-4.123s-.012-3.056-.06-4.123c-.048-1.065-.217-1.79-.465-2.427-.255-.658-.597-1.216-1.154-1.772-.554-.555-1.112-.897-1.77-1.153C15.915.278 15.188.11 14.124.06 13.057.012 12.716 0 10 0m0 2c2.606 0 2.914.01 3.943.057.952.044 1.468.202 1.812.336.455.177.78.39 1.123.73.34.34.552.667.73 1.12.133.346.292.862.335 1.814C17.99 7.087 18 7.394 18 10s-.01 2.914-.057 3.943c-.043.952-.202 1.468-.335 1.812-.178.455-.39.78-.73 1.123-.343.34-.668.552-1.123.73-.344.133-.86.292-1.812.335-1.03.047-1.337.057-3.943.057s-2.914-.01-3.943-.057c-.952-.043-1.468-.202-1.813-.335-.454-.178-.78-.39-1.12-.73-.342-.343-.554-.668-.73-1.123-.135-.344-.293-.86-.337-1.812C2.01 12.913 2 12.606 2 10s.01-2.914.057-3.943c.044-.952.202-1.468.336-1.813.177-.454.39-.78.73-1.12.34-.342.667-.554 1.12-.73.346-.135.862-.293 1.814-.337C7.087 2.01 7.394 2 10 2"></path>
@@ -72,6 +64,8 @@ const Footer = () => {
                       </g>
                     </svg>
                   </a>
+                  
+
                   <a
                     href="https://www.Twitter.com/runwaytv"
                     rel="noopener"
@@ -84,52 +78,14 @@ const Footer = () => {
                       viewBox="0 0 20 17"
                       style={{ fill: "currentcolor" }}
                     >
-                      <path
+                      <path style={{color:'red'}}
                         d="M6 17c7.837 0 11.965-6.156 12-11-.035-.67-.035-.844 0-1 .756-.59 1.45-1.297 2-2-.75.218-1.543.433-2 1 .5-.978 1.14-1.77 1-3-.358.763-1.24 1.095-2 1C15.29.647 12.69.568 11 2c-1.03 1.084-1.48 2.555-1 4-3.45-.204-6.524-1.74-9-4C.303 3.584.86 5.945 3 7c-.99.11-1.63-.062-2 0-.2 1.6 1.178 3.255 3 4-.512-.202-1.146-.178-2 0 .777 1.35 2.318 2.478 4 3-1.38.635-3.175 1.246-5 1-.35.244-.675.223-1 0 1.877 1.37 4.06 2 6 2"
                         fill="currentColor"
                         fillRule="evenodd"
                       ></path>
                     </svg>
                   </a>
-
-                  <div className="tumblrICON"></div>
                   
-
-
-                  <a
-                    href="https://www.runwaytv.tumblr.com"
-                    rel="noopener"
-                    target="_blank"
-                    className="linkButton footerTwitter"
-                  >
-                    <svg
-                      className="svgIcon"
-                      preserveAspectRatio="xMidYMid meet"
-                      viewBox="0 0 20 17"
-                      style={{ fill: "currentcolor" }}
-                    >
-                      <path
-                        d="M256,0C115.03,0,0,115.05,0,256c0,140.97,115.05,256,256,256c140.97,0,256-115.05,256-256C512,115.03,396.95,0,256,0z M256,482C131.383,482,30,380.617,30,256S131.383,30,256,30s226,101.383,226,226S380.617,482,256,482z"
-                        fill="currentColor"
-                        fillRule="evenodd"
-                      ></path>
-                    </svg>
-                  </a>
-
-
-
-
-
-                  {/* <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                    width="50" height="50"
-                    viewBox="0 0 50 50"
-                    style=" fill:#fff;">
-                    <path d="M 40 0 L 10 0 C 4.484375 0 0 4.484375 0 10 L 0 40 C 0 45.515625 4.484375 50 10 50 L 40 50 C 45.515625 50 50 45.515625 50 40 L 50 10 C 50 4.484375 45.515625 0 40 0 Z M 34 40.238281 C 34 40.363281 33.945313 40.480469 33.855469 40.5625 C 33.738281 40.664063 31.011719 43 24.742188 43 C 17.230469 43 17 34.617188 17 33.664063 L 17 23.011719 L 13.429688 23 C 13.191406 23 13 22.816406 13 22.578125 L 13 18.808594 C 13 18.632813 13.109375 18.472656 13.273438 18.40625 C 13.34375 18.382813 20.058594 15.773438 20.058594 9.429688 C 20.058594 9.191406 20.253906 9 20.492188 9 L 24.578125 9 C 24.816406 9 25.007813 9.191406 25.007813 9.429688 L 25 17 L 31.5625 17 C 31.800781 17 31.992188 17.207031 31.992188 17.445313 L 31.992188 22.554688 C 31.992188 22.789063 31.800781 23 31.5625 23 L 25 23 C 25 23 25 33.253906 25 33.503906 C 25 33.75 25.226563 36.765625 28.433594 36.765625 C 31.089844 36.765625 33.320313 35.398438 33.34375 35.382813 C 33.476563 35.296875 33.640625 35.292969 33.777344 35.371094 C 33.914063 35.445313 34 35.589844 34 35.746094 Z"></path></svg> */}
-                  {/* <a href="https://www.linkedin.com" rel="noopener" target="_blank" className="linkButton footerLinkedIn">
-                                    <svg className="svgIcon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 15 15" style={{ fill: 'currentcolor' }}>
-                                        <path d="M13.89 0H1.11A1.1 1.1 0 0 0 0 1.08v12.84A1.1 1.1 0 0 0 1.11 15h12.78A1.1 1.1 0 0 0 15 13.92V1.08A1.1 1.1 0 0 0 13.89 0zM4 13H2V5h2zm0-9H2V2h2zm9 9h-2.24V9.2c0-.91 0-2.07-1.17-2.07s-1.35 1-1.35 2V13H6V5.19h2.15v1.07A2.33 2.33 0 0 1 10.31 5C12.58 5 13 6.62 13 8.72z"></path>
-                                    </svg>
-                                </a> */}
                 </div>
               </div>
             </div>
@@ -145,7 +101,7 @@ const Footer = () => {
                 <li>
                   {" "}
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     onClick={() => {
                       functionOnclick("/aboutus");
                     }}
@@ -156,19 +112,16 @@ const Footer = () => {
                     About Us
                   </div>
                 </li>
-                {/* <li> <a rel="noopener" target="_self" className="linkButton">Careers</a></li> */}
                 <li>
-                  <div
-                    style={{ color: "white" }}
+                  {/* <a
                     rel="noopener"
-                    target="_self"
-                    onClick={() => {
-                      window.location.href = "https://www.runwaytv.com/contact-runway/"
-                    }}
+                    target="_blank"
+                    href="https://www.outdoorchannelplus.com/"
+                    style={{ color: "#fff" }}
                     className="linkButton"
-                  >
-                    Contact
-                  </div>
+                  > */}
+                    Official Website
+                  {/* </a> */}
                 </li>
               </ul>
             </div>
@@ -177,7 +130,7 @@ const Footer = () => {
                 <li className="footerMenuHead">SUPPORT</li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     className="linkButton"
                     onClick={() => {
                       functionOnclick("/contactsupport");
@@ -196,7 +149,7 @@ const Footer = () => {
                 <li className="footerMenuHead">PARTNERS</li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     rel="noopener"
                     target="_self"
                     onClick={() => {
@@ -209,7 +162,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     className="linkButton"
                     onClick={() => {
                       functionOnclick("/contactsupport");
@@ -223,12 +176,17 @@ const Footer = () => {
             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">GET THE APPS</li>
+                {/* <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://apps.apple.com/in/app/boondock-nation/id1448300263') }} rel="noopener" target="_self" className="linkButton">iOS</div></li> */}
+                {/* <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://play.google.com/store/apps/details?id=com.discovermediaworks.boondocktemplate') }} rel="noopener" target="_self" className="linkButton">Android</div></li> */}
+                {/* <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://channelstore.roku.com/details/16f2a379ecb08501662e6c33d49cf369/boondock-nation') }} rel="noopener" target="_self" className="linkButton">Roku</div></li> */}
+                {/* <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://www.amazon.com') }} rel="noopener" target="_self" className="linkButton">Amazon Fire</div></li> */}
+
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     // onClick={() => {
                     //   window.open(
-                    //     ""
+                    //     "https://apps.apple.com/in/app/boondock-nation/id1448300263"
                     //   );
                     // }}
                     rel="noopener"
@@ -240,10 +198,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     // onClick={() => {
                     //   window.open(
-                    //     "#"
+                    //     "https://play.google.com/store/apps/details?id=com.discovermediaworks.boondocktemplate"
                     //   );
                     // }}
                     rel="noopener"
@@ -255,10 +213,10 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     // onClick={() => {
                     //   window.open(
-                    //     "#"
+                    //     "https://channelstore.roku.com/details/16f2a379ecb08501662e6c33d49cf369/boondock-nation"
                     //   );
                     // }}
                     rel="noopener"
@@ -270,12 +228,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
-                    // onClick={() => {
-                    //   window.open(
-                    //     "#"
-                    //   );
-                    // }}
+                    style={{ color: "#fff" }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -285,45 +238,62 @@ const Footer = () => {
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     // onClick={() => {
                     //   window.open(
-                    //     "#"
+                    //     "https://play.google.com/store/apps/details?id=com.boondocknationtv.template&hl=en&gl=US"
                     //   );
                     // }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
                   >
-                    Android Tv
+                    Android TV
+                  </div>
+                </li>
+                <li>
+                  <div
+                    style={{ color: "#fff" }}
+                    rel="noopener"
+                    target="_self"
+                    className="linkButton"
+                  >
+                    Apple TV
                   </div>
                 </li>
               </ul>
             </div>
-
             <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">LEGAL</li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     onClick={() => {
                       functionOnclick("/privacypolicy");
                     }}
+                    // onClick={() => {
+                    //   window.open(
+                    //     "https://www.outdoorchannel.com/privacy/247031"
+                    //   );
+                    // }}
                     className="linkButton"
                   >
-                    Privacy Policy (Updated)
+                    Privacy Policy
                   </div>
                 </li>
                 <li>
                   <div
-                    style={{ color: "white" }}
+                    style={{ color: "#fff" }}
                     onClick={() => {
                       functionOnclick("/termsandconditions");
                     }}
+                    // onClick={() => {
+                    //   window.open("https://www.outdoorchannel.com/terms/99078");
+                    // }}
                     className="linkButton"
                   >
-                    Terms of Use (Updated)
+                    Terms of Use
                   </div>
                 </li>
                 {/* <li><div style={{ color: '#fff' }} className="linkButton"
@@ -332,7 +302,6 @@ const Footer = () => {
                 {/* <li><a className="linkButton" >Do Not Sell My Personal Information</a></li> */}
               </ul>
             </div>
-
           </div>
         </div>
         <FooterInfo />
