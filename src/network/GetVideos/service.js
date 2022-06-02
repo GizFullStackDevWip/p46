@@ -190,7 +190,7 @@ function onVideoPlayFunction(values, event) {
     user_id: uId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 140,
+    app_id: 160,
     channel_id: values.channel_id,
     event_type: event,
     video_id: values.video_id,
