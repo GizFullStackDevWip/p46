@@ -30,7 +30,10 @@ const CategoryList = () => {
   }, [search]);
 
   const updateUseEffect = () => {
-    if (parsed.category_id === "playlist") {
+    
+    console.log("list");
+    if (parsed.category_id === "99991") {
+      console.log("list",parsed.category_id);
       let isLoggedIn = localStorage.getItem("isLoggedIn");
       let userId = service.getCookie("userId");
       if (isLoggedIn === "true" && userId) {
@@ -41,12 +44,20 @@ const CategoryList = () => {
           }
         });
       }
-    } else if (parsed.category_id === "free__videos") {
+    } else if (parsed.category_id === "99993") {
       service.freeVideos().then((response) => {
+        console.log("freeeee",response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } else {
+    } else if (parsed.category_id === "99992") {
+      service.getContinueWatchingVideos().then((response) => {
+        console.log("freeeee",response);
+        setShowName(parsed.category_name);
+        setShowList(response.data);
+      });
+    } 
+    else {
       service.showsByCategory(parsed.category_id).then((response) => {
         if (response.success == true && response.data) {
           setShowName(parsed.category_name);
@@ -195,7 +206,7 @@ const CategoryList = () => {
                                     backgroundImage:
                                       "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5)), url(./images/adventures/adventures-04.jpg)",
                                     backgroundPosition: "center bottom",
-                                    backgroundSize: "cover",
+                                    backgroundSize: "cover", width:"260px"
                                   }}
                                 ></div>
                                 {show.watchlist_flag === 1 ? (

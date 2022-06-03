@@ -461,7 +461,7 @@ const Show = ({ param, update, categoryId, funcc }) => {
                           backgroundImage:
                             "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))",
                           backgroundPosition: "center bottom",
-                          backgroundSize: "cover",
+                          backgroundSize: "cover", width: "260px"
                         }}
                       ></div>
                       {show.watchlist_flag === 1 ? (

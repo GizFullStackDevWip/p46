@@ -7,7 +7,6 @@ import LiveSchedule from "./LiveSchedule";
 import Notification from "../../common/Notification";
 import $ from "jquery";
 // import Banner from "./Banner";
-
 const Home = () => {
   const [category, setCategory] = useState([]);
   const [playLink, setPlayLink] = useState(``);
@@ -18,7 +17,6 @@ const Home = () => {
   let scrollHeight = 100
   let maxScrollExceed = false;
   let loadedRows = []
-
   useEffect(() => {
     window.scrollTo(0, 0);
     $(".menuItemContainer").addClass("menuClose");
@@ -34,9 +32,7 @@ const Home = () => {
       }
     });
   }, [login]);
-
   useEffect(() => {
-
     let prevPosition = 0
     let newPosition = 0
     let currentPosition = 0
@@ -52,7 +48,6 @@ const Home = () => {
       prevPosition = newPosition;
     });
   }, []);
-
   const liveFetch = (linkForLive) =>{
     setPlayLink(linkForLive);
     console.log(`from home:`,linkForLive)
@@ -74,70 +69,9 @@ const Home = () => {
       });
     }, 1000);
   };
-  // const updateFuction = () => {
-  //   if (loadMore === true) {
-  //     let continueWatchingArray = [];
-  //     service.getshowsbyCategory().then((response) => {
-  //       if (response.success === true && response.data.length > 0) {
-  //         // setCategoryOrgLength(0);
-  //         var data = response.data;
-  //         setCategory(data);
-  //         let isLoggedIn = localStorage.getItem("isLoggedIn");
-  //         if (isLoggedIn == "true") {
-  //           service.getContinueWatchingVideos().then((response) => {
-  //             if (
-  //               response.success == true &&
-  //               response.data &&
-  //               response.data.length > 0
-  //             ) {
-  //               let continueWatching = {};
-  //               continueWatching.category_id = "continuewatching";
-  //               continueWatching.category_name = "Continue Watching";
-  //               continueWatching.shows = response.data;
-  //               continueWatchingArray.push(continueWatching);
-  //               setContinueWatching(continueWatchingArray);
-  //             }
-  //           });
-  //         }
-  //       }
-  //     });
-  //   } else {
-  //     var singleObj = [];
-  //     let continueWatchingArray = [];
-  //     service.getshowsbyCategory().then((response) => {
-  //       if (response.success === true && response.data.length > 0) {
-  //         // setCategoryOrgLength(response.data.length);
-  //         var data = response.data;
-  //         data.map((item, index) => {
-  //           if (index < 4) {
-  //             singleObj.push(item);
-  //           }
-  //         });
-  //         setCategory(singleObj);
-        
-  //         let isLoggedIn = localStorage.getItem("isLoggedIn");
-  //         if (isLoggedIn == "true") {
-  //           service.getContinueWatchingVideos().then((response) => {
-  //             if (
-  //               response.success == true &&
-  //               response.data &&
-  //               response.data.length > 0
-  //             ) {
-  //               let continueWatching = {};
-  //               continueWatching.category_id = "continuewatching";
-  //               continueWatching.category_name = "Continue Watching";
-  //               continueWatching.shows = response.data;
-  //               continueWatchingArray.push(continueWatching);
-  //               setContinueWatching(continueWatchingArray);
-  //             }
-  //           });
-  //         }
-  //       }
-  //     });
-  //   }
-  // };
-
-
+  const updateFuction = () => {
+ console.log("updated");
+  };
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
   };
@@ -145,9 +79,8 @@ const Home = () => {
     <div className="pageWrapper searchPageMain">
       <div className="topContainer">
         <div className="homepageWrapper menuCloseJS closeMenuWrapper">
-          
           {signInBlock === true ? <Notification /> : null}
-          <LiveContainer param={playLink} />
+          <LiveContainer param={playLink}  />
           <LiveSchedule />
           {/* <Banner /> */}
           <div className="allCategoryContainer">
@@ -165,9 +98,8 @@ const Home = () => {
                 }
               })} */}
             {category &&
-              category.show_count !== "0" && 
+              category.show_count !== "0" &&
               category.map((category, index) => {
-                {console.log("categorytype",category.type);}
                 // if(category.type === "CONTINUE_WATCHING"){
                   // return (
                   //   <div key={index}>
@@ -175,7 +107,6 @@ const Home = () => {
                   //       param={category}
                   //     />
                   //   </div>
-                  
                   // );
                 // }else{
                   return (
@@ -183,12 +114,11 @@ const Home = () => {
                       <CategoryContainer
                         param={category}
                         funcc={liveFetch}
+                        clickHandler={updateFuction}
                       />
                     </div>
-                  
                   );
                 // }
-              
               })}
           </div>
         </div>
