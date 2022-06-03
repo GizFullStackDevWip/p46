@@ -533,7 +533,11 @@ const VideoDetails = (categoryId, episode) => {
       });
     }
   };
+  const onNewsClick = (videoDetails) => {
+    ToastsStore.warning("Oops!!! There is no video for this news...");
+  };
   const onWatchClick = (videoDetails) => {
+    // ;
     console.log("showDetailsq", videoDetails);
     let user_id = service.getCookie("userId");
     if (user_id == null || user_id == service.getCookie("guestUserId")) {
@@ -629,6 +633,8 @@ const VideoDetails = (categoryId, episode) => {
             }
           });
         });
+      } else if (videoDetails && videoDetails.videos[0] === null) {
+        ToastsStore.warning("Oops!!! There is no video for this news...");
       } else if (
         // {
         // if (
@@ -773,14 +779,26 @@ const VideoDetails = (categoryId, episode) => {
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${showsImageUrl + showDetails.logo})`,
+                backgroundImage: `url(${
+                  showDetails.type === "linear_event"
+                    ? showDetails.logo
+                    : showDetails.type === "news"
+                    ? showDetails.logo_thumb
+                    : showsImageUrl + showDetails.logo
+                })`,
               }}
             ></div>
           ) : showDetails.single_video == 1 ? (
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${showsImageUrl + showDetails.logo})`,
+                backgroundImage: `url(${
+                  showDetails.type === "linear_event"
+                    ? showDetails.logo
+                    : showDetails.type === "news"
+                    ? showDetails.logo_thumb
+                    : showsImageUrl + showDetails.logo
+                })`,
               }}
             ></div>
           ) : null}
@@ -864,7 +882,11 @@ const VideoDetails = (categoryId, episode) => {
                           className="vpPoster"
                           style={{
                             backgroundImage: `url(${
-                              showsImageUrl + showDetails.logo
+                              showDetails.type === "linear_event"
+                                ? showDetails.logo
+                                : showDetails.type === "news"
+                                ? showDetails.logo_thumb
+                                : showsImageUrl + showDetails.logo
                             })`,
                             marginLeft: "7px",
                             // height: "385px",
@@ -874,15 +896,21 @@ const VideoDetails = (categoryId, episode) => {
                         <div
                           className="vpPoster"
                           style={{
-                            backgroundImage: `url(${
+                            backgroundImage:
+                              // `url(${
                               // showDetails.logo
-                              !showsImageUrl + showDetails.logo
-                                ? showsImageUrl + showDetails.logo
-                                : showDetails.logo_thumb
-                              // showDetails.logo_thumb  ? showDetails.logo_thumb :showsImageUrl+showDetails.logo
-                              // videoImageUrl + showDetails.logo
-                              // showsImageUrl+showDetails.logo
-                            })`,
+                              `url(${
+                                showDetails.type === "linear_event"
+                                  ? showDetails.logo
+                                  : showDetails.type === "news"
+                                  ? showDetails.logo_thumb
+                                  : showsImageUrl + showDetails.logo
+                              })`,
+                            // (!showsImageUrl+showDetails.logo )? showsImageUrl+showDetails.logo :showDetails.logo_thumb
+                            // showDetails.logo_thumb  ? showDetails.logo_thumb :showsImageUrl+showDetails.logo
+                            // videoImageUrl + showDetails.logo
+                            // showsImageUrl+showDetails.logo
+                            // })`,
                             marginLeft: "7px",
                             // height: "365px",
                           }}
@@ -893,45 +921,57 @@ const VideoDetails = (categoryId, episode) => {
                         style={{ marginTop: "7px" }}
                       >
                         <div className="vpLeftButtons">
-                          <button
-                            className="button buttonLarge buttonBlock vpWatchSeason innerPageBtnMargin"
-                            style={{ height: "41px" }}
-                            onClick={() => {
-                              if (showDetails.single_video === 1) {
-                                onWatchClick(
-                                  showDetails
-                                  // defaultOptions[0].videos[0],
-                                  // showDetails.single_video,
-                                  // showDetails.show_id
-                                );
-                              }
-                              else
-                              {
-                                onWatchBtnClick(
-                                  defaultOptions[0].videos[0],
-                                  showDetails.single_video,
-                                  showDetails.show_id
-                                );
-                              }
-                            }}
-                          >
-                            <div className="buttonBg rounderbutton"></div>
-                            <div className="buttonContent">
-                              {showDetails.single_video === 0 &&
-                              defaultOptions &&
-                              defaultOptions.length > 0 ? (
-                                <div className="vpWatchSeasonText">
-                                  {defaultOptions[0].season == null
-                                    ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
-                                    : `Watch S0${defaultOptions[0].season}:E0${defaultOptions[0].videos[0].video_order}`}
-                                </div>
-                              ) : showDetails.single_video === 1 ? (
-                                <div className="vpWatchSeasonText">
-                                  Watch Now
-                                </div>
-                              ) : null}
-                            </div>
-                          </button>
+                          {showDetails.type === "news" ||
+                          showDetails.video == [] ? (
+                            <div> </div>
+                          ) : (
+                            <button
+                              className="button buttonLarge buttonBlock vpWatchSeason innerPageBtnMargin"
+                              style={{ height: "41px" }}
+                              onClick={() => {
+                                if (
+                                  showDetails.type === "news" ||
+                                  showDetails.video == []
+                                ) {
+                                  onNewsClick();
+                                } else if (showDetails.single_video === 1) {
+                                  onWatchClick(showDetails);
+                                } else {
+                                  onWatchBtnClick(
+                                    defaultOptions[0].videos[0],
+                                    showDetails.single_video,
+                                    showDetails.show_id
+                                  );
+                                }
+                              }}
+                            >
+                              <div className="buttonBg rounderbutton"></div>
+                              <div className="buttonContent">
+                                {showDetails.single_video === 0 &&
+                                defaultOptions &&
+                                defaultOptions.length > 0 ? (
+                                  <div className="vpWatchSeasonText">
+                                    {defaultOptions[0].season == null
+                                      ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
+                                      : `Watch S0${defaultOptions[0].season}:E0${defaultOptions[0].videos[0].video_order}`}
+                                  </div>
+                                ) : showDetails.type === "news" ||
+                                  showDetails.video == [] ? (
+                                  <div
+                                    className="vpWatchSeasonText"
+                                    style={{ display: "none" }}
+                                  >
+                                    {" "}
+                                    News
+                                  </div>
+                                ) : showDetails.single_video === 1 ? (
+                                  <div className="vpWatchSeasonText">
+                                    Watch Now
+                                  </div>
+                                ) : null}
+                              </div>
+                            </button>
+                          )}
 
                           {showDetails.watchlist_flag === 1 ? (
                             <button
@@ -1008,27 +1048,22 @@ const VideoDetails = (categoryId, episode) => {
                                   className="_1TcfH _1Dgjh dropAdj"
                                   style={{ left: "7px" }}
                                 >
+                                  {console.log(`show details are:`, showDetails)}
                                   <FacebookShareButton
                                     url={
                                       "staging.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
-                                    // quote={
-                                    //   (showDetails.videos
-                                    //     ? showDetails.videos[0].video_title
-                                    //     : "") +
-                                    //   " || " +
-                                    //   showDetails.synopsis
-                                    // }
-
+                                    
+                                    
                                     quote={
                                       showDetails.show_name +
-                                      // " || " +
-                                      // (showDetails.videos
-                                      //   ? showDetails.videos[0].video_title
-                                      //   : "") +
                                       " || " +
-                                      showDetails.video_description
+                                      (showDetails.videos
+                                        ? showDetails.videos[0].video_title
+                                        : "") +
+                                      " || " +
+                                      showDetails.synopsis
                                     }
                                     className="share"
                                     style={{
@@ -1063,7 +1098,7 @@ const VideoDetails = (categoryId, episode) => {
                                         ? showDetails.videos[0].video_title
                                         : ""
                                     }
-                                    description={showDetails.video_description}
+                                    description={showDetails.synopsis}
                                     style={{
                                       display: "flex",
                                       flexDirection: "column",
@@ -1348,6 +1383,7 @@ const VideoDetails = (categoryId, episode) => {
                                                   backgroundPosition:
                                                     "center bottom",
                                                   backgroundSize: "cover",
+                                                  width: "260px",
                                                 }}
                                               ></div>
                                               {showDetails.watchlist_flag ===
@@ -1562,7 +1598,13 @@ const VideoDetails = (categoryId, episode) => {
                                           className="moviePoster"
                                           style={{
                                             backgroundImage: `url(${
-                                              showsImageUrl + show.logo
+                                              showDetails.type ===
+                                              "linear_event"
+                                                ? showDetails.logo
+                                                : showDetails.type === "news"
+                                                ? showDetails.logo_thumb
+                                                : showsImageUrl +
+                                                  showDetails.logo
                                             })`,
                                           }}
                                         >
@@ -1590,6 +1632,7 @@ const VideoDetails = (categoryId, episode) => {
                                                 backgroundPosition:
                                                   "center bottom",
                                                 backgroundSize: "cover",
+                                                width: "260px",
                                               }}
                                             ></div>
                                             {show.watchlist_flag === 1 ? (
@@ -1699,3 +1742,4 @@ const VideoDetails = (categoryId, episode) => {
   );
 };
 export default VideoDetails;
+
