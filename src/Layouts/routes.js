@@ -76,7 +76,7 @@ const routes = () => {
                 component={RecentlyAdded}
               />
               <Route path="/signin" exact component={SignIn} />
-              <Route path="/unavailable" exact component={LandingUS} />
+              {/* <Route path="/unavailable" exact component={LandingUS} /> */}
               <Route path="/register" exact component={Register} />
               <PublicRoute path="/aboutus" exact component={AboutUs} />
               <PublicRoute path="/search" exact component={Search} />

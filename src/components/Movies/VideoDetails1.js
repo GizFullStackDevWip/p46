@@ -302,10 +302,10 @@ const VideoDetails = (categoryId, episode) => {
     let countryName =
       localStorage.getItem("currentLocation") &&
       JSON.parse(localStorage.getItem("currentLocation")).country_name;
-    if (
-      countryName != "United States" &&
-      countryName != "United States of America"
-    ) {
+    // if (
+    //   countryName != "United States" &&
+    //   countryName != "United States of America"
+    // ) {
       if (user_id == null || user_id == service.getCookie("guestUserId")) {
         history.push({
           pathname: "/signin",
@@ -516,11 +516,11 @@ const VideoDetails = (categoryId, episode) => {
           ToastsStore.error("Oops! Something went wrong.");
         }
       }
-    } else {
-      history.push({
-        pathname: "/unavailable",
-      });
-    }
+    // } else {
+    //   history.push({
+    //     pathname: "/unavailable",
+    //   });
+    // }
   };
 
   return (
