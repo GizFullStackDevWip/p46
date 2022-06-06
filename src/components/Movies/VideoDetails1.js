@@ -976,7 +976,7 @@ const VideoDetails = (categoryId, episode) => {
                                     <div className="col col-3" key={index}>
                                       <div className="movieTile">
                                         <div
-                                          className="movieTileImage"
+                                          // className="movieTileImage"
                                           className={
                                             hover === true &&
                                             focusedId === index
@@ -1222,7 +1222,7 @@ const VideoDetails = (categoryId, episode) => {
                                   <div className="col col-3" key={index}>
                                     <div className="movieTile">
                                       <div
-                                        className="movieTileImage"
+                                        // className="movieTileImage"
                                         className={
                                           hover === true &&
                                           focusedId === index + "key"
