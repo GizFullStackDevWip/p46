@@ -784,7 +784,7 @@ const VideoDetails = (categoryId, episode) => {
                     ? showDetails.logo
                     : showDetails.type === "news"
                     ? showDetails.logo_thumb
-                    : showsImageUrl + showDetails.logo
+                    : showsImageUrl + showDetails.logo_thumb
                 })`,
               }}
             ></div>
@@ -797,7 +797,7 @@ const VideoDetails = (categoryId, episode) => {
                     ? showDetails.logo
                     : showDetails.type === "news"
                     ? showDetails.logo_thumb
-                    : showsImageUrl + showDetails.logo
+                    : showsImageUrl + showDetails.logo_thumb
                 })`,
               }}
             ></div>
@@ -806,7 +806,7 @@ const VideoDetails = (categoryId, episode) => {
             className="videoPageBGimg"
             style={{
               backgroundImage:
-                "linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))",
+                "linear-gradient(to top, rgb(0 0 0), rgb(60 59 59 / 40%) 83%, rgb(0 0 0 / 63%))",
             }}
           ></div>
           {showDetails.teaser && (
@@ -856,27 +856,7 @@ const VideoDetails = (categoryId, episode) => {
                     className={showDetails.teaser ? "col col-9" : "col col-4"}
                   >
                     <div className="vpLeftSection">
-                      {/* {showDetails.single_video === 0 ? (
-                        <div
-                          className="vpPoster"
-                          style={{
-                            backgroundImage: `url(${
-                              showsImageUrl + showDetails.logo
-                            })`,
-                            marginLeft: "7px",
-                          }}
-                        ></div>
-                      ) : showDetails.single_video === 1 ? (
-                        <div
-                          className="vpPoster"
-                          style={{
-                            backgroundImage: `url(${
-                              showsImageUrl + showDetails.logo
-                            })`,
-                            marginLeft: "7px",
-                          }}
-                        ></div>
-                      ) : null} */}
+                      
                       {showDetails.single_video === 0 ? (
                         <div
                           className="vpPoster"
@@ -886,7 +866,7 @@ const VideoDetails = (categoryId, episode) => {
                                 ? showDetails.logo
                                 : showDetails.type === "news"
                                 ? showDetails.logo_thumb
-                                : showsImageUrl + showDetails.logo
+                                : showsImageUrl + showDetails.logo_thumb
                             })`,
                             marginLeft: "7px",
                             // height: "385px",
@@ -904,13 +884,9 @@ const VideoDetails = (categoryId, episode) => {
                                   ? showDetails.logo
                                   : showDetails.type === "news"
                                   ? showDetails.logo_thumb
-                                  : showsImageUrl + showDetails.logo
+                                  : videoImageUrl + showDetails.logo_thumb
                               })`,
-                            // (!showsImageUrl+showDetails.logo )? showsImageUrl+showDetails.logo :showDetails.logo_thumb
-                            // showDetails.logo_thumb  ? showDetails.logo_thumb :showsImageUrl+showDetails.logo
-                            // videoImageUrl + showDetails.logo
-                            // showsImageUrl+showDetails.logo
-                            // })`,
+                            
                             marginLeft: "7px",
                             // height: "365px",
                           }}
@@ -1598,13 +1574,7 @@ const VideoDetails = (categoryId, episode) => {
                                           className="moviePoster"
                                           style={{
                                             backgroundImage: `url(${
-                                              showDetails.type ===
-                                              "linear_event"
-                                                ? showDetails.logo
-                                                : showDetails.type === "news"
-                                                ? showDetails.logo_thumb
-                                                : showsImageUrl +
-                                                  showDetails.logo
+                                              showsImageUrl + show.logo
                                             })`,
                                           }}
                                         >

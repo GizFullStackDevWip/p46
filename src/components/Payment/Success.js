@@ -36,9 +36,10 @@ const Success = () => {
     var urlParams = new URLSearchParams(window.location.search);
     var sessionId = urlParams.get("session_id");
     // let paypalData = urlParams.get("amt");  // live
-    let paypalData = urlParams.get("token")
-      ? urlParams.get("token") // sandbox
+    let paypalData = urlParams.get("PayerID")
+      ? urlParams.get("PayerID") // sandbox
       : urlParams.get("amt"); // live
+      // console.log("PayerID",PayerID);
     if (sessionId) {
       service.stripeDecode(sessionId).then((response) => {
         if (response.success != false) {
