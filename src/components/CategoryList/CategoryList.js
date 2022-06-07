@@ -13,11 +13,17 @@ var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 const queryString = require("query-string");
 
 const CategoryList = () => {
+  const [category, setCategory] = useState([]);
+  let offset = 0;
+  let scrollHeight = 100;
+  let maxScrollExceed = false;
+  let loadedRows = [];
   var { search } = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
   const parsed = queryString.parse(search);
   const [showList, setShowList] = useState([]);
+  let listArray = [];
   const [showName, setShowName] = useState("");
   const [hover, setHover] = useState(false);
   const [focusedId, setFocusedId] = useState(-1);
@@ -26,14 +32,15 @@ const CategoryList = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     $(".menuItemContainer").addClass("menuClose");
+
     updateUseEffect();
   }, [search]);
 
   const updateUseEffect = () => {
-    
+    var singleObj = [];
     console.log("list");
     if (parsed.category_id === "99991") {
-      console.log("list",parsed.category_id);
+      console.log("list", parsed.category_id);
       let isLoggedIn = localStorage.getItem("isLoggedIn");
       let userId = service.getCookie("userId");
       if (isLoggedIn === "true" && userId) {
@@ -46,22 +53,28 @@ const CategoryList = () => {
       }
     } else if (parsed.category_id === "99993") {
       service.freeVideos().then((response) => {
-        console.log("freeeee",response);
+        console.log("freeeee", response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
     } else if (parsed.category_id === "99992") {
       service.getContinueWatchingVideos().then((response) => {
-        console.log("freeeee",response);
+        console.log("freeeee", response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } 
-    else {
+    } else {
       service.showsByCategory(parsed.category_id).then((response) => {
         if (response.success == true && response.data) {
+          console.log(`$$response is:`, response);
+          var data = response.data.shows;
+          data.map((item, index) => {
+            singleObj.push(item);
+          });
+
           setShowName(parsed.category_name);
-          setShowList(response.data.shows);
+          setShowList(singleObj);
+          loadedRows = singleObj;
         }
       });
     }
@@ -70,6 +83,89 @@ const CategoryList = () => {
   const hoverFunction = (flag, index) => {
     setHover(flag);
     setFocusedId(index);
+  };
+
+  useEffect(() => {
+    let prevPosition = 0;
+    let newPosition = 0;
+    let currentPosition = 0;
+    window.addEventListener("scroll", (e) => {
+      console.log(showList);
+      newPosition = window.pageYOffset;
+      currentPosition += 1;
+      if (
+        !maxScrollExceed &&
+        prevPosition < newPosition &&
+        currentPosition > scrollHeight
+      ) {
+        currentPosition = 0;
+        offset += 10;
+        console.log(showList);
+
+        fetchData();
+      } else if (prevPosition > newPosition) {
+      }
+      prevPosition = newPosition;
+    });
+  }, []);
+
+  const fetchData = async () => {
+    setTimeout(async () => {
+      if (parsed.category_id === "99991") {
+        console.log("list", parsed.category_id);
+        let isLoggedIn = localStorage.getItem("isLoggedIn");
+        let userId = service.getCookie("userId");
+        if (isLoggedIn === "true" && userId) {
+          service.playList(offset).then((response) => {
+            if (response.data) {
+              setShowList(response.data);
+              setShowName(parsed.category_name);
+            }
+          });
+        }
+      } else if (parsed.category_id === "99993") {
+        service.freeVideos(offset).then((response) => {
+          console.log("freeeee", response);
+          setShowName(parsed.category_name);
+          setShowList(response.data);
+        });
+      } else if (parsed.category_id === "99992") {
+        service.getContinueWatchingVideos(offset).then((response) => {
+          if (response.success == true && response.data) {
+            var data = response.data.shows;
+            let singleObj = [];
+            data.map((item, index) => {
+              singleObj.push(item);
+            });
+            loadedRows = [...loadedRows, ...singleObj];
+            setShowName(parsed.category_name);
+            setShowList(loadedRows);
+          } else if (response.data.shows.length === 0) {
+            maxScrollExceed = true;
+          }
+        });
+      } else {
+        service.showsByCategory(parsed.category_id, offset).then((response) => {
+          console.log(`catagory response is:`, response);
+
+          if (response.success == true && response.data) {
+            var data = response.data.shows;
+            let singleObj = [];
+            data.map((item, index) => {
+              singleObj.push(item);
+            });
+            loadedRows = [...loadedRows, ...singleObj];
+            setShowName(parsed.category_name);
+            setShowList(loadedRows);
+          } else if (response.data.shows.length === 0) {
+            maxScrollExceed = true;
+          }
+        });
+      }
+      // else if (response.data.length == 0) {
+      //   maxScrollExceed = true;
+      // }
+    }, 1000);
   };
 
   const addtoMylistFunction = (show) => {
@@ -206,7 +302,8 @@ const CategoryList = () => {
                                     backgroundImage:
                                       "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5)), url(./images/adventures/adventures-04.jpg)",
                                     backgroundPosition: "center bottom",
-                                    backgroundSize: "cover", width:"260px"
+                                    backgroundSize: "cover",
+                                    width: "260px",
                                   }}
                                 ></div>
                                 {show.watchlist_flag === 1 ? (

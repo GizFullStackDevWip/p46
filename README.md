@@ -1,10 +1,10 @@
-## MaxBet-TV adding dynamic metadata tags server side with Create React App
+## Runway-TV adding dynamic metadata tags server side with Create React App
 
 To try the demo, first clone this repo.
 
 ```
-git clone https://github.com/GizFullStackDevWip/MaxBet-TV.git
-cd MaxBet-TV
+git clone https://github.com/GizFullStackDevWip/Runway-TV.git
+cd Runway-TV
 npm install
 npm run build
 node server.js

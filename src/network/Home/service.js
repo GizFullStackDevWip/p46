@@ -87,7 +87,7 @@ function getshowsbyCategory(offset = null) {
   
   
 }
-function freeVideos() {
+function freeVideos(offset) {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -113,14 +113,31 @@ function freeVideos() {
       device_type: "web",
     },
   };
-  return axios
+  if (offset=== null){
+  return (
+    axios
     .get(process.env.REACT_APP_API_URL + "show/free/list", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
-    });
+    })
+  );
+  }
+  else
+  {
+    return (
+      axios
+      .get(process.env.REACT_APP_API_URL + `show/free/list?offset=${offset}`, customConfig)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return [];
+      })
+    );
+  }
 }
 
 function getshowsbyPartner(partner_id) {
@@ -199,7 +216,7 @@ function getRecentlyAddedShows() {
     });
 }
 
-function getContinueWatchingVideos() {
+function getContinueWatchingVideos(offset= null) {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -224,7 +241,9 @@ function getContinueWatchingVideos() {
       device_type: "web",
     },
   };
-  return axios
+  if (offset === null){
+  return (
+    axios
     .get(
       process.env.REACT_APP_API_URL + "show/continueWatching/list",
       customConfig
@@ -234,7 +253,25 @@ function getContinueWatchingVideos() {
     })
     .catch((error) => {
       return [];
-    });
+    })
+  );
+  }
+  else
+  {
+    return (
+      axios
+      .get(
+        process.env.REACT_APP_API_URL + `show/continueWatching/list?offset=${offset}`,
+        customConfig
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return [];
+      })
+    );
+  }
 }
 function getLiveChannels() {
   var token = localStorage.getItem("access-token");
@@ -479,7 +516,7 @@ function addToMyPlayList(id, flag) {
     });
 }
 
-function playList() {
+function playList(offset = null) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -504,14 +541,30 @@ function playList() {
       device_type: "web",
     },
   };
-  return axios
+  if (offset === null){
+  return (
+    axios
     .get(process.env.REACT_APP_API_URL + "show/watchlist", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
-    });
+    })
+  );
+  }
+  else{
+    return (
+      axios
+      .get(process.env.REACT_APP_API_URL + `show/watchlist?offset=${offset}`, customConfig)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return [];
+      })
+    );
+  }
 }
 function getShows(key) {
   var token = localStorage.getItem("access-token");
@@ -550,7 +603,7 @@ function getShows(key) {
       return [];
     });
 }
-function showsByCategory(id) {
+function showsByCategory(id , offset= null) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -575,7 +628,9 @@ function showsByCategory(id) {
       device_type: "web",
     },
   };
-  return axios
+  if (offset=== null){
+  return (
+    axios
   // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
     .get(
       process.env.REACT_APP_API_URL + "category/" + id + "/shows/list",
@@ -586,7 +641,26 @@ function showsByCategory(id) {
     })
     .catch((error) => {
       return [];
-    });
+    })
+  );
+  }
+  else
+  {
+    return (
+      axios
+    // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
+      .get(
+        process.env.REACT_APP_API_URL + `category/` + id + `/shows/list?offset=${offset}`,
+        customConfig
+      )
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        return [];
+      })
+    );
+  }
 }
 function getCookie(name) {
   var nameEQ = name + "=";
