@@ -577,6 +577,7 @@ const VideoDetails = (categoryId, episode) => {
                 ToastsStore.warning("Sorry! Session Has Expired");
                 redirectToLogin();
               } else {
+                console.log(`the video details are :`, videoDetails);
                 videoDetails.map(function (subscription, index) {
                   if (useResponse.data.length == 0 && subFlag) {
                     subFlag = false;
