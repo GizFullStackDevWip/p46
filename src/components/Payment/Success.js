@@ -40,7 +40,7 @@ const Success = () => {
     // let paypalData = urlParams.get("amt");  // live
     let paypalData = urlParams.get("PayerID")
       ? urlParams.get("PayerID") // sandbox
-      : urlParams.get("amt"); // live
+      : urlParams.get("token") ? urlParams.get("token") :  urlParams.get("amt"); // live
       // console.log("PayerID",PayerID);
     if (sessionId) {
       service.stripeDecode(sessionId).then((response) => {

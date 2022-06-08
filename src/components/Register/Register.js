@@ -611,7 +611,7 @@ const Register = (state) => {
               <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
                 <h3 className="H3">Let's get you set up!</h3>
                 <div>
-                  {/* {isFbAcive && (
+                  {isFbAcive && (
                     <div>
                       <div rel="noopener" target="_self">
                         <button className="button buttonLarge buttonBlock registerFacebook">
@@ -634,7 +634,7 @@ const Register = (state) => {
                         <div className="orDivider"></div>
                       </div>
                     </div>
-                  )} */}
+                  )}
 
                   {isRegister ? (
                     <div id="registerId">
