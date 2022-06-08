@@ -630,7 +630,7 @@ const VideoPlayer = (history) => {
         ;
         console.log(
           "showid videoid state",
-          history.location.state.show_details[0]
+          history.location.state.show_details
         );
         // debugger
         if (history.location.state.show_details.type === 'linear_event') {
@@ -641,26 +641,45 @@ const VideoPlayer = (history) => {
           
         }
 
-        if (history.location.state.show_details.type == "live_event") {
-          videoId = history.location.state.show_details.videos[0].video_id;
-        } else if (history.location.state.show_details.video_id != null) {
-          videoId = history.location.state.show_details.video_id;
-          console.log("1 history.location.state.show_details.video_id", history.location.state.show_details.video_id);
-        }  else if (history.location.state.show_details[0].video_id != null) {
-          videoId = history.location.state.show_details[0].video_id;
-          console.log("3  history.location.state.show_details[0].video_id", history.location.state.show_details[0].video_id);
-        } else if (history.location.state.show_details.videos[0].show_id != null) {
-          videoId = history.location.state.show_details.videos[0].show_id;  
-          console.log("4  history.location.state.show_details.videos[0].video_id", history.location.state.show_details.videos[0].video_id);
-        }
-        else if (history.location.state.show_details.show_id != null) {
-          videoId = history.location.state.show_details.show_id;  
-          console.log("2  history.location.state.show_details.show_id", history.location.state.show_details.show_id);
-        }
-          else if (history.location.state.show_details.show_id != null) {
-          videoId = history.location.state.show_details.show_id;  
-          console.log("2  history.location.state.show_details.show_id", history.location.state.show_details.show_id);
-        } 
+if(history.location.state.show_details.videos != null){
+  videoId = history.location.state.show_details.videos[0].video_id;
+}
+
+else{
+  if(history.location.state.show_details[0] != null)
+  {
+
+    console.log(" history.location.state.show_details.video_id", history.location.state.show_details.video_id);
+      videoId = history.location.state.show_details[0].video_id;
+  }
+  else{
+    videoId = history.location.state.show_details.video_id;
+  }
+  
+}
+
+
+
+
+
+
+
+        // if (history.location.state.show_details.type == "live_event") {
+        //   videoId = history.location.state.show_details.videos[0].video_id;
+        // } else if (history.location.state.show_details.video_id != null) {
+        //   videoId = history.location.state.show_details.video_id;
+        //   console.log("1 history.location.state.show_details.video_id", history.location.state.show_details.video_id);
+        // }  else if (history.location.state.show_details[0].video_id != null) {
+        //   videoId = history.location.state.show_details[0].video_id;
+        //   console.log("3  history.location.state.show_details[0].video_id", history.location.state.show_details[0].video_id);
+        // } else if (history.location.state.show_details.videos[0].show_id != null) {
+        //   videoId = history.location.state.show_details.videos[0].show_id;  
+        //   console.log("4  history.location.state.show_details.videos[0].video_id", history.location.state.show_details.videos[0].video_id);
+        // }
+        // else if (history.location.state.show_details.show_id != null) {
+        //   videoId = history.location.state.show_details.show_id;  
+        //   console.log("2  history.location.state.show_details.show_id", history.location.state.show_details.show_id);
+        // }
 
         // videoId =history.location.state.show_details.video_id ? history.location.state.show_details.video_id :history.location.state.show_details.videos[0].video_id
         // videoId =history.location.state.show_details.video_id ?history.location.state.show_details.video_id :history.location.state.show_details.videos[0].video_id

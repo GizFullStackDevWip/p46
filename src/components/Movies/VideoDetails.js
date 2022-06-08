@@ -20,6 +20,8 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import freeTag from "../../images/free1.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+let urlParams = new URLSearchParams(window.location.search);
+let ShwID = urlParams.get("show_id");
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
@@ -362,7 +364,7 @@ const VideoDetails = (categoryId, episode) => {
                   videoSubLists.map(function (subscription, index) {
                     if (useResponse.data.length == 0 && subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", showId, 10);
+                      service.setCookie("showId", ShwID, 10);
                       service.setCookie("videoId", videoDetails.video_id, 10);
                       history.push({
                         pathname: "/SubscriptionList",
@@ -554,6 +556,8 @@ const VideoDetails = (categoryId, episode) => {
         let movie = videoDetails.videos[0];
         service.videoSubscription(movie.video_id).then((response) => {
           let videoDetails = response.data;
+
+          console.log(`video tetail response is :`, response);
           let subFlag = true;
           let uId = service.getCookie("guestUserId");
           let user_id = service.getCookie("userId");
@@ -581,7 +585,7 @@ const VideoDetails = (categoryId, episode) => {
                 videoDetails.map(function (subscription, index) {
                   if (useResponse.data.length == 0 && subFlag) {
                     subFlag = false;
-                    service.setCookie("showId", videoDetails.show_id, 10);
+                    service.setCookie("showId", ShwID, 10);
                     service.setCookie("videoId", movie.video_id, 10);
                     history.push({
                       pathname: "/SubscriptionList",
@@ -607,7 +611,7 @@ const VideoDetails = (categoryId, episode) => {
                       index + 1 == videoDetails.length
                     ) {
                       subFlag = false;
-                      service.setCookie("showId", videoDetails.show_id, 10);
+                      service.setCookie("showId", ShwID, 10);
                       service.setCookie("videoId", movie.video_id, 10);
                       history.push({
                         pathname: "/SubscriptionList",
@@ -617,7 +621,7 @@ const VideoDetails = (categoryId, episode) => {
                       });
                     } else if (subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", videoDetails.show_id, 10);
+                      service.setCookie("showId", ShwID, 10);
                       localStorage.setItem("ContinueWatching", "true");
                       history.push({
                         pathname: "/videoplayer",
@@ -665,7 +669,7 @@ const VideoDetails = (categoryId, episode) => {
         }
         let movie = videoDetails.videos[0];
         const onClickNo = () => {
-          service.setCookie("showId", videoDetails.show_id, 10);
+          service.setCookie("showId", ShwID, 10);
           localStorage.setItem("ContinueWatching", "true");
           history.push({
             pathname: "/videoplayer",
@@ -678,7 +682,7 @@ const VideoDetails = (categoryId, episode) => {
         };
 
         const onClickYes = () => {
-          service.setCookie("showId", videoDetails.show_id, 10);
+          service.setCookie("showId", ShwID, 10);
           service.setCookie("videoId", movie.video_id, 10);
           history.push({
             pathname: "/SubscriptionList",
@@ -730,7 +734,7 @@ const VideoDetails = (categoryId, episode) => {
                       WatchWithoutAdsPopUp(onClickYes, onClickNo);
                     } else if (subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", videoDetails.show_id, 10);
+                      service.setCookie("showId", ShwID, 10);
                       localStorage.setItem("ContinueWatching", "true");
                       history.push({
                         pathname: "/videoplayer",
@@ -757,7 +761,7 @@ const VideoDetails = (categoryId, episode) => {
         videoDetails.videos[0].subscriptions.length == 0
       ) {
         let movie = videoDetails.videos[0];
-        service.setCookie("showId", videoDetails.show_id, 10);
+        service.setCookie("showId", ShwID, 10);
         localStorage.setItem("ContinueWatching", "true");
         history.push({
           pathname: "/videoplayer",
