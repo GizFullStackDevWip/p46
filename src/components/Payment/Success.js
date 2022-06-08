@@ -16,6 +16,7 @@ const Success = () => {
       console.log("testing success (prevurl == true)");
       const vshowId = service.getCookie("showId");
       if (vshowId) {
+        console.log("redirection to movies",vshowId);
         history.push({
           pathname: "/home/movies",
           search: encodeURI(`show_id=${vshowId}`),
@@ -24,6 +25,7 @@ const Success = () => {
         history.push({
           pathname: "/home",
         });
+        console.log(`redirection to home`,vshowId);
       }
     } else {
       setFromVP(true);
