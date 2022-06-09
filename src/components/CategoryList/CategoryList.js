@@ -39,7 +39,7 @@ const CategoryList = () => {
   const updateUseEffect = () => {
     var singleObj = [];
     console.log("list");
-    if (parsed.category_id === "99991") {
+    if (parsed.category_type === "WATCHLIST") {
       console.log("list", parsed.category_id);
       let isLoggedIn = localStorage.getItem("isLoggedIn");
       let userId = service.getCookie("userId");
@@ -51,19 +51,40 @@ const CategoryList = () => {
           }
         });
       }
-    } else if (parsed.category_id === "99993") {
+    } else if (parsed.category_type === "FREE_SHOWS") {
       service.freeVideos().then((response) => {
         console.log("freeeee", response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } else if (parsed.category_id === "99992") {
+    } else if (parsed.category_type === "CONTINUE_WATCHING") {
       service.getContinueWatchingVideos().then((response) => {
         console.log("freeeee", response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } else {
+    
+    }
+    
+    else if(parsed.category_type === "NEWS"){
+      service.getNews().then((response) => {
+        if (response.success == true && response.data) {
+          console.log(`$$news response is:`, response);
+          var data = response.data;
+          data.map((item, index) => {
+            singleObj.push(item);
+          });
+
+          setShowName(parsed.category_name);
+          setShowList(singleObj);
+          loadedRows = singleObj;
+          
+        }
+      });
+    }
+
+
+    else {
       service.showsByCategory(parsed.category_id).then((response) => {
         if (response.success == true && response.data) {
           console.log(`$$response is:`, response);
@@ -111,7 +132,7 @@ const CategoryList = () => {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      if (parsed.category_id === "99991") {
+      if (parsed.category_type === "WATCHLIST") {
         console.log("list", parsed.category_id);
         let isLoggedIn = localStorage.getItem("isLoggedIn");
         let userId = service.getCookie("userId");
@@ -123,13 +144,13 @@ const CategoryList = () => {
             }
           });
         }
-      } else if (parsed.category_id === "99993") {
+      } else if (parsed.category_type === "FREE_SHOWS") {
         service.freeVideos(offset).then((response) => {
           console.log("freeeee", response);
           setShowName(parsed.category_name);
           setShowList(response.data);
         });
-      } else if (parsed.category_id === "99992") {
+      } else if (parsed.category_type === "CONTINUE_WATCHING") {
         service.getContinueWatchingVideos(offset).then((response) => {
           if (response.success == true && response.data) {
             var data = response.data.shows;
@@ -144,11 +165,12 @@ const CategoryList = () => {
             maxScrollExceed = true;
           }
         });
-      } else {
+      } else if (parsed.category_type === "CATEGORY_SHOWS") {
         service.showsByCategory(parsed.category_id, offset).then((response) => {
           console.log(`catagory response is:`, response);
 
           if (response.success == true && response.data) {
+            console.log(`response of category:` , response)
             var data = response.data.shows;
             let singleObj = [];
             data.map((item, index) => {
@@ -240,9 +262,10 @@ const CategoryList = () => {
                           >
                             <div
                               onClick={() => {
+                                let show_id=show.show_id
                                 history.push({
                                   pathname: "/home/movies",
-                                  search: encodeURI(`show_id=${show.show_id}`),
+                                  search: encodeURI(`show_id=${show_id}`),
                                 });
                               }}
                               className={
@@ -272,7 +295,7 @@ const CategoryList = () => {
                                 ></path>
                               </svg>
                             </div>
-                            {show.logo && (
+                            {show.logo ? (
                               <div
                                 className="moviePoster imageSizeAdj thumbImage"
                                 style={{
@@ -283,7 +306,17 @@ const CategoryList = () => {
                               >
                                 <div className="FeNml"></div>
                               </div>
-                            )}
+                            ) :
+                            <div
+                                className="moviePoster imageSizeAdj thumbImage"
+                                style={{
+                                  backgroundImage: `url(${show.logo_landscape
+                                  })`,
+                                }}
+                              >
+                                <div className="FeNml"></div>
+                              </div>
+                            }
                             <div
                               className={
                                 hover === true && focusedId === index
@@ -342,7 +375,8 @@ const CategoryList = () => {
                           <section className="movieTextWrapper movieTextWrapperPadding">
                             <div className="movieTextFlex">
                               <h3>
-                                {show.show_name && (
+                                {(show.show_name) ? 
+                                (
                                   <div
                                     className="linkButton movieTextHeading"
                                     onClick={() => {
@@ -356,7 +390,22 @@ const CategoryList = () => {
                                   >
                                     {show.show_name}
                                   </div>
-                                )}
+                                ) :
+                                <div
+                                    className="linkButton movieTextHeading"
+                                    onClick={() => {
+                                      console.log(`news show id is :`, show.show_id)
+                                      history.push({
+                                        pathname: "/home/movies",
+                                        search: encodeURI(
+                                          `show_id=${show.show_id}`
+                                        ),
+                                      });
+                                    }}
+                                  >
+                                    {show.title}
+                                  </div>
+                              }
                               </h3>
                               <div className="movieCatYear">
                                 <div>

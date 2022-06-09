@@ -3746,7 +3746,7 @@ a.headerMenuItems:hover {
 .vpLengthCensor .vpLengthYear,
 .vpLengthCensor .POOsG {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
 }
 
 .vpLengthCensor .vpLengthYear .vpYearBreak,
@@ -3759,6 +3759,7 @@ a.headerMenuItems:hover {
   align-items: center;
   justify-content: flex-end;
   color: #fff;
+  padding-left: 5px;
 }
 
 .vpLengthCensor .vpCCwrapper .vpCCicon {

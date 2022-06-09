@@ -15,7 +15,7 @@ import logo from '../../images/placeholder.png';
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 
-const Show = ({ param, update, categoryId, funcc }) => {
+const Show = ({ param, update, categoryType, funcc }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [eventLink, setEventLink] = useState("");
@@ -354,7 +354,7 @@ const Show = ({ param, update, categoryId, funcc }) => {
                     onClick={() => {
                       console.log("clicked", show.live_url);
 
-                      if (categoryId == 99992) {
+                      if (categoryType == "CONTINUE_WATCHING") {
                         console.log(
                           "continuewatching click",
                           show.show_id,
@@ -491,7 +491,7 @@ const Show = ({ param, update, categoryId, funcc }) => {
                     </div>
                   </div>
                   {show.is_free_video == false ||
-                  categoryId == "free__videos" ? (
+                  categoryType == "free__videos" ? (
                     <div className="freeTagWrapper">
                       <img src={freeTag} />
                     </div>
@@ -521,7 +521,7 @@ const Show = ({ param, update, categoryId, funcc }) => {
                         <div
                           className="linkButton movieTextHeading"
                           onClick={() => {
-                            if (categoryId == 99992) {
+                            if (categoryType == "CONTINUE_WATCHING") {
                               console.log(
                                 "continuewatching click",
                                 show.show_id,

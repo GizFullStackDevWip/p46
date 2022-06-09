@@ -50,7 +50,7 @@ const VideoDetails = (categoryId, episode) => {
   const [categories, setCategories] = useState([]);
   const [isDesktop, setIsDesktop] = useState(deviceDetect());
   const dispatch = useDispatch();
-  const [ShwID, setShwID] = useState()
+  const [ShwID, setShwID] = useState('')
   const border = {
     "border-radius": "12px",
   };
@@ -183,6 +183,7 @@ const VideoDetails = (categoryId, episode) => {
     setFocusedId(index);
   };
   const addtoMylistFunction = (show) => {
+    ;
     let isLoggedIn = localStorage.getItem("isLoggedIn");
     let userId = service.getCookie("userId");
     if (isLoggedIn === "true" && userId) {
@@ -312,6 +313,7 @@ const VideoDetails = (categoryId, episode) => {
 
   const onWatchBtnClick = (videoDetails, singleVideo, showId) => {
     console.log("watch btn click");
+    ;
     let user_id = service.getCookie("userId");
     let countryName =
       localStorage.getItem("currentLocation") &&
@@ -320,74 +322,50 @@ const VideoDetails = (categoryId, episode) => {
     //   countryName != "United States" &&
     //   countryName != "United States of America"
     // ) {
-    if (user_id == null || user_id == service.getCookie("guestUserId")) {
-      history.push({
-        pathname: "/signin",
-      });
-    } else {
-      if (
-        videoDetails &&
-        videoDetails.free_video != true &&
-        videoDetails.subscriptions &&
-        videoDetails.subscriptions.length > 0
-      ) {
-        // history.push({
-        //   pathname: "/SubscriptionList",
-        //   state: {
-        //     videoData: videoDetails.video_id,
-        //   },
-        // });
-        service.videoSubscription(videoDetails.video_id).then((response) => {
-          let videoSubLists = response.data;
-          let subFlag = true;
-          let uId = service.getCookie("guestUserId");
-          let user_id = service.getCookie("userId");
-          if (user_id) {
-            uId = user_id;
-          }
+      if (user_id == null || user_id == service.getCookie("guestUserId")) {
+        history.push({
+          pathname: "/signin",
+        });
+      } else {
+        if (
+          videoDetails &&
+          videoDetails.free_video != true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length > 0
+        ) {
+          // history.push({
+          //   pathname: "/SubscriptionList",
+          //   state: {
+          //     videoData: videoDetails.video_id,
+          //   },
+          // });
+          service.videoSubscription(videoDetails.video_id).then((response) => {
+            let videoSubLists = response.data;
+            let subFlag = true;
+            let uId = service.getCookie("guestUserId");
+            let user_id = service.getCookie("userId");
+            if (user_id) {
+              uId = user_id;
+            }
 
-          service.checkUserSubscription(uId).then((useResponse) => {
-            var userData = useResponse.data;
-            if (useResponse.success == true) {
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                videoSubLists.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    service.setCookie("showId", ShwID, 10);
-                    service.setCookie("videoId", videoDetails.video_id, 10);
-                    history.push({
-                      pathname: "/SubscriptionList",
-                      state: {
-                        videoData: videoDetails.video_id,
-                      },
-                    });
-                  } else {
-                    let subscribedVideo = userData.filter(
-                      (e) => e.sub_id == subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoSubLists.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoSubLists.length
-                    ) {
+            service.checkUserSubscription(uId).then((useResponse) => {
+              var userData = useResponse.data;
+              if (useResponse.success == true) {
+                if (useResponse.forcibleLogout === true) {
+                  alert(
+                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                  );
+                  service.logoutAll(uId).then((res) => {
+                    setTimeout(() => {
+                      redirectToLogin();
+                    }, 1000);
+                  });
+                } else if (useResponse.session_expired === true) {
+                  ToastsStore.warning("Sorry! Session Has Expired");
+                  redirectToLogin();
+                } else {
+                  videoSubLists.map(function (subscription, index) {
+                    if (useResponse.data.length == 0 && subFlag) {
                       subFlag = false;
                       service.setCookie("showId", showId, 10);
                       service.setCookie("videoId", videoDetails.video_id, 10);
@@ -397,38 +375,150 @@ const VideoDetails = (categoryId, episode) => {
                           videoData: videoDetails.video_id,
                         },
                       });
-                    } else if (subFlag) {
-                      subFlag = false;
-                      service.setCookie("showId", showId, 10);
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoplayer",
-                        state: {
-                          show_details: videoDetails,
-                          singleVideo: singleVideo,
-                          showId: showId,
-                        },
-                      });
+                    } else {
+                      let subscribedVideo = userData.filter(
+                        (e) =>
+                          e.sub_id == subscription.publisher_subscription_id
+                      );
+                      if (
+                        subscribedVideo.length == 0 &&
+                        index + 1 < videoSubLists.length
+                      ) {
+                        return;
+                      }
+                      if (
+                        subscribedVideo.length == 0 &&
+                        subFlag &&
+                        index + 1 == videoSubLists.length
+                      ) {
+                        subFlag = false;
+                        service.setCookie("showId", showId, 10);
+                        service.setCookie("videoId", videoDetails.video_id, 10);
+                        history.push({
+                          pathname: "/SubscriptionList",
+                          state: {
+                            videoData: videoDetails.video_id,
+                          },
+                        });
+                      } else if (subFlag) {
+                        subFlag = false;
+                        service.setCookie("showId", showId, 10);
+                        localStorage.setItem("ContinueWatching", "true");
+                        history.push({
+                          pathname: "/videoplayer",
+                          state: {
+                            show_details: videoDetails,
+                            singleVideo: singleVideo,
+                            showId: showId,
+                          },
+                        });
+                      }
                     }
-                  }
-                });
+                  });
+                }
               }
-            }
+            });
           });
-        });
-      } else if (
-        videoDetails &&
-        videoDetails.free_video === true &&
-        videoDetails.subscriptions &&
-        videoDetails.subscriptions.length > 0
-      ) {
-        let uId = service.getCookie("guestUserId");
-        let user_id = service.getCookie("userId");
-        if (user_id) {
-          uId = user_id;
-        }
+        } else if (
+          videoDetails &&
+          videoDetails.free_video === true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length > 0
+        ) {
+          let uId = service.getCookie("guestUserId");
+          let user_id = service.getCookie("userId");
+          if (user_id) {
+            uId = user_id;
+          }
 
-        const onClickNo = () => {
+          const onClickNo = () => {
+            localStorage.setItem("ContinueWatching", "true");
+            history.push({
+              pathname: "/videoplayer",
+              state: {
+                show_details: videoDetails,
+                singleVideo: singleVideo,
+                showId: showId,
+              },
+            });
+          };
+
+          const onClickYes = () => {
+            service.setCookie("showId", showId, 10);
+            service.setCookie("videoId", videoDetails.video_id, 10);
+            history.push({
+              pathname: "/SubscriptionList",
+              state: {
+                videoData: videoDetails.video_id,
+              },
+            });
+          };
+
+          service.videoSubscription(videoDetails.video_id).then((response) => {
+            let videoSubDetails = response.data;
+            let subFlag = true;
+            service.checkUserSubscription(uId).then((useResponse) => {
+              if (useResponse.success == true) {
+                var userSubDetails = useResponse.data;
+                if (useResponse.forcibleLogout === true) {
+                  alert(
+                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                  );
+                  service.logoutAll(uId).then((res) => {
+                    setTimeout(() => {
+                      redirectToLogin();
+                    }, 1000);
+                  });
+                } else if (useResponse.session_expired === true) {
+                  ToastsStore.warning("Sorry! Session Has Expired");
+                  redirectToLogin();
+                } else {
+                  videoSubDetails.map(function (subscription, index) {
+                    if (useResponse.data.length == 0 && subFlag) {
+                      subFlag = false;
+                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                    } else {
+                      let subscribedVideo = userSubDetails.filter(
+                        (e) =>
+                          e.sub_id == subscription.publisher_subscription_id
+                      );
+                      if (
+                        subscribedVideo.length == 0 &&
+                        index + 1 < videoSubDetails.length
+                      ) {
+                        return;
+                      }
+                      if (
+                        subscribedVideo.length == 0 &&
+                        subFlag &&
+                        index + 1 == videoSubDetails.length
+                      ) {
+                        subFlag = false;
+                        WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                      } else if (subFlag) {
+                        subFlag = false;
+                        localStorage.setItem("ContinueWatching", "true");
+                        history.push({
+                          pathname: "/videoplayer",
+                          state: {
+                            show_details: videoDetails,
+                            singleVideo: singleVideo,
+                            showId: showId,
+                          },
+                        });
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          });
+        } else if (
+          videoDetails &&
+          videoDetails.free_video === true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length === 0
+        ) {
           localStorage.setItem("ContinueWatching", "true");
           history.push({
             pathname: "/videoplayer",
@@ -438,96 +528,10 @@ const VideoDetails = (categoryId, episode) => {
               showId: showId,
             },
           });
-        };
-
-        const onClickYes = () => {
-          service.setCookie("showId", showId, 10);
-          service.setCookie("videoId", videoDetails.video_id, 10);
-          history.push({
-            pathname: "/SubscriptionList",
-            state: {
-              videoData: videoDetails.video_id,
-            },
-          });
-        };
-
-        service.videoSubscription(videoDetails.video_id).then((response) => {
-          let videoSubDetails = response.data;
-          let subFlag = true;
-          service.checkUserSubscription(uId).then((useResponse) => {
-            if (useResponse.success == true) {
-              var userSubDetails = useResponse.data;
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                videoSubDetails.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                  } else {
-                    let subscribedVideo = userSubDetails.filter(
-                      (e) => e.sub_id == subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoSubDetails.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoSubDetails.length
-                    ) {
-                      subFlag = false;
-                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                    } else if (subFlag) {
-                      subFlag = false;
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoplayer",
-                        state: {
-                          show_details: videoDetails,
-                          singleVideo: singleVideo,
-                          showId: showId,
-                        },
-                      });
-                    }
-                  }
-                });
-              }
-            }
-          });
-        });
-      } else if (
-        videoDetails &&
-        videoDetails.free_video === true &&
-        videoDetails.subscriptions &&
-        videoDetails.subscriptions.length === 0
-      ) {
-        localStorage.setItem("ContinueWatching", "true");
-        history.push({
-          pathname: "/videoplayer",
-          state: {
-            show_details: videoDetails,
-            singleVideo: singleVideo,
-            showId: showId,
-          },
-        });
-      } else {
-        ToastsStore.error("Oops! Something went wrong.");
+        } else {
+          ToastsStore.error("Oops! Something went wrong.");
+        }
       }
-    }
     // } else {
     //   history.push({
     //     pathname: "/unavailable",
@@ -555,8 +559,6 @@ const VideoDetails = (categoryId, episode) => {
         let movie = videoDetails.videos[0];
         service.videoSubscription(movie.video_id).then((response) => {
           let videoDetails = response.data;
-
-          console.log(`video tetail response is :`, response);
           let subFlag = true;
           let uId = service.getCookie("guestUserId");
           let user_id = service.getCookie("userId");
@@ -860,6 +862,7 @@ const VideoDetails = (categoryId, episode) => {
                     className={showDetails.teaser ? "col col-9" : "col col-4"}
                   >
                     <div className="vpLeftSection">
+                      
                       {showDetails.single_video === 0 ? (
                         <div
                           className="vpPoster"
@@ -889,7 +892,7 @@ const VideoDetails = (categoryId, episode) => {
                                   ? showDetails.logo_thumb
                                   : videoImageUrl + showDetails.logo_thumb
                               })`,
-
+                            
                             marginLeft: "7px",
                             // height: "365px",
                           }}
@@ -1027,15 +1030,14 @@ const VideoDetails = (categoryId, episode) => {
                                   className="_1TcfH _1Dgjh dropAdj"
                                   style={{ left: "7px" }}
                                 >
-                                  {console.log(
-                                    `show details are:`,
-                                    showDetails
-                                  )}
+                                  {console.log(`show details are:`, showDetails)}
                                   <FacebookShareButton
                                     url={
                                       "staging.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
+                                    
+                                    
                                     quote={
                                       showDetails.show_name +
                                       " || " +

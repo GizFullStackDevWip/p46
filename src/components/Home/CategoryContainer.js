@@ -9,27 +9,27 @@ const CategoryContainer = (param) => {
     setCategory(param.param);
   }, [param]);
 
-  const historyPush = (id) => {
-    console.log("inddddd", id);
-    if (id === 99994) {
+  const historyPush = (type) => {
+    console.log("inddddd", type);
+    if (type === "NEW_RELEASES") {
       console.log("inside if");
       history.push({
         pathname: "/home/recentlyadded",
       });
-    } else if (id === 99993) {
+    } else if (type === "FREE_SHOWS") {
       console.log("inside free");
       history.push({
         pathname: "/home/categorylist",
         search: encodeURI(
-          `category_id=${99993}&category_name=${"Free Videos"}`
+          `category_id=${category.category_id}&category_type=${type}&category_name=${"Free Videos"}`
         ),
       });
-    } else if (id === 99996) {
+    } else if (type === "NEWS") {
       console.log("inside news");
       history.push({
         pathname: "/home/categorylist",
         search: encodeURI(
-          `category_id=${99996}&category_name=${"Latest News"}`
+          `category_id=${category.category_id}&category_type=${type}&category_name=${"Latest News"}`
         ),
       });
     } else {
@@ -37,7 +37,7 @@ const CategoryContainer = (param) => {
       history.push({
         pathname: "/home/categorylist",
         search: encodeURI(
-          `category_id=${category.category_id}&category_name=${category.category_name}`
+          `category_id=${category.category_id}&category_type=${type}&category_name=${category.category_name}`
         ),
       });
     }
@@ -49,7 +49,7 @@ const CategoryContainer = (param) => {
         {category.category_name && category.category_id && (
           <div className="categoryLinkWrapper">
             <div className="categoryHeading" style={{ cursor: "pointer" }}>
-              {category.category_id === 99999 ? 
+              {category.type === "Live Now" ? 
               <div
               className="_2hvCx"
               // onClick={() => {
@@ -61,8 +61,7 @@ const CategoryContainer = (param) => {
               <h2 className="_1mK3G" style={{ paddingBottom: "15px" }}>
                 {category.category_name}
               </h2>
-            </div> : category.category_id ===
-                99995 ? 
+            </div> : category.type === "FEATURED" ? 
                 <div
                   className="_2hvCx"
                   // onClick={() => {
@@ -74,7 +73,7 @@ const CategoryContainer = (param) => {
                   <h2 className="_1mK3G" style={{ paddingBottom: "15px" }}>
                     {category.category_name}
                   </h2>
-                </div> : category.category_id === 99997 ? 
+                </div> : category.type === "ENDED_EVENTS" ? 
                 <div
                   className="_2hvCx"
                   // onClick={() => {
@@ -90,9 +89,9 @@ const CategoryContainer = (param) => {
                 <div
                   className="_2hvCx"
                   onClick={() => {
-                    if (category.category_id != "continuewatching") {
-                      historyPush(category.category_id);
-                    }
+                    // if (category.category_id != "continuewatching") {
+                    //   historyPush(category.category_id);
+                    // }
                   }}
                 >
                   <h2 className="_1mK3G" style={{ paddingBottom: "15px" }}>
@@ -101,13 +100,12 @@ const CategoryContainer = (param) => {
                 </div>
               )}
             </div>
-            {category.category_id === 99999 ? null : category.category_id ===
-              99995 ? null : category.category_id === 99997 ? null : (
+            {category.type === "LIVE" ? null : category.type === "FEATURED" ? null : category.type === "ENDED_EVENTS" ? null : (
               <div
                 className="categoryDotsWrapper"
                 style={{ cursor: "pointer", fontWeight: "900" }}
                 onClick={() => {
-                  historyPush(category.category_id);
+                  historyPush(category.type);
                 }}
               >
                 Browse More
@@ -119,7 +117,7 @@ const CategoryContainer = (param) => {
           <Show
             param={category.shows}
             update={param}
-            categoryId={category.category_id}
+            categoryType={category.type}
             funcc={param.funcc}
           />
         )}
