@@ -648,6 +648,7 @@ function getShows(key) {
     });
 }
 function showsByCategory(id , offset= null) {
+  console.log(`inside show cat` , id)
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");

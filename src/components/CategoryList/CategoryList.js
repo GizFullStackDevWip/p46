@@ -39,7 +39,7 @@ const CategoryList = () => {
   const updateUseEffect = () => {
     var singleObj = [];
     console.log("list");
-    if (parsed.category_id === "99991") {
+    if (parsed.category_type === "WATCHLIST") {
       console.log("list", parsed.category_id);
       let isLoggedIn = localStorage.getItem("isLoggedIn");
       let userId = service.getCookie("userId");
@@ -51,13 +51,13 @@ const CategoryList = () => {
           }
         });
       }
-    } else if (parsed.category_id === "99993") {
+    } else if (parsed.category_type === "FREE_SHOWS") {
       service.freeVideos().then((response) => {
         console.log("freeeee", response);
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } else if (parsed.category_id === "99992") {
+    } else if (parsed.category_type === "CONTINUE_WATCHING") {
       service.getContinueWatchingVideos().then((response) => {
         console.log("freeeee", response);
         setShowName(parsed.category_name);
@@ -66,8 +66,8 @@ const CategoryList = () => {
     
     }
     
-    else if(parsed.category_id === "99996"){
-      service.getNews(parsed.category_id).then((response) => {
+    else if(parsed.category_type === "NEWS"){
+      service.getNews().then((response) => {
         if (response.success == true && response.data) {
           console.log(`$$news response is:`, response);
           var data = response.data;
@@ -132,7 +132,7 @@ const CategoryList = () => {
 
   const fetchData = async () => {
     setTimeout(async () => {
-      if (parsed.category_id === "99991") {
+      if (parsed.category_type === "WATCHLIST") {
         console.log("list", parsed.category_id);
         let isLoggedIn = localStorage.getItem("isLoggedIn");
         let userId = service.getCookie("userId");
@@ -144,13 +144,13 @@ const CategoryList = () => {
             }
           });
         }
-      } else if (parsed.category_id === "99993") {
+      } else if (parsed.category_type === "FREE_SHOWS") {
         service.freeVideos(offset).then((response) => {
           console.log("freeeee", response);
           setShowName(parsed.category_name);
           setShowList(response.data);
         });
-      } else if (parsed.category_id === "99992") {
+      } else if (parsed.category_type === "CONTINUE_WATCHING") {
         service.getContinueWatchingVideos(offset).then((response) => {
           if (response.success == true && response.data) {
             var data = response.data.shows;
@@ -165,11 +165,12 @@ const CategoryList = () => {
             maxScrollExceed = true;
           }
         });
-      } else {
+      } else if (parsed.category_type === "CATEGORY_SHOWS") {
         service.showsByCategory(parsed.category_id, offset).then((response) => {
           console.log(`catagory response is:`, response);
 
           if (response.success == true && response.data) {
+            console.log(`response of category:` , response)
             var data = response.data.shows;
             let singleObj = [];
             data.map((item, index) => {
