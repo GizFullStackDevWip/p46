@@ -63,7 +63,28 @@ const CategoryList = () => {
         setShowName(parsed.category_name);
         setShowList(response.data);
       });
-    } else {
+    
+    }
+    
+    else if(parsed.category_id === "99996"){
+      service.getNews(parsed.category_id).then((response) => {
+        if (response.success == true && response.data) {
+          console.log(`$$news response is:`, response);
+          var data = response.data;
+          data.map((item, index) => {
+            singleObj.push(item);
+          });
+
+          setShowName(parsed.category_name);
+          setShowList(singleObj);
+          loadedRows = singleObj;
+          
+        }
+      });
+    }
+
+
+    else {
       service.showsByCategory(parsed.category_id).then((response) => {
         if (response.success == true && response.data) {
           console.log(`$$response is:`, response);
@@ -240,9 +261,10 @@ const CategoryList = () => {
                           >
                             <div
                               onClick={() => {
+                                let show_id=show.show_id
                                 history.push({
                                   pathname: "/home/movies",
-                                  search: encodeURI(`show_id=${show.show_id}`),
+                                  search: encodeURI(`show_id=${show_id}`),
                                 });
                               }}
                               className={
@@ -272,7 +294,7 @@ const CategoryList = () => {
                                 ></path>
                               </svg>
                             </div>
-                            {show.logo && (
+                            {show.logo ? (
                               <div
                                 className="moviePoster imageSizeAdj thumbImage"
                                 style={{
@@ -283,7 +305,17 @@ const CategoryList = () => {
                               >
                                 <div className="FeNml"></div>
                               </div>
-                            )}
+                            ) :
+                            <div
+                                className="moviePoster imageSizeAdj thumbImage"
+                                style={{
+                                  backgroundImage: `url(${show.logo_landscape
+                                  })`,
+                                }}
+                              >
+                                <div className="FeNml"></div>
+                              </div>
+                            }
                             <div
                               className={
                                 hover === true && focusedId === index
@@ -342,7 +374,8 @@ const CategoryList = () => {
                           <section className="movieTextWrapper movieTextWrapperPadding">
                             <div className="movieTextFlex">
                               <h3>
-                                {show.show_name && (
+                                {(show.show_name) ? 
+                                (
                                   <div
                                     className="linkButton movieTextHeading"
                                     onClick={() => {
@@ -356,7 +389,22 @@ const CategoryList = () => {
                                   >
                                     {show.show_name}
                                   </div>
-                                )}
+                                ) :
+                                <div
+                                    className="linkButton movieTextHeading"
+                                    onClick={() => {
+                                      console.log(`news show id is :`, show.show_id)
+                                      history.push({
+                                        pathname: "/home/movies",
+                                        search: encodeURI(
+                                          `show_id=${show.show_id}`
+                                        ),
+                                      });
+                                    }}
+                                  >
+                                    {show.title}
+                                  </div>
+                              }
                               </h3>
                               <div className="movieCatYear">
                                 <div>
