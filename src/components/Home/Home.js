@@ -11,12 +11,13 @@ const Home = () => {
   const [category, setCategory] = useState([]);
   const [playLink, setPlayLink] = useState(``);
   const [continueWatching, setContinueWatching] = useState([]);
+  const [playStatus, setplayStatus] = useState(true);
   const signInBlock = useSelector((state) => state.signInBlock);
   const login = useSelector((state) => state.login);
-  let offset = 0
-  let scrollHeight = 100
+  let offset = 0;
+  let scrollHeight = 100;
   let maxScrollExceed = false;
-  let loadedRows = []
+  let loadedRows = [];
   useEffect(() => {
     window.scrollTo(0, 0);
     $(".menuItemContainer").addClass("menuClose");
@@ -28,40 +29,54 @@ const Home = () => {
           singleObj.push(item);
         });
         setCategory(singleObj);
-        loadedRows = singleObj
+        loadedRows = singleObj;
       }
     });
   }, [login]);
   useEffect(() => {
-    let prevPosition = 0
-    let newPosition = 0
-    let currentPosition = 0
-    window.addEventListener('scroll', (e) => {
+    let prevPosition = 0;
+    let newPosition = 0;
+    let currentPosition = 0;
+    window.addEventListener("scroll", (e) => {
       newPosition = window.pageYOffset;
+      console.log(`Y offset is`, newPosition);
+      if (newPosition > 250) {
+        let sts= false;
+        setplayStatus(false);
+        console.log(`from home playing status is :`,sts)
+      }else{
+        setplayStatus(true);
+        let sts= true;
+        console.log(`from home playing status is :`,sts)
+      }
       currentPosition += 1;
-      if (!maxScrollExceed && prevPosition < newPosition && currentPosition > scrollHeight) {
-        currentPosition = 0
-        offset += 10
+      if (
+        !maxScrollExceed &&
+        prevPosition < newPosition &&
+        currentPosition > scrollHeight
+      ) {
+        currentPosition = 0;
+        offset += 10;
         fetchData();
       } else if (prevPosition > newPosition) {
       }
       prevPosition = newPosition;
     });
   }, []);
-  const liveFetch = (linkForLive) =>{
+  const liveFetch = (linkForLive) => {
     setPlayLink(linkForLive);
-    console.log(`from home:`,linkForLive)
-  }
+    console.log(`from home:`, linkForLive);
+  };
   const fetchData = async () => {
     setTimeout(async () => {
       service.getshowsbyCategory(offset).then((response) => {
         if (response.success === true && response.data.length > 0) {
           var data = response.data;
-          let singleObj = []
+          let singleObj = [];
           data.map((item, index) => {
             singleObj.push(item);
           });
-          loadedRows = [...loadedRows, ...singleObj]
+          loadedRows = [...loadedRows, ...singleObj];
           setCategory(loadedRows);
         } else if (response.data.length == 0) {
           maxScrollExceed = true;
@@ -70,7 +85,7 @@ const Home = () => {
     }, 1000);
   };
   const updateFuction = () => {
- console.log("updated");
+    console.log("updated");
   };
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
@@ -80,11 +95,12 @@ const Home = () => {
       <div className="topContainer">
         <div className="homepageWrapper menuCloseJS closeMenuWrapper">
           {signInBlock === true ? <Notification /> : null}
-          <LiveContainer param={playLink}  />
+          
+          <LiveContainer param={playLink} playing={playStatus} />
           <LiveSchedule />
           {/* <Banner /> */}
           <div className="allCategoryContainer">
-                   {/* {continueWatching.length > 0 &&
+            {/* {continueWatching.length > 0 &&
             continueWatching.map((item, index) => {
                 if (item.show_count !== "0") {
                   return (
@@ -101,23 +117,24 @@ const Home = () => {
               category.show_count !== "0" &&
               category.map((category, index) => {
                 // if(category.type === "CONTINUE_WATCHING"){
-                  // return (
-                  //   <div key={index}>
-                  //     <CategoryContainer
-                  //       param={category}
-                  //     />
-                  //   </div>
-                  // );
+                // return (
+                //   <div key={index}>
+                //     <CategoryContainer
+                //       param={category}
+                //     />
+                //   </div>
+                // );
                 // }else{
-                  return (
-                    <div key={index}>
-                      <CategoryContainer
-                        param={category}
-                        funcc={liveFetch}
-                        clickHandler={updateFuction}
-                      />
-                    </div>
-                  );
+                return (
+                  <div key={index}>
+                    <CategoryContainer
+                      param={category}
+                      funcc={liveFetch}
+                      playing={playStatus}
+                      clickHandler={updateFuction}
+                    />
+                  </div>
+                );
                 // }
               })}
           </div>

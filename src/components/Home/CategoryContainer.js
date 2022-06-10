@@ -119,6 +119,7 @@ const CategoryContainer = (param) => {
             update={param}
             categoryType={category.type}
             funcc={param.funcc}
+            playing={param.playing}
           />
         )}
       </div>

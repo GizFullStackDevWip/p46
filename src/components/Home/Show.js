@@ -15,7 +15,7 @@ import logo from '../../images/placeholder.png';
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 
-const Show = ({ param, update, categoryType, funcc }) => {
+const Show = ({ param, update, categoryType, funcc , playing }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [eventLink, setEventLink] = useState("");

@@ -2089,8 +2089,8 @@ body {
   }
 
   .col-xxl-2 {
-    flex: 0 0 16.66667%;
-    max-width: 16.66667%;
+    flex: 1 1 33.66667%;
+    max-width: max-content;
   }
 
   .Col--xxl-3 {
@@ -5044,7 +5044,7 @@ a.headerMenuItems:hover {
 
 .movieTextWrapper .movieTextFlex {
   overflow: hidden;
-  width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding-top: 6px;
