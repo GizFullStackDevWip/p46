@@ -91,10 +91,11 @@ const VideoDetails = (categoryId, episode) => {
           : response.data.videos[0].videos
       );
       setAllSeasonList(response.data.videos);
+      debugger
       setCurrentSeason(
         response.data.videos
-          ? response.data.videos
-          : response.data.videos[0].videos
+          ? response.data.videos[0].videos
+          : []
       );
       let defaultOpt = [];
       defaultOpt.push(response.data.videos[0]);
@@ -241,6 +242,7 @@ const VideoDetails = (categoryId, episode) => {
           service
             .getShowDetails(categoryId.categoryId.show_id)
             .then((response) => {
+              
               var data = response.data;
               // if (data.length > 0) {
               var videoDetail = "";
@@ -270,6 +272,7 @@ const VideoDetails = (categoryId, episode) => {
               service
                 .similarShow(categoryId.categoryId.show_id)
                 .then((response) => {
+                  
                   if (response.success == true && response.data.length > 0) {
                     setSimilarShows(response.data);
                   }
@@ -1199,6 +1202,7 @@ const VideoDetails = (categoryId, episode) => {
                         </div>
                       </div>
                     </div>
+                    {console.log("showdetails season",showDetails)}
                     {isDesktop === true ? (
                       showDetails.single_video === 0 ? (
                         <div className="vpMiddleDesc">

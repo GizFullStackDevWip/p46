@@ -41,13 +41,13 @@ const Home = () => {
       newPosition = window.pageYOffset;
       console.log(`Y offset is`, newPosition);
       if (newPosition > 250) {
-        let sts= false;
-        setplayStatus(false);
-        console.log(`from home playing status is :`,sts)
-      }else{
-        setplayStatus(true);
         let sts= true;
-        console.log(`from home playing status is :`,sts)
+        setplayStatus(true);
+        console.log(`from home mute status should be :`,sts)
+      }else{
+        setplayStatus(false);
+        let sts= false;
+        console.log(`from home mute status should be :`,sts)
       }
       currentPosition += 1;
       if (

@@ -13,10 +13,10 @@ app.get("/", function (request, response) {
     if (err) {
       return console.log(err);
     }
-    data = data.replace(/\$OG_TITLE/g, "Runway TV");
+    data = data.replace(/\$OG_TITLE/g, "RunwayTV");
     data = data.replace(
       /\$OG_DESCRIPTION/g,
-      "RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world. Book a talent to come work for you, read about the newest celebrity news and see our picks from the world's top runway collections and read up on beauty & fashion tips all in one place."
+      "RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world."
     );
 
     data = data.replace(/\$OG_IMAGE/g, "");

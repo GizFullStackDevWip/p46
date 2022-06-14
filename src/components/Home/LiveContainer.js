@@ -36,7 +36,8 @@ const LiveContainer = (param) => {
         <ReactHlsPlayer
           id="singleVideo_html5_api"
           url={param.param}
-          autoplay={param.playing}
+          autoplay={true}
+          muted={param.playing}
           controls={true}
           width={"75%"}
           height={"100%"}
@@ -65,7 +66,8 @@ const LiveContainer = (param) => {
               <ReactHlsPlayer
                 id="singleVideo_html5_api"
                 url={response.data[0].live_link}
-                autoplay={param.playing}
+                autoplay={true}
+                muted={param.playing}
                 controls={true}
                 width={"75%"}
                 height={"100%"}
