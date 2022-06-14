@@ -177,8 +177,9 @@ const Header = () => {
                   className="logoContain"
                   style={
                     isDesktop
-                      ? { width: "250px", paddingTop: "4px" }
-                      : { width: "188px", paddingTop: "13px" }
+                      ? 
+                      { width: "250px", paddingTop: "4px" }
+                      : { width: "188px", paddingTop: "25px" , marginTop: "8px" }
                   }
                 >
                   <span style={{ fontSize: "14px", fontWeight: "700" }}>
@@ -370,7 +371,7 @@ const Header = () => {
                             </div> */}
                             <div className="menuListItems">
                               <a
-                                href="https://weboc.poppo.tv/"
+                                href="https://staging.runwaytv.com/home"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -883,7 +884,7 @@ const Header = () => {
                           </div> */}
                           <div className="menuListItems">
                             <a
-                              href="https://weboc.poppo.tv/"
+                              href="https://staging.runwaytv.com/home"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
