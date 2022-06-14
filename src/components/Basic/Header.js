@@ -156,12 +156,12 @@ const Header = () => {
     return null;
   } else if (currentPath === "/" || currentPath === "/home/movies") {
     return (
-      <div style={{ paddingTop: downloadHoverStyle }}>
+      <div style={{ paddingTop: downloadHoverStyle , background: "#d4d4d4"}}>
         {downloadHover === true && (
           <header
             className="headerMenu headerWhite headerGradient"
             style={{
-              backgroundColor: "#d9d7d7",
+              backgroundColor: "#d4d4d4",
               marginTop: "-80px",
               padding: "0px",
             }}
@@ -186,7 +186,7 @@ const Header = () => {
                     Watch Movies & TV Shows
                     <br />
                     <span style={{ fontSize: "10px", fontWeight: "600" }}>
-                      Open in the Runway TV app
+                       <b>Open in the Runway TV app</b>
                     </span>
                   </span>
                 </div>
