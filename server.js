@@ -22,7 +22,7 @@ app.get("/", function (request, response) {
     data = data.replace(/\$OG_IMAGE/g, "");
     result = data.replace(
       /\$OG_URL/g,
-      "weboc.poppo.tv" + request.originalUrl
+      "watch.runwaytv.com" + request.originalUrl
     );
     response.send(result);
   });
@@ -124,7 +124,7 @@ app.get("/home/movies", function (request, response) {
                           );
                           console.log(
                             "url",
-                            "weboc.poppo.tv/" + request.originalUrl
+                            "watch.runwaytv.com/" + request.originalUrl
                           );
                           data = data.replace(/\$OG_DESCRIPTION/g, videoDesc);
                           data = data.replace(
@@ -134,7 +134,7 @@ app.get("/home/movies", function (request, response) {
                           );
                           result = data.replace(
                             /\$OG_URL/g,
-                            "weboc.poppo.tv" + request.originalUrl
+                            "watch.runwaytv.com" + request.originalUrl
                           );
                           response.send(result);
                         }
@@ -179,7 +179,7 @@ app.get("*", function (request, response) {
     data = data.replace(/\$OG_IMAGE/g, "");
     result = data.replace(
       /\$OG_URL/g,
-      "weboc.poppo.tv" + request.originalUrl
+      "watch.runwaytv.com" + request.originalUrl
     );
     response.send(result);
   });
