@@ -45,7 +45,7 @@ const Payment = (state) => {
         subscription_id: tempData.publisher_subscription_id,
         uid: userId,
         amount: tempData.price,
-        pubid: 50012,
+        pubid: process.env.REACT_APP_PUBID,
         country_code: countryCode,
         device_type: deviceType,
       };

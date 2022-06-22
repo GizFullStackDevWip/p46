@@ -170,7 +170,7 @@ const Contact = () => {
                                                 <div className="wpb_text_column wpb_content_element  b-color-border white small  vc_custom_1596100857685 container happi-text-banner">
                                                     <div className="wpb_wrapper">
                                                         <h4>Need additional help?</h4>
-                                                        <p>Contact our support team for any other HappiTV questions.</p>
+                                                        <p>Contact our support team for any other RunwayTV questions.</p>
                                                         <a className="btn support-link"
                                                             onClick={() => {
                                                                 history.push(

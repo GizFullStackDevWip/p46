@@ -20,6 +20,7 @@ const Header = () => {
   const [input, setInput] = useState([]);
   const [timeOut, setTimeOut] = useState(0);
   const [category, setCategory] = useState([]);
+  const [listCategory, setListCategory] = useState([]);
   let userName = localStorage.getItem("userName");
   const [typing, setTyping] = useState(false);
   const [background, setBackground] = useState(false);
@@ -59,7 +60,15 @@ const Header = () => {
         setCategory(response.data);
       }
     });
-    let device = checkOperatingSystem();
+    service.getshowsbyListCategory().then((response) => {
+      //console.log(`resp func called`, response);
+      if (response.message == "invalid token") {
+        history.go(0);
+      } else {
+        setListCategory(response.categories);
+      }
+    });
+let device = checkOperatingSystem();
     setDeviceType(device);
     if (device === "none" || device === "window" || device === "mac") {
       setDownloadHover(false);
@@ -125,14 +134,14 @@ const Header = () => {
   const functionLogout = () => {
     let user = localStorage.getItem("userId");
     service.logoutFunction(user).then((response) => {
-      console.log("resposne", response);
+      //console.log("resposne", response);
       if (response.success == true) {
         clearUserData();
         dispatch({ type: "LOGOUT" });
         setMouseHover(false);
         window.location.href = "/home";
       } else {
-        console.log("somthing went wrong!");
+        //console.log("somthing went wrong!");
       }
     });
   };
@@ -371,7 +380,7 @@ const Header = () => {
                             </div> */}
                             <div className="menuListItems">
                               <a
-                                href="https://staging.runwaytv.com/home"
+                                href="https://watch.runwaytv.com/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -385,6 +394,34 @@ const Header = () => {
                                   Link TV App
                                 </div>
                               </Link>
+                            </div>
+                            <div className="menuItemHead">Categories</div>
+                            <div className="menuListItems">
+                              <div className="menuInnerCol">
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if ((listCategory.length / 3) > index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
+                              </div>
                             </div>
                             {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                         <div className="menuListItems">
@@ -416,25 +453,25 @@ const Header = () => {
                           style={{ height: "auto" }}
                         >
                           <div className="menuCol">
-                            <div className="menuItemHead">Categories</div>
+                            <div className="menuItemHead">More Categories</div>
                             <div className="menuListItems">
                               <div className="menuInnerCol">
-                                {category &&
-                                  category.map((item, index) => {
-                                    if (category.length / 3 - 2 < index) {
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if ((listCategory.length / 3) < index) {
                                       return (
                                         <div key={index}>
-                                          {item.category_name && (
+                                          {item.categoryname && (
                                             <Link
                                               to={{
                                                 pathname: "/home/categorylist",
                                                 search: encodeURI(
-                                                  `category_id=${item.category_id}&category_name=${item.category_name}`
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
                                                 ),
                                               }}
                                             >
                                               <div className="linkButton headerMenuItems">
-                                                {item.category_name}
+                                                {item.categoryname}
                                               </div>
                                             </Link>
                                           )}
@@ -549,7 +586,7 @@ const Header = () => {
                         style={{ color: "#ff3f3f" }}
                       >
                         Hi,{" "}
-                        <span className="_4wVtj">{capitalize(userName)}</span>
+                        <span className="_4wVtj">{capitalize(userName).split(" ")[0] }</span>
                       </div>
                     ) : (
                       <div
@@ -560,7 +597,7 @@ const Header = () => {
                         }}
                       >
                         Hi,{" "}
-                        <span className="_4wVtj">{capitalize(userName)}</span>
+                        <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
                       </div>
                     )}
                     {mouseHover === true ? (
@@ -884,7 +921,7 @@ const Header = () => {
                           </div> */}
                           <div className="menuListItems">
                             <a
-                              href="https://staging.runwaytv.com/home"
+                              href="https://watch.runwaytv.com/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -899,6 +936,34 @@ const Header = () => {
                               </div>
                             </Link>
                           </div>
+                          <div className="menuItemHead">Categories</div>
+                            <div className="menuListItems">
+                              <div className="menuInnerCol">
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if ((listCategory.length / 3) > index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
+                              </div>
+                            </div>
                           {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
                                                     <div className="menuListItems">
                                                         <div className="menuInnerCol">
@@ -929,22 +994,22 @@ const Header = () => {
                           <div className="menuItemHead">Categories</div>
                           <div className="menuListItems">
                             <div className="menuInnerCol">
-                              {category &&
-                                category.map((item, index) => {
-                                  if (category.length / 3 - 2 < index) {
+                              {listCategory &&
+                                listCategory.map((item, index) => {
+                                  if ((listCategory.length / 3)  < index) {
                                     return (
                                       <div key={index}>
-                                        {item.category_name && (
+                                        {item.categoryname && (
                                           <Link
                                             to={{
                                               pathname: "/home/categorylist",
                                               search: encodeURI(
-                                                `category_id=${item.category_id}&category_name=${item.category_name}`
+                                                `category_id=${item.categoryid}&category_name=${item.categoryname}`
                                               ),
                                             }}
                                           >
                                             <div className="linkButton headerMenuItems">
-                                              {item.category_name}
+                                              {item.categoryname}
                                             </div>
                                           </Link>
                                         )}
@@ -1049,7 +1114,7 @@ const Header = () => {
                       }}
                       style={{ color: "red" }}
                     >
-                      Hi, <span className="_4wVtj">{capitalize(userName)}</span>
+                      Hi, <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
                     </div>
                   ) : (
                     <div
@@ -1059,7 +1124,7 @@ const Header = () => {
                         setBackground(true);
                       }}
                     >
-                      Hi, <span className="_4wVtj">{capitalize(userName)}</span>
+                      Hi, <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
                     </div>
                   )}
                   {mouseHover === true ? (

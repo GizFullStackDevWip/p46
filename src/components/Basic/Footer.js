@@ -24,7 +24,7 @@ const Footer = () => {
               </div>
             </Link>
             <div className="_23TJ8"></div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 socialTray">
+            <div className="col col-4 col-lg-3 col-xl-1-5  socialTray">
               <div className="socialLinkContainer">
                 <div className="footerSLWrapper">
                 <a
@@ -91,11 +91,11 @@ const Footer = () => {
             </div>
           </div>
           <div className="row footerSeperator">
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 footerLine"></div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2 footerLine"></div>
+            <div className="col col-4 col-lg-3 col-xl-1-5  footerLine"></div>
+            <div className="col col-4 col-lg-3 col-xl-1-5  footerLine"></div>
           </div>
           <div className="row footerMenu" style={{ lineHeight: "1.4rem" }}>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
+            <div className="col col-4 col-lg-3 col-xl-1-5 ">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">COMPANY</li>
                 <li>
@@ -113,19 +113,19 @@ const Footer = () => {
                   </div>
                 </li>
                 <li>
-                  {/* <a
+                  <a
                     rel="noopener"
                     target="_blank"
-                    href="https://www.outdoorchannelplus.com/"
+                    href="https://watch.runwaytv.com/"
                     style={{ color: "#fff" }}
                     className="linkButton"
-                  > */}
+                  >
                     Official Website
-                  {/* </a> */}
+                  </a>
                 </li>
               </ul>
             </div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
+            <div className="col col-4 col-lg-3 col-xl-1-5 ">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">SUPPORT</li>
                 <li>
@@ -144,7 +144,7 @@ const Footer = () => {
                             <li><a className="linkButton"  >Activate Your Device</a></li> */}
               </ul>
             </div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
+            <div className="col col-4 col-lg-3 col-xl-1-5 ">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">PARTNERS</li>
                 <li>
@@ -173,7 +173,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
+            <div className="col col-4 col-lg-3 col-xl-1-5 ">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">GET THE APPS</li>
                 {/* <li><div style={{ color: '#fff' }} onClick={() => { window.open('https://apps.apple.com/in/app/boondock-nation/id1448300263') }} rel="noopener" target="_self" className="linkButton">iOS</div></li> */}
@@ -199,11 +199,11 @@ const Footer = () => {
                 <li>
                   <div
                     style={{ color: "#fff" }}
-                    // onClick={() => {
-                    //   window.open(
-                    //     "https://play.google.com/store/apps/details?id=com.discovermediaworks.boondocktemplate"
-                    //   );
-                    // }}
+                    onClick={() => {
+                      window.open(
+                        "https://play.google.com/store/apps/details?id=com.runway.androidtv"
+                      );
+                    }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -214,11 +214,11 @@ const Footer = () => {
                 <li>
                   <div
                     style={{ color: "#fff" }}
-                    // onClick={() => {
-                    //   window.open(
-                    //     "https://channelstore.roku.com/details/16f2a379ecb08501662e6c33d49cf369/boondock-nation"
-                    //   );
-                    // }}
+                    onClick={() => {
+                      window.open(
+                        "https://channelstore.roku.com/details/a7088d4e53090842812815e0c681a4bd/runway-tv"
+                      );
+                    }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -229,6 +229,11 @@ const Footer = () => {
                 <li>
                   <div
                     style={{ color: "#fff" }}
+                    onClick={() => {
+                      window.open(
+                        "https://www.amazon.com/Runway-TV/dp/B0B3MXCGMR/ref=sr_1_1?crid=2KBAYJ58VUDPB&keywords=runway+tv&qid=1655379684&rnid=2941120011&s=mobile-apps&sprefix=runway+tv%2Caps%2C310&sr=1-1"
+                      );
+                    }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -239,11 +244,11 @@ const Footer = () => {
                 <li>
                   <div
                     style={{ color: "#fff" }}
-                    // onClick={() => {
-                    //   window.open(
-                    //     "https://play.google.com/store/apps/details?id=com.boondocknationtv.template&hl=en&gl=US"
-                    //   );
-                    // }}
+                    onClick={() => {
+                      window.open(
+                        "https://play.google.com/store/apps/details?id=com.runway.androidtv"
+                      );
+                    }}
                     rel="noopener"
                     target="_self"
                     className="linkButton"
@@ -263,7 +268,7 @@ const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="col col-4 col-lg-3 col-xl-1-5 col-xxl-2">
+            <div className="col col-4 col-lg-3 col-xl-1-5 ">
               <ul className="footerMenuContainer">
                 <li className="footerMenuHead">LEGAL</li>
                 <li>

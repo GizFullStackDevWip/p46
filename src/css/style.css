@@ -2325,8 +2325,8 @@ body {
   max-width: 1920px;
   margin-right: auto;
   margin-left: auto;
-  padding-right: 65px;
-  padding-left: 65px;
+  /* padding-right: 65px; */
+  /* padding-left: 8%; */
 }
 
 @media (max-width: 767px) {
@@ -4769,9 +4769,9 @@ a.headerMenuItems:hover {
   }
   .movieTile .movieTileImage .moviePoster {
     /* width: 25vw; */
-    width: 100%;
+    width: 95%;
     height: 117px;
-    padding: 25% 0;
+    padding: 29% 0;
     background-size: 100% 100%;
     background-position: 50% 50%;
     background-repeat: no-repeat;
@@ -6970,7 +6970,7 @@ a.headerMenuItems:hover {
 }
 
 .searchWrapper .searchResultMargin {
-  margin: 1rem 0 2rem;
+  margin: 1rem 60px 2rem;
 }
 
 .searchWrapper .searchResultMargin ._18Y8d {
@@ -9632,7 +9632,7 @@ body {
 }
 /* edited */
 .mainPlayer {
-  margin-top: 120px;
+  /* margin-top: 120px; */
   margin-left: auto;
   margin-right: auto;
   width: 98vw;

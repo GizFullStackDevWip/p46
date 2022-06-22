@@ -23,7 +23,7 @@ const CookiePolicy = () => {
                                 <ul>
                                     <li><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Cookies Policy) refers to HappiTV, 7155 Hawthorn Ave, Apt 5 Los Angeles.</li>
                                     <li><strong>Cookies</strong> means small files that are placed on Your computer, mobile device or any other device by a website, containing details of your browsing history on that website among its many uses.</li>
-                                    <li><strong>Website</strong> refers to HappiTV, accessible from <a href="http://www.gethappi.tv" rel="external nofollow noopener" target="_blank">http://www.gethappi.tv</a></li>
+                                    <li><strong>Website</strong> refers to RunwayTV, accessible from <a href="http://www.watch.Runwaytv.com/" rel="external nofollow noopener" target="_blank">http://www.gethappi.tv</a></li>
                                     <li><strong>You</strong> means the individual accessing or using the Website, or a company, or any legal entity on behalf of which such individual is accessing or using the Website, as applicable.</li>
                                 </ul>
                                 <h1>The use of the Cookies</h1>

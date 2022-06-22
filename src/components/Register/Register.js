@@ -13,6 +13,11 @@ import $ from "jquery";
 
 const Register = (state) => {
   let location = useLocation();
+  var detailWatchNowClicked = localStorage.getItem('detailWatchNowClicked')
+  var detailsPath = '';
+  if (detailWatchNowClicked) {
+    detailsPath = `/home/movies?show_id=9640`
+  }
   console.log(location.state);
   if (location.state && location.state.from) {
     localStorage.setItem("location", location.state.from.pathname);
@@ -31,8 +36,14 @@ const Register = (state) => {
     .replace("https://", "")
     .split(/[/?#]/)[0];
   if (isLoggedIn === "true" && userId) {
-    return <Redirect to="/home" />;
+    if (detailWatchNowClicked) {
+      window.location.href = detailsPath
+    } else {
+      return <Redirect to="/home" />;
+    }
   }
+
+  
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -312,7 +323,11 @@ const Register = (state) => {
             if (prevLocation === "/tv") {
               history.push("/tv");
             } else {
-              window.location.href = "/home";
+              if (detailWatchNowClicked) {
+                window.location.href = detailsPath
+              } else {
+                return <Redirect to="/home" />;
+              }
             }
           }
         } else if (response.success == false) {

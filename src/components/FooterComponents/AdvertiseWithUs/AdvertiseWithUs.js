@@ -32,7 +32,7 @@ const AdvertiseWithUs = () => {
                                             <div className="wpb_wrapper">
                                                 <div className="wpb_text_column wpb_content_element  normal w_780  wpb_animate_when_almost_visible wpb_slideInUp slideInUp test-class1 test-class2 container happi-content wpb_start_animation animated" id="test_id">
                                                     <div className="wpb_wrapper">
-                                                        <h2>Why HappiTV</h2>
+                                                        <h2>Why RunwayTV</h2>
                                                         <p><span style={{ fontWeight: '400' }}>
                                                             Our mission is to provide viewers with access to the largest library of premium movies and TV shows, all for free. We believe that personalized viewing experiences across quality, curated content helps brands amplify their message in front of the consumers who matter most as they stream what they love.</span></p>
                                                     </div>

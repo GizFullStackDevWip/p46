@@ -388,7 +388,7 @@ const CategoryList = () => {
                                       });
                                     }}
                                   >
-                                    {show.show_name}
+                                    {(show.show_name).toUpperCase()}
                                   </div>
                                 ) :
                                 <div

@@ -10,10 +10,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { deviceDetect } from "../../Utils/utils";
 import $ from "jquery";
 const SignIn = (props) => {
+  var detailWatchNowClicked = localStorage.getItem('detailWatchNowClicked')
+  var detailsPath = '';
+  if (detailWatchNowClicked) {
+    detailsPath = `/home/movies?show_id=9640`
+  }
   let isLoggedIn = localStorage.getItem("isLoggedIn");
   let userId = service.getCookie("userId");
   if (isLoggedIn === "true" && userId) {
-    return <Redirect to="/home" />;
+    if (detailWatchNowClicked) {
+      window.location.href = detailsPath
+    } else {
+      return <Redirect to="/home" />;
+    }
+
   }
   let location = useLocation();
   const history = useHistory();
@@ -639,7 +649,12 @@ const SignIn = (props) => {
                   if (prevDomain == currentDomain) {
                     history.goBack();
                   } else {
-                    window.location.href = "/home";
+                    if (detailWatchNowClicked) {
+                      console.log('detailsPath', detailsPath, typeof detailsPath)
+                      window.location.href = detailsPath
+                    } else {
+                      return <Redirect to="/home" />;
+                    }
                   }
                 }
                 // window.location.reload(false);
@@ -665,7 +680,11 @@ const SignIn = (props) => {
                   if (prevDomain == currentDomain) {
                     history.goBack();
                   } else {
-                    window.location.href = "/home";
+                    if (detailWatchNowClicked) {
+                      window.location.href = detailsPath
+                    } else {
+                      return <Redirect to="/home" />;
+                    }
                   }
                 }
                 // window.location.reload(false);
@@ -898,7 +917,7 @@ const SignIn = (props) => {
                               Already have an account?{" "}
                               <span
                                 className="linkButton"
-                                
+
                                 onClick={() => {
                                   setIsLogin(true);
                                   setIsForgot(false);
@@ -969,7 +988,7 @@ const SignIn = (props) => {
                           <p>
                             <span>
                               Already have an account?{" "}
-                              <a className="linkButton" href="/signin" style={{color:"black"}}>
+                              <a className="linkButton" href="/signin" style={{ color: "black" }}>
                                 Sign In
                               </a>
                             </span>{" "}
@@ -1083,7 +1102,7 @@ const SignIn = (props) => {
                               type="submit"
                             >
                               <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent" style={{color:"white"}}>Sign In</div>
+                              <div className="buttonContent" style={{ color: "white" }}>Sign In</div>
                             </button>
                           </div>
                         ) : (
@@ -1095,7 +1114,7 @@ const SignIn = (props) => {
                                 type="submit"
                               >
                                 <div className="buttonBg rounderbutton"></div>
-                                <div className="buttonContent" style={{color:"white"}}>Sign In</div>
+                                <div className="buttonContent" style={{ color: "white" }}>Sign In</div>
                               </button>
                             </div>
                             <div className="regnSubmitWrapper">
@@ -1123,11 +1142,11 @@ const SignIn = (props) => {
                               onClick={() => {
                                 functionOnclick("/termsandconditions");
                               }}
-                              // onClick={() => {
-                              //   window.open(
-                              //     "https://www.outdoorchannel.com/terms/99078"
-                              //   );
-                              // }}
+                            // onClick={() => {
+                            //   window.open(
+                            //     "https://www.outdoorchannel.com/terms/99078"
+                            //   );
+                            // }}
                             >
                               &nbsp;Terms of Use
                             </div>
@@ -1140,11 +1159,11 @@ const SignIn = (props) => {
                               onClick={() => {
                                 functionOnclick("/privacypolicy");
                               }}
-                              // onClick={() => {
-                              //   window.open(
-                              //     "https://www.outdoorchannel.com/privacy/247031"
-                              //   );
-                              // }}
+                            // onClick={() => {
+                            //   window.open(
+                            //     "https://www.outdoorchannel.com/privacy/247031"
+                            //   );
+                            // }}
                             >
                               &nbsp;Privacy Policy
                             </div>

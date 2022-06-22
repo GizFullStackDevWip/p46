@@ -30,7 +30,6 @@ const AboutUs = () => {
                                 ></div>
                                 <div className="header-content" >
                                 	<div className="header-content">
-																	{/*  digital platform dedicated to streaming content of interest made by and for the LGBTQ+ community.  */}
 																	<h1>RunwayTV<span>
 																	RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world. Book a talent to come work for you, read about the newest celebrity news and see our picks from the world's top runway collections and read up on beauty & fashion tips all in one place.																		</span></h1> </div>
 															{/* </div> */}

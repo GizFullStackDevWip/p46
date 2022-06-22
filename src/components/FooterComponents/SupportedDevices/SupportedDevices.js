@@ -105,8 +105,8 @@ const SupportedDevices =()=>{
                                     </svg>
                                     <h2 className="selectedDeviceHeading">Roku</h2>
                                     <div className="selectedDeviceContent"><img className="selectedDeviceImage" src={require("../../../images/supportedDevice/streamingDevice/roku.png")}/>
-                                        <div className="selectedDeviceText">You can directly install the latest version of the HappiTV channel to your Roku player from Roku’s Channel Store.</div>
-                                        <a className="selectedDeviceButton" target="_blank" href="https://channelstore.roku.com/details/9aae5dd01c2467862bb962b68b8b70e9/happitv">
+                                        <div className="selectedDeviceText">You can directly install the latest version of the RunwayTV channel to your Roku player from Roku’s Channel Store.</div>
+                                        <a className="selectedDeviceButton" target="_blank" href="https://channelstore.roku.com/details/a7088d4e53090842812815e0c681a4bd/runway-tv">
                                             <button className="button buttonLarge buttonInverse">
                                                 <div className="buttonBg"></div>
                                                 <div className="buttonContent">Install Now</div>

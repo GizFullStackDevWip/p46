@@ -59,7 +59,7 @@ const CategoryContainer = (param) => {
               // }}
             >
               <h2 className="_1mK3G" style={{ paddingBottom: "15px" }}>
-                {category.category_name}
+              {(category.category_name).toUpperCase()}
               </h2>
             </div> : category.type === "FEATURED" ? 
                 <div

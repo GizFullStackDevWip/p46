@@ -546,7 +546,9 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                             }
                           }}
                         >
-                          {show.show_name}
+                          {
+                          (show.show_name).toUpperCase()
+                          }
                         </div>
                       )}
                     </h3>

@@ -168,6 +168,43 @@ function getshowsbyCategory() {
     });
 }
 
+function getshowsbyListCategory() {
+  var token = localStorage.getItem("access-token");
+  let device_id = localStorage.getItem("deviceId");
+  let ipaddress = localStorage.getItem("ipaddress");
+  let uId = 291;
+  let user_id = getCookie("userId");
+  let countryCode = getCookie("country_code");
+  if (user_id) {
+    uId = user_id;
+  }
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": true,
+      crossorigin: true,
+      "access-token": token,
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: device_id,
+      ip: ipaddress,
+      device_type: "web",
+    },
+  };
+  return axios
+  // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
+    .get(process.env.REACT_APP_API_URL + "category/list", customConfig)
+    .then((response) => {
+      return response.data;
+      console.log(`resp from listcat`,response.data)
+    })
+    .catch((error) => {
+      return [];
+    });
+}
+
 function getShows(key) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -1381,6 +1418,7 @@ export const service = {
   keyAuthenticate,
   register,
   getshowsbyCategory,
+  getshowsbyListCategory,
   getShows,
   verifyEmail,
   login,

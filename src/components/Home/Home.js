@@ -33,22 +33,23 @@ const Home = () => {
       }
     });
   }, [login]);
+
   useEffect(() => {
     let prevPosition = 0;
     let newPosition = 0;
     let currentPosition = 0;
     window.addEventListener("scroll", (e) => {
       newPosition = window.pageYOffset;
-      console.log(`Y offset is`, newPosition);
-      if (newPosition > 250) {
-        let sts= true;
-        setplayStatus(true);
-        console.log(`from home mute status should be :`,sts)
-      }else{
-        setplayStatus(false);
-        let sts= false;
-        console.log(`from home mute status should be :`,sts)
-      }
+      //console.log(`Y offset is`, newPosition);
+      // if (newPosition > 250) {
+      //   let sts = true;
+      //   setplayStatus(true);
+      //   //console.log(`from home mute status should be :`, sts)
+      // } else {
+      //   setplayStatus(false);
+      //   let sts = false;
+      //   //console.log(`from home mute status should be :`, sts)
+      // }
       currentPosition += 1;
       if (
         !maxScrollExceed &&
@@ -63,9 +64,25 @@ const Home = () => {
       prevPosition = newPosition;
     });
   }, []);
+
+  useEffect(() => {
+    let newPosition = 0;
+    window.addEventListener("scroll", (e) => {
+      newPosition = window.pageYOffset;
+      //console.log(`Y offset is`, newPosition);
+      let livePlayer = document.getElementById('live_content_video_html5_api');
+      if (newPosition > 350) {
+        livePlayer.pause()
+      } else {
+        livePlayer && livePlayer.paused && livePlayer.play()
+      }
+
+    })
+  }, []);
+
   const liveFetch = (linkForLive) => {
     setPlayLink(linkForLive);
-    console.log(`from home:`, linkForLive);
+    //console.log(`from home:`, linkForLive);
   };
   const fetchData = async () => {
     setTimeout(async () => {
@@ -85,7 +102,7 @@ const Home = () => {
     }, 1000);
   };
   const updateFuction = () => {
-    console.log("updated");
+    //console.log("updated");
   };
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
@@ -95,11 +112,11 @@ const Home = () => {
       <div className="topContainer">
         <div className="homepageWrapper menuCloseJS closeMenuWrapper">
           {signInBlock === true ? <Notification /> : null}
-          
+
           <LiveContainer param={playLink} playing={playStatus} />
           <LiveSchedule />
           {/* <Banner /> */}
-          <div className="allCategoryContainer">
+          <div className="allCategoryContainer" id="allCategoryContainer">
             {/* {continueWatching.length > 0 &&
             continueWatching.map((item, index) => {
                 if (item.show_count !== "0") {

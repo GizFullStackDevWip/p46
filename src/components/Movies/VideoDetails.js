@@ -63,6 +63,7 @@ const VideoDetails = (categoryId, episode) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    localStorage.removeItem('detailWatchNowClicked')
     var urlParams = new URLSearchParams(window.location.search);
     let Shw_ID = urlParams.get("show_id");
     console.log(`show id from url params:`, Shw_ID);
@@ -91,7 +92,7 @@ const VideoDetails = (categoryId, episode) => {
           : response.data.videos[0].videos
       );
       setAllSeasonList(response.data.videos);
-      debugger
+      // debugger
       setCurrentSeason(
         response.data.videos
           ? response.data.videos[0].videos
@@ -242,7 +243,7 @@ const VideoDetails = (categoryId, episode) => {
           service
             .getShowDetails(categoryId.categoryId.show_id)
             .then((response) => {
-              
+
               var data = response.data;
               // if (data.length > 0) {
               var videoDetail = "";
@@ -272,7 +273,7 @@ const VideoDetails = (categoryId, episode) => {
               service
                 .similarShow(categoryId.categoryId.show_id)
                 .then((response) => {
-                  
+
                   if (response.success == true && response.data.length > 0) {
                     setSimilarShows(response.data);
                   }
@@ -288,8 +289,11 @@ const VideoDetails = (categoryId, episode) => {
 
   const redirectToLogin = () => {
     clearUserData();
+    localStorage.setItem('detailWatchNowClicked', ShwID)
     setTimeout(() => {
-      window.location.href = "/signin";
+      history.push({
+        pathname: "/signin",
+      });
     }, 1500);
   };
 
@@ -325,50 +329,78 @@ const VideoDetails = (categoryId, episode) => {
     //   countryName != "United States" &&
     //   countryName != "United States of America"
     // ) {
-      if (user_id == null || user_id == service.getCookie("guestUserId")) {
+    if (user_id == null || user_id == service.getCookie("guestUserId")) {
+      localStorage.setItem('detailWatchNowClicked', ShwID)
+      setTimeout(() => {
         history.push({
           pathname: "/signin",
         });
-      } else {
-        if (
-          videoDetails &&
-          videoDetails.free_video != true &&
-          videoDetails.subscriptions &&
-          videoDetails.subscriptions.length > 0
-        ) {
-          // history.push({
-          //   pathname: "/SubscriptionList",
-          //   state: {
-          //     videoData: videoDetails.video_id,
-          //   },
-          // });
-          service.videoSubscription(videoDetails.video_id).then((response) => {
-            let videoSubLists = response.data;
-            let subFlag = true;
-            let uId = service.getCookie("guestUserId");
-            let user_id = service.getCookie("userId");
-            if (user_id) {
-              uId = user_id;
-            }
+      }, 1000);
+    } else {
+      if (
+        videoDetails &&
+        videoDetails.free_video != true &&
+        videoDetails.subscriptions &&
+        videoDetails.subscriptions.length > 0
+      ) {
+        // history.push({
+        //   pathname: "/SubscriptionList",
+        //   state: {
+        //     videoData: videoDetails.video_id,
+        //   },
+        // });
+        service.videoSubscription(videoDetails.video_id).then((response) => {
+          let videoSubLists = response.data;
+          let subFlag = true;
+          let uId = service.getCookie("guestUserId");
+          let user_id = service.getCookie("userId");
+          if (user_id) {
+            uId = user_id;
+          }
 
-            service.checkUserSubscription(uId).then((useResponse) => {
-              var userData = useResponse.data;
-              if (useResponse.success == true) {
-                if (useResponse.forcibleLogout === true) {
-                  alert(
-                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                  );
-                  service.logoutAll(uId).then((res) => {
-                    setTimeout(() => {
-                      redirectToLogin();
-                    }, 1000);
-                  });
-                } else if (useResponse.session_expired === true) {
-                  ToastsStore.warning("Sorry! Session Has Expired");
-                  redirectToLogin();
-                } else {
-                  videoSubLists.map(function (subscription, index) {
-                    if (useResponse.data.length == 0 && subFlag) {
+          service.checkUserSubscription(uId).then((useResponse) => {
+            var userData = useResponse.data;
+            if (useResponse.success == true) {
+              if (useResponse.forcibleLogout === true) {
+                alert(
+                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                );
+                service.logoutAll(uId).then((res) => {
+                  setTimeout(() => {
+                    redirectToLogin();
+                  }, 1000);
+                });
+              } else if (useResponse.session_expired === true) {
+                ToastsStore.warning("Sorry! Session Has Expired");
+                redirectToLogin();
+              } else {
+                videoSubLists.map(function (subscription, index) {
+                  if (useResponse.data.length == 0 && subFlag) {
+                    subFlag = false;
+                    service.setCookie("showId", showId, 10);
+                    service.setCookie("videoId", videoDetails.video_id, 10);
+                    history.push({
+                      pathname: "/SubscriptionList",
+                      state: {
+                        videoData: videoDetails.video_id,
+                      },
+                    });
+                  } else {
+                    let subscribedVideo = userData.filter(
+                      (e) =>
+                        e.sub_id == subscription.publisher_subscription_id
+                    );
+                    if (
+                      subscribedVideo.length == 0 &&
+                      index + 1 < videoSubLists.length
+                    ) {
+                      return;
+                    }
+                    if (
+                      subscribedVideo.length == 0 &&
+                      subFlag &&
+                      index + 1 == videoSubLists.length
+                    ) {
                       subFlag = false;
                       service.setCookie("showId", showId, 10);
                       service.setCookie("videoId", videoDetails.video_id, 10);
@@ -378,150 +410,38 @@ const VideoDetails = (categoryId, episode) => {
                           videoData: videoDetails.video_id,
                         },
                       });
-                    } else {
-                      let subscribedVideo = userData.filter(
-                        (e) =>
-                          e.sub_id == subscription.publisher_subscription_id
-                      );
-                      if (
-                        subscribedVideo.length == 0 &&
-                        index + 1 < videoSubLists.length
-                      ) {
-                        return;
-                      }
-                      if (
-                        subscribedVideo.length == 0 &&
-                        subFlag &&
-                        index + 1 == videoSubLists.length
-                      ) {
-                        subFlag = false;
-                        service.setCookie("showId", showId, 10);
-                        service.setCookie("videoId", videoDetails.video_id, 10);
-                        history.push({
-                          pathname: "/SubscriptionList",
-                          state: {
-                            videoData: videoDetails.video_id,
-                          },
-                        });
-                      } else if (subFlag) {
-                        subFlag = false;
-                        service.setCookie("showId", showId, 10);
-                        localStorage.setItem("ContinueWatching", "true");
-                        history.push({
-                          pathname: "/videoplayer",
-                          state: {
-                            show_details: videoDetails,
-                            singleVideo: singleVideo,
-                            showId: showId,
-                          },
-                        });
-                      }
-                    }
-                  });
-                }
-              }
-            });
-          });
-        } else if (
-          videoDetails &&
-          videoDetails.free_video === true &&
-          videoDetails.subscriptions &&
-          videoDetails.subscriptions.length > 0
-        ) {
-          let uId = service.getCookie("guestUserId");
-          let user_id = service.getCookie("userId");
-          if (user_id) {
-            uId = user_id;
-          }
-
-          const onClickNo = () => {
-            localStorage.setItem("ContinueWatching", "true");
-            history.push({
-              pathname: "/videoplayer",
-              state: {
-                show_details: videoDetails,
-                singleVideo: singleVideo,
-                showId: showId,
-              },
-            });
-          };
-
-          const onClickYes = () => {
-            service.setCookie("showId", showId, 10);
-            service.setCookie("videoId", videoDetails.video_id, 10);
-            history.push({
-              pathname: "/SubscriptionList",
-              state: {
-                videoData: videoDetails.video_id,
-              },
-            });
-          };
-
-          service.videoSubscription(videoDetails.video_id).then((response) => {
-            let videoSubDetails = response.data;
-            let subFlag = true;
-            service.checkUserSubscription(uId).then((useResponse) => {
-              if (useResponse.success == true) {
-                var userSubDetails = useResponse.data;
-                if (useResponse.forcibleLogout === true) {
-                  alert(
-                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                  );
-                  service.logoutAll(uId).then((res) => {
-                    setTimeout(() => {
-                      redirectToLogin();
-                    }, 1000);
-                  });
-                } else if (useResponse.session_expired === true) {
-                  ToastsStore.warning("Sorry! Session Has Expired");
-                  redirectToLogin();
-                } else {
-                  videoSubDetails.map(function (subscription, index) {
-                    if (useResponse.data.length == 0 && subFlag) {
+                    } else if (subFlag) {
                       subFlag = false;
-                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                    } else {
-                      let subscribedVideo = userSubDetails.filter(
-                        (e) =>
-                          e.sub_id == subscription.publisher_subscription_id
-                      );
-                      if (
-                        subscribedVideo.length == 0 &&
-                        index + 1 < videoSubDetails.length
-                      ) {
-                        return;
-                      }
-                      if (
-                        subscribedVideo.length == 0 &&
-                        subFlag &&
-                        index + 1 == videoSubDetails.length
-                      ) {
-                        subFlag = false;
-                        WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                      } else if (subFlag) {
-                        subFlag = false;
-                        localStorage.setItem("ContinueWatching", "true");
-                        history.push({
-                          pathname: "/videoplayer",
-                          state: {
-                            show_details: videoDetails,
-                            singleVideo: singleVideo,
-                            showId: showId,
-                          },
-                        });
-                      }
+                      service.setCookie("showId", showId, 10);
+                      localStorage.setItem("ContinueWatching", "true");
+                      history.push({
+                        pathname: "/videoplayer",
+                        state: {
+                          show_details: videoDetails,
+                          singleVideo: singleVideo,
+                          showId: showId,
+                        },
+                      });
                     }
-                  });
-                }
+                  }
+                });
               }
-            });
+            }
           });
-        } else if (
-          videoDetails &&
-          videoDetails.free_video === true &&
-          videoDetails.subscriptions &&
-          videoDetails.subscriptions.length === 0
-        ) {
+        });
+      } else if (
+        videoDetails &&
+        videoDetails.free_video === true &&
+        videoDetails.subscriptions &&
+        videoDetails.subscriptions.length > 0
+      ) {
+        let uId = service.getCookie("guestUserId");
+        let user_id = service.getCookie("userId");
+        if (user_id) {
+          uId = user_id;
+        }
+
+        const onClickNo = () => {
           localStorage.setItem("ContinueWatching", "true");
           history.push({
             pathname: "/videoplayer",
@@ -531,10 +451,97 @@ const VideoDetails = (categoryId, episode) => {
               showId: showId,
             },
           });
-        } else {
-          ToastsStore.error("Oops! Something went wrong.");
-        }
+        };
+
+        const onClickYes = () => {
+          service.setCookie("showId", showId, 10);
+          service.setCookie("videoId", videoDetails.video_id, 10);
+          history.push({
+            pathname: "/SubscriptionList",
+            state: {
+              videoData: videoDetails.video_id,
+            },
+          });
+        };
+
+        service.videoSubscription(videoDetails.video_id).then((response) => {
+          let videoSubDetails = response.data;
+          let subFlag = true;
+          service.checkUserSubscription(uId).then((useResponse) => {
+            if (useResponse.success == true) {
+              var userSubDetails = useResponse.data;
+              if (useResponse.forcibleLogout === true) {
+                alert(
+                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                );
+                service.logoutAll(uId).then((res) => {
+                  setTimeout(() => {
+                    redirectToLogin();
+                  }, 1000);
+                });
+              } else if (useResponse.session_expired === true) {
+                ToastsStore.warning("Sorry! Session Has Expired");
+                redirectToLogin();
+              } else {
+                videoSubDetails.map(function (subscription, index) {
+                  if (useResponse.data.length == 0 && subFlag) {
+                    subFlag = false;
+                    WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                  } else {
+                    let subscribedVideo = userSubDetails.filter(
+                      (e) =>
+                        e.sub_id == subscription.publisher_subscription_id
+                    );
+                    if (
+                      subscribedVideo.length == 0 &&
+                      index + 1 < videoSubDetails.length
+                    ) {
+                      return;
+                    }
+                    if (
+                      subscribedVideo.length == 0 &&
+                      subFlag &&
+                      index + 1 == videoSubDetails.length
+                    ) {
+                      subFlag = false;
+                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                    } else if (subFlag) {
+                      subFlag = false;
+                      localStorage.setItem("ContinueWatching", "true");
+                      history.push({
+                        pathname: "/videoplayer",
+                        state: {
+                          show_details: videoDetails,
+                          singleVideo: singleVideo,
+                          showId: showId,
+                        },
+                      });
+                    }
+                  }
+                });
+              }
+            }
+          });
+        });
+      } else if (
+        videoDetails &&
+        videoDetails.free_video === true &&
+        videoDetails.subscriptions &&
+        videoDetails.subscriptions.length === 0
+      ) {
+        localStorage.setItem("ContinueWatching", "true");
+        history.push({
+          pathname: "/videoplayer",
+          state: {
+            show_details: videoDetails,
+            singleVideo: singleVideo,
+            showId: showId,
+          },
+        });
+      } else {
+        ToastsStore.error("Oops! Something went wrong.");
       }
+    }
     // } else {
     //   history.push({
     //     pathname: "/unavailable",
@@ -549,9 +556,12 @@ const VideoDetails = (categoryId, episode) => {
     console.log("showDetailsq", videoDetails);
     let user_id = service.getCookie("userId");
     if (user_id == null || user_id == service.getCookie("guestUserId")) {
-      history.push({
-        pathname: "/signin",
-      });
+      localStorage.setItem('detailWatchNowClicked', ShwID)
+      setTimeout(() => {
+        history.push({
+          pathname: "/signin",
+        });
+      }, 1000);
     } else {
       if (
         videoDetails &&
@@ -788,26 +798,24 @@ const VideoDetails = (categoryId, episode) => {
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${
-                  showDetails.type === "linear_event"
+                backgroundImage: `url(${showDetails.type === "linear_event"
                     ? showDetails.logo
                     : showDetails.type === "news"
-                    ? showDetails.logo_thumb
-                    : showsImageUrl + showDetails.logo_thumb
-                })`,
+                      ? showDetails.logo_thumb
+                      : showsImageUrl + showDetails.logo_thumb
+                  })`,
               }}
             ></div>
           ) : showDetails.single_video == 1 ? (
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${
-                  showDetails.type === "linear_event"
+                backgroundImage: `url(${showDetails.type === "linear_event"
                     ? showDetails.logo
                     : showDetails.type === "news"
-                    ? showDetails.logo_thumb
-                    : showsImageUrl + showDetails.logo_thumb
-                })`,
+                      ? showDetails.logo_thumb
+                      : showsImageUrl + showDetails.logo_thumb
+                  })`,
               }}
             ></div>
           ) : null}
@@ -865,18 +873,17 @@ const VideoDetails = (categoryId, episode) => {
                     className={showDetails.teaser ? "col col-9" : "col col-4"}
                   >
                     <div className="vpLeftSection">
-                      
+
                       {showDetails.single_video === 0 ? (
                         <div
                           className="vpPoster"
                           style={{
-                            backgroundImage: `url(${
-                              showDetails.type === "linear_event"
+                            backgroundImage: `url(${showDetails.type === "linear_event"
                                 ? showDetails.logo
                                 : showDetails.type === "news"
-                                ? showDetails.logo_thumb
-                                : showsImageUrl + showDetails.logo_thumb
-                            })`,
+                                  ? showDetails.logo_thumb
+                                  : showsImageUrl + showDetails.logo_thumb
+                              })`,
                             marginLeft: "7px",
                             // height: "385px",
                           }}
@@ -888,14 +895,13 @@ const VideoDetails = (categoryId, episode) => {
                             backgroundImage:
                               // `url(${
                               // showDetails.logo
-                              `url(${
-                                showDetails.type === "linear_event"
-                                  ? showDetails.logo
-                                  : showDetails.type === "news"
+                              `url(${showDetails.type === "linear_event"
+                                ? showDetails.logo
+                                : showDetails.type === "news"
                                   ? showDetails.logo_thumb
                                   : videoImageUrl + showDetails.logo_thumb
                               })`,
-                            
+
                             marginLeft: "7px",
                             // height: "365px",
                           }}
@@ -907,7 +913,7 @@ const VideoDetails = (categoryId, episode) => {
                       >
                         <div className="vpLeftButtons">
                           {showDetails.type === "news" ||
-                          showDetails.video == [] ? (
+                            showDetails.video == [] ? (
                             <div> </div>
                           ) : (
                             <button
@@ -933,8 +939,8 @@ const VideoDetails = (categoryId, episode) => {
                               <div className="buttonBg rounderbutton"></div>
                               <div className="buttonContent">
                                 {showDetails.single_video === 0 &&
-                                defaultOptions &&
-                                defaultOptions.length > 0 ? (
+                                  defaultOptions &&
+                                  defaultOptions.length > 0 ? (
                                   <div className="vpWatchSeasonText">
                                     {defaultOptions[0].season == null
                                       ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
@@ -1036,11 +1042,11 @@ const VideoDetails = (categoryId, episode) => {
                                   {console.log(`show details are:`, showDetails)}
                                   <FacebookShareButton
                                     url={
-                                      "staging.runwaytv.com/home/movies?show_id=" +
+                                      "watch.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
-                                    
-                                    
+
+
                                     quote={
                                       showDetails.show_name +
                                       " || " +
@@ -1075,7 +1081,7 @@ const VideoDetails = (categoryId, episode) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "staging.runwaytv.com/home/movies?show_id=" +
+                                      "watch.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={
@@ -1202,7 +1208,7 @@ const VideoDetails = (categoryId, episode) => {
                         </div>
                       </div>
                     </div>
-                    {console.log("showdetails season",showDetails)}
+                    {console.log("showdetails season", showDetails)}
                     {isDesktop === true ? (
                       showDetails.single_video === 0 ? (
                         <div className="vpMiddleDesc">
@@ -1283,7 +1289,7 @@ const VideoDetails = (categoryId, episode) => {
                                           // className="movieTileImage"
                                           className={
                                             hover === true &&
-                                            focusedId === index
+                                              focusedId === index
                                               ? "movieTileImage movieTileImageOpen"
                                               : "movieTileImage"
                                           }
@@ -1305,13 +1311,13 @@ const VideoDetails = (categoryId, episode) => {
                                             }}
                                             className={
                                               hover === true &&
-                                              focusedId === index
+                                                focusedId === index
                                                 ? "movieTileIcon "
                                                 : "movieTileIcon  movieTileHoverOpened"
                                             }
                                           >
                                             {hover === true &&
-                                            focusedId === index ? (
+                                              focusedId === index ? (
                                               <svg
                                                 className="svgIcon movieTilePlayIcon"
                                                 preserveAspectRatio="xMidYMid meet"
@@ -1337,10 +1343,9 @@ const VideoDetails = (categoryId, episode) => {
                                             <div
                                               className="moviePoster"
                                               style={{
-                                                backgroundImage: `url(${
-                                                  videoImageUrl +
+                                                backgroundImage: `url(${videoImageUrl +
                                                   show.thumbnail_350_200
-                                                })`,
+                                                  })`,
                                               }}
                                             >
                                               <div className="FeNml"></div>
@@ -1350,7 +1355,7 @@ const VideoDetails = (categoryId, episode) => {
                                           <div
                                             className={
                                               hover === true &&
-                                              focusedId === index
+                                                focusedId === index
                                                 ? "wishlistPosition wishlistTranslate wishlistParentOpen"
                                                 : "wishlistPosition wishlistTranslate wishlistParentClose"
                                             }
@@ -1359,7 +1364,7 @@ const VideoDetails = (categoryId, episode) => {
                                               <div
                                                 className={
                                                   hover === true &&
-                                                  focusedId === index
+                                                    focusedId === index
                                                     ? "wlgradientPosition wlgradientTranslate wlgradientOpen"
                                                     : "wlgradientPosition wlgradientTranslate wlgradientClose"
                                                 }
@@ -1373,7 +1378,7 @@ const VideoDetails = (categoryId, episode) => {
                                                 }}
                                               ></div>
                                               {showDetails.watchlist_flag ===
-                                              1 ? (
+                                                1 ? (
                                                 <div className="wishlistTextWrapper">
                                                   <div
                                                     className="wishlistText"
@@ -1387,9 +1392,9 @@ const VideoDetails = (categoryId, episode) => {
                                                   </div>
                                                 </div>
                                               ) : showDetails.watchlist_flag ===
-                                                  null ||
+                                                null ||
                                                 showDetails.watchlist_flag ===
-                                                  0 ? (
+                                                0 ? (
                                                 <div className="wishlistTextWrapper">
                                                   <div
                                                     className="wishlistText"
@@ -1434,7 +1439,7 @@ const VideoDetails = (categoryId, episode) => {
                                                     ? `(${showDetails.year})`
                                                     : null}
                                                   {showDetails.year &&
-                                                  show.duration_text
+                                                    show.duration_text
                                                     ? " . "
                                                     : null}
                                                   {show.duration_text
@@ -1449,7 +1454,7 @@ const VideoDetails = (categoryId, episode) => {
                                                           index ===
                                                           showDetails.categories
                                                             .length -
-                                                            1
+                                                          1
                                                         ) {
                                                           return item.category_name;
                                                         } else {
@@ -1494,7 +1499,7 @@ const VideoDetails = (categoryId, episode) => {
                   </div>
                 ) : null}
                 {showDetails.key_art_work &&
-                showDetails.key_art_work.length > 0 ? (
+                  showDetails.key_art_work.length > 0 ? (
                   <KeyArtWork keyartWork={showDetails.key_art_work} />
                 ) : null}
                 <div
@@ -1530,7 +1535,7 @@ const VideoDetails = (categoryId, episode) => {
                                         // className="movieTileImage"
                                         className={
                                           hover === true &&
-                                          focusedId === index + "key"
+                                            focusedId === index + "key"
                                             ? "movieTileImage movieTileImageOpen"
                                             : "movieTileImage"
                                         }
@@ -1548,21 +1553,21 @@ const VideoDetails = (categoryId, episode) => {
                                           }}
                                           className={
                                             hover === true &&
-                                            focusedId === index + "key"
+                                              focusedId === index + "key"
                                               ? "movieTileIcon "
                                               : "movieTileIcon  movieTileHoverOpened"
                                           }
                                         >
                                           {hover === true &&
-                                          focusedId === index + "key" ? (
+                                            focusedId === index + "key" ? (
                                             <svg
                                               className="svgIcon movieTilePlayIcon"
                                               preserveAspectRatio="xMidYMid meet"
                                               viewBox="0 0 62 62"
                                               style={{ fill: "currentcolor" }}
-                                              // onClick={() => {
-                                              //   functionOnclick(show);
-                                              // }}
+                                            // onClick={() => {
+                                            //   functionOnclick(show);
+                                            // }}
                                             >
                                               <circle
                                                 r="30"
@@ -1583,9 +1588,8 @@ const VideoDetails = (categoryId, episode) => {
                                         <div
                                           className="moviePoster"
                                           style={{
-                                            backgroundImage: `url(${
-                                              showsImageUrl + show.logo
-                                            })`,
+                                            backgroundImage: `url(${showsImageUrl + show.logo
+                                              })`,
                                           }}
                                         >
                                           <div className="FeNml"></div>
@@ -1593,7 +1597,7 @@ const VideoDetails = (categoryId, episode) => {
                                         <div
                                           className={
                                             hover === true &&
-                                            focusedId === index + "key"
+                                              focusedId === index + "key"
                                               ? "wishlistPosition wishlistTranslate wishlistParentOpen"
                                               : "wishlistPosition wishlistTranslate wishlistParentClose"
                                           }
@@ -1602,7 +1606,7 @@ const VideoDetails = (categoryId, episode) => {
                                             <div
                                               className={
                                                 hover === true &&
-                                                focusedId === index + "key"
+                                                  focusedId === index + "key"
                                                   ? "wlgradientPosition wlgradientTranslate wlgradientOpen"
                                                   : "wlgradientPosition wlgradientTranslate wlgradientClose"
                                               }
@@ -1658,7 +1662,7 @@ const VideoDetails = (categoryId, episode) => {
                                                 functionOnclick(show);
                                               }}
                                             >
-                                              {show.show_name}
+                                              {(show.show_name).toUpperCase()}
                                             </a>
                                           </h3>
                                           <div className="movieCatYear">
