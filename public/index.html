@@ -223,67 +223,24 @@
             })
         }
 
+        window.playLivePlayer = (videoElem) => {
+            setTimeout(() => {
+                if (player) {
+                    videojs(videoElem).dispose();
+                } else {
+                    var player
+                }
+                var options = {
+                    id: videoElem
+                };
+                player = videojs(videoElem);
+                setTimeout(() => {
+                    player.play();
+                }, 1000);
 
+            }, 1000)
 
-
-        // const playerEvents = (player, videoId, vd, show_details) => {
-        //     if (playvariable === true) {
-        //         player.on("play", function () {
-        //             console.log('play');
-        //             window.onVideoPlay(videoId, vd, show_details);
-        //         });
-        //     } else {
-        //         window.onVideoResume(videoId, vd, show_details);
-        //     }
-
-        //     var orgValue = 0
-        //     var prevValue = 0
-        //     player.on('timeupdate', function (time) {
-        //         // console.log('time update', player.currentTime());
-        //         var currenttime = player.currentTime();
-        //         var value = Math.floor(currenttime);
-
-        //         if (value % 60 === 0) {
-        //             orgValue = value;
-        //         }
-
-        //         if (orgValue && orgValue !== prevValue) {
-        //             prevValue = orgValue
-        //             window.onVideoPlayInteval(vd, show_details);
-        //         }
-
-        //     });
-        //     player.on("pause", function () {
-        //         playvariable = false;
-        //         console.log('pause');
-        //         window.onVideoPause(vd, show_details);
-        //     });
-
-        //     player.on("end", function () {
-        //         console.log('end');
-        //         window.onVideoEnd(vd, show_details);
-        //     });
-
-        //     player.on("adsready", function () {
-        //         player.ima.addEventListener(google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED, function () {
-        //             console.log("ads CONTENT_RESUME_REQUESTED completed")
-        //             player.play();
-        //         });
-
-        //         player.ima.addEventListener(google.ima.AdEvent.Type.ALL_ADS_COMPLETED, function () {
-        //             console.log("ads completed")
-        //             player.play();
-        //         });
-        //         player.ima.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR, function () {
-        //             console.log("ads error")
-        //             player.play();
-        //         });
-        //         player.ima.addEventListener(google.ima.AdErrorEvent.Type.PAUSED, function () {
-        //             console.log("ads paused")
-        //             player.play();
-        //         });
-        //     })
-        // }
+        }
     </script>
     <!--
       This HTML file is a template.
