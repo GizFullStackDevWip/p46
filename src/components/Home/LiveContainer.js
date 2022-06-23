@@ -64,6 +64,7 @@ const LiveContainer = (param) => {
             "live_content_video";
 
           if (!details.ssai_enabled) {
+            console.log(`response.data[0].live_link`,response.data[0].live_link)
 
             setVideoPlayer(
               <video

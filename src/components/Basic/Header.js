@@ -34,6 +34,10 @@ const Header = () => {
   const [menuClose, setMenuClose] = useState(false);
   const [isDesktop, setIsDesktop] = useState(deviceDetect());
 
+  const [suggestionLoading, setSuggestionLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
+  const [suggestionList, setSuggestionList] = useState([]);
+
   currentPathStrings =
     currentPath === "/register" ||
     currentPath === "/signin" ||
@@ -87,6 +91,64 @@ let device = checkOperatingSystem();
       });
     }
   }, []);
+
+  const handler = (event) => {
+    if (event.key === "Enter") {
+      callSearchAPI(input);
+    }
+  };
+
+  const onChangeNewHandler = (e) => {
+    const inputValue = e.target.value;
+    setInput(e.target.value);
+    if (e.which === 13) {
+      callSearchAPI(inputValue);
+    }
+    if (inputValue.length > 0) {
+      if (timeOut) {
+        clearTimeout(timeOut);
+      }
+      setSuggestionLoading(true);
+      setSearching(true);
+      setTimeOut(
+        setTimeout(function () {
+          service.getSearchSuggestion(inputValue).then((response) => {
+            if (response.success == true) {
+              console.log(response);
+              setSuggestionLoading(false);
+              setSuggestionList(response.data.slice(0, 10));
+            }
+          });
+        }, 500)
+      );
+    } else {
+      setSearching(false);
+    }
+  };
+
+  const callSearchAPI = (key) => {
+    setSearching(false);
+    setSuggestionList([]);
+    setInput("");
+    if (key) {
+      service.searchShow(key).then((response) => {
+        if (response.data && response.data.length > 0) {
+          setMenuClose(false);
+          history.push({
+            pathname: "/search",
+            search: encodeURI(`input=${key}`),
+            state: { item: response.data },
+          });
+        } else {
+          history.push({
+            pathname: "/search",
+            search: encodeURI(`input=${key}`),
+            state: { item: [] },
+          });
+        }
+      });
+    }
+  };
 
   const onChangeHandler = (e) => {
     setTyping(true);
@@ -268,8 +330,10 @@ let device = checkOperatingSystem();
                 >
                   <div className="menuWrapper">
                     <div className="mobileSearch">
+                      
                       <section className="searchContainer mobileSearchBG">
-                        {login === true ? (
+                        {
+                        login === true ? (
                           <div>
                             <svg
                               className="svgIcon searchIcon"
@@ -289,7 +353,7 @@ let device = checkOperatingSystem();
                                 type="search"
                                 placeholder="Search"
                                 required=""
-                                onChange={onChangeHandler}
+                                onChange={onChangeNewHandler}
                                 value={
                                   parsed.show_id
                                     ? typing === true
@@ -298,6 +362,7 @@ let device = checkOperatingSystem();
                                     : input
                                 }
                               />
+                            
                             </form>
                             <svg
                               className="svgIcon searchClose"
@@ -311,8 +376,59 @@ let device = checkOperatingSystem();
                                 d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                               ></path>
                             </svg>
+                            
+                          {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
+
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
                           </div>
                         ) : null}
+                        
                       </section>
                     </div>
                     <div
@@ -516,7 +632,7 @@ let device = checkOperatingSystem();
             ) : (
               <section className="searchContainer searchBar">
                 {login === true ? (
-                  <div>
+                  <div className="searchBox__wrapper">
                     <svg
                       className="svgIcon searchIcon"
                       preserveAspectRatio="xMidYMid meet"
@@ -535,14 +651,11 @@ let device = checkOperatingSystem();
                         type="search"
                         placeholder="Find movies, TV shows and more"
                         required=""
-                        onChange={onChangeHandler}
-                        value={
-                          parsed.show_id
-                            ? typing === true
-                              ? input
-                              : ""
-                            : input
-                        }
+                        onChange={onChangeNewHandler}
+                        // onKeyPress={callSearchAPI(input)}
+                        // onKeyPress={(e) => handler(e,input)}
+                        value={input}
+                        autoComplete="off"
                       />
                     </form>
 
@@ -558,6 +671,60 @@ let device = checkOperatingSystem();
                         d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                       ></path>
                     </svg>
+                    {searching == true && (
+                      <div className="search__suggestion__container">
+                        {suggestionLoading == true ? (
+                          <div className="suggestion__loading">Loading...</div>
+                        ) : suggestionList.length == 0 ? (
+                          <div
+                            onClick={() => {
+                              callSearchAPI();
+                            }}
+                            className="search__suggestion__item"
+                          >
+                            More Results
+                          </div>
+                        ) : (
+                          // <div className="suggestion__loading">
+                          //   No results found
+                          //   <div
+                          //               onClick={() => {
+                          //                 callSearchAPI('hollywood')
+                          //               }}
+                          //               className="search__suggestion__item"
+                          //             >3333333
+                          //               {/* {item} */}
+                          //             </div>
+                          //   {/* {searching.map((item, index) => {
+                          //           return (
+                          //             <li
+                          //               onKeyPress={() => {
+                          //                 callSearchAPI(item);
+                          //               }}
+                          //               className="search__suggestion__item"
+                          //             >
+                          //               {item}
+                          //             </li>
+                          //           );
+                          //         })} */}
+                          // </div>
+                          <ul className="search__suggestion__list">
+                            {suggestionList.map((item, index) => {
+                              return (
+                                <li
+                                  onClick={() => {
+                                    callSearchAPI(item);
+                                  }}
+                                  className="search__suggestion__item"
+                                >
+                                  {item.toUpperCase()}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </section>
@@ -809,51 +976,100 @@ let device = checkOperatingSystem();
                 <div className="menuWrapper">
                   <div className="mobileSearch">
                     <section className="searchContainer mobileSearchBG">
-                      {login === true ? (
-                        <div>
-                          <svg
-                            className="svgIcon searchIcon"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 18.07 18.07"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                            ></path>
-                          </svg>
-                          <form onSubmit={submitSearch}>
-                            <input
-                              className="searchInput"
-                              id="searchInput"
-                              type="search"
-                              placeholder="Search"
-                              required=""
-                              onChange={onChangeHandler}
-                              value={
-                                parsed.show_id
-                                  ? typing === true
-                                    ? input
-                                    : ""
-                                  : input
-                              }
-                            />
-                          </form>
+                    {
+                        login === true ? (
+                          <div>
+                            <svg
+                              className="svgIcon searchIcon"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 18.07 18.07"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                              ></path>
+                            </svg>
+                            <form onSubmit={submitSearch}>
+                              <input
+                                className="searchInput"
+                                id="searchInput"
+                                type="search"
+                                placeholder="Search"
+                                required=""
+                                onChange={onChangeNewHandler}
+                                value={
+                                  parsed.show_id
+                                    ? typing === true
+                                      ? input
+                                      : ""
+                                    : input
+                                }
+                              />
+                            </form>
+                            <svg
+                              className="svgIcon searchClose"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 13 13"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                fillRule="evenodd"
+                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                              ></path>
+                            </svg>
+                          {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
 
-                          <svg
-                            className="svgIcon searchClose"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 13 13"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              fillRule="evenodd"
-                              d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                            ></path>
-                          </svg>
-                        </div>
-                      ) : null}
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
                     </section>
                   </div>
                   <div
@@ -1049,46 +1265,100 @@ let device = checkOperatingSystem();
             ></section>
           ) : (
             <section className="searchContainer searchBar">
-              {login === true ? (
-                <div>
-                  <svg
-                    className="svgIcon searchIcon"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 18.07 18.07"
-                    style={{ fill: "currentcolor" }}
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                    ></path>
-                  </svg>
-                  <form onSubmit={submitSearch}>
-                    <input
-                      className="searchInput"
-                      id="searchInput"
-                      type="search"
-                      placeholder="Find movies, TV shows and more"
-                      required=""
-                      onChange={onChangeHandler}
-                      value={
-                        parsed.show_id ? (typing === true ? input : "") : input
-                      }
-                    />
-                  </form>
-                  <svg
-                    className="svgIcon searchClose"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 13 13"
-                    style={{ fill: "currentcolor" }}
-                  >
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                    ></path>
-                  </svg>
-                </div>
-              ) : null}
+               {
+                        login === true ? (
+                          <div>
+                            <svg
+                              className="svgIcon searchIcon"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 18.07 18.07"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                              ></path>
+                            </svg>
+                            <form onSubmit={submitSearch}>
+                              <input
+                                className="searchInput"
+                                id="searchInput"
+                                type="search"
+                                placeholder="Search"
+                                required=""
+                                onChange={onChangeNewHandler}
+                                value={
+                                  parsed.show_id
+                                    ? typing === true
+                                      ? input
+                                      : ""
+                                    : input
+                                }
+                              />
+                            </form>
+                            <svg
+                              className="svgIcon searchClose"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 13 13"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                fillRule="evenodd"
+                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                              ></path>
+                            </svg>
+                          {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
+
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
             </section>
           )}
 

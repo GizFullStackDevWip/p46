@@ -72,7 +72,7 @@ const Home = () => {
       //console.log(`Y offset is`, newPosition);
       let livePlayer = document.getElementById('live_content_video_html5_api');
       if (newPosition > 350) {
-        livePlayer.pause()
+        (livePlayer)&&(livePlayer.pause())
       } else {
         livePlayer && livePlayer.paused && livePlayer.play()
       }

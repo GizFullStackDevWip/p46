@@ -2410,6 +2410,51 @@ body {
   pointer-events: none;
 }
 
+.search__suggestion__container {
+  position: absolute;
+  background-color: rgba(8, 1, 1, 0.888);
+  width: 100%;
+  /* height: 186px; */
+  top: 44px;
+  border-radius: 1px 1px 8px 8px;
+  box-shadow: 4px 2px 14px #151414;
+}
+
+.suggestion__loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 0;
+}
+
+.mobileSearch .search__suggestion__item:hover {
+  background-color: rgba(255, 215, 255, 1.25);
+}
+
+.mobileSearch .search__suggestion__item {
+  border-bottom: 1px solid #e6dcdc;
+  color: black;
+}
+
+.search__suggestion__item:hover {
+  background-color: rgba(0, 0, 0, 0.741);
+  border-bottom: 1px solid #e6dcdc;
+  border-top: 1px solid #e6dcdc;
+
+  color:rgb(181, 0, 0)
+}
+
+.search__suggestion__item:last-child {
+  border: none;
+  border-radius: 1px 1px 8px 8px;
+}
+.search__suggestion__item {
+  list-style: none;
+  padding: 6px;
+  border-bottom: 1px solid rgb(130, 0, 0);
+  cursor: pointer;
+}
+
 .input:not(.inputFixed) .inputText:focus ~ .inputLabel {
   top: 10px;
   font-size: 11px;
