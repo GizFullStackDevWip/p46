@@ -1,0 +1,245 @@
+.topContainer {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.landing__Page__Wrapper .lpBanner__Section {
+  position: relative;
+  width: 100%;
+  background-image: url(https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner2.png);
+  /* background-image: url(https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner.jpg); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 67%;
+}
+
+.landing__Page__Wrapper .lpBanner__Section .lpBanner__wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.landing__Page__Wrapper .lpBanner__Section .lpBanner__wrapper .Xd2tG {
+  position: relative;
+  height: 70vw;
+  width: 100vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container {
+  position: relative;
+  z-index: 2;
+}
+.landing__Page__Wrapper .lpMain__Container {
+  width: 100%;
+  position: absolute;
+}
+
+.landing__Page__Wrapper .lpBanner__Section .lpSection__Wrapper {
+  width: 100%;
+}
+
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center {
+  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center
+  .H1 {
+  width: 100%;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 36px;
+  letter-spacing: 0.3px;
+}
+
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center
+  .lpSection__Text__Center,
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center
+  .H1 {
+  color: #fff;
+  text-align: center;
+}
+
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center
+  .H1
+  span {
+  font-size: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  display: inherit;
+  line-height: inherit;
+}
+
+.landing__Page__Wrapper
+  .lpBanner__Section
+  .lpBanner__wrapper
+  .lpMain__Container
+  .lpFlex__Center
+  .lpSection__Text__Center {
+  margin: 0 auto 18px;
+}
+
+.landing__Page__Wrapper .lpMain__Container .lpSection__Text__Center {
+  text-align: center;
+}
+.landing__Page__Wrapper .lpSection__Font {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.platform__Logos__Image {
+  padding: 35px 5%;
+  background: var(--primarybg-color);
+}
+.desktop__Platform__Logo {
+  display: none;
+}
+
+.platform__Logos__Text {
+  padding: 30px;
+  background: #fff;
+}
+
+h2.pl__Heading {
+  font-size: 35px;
+  text-align: center;
+  line-height: 1.3em;
+}
+/* *********************************************************** */
+/* min 768px */
+@media (min-width: 768px) {
+  .landing__Page__Wrapper .lpBanner__Section {
+    height: 56.25vw;
+    /* height: 60.25vw; */
+  }
+  .landing__Page__Wrapper .lpBanner__Section .lpBanner__wrapper .Xd2tG {
+    position: absolute;
+    height: 105%;
+    width: 84%;
+    align-self: flex-end;
+  }
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container {
+    height: 100%;
+    /* height: 88%; */
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 10%;
+  }
+
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center
+    .lpSection__Text__Center,
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center
+    .H1 {
+    text-align: left;
+  }
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center
+    .lpSection__Text__Center,
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center
+    a {
+    align-self: flex-start;
+    margin-left: 0;
+  }
+}
+
+/* max 767px */
+
+@media (max-width: 767px) {
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center {
+    align-items: center;
+  }
+}
+
+/* min 960px */
+
+@media (min-width: 960px) {
+  .landing__Page__Wrapper
+    .lpBanner__Section
+    .lpBanner__wrapper
+    .lpMain__Container
+    .lpFlex__Center
+    .H1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 56px;
+    letter-spacing: 0.3px;
+  }
+  .landing__Page__Wrapper .lpSection__Font {
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0.37px;
+  }
+  .mobile__Platform__Logo {
+    display: none;
+  }
+  .platform__Logos__Image {
+    padding: 35px 8%;
+  }
+  .desktop__Platform__Logo {
+    display: block;
+  }
+  .platform__Logos__Text {
+    padding: 55px 30px;
+  }
+  h2.pl__Heading {
+    /* font-size: 54px; */
+    font-size: 45px;
+  }
+}

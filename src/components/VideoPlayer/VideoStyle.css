@@ -1,0 +1,56 @@
+.MainVideoPlayer{
+    width:100%;
+    background-color:black;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.SinglePlayer{
+    margin:10%;
+}
+
+.VideoList{
+    text-align: center;
+    align-items: center;
+    background-color:black;
+    width: 400px;
+    height:360px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-top: 150px;
+    margin-left: -120px;
+}
+
+.ListHeadng{
+    color:white;
+}
+
+.justSpacing{
+    background-color:black;
+    padding:5px;
+}
+
+/* width */
+.VideoList::-webkit-scrollbar {
+    width: 9px;
+  }
+  
+  /* Track */
+  .VideoList::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .VideoList::-webkit-scrollbar-thumb {
+    background:#79a6d2; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .VideoList::-webkit-scrollbar-thumb:hover {
+    background:#3973ac; 
+  }
+
+

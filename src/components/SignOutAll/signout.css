@@ -1,0 +1,90 @@
+.mainClass {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: black;
+}
+
+/* .signOutButton {
+  background-color: #0080ff;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 13px;
+  padding: 12px 2em;
+  min-width: 98px;
+  min-height: 37px;
+  margin-right: 0.85em;
+  cursor: pointer;
+  font-weight: 400;
+} */
+.cancelButton {
+  font-family: 'Roboto Condensed', sans-serif;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #0aabea, #0a0063);
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: condensed;
+  font-style: normal;
+  line-height: 1.32;
+  letter-spacing: -0.34px;
+  text-align: left;
+  color: #EEEEEE;
+  outline: 0 !important;
+  border: 0;
+  text-align: center;
+  height: 38px;
+  transition: all 0.3s !important;
+  margin-right: 20px;
+}
+
+.signOutButton {
+  font-family: 'Roboto Condensed', sans-serif;
+  border-radius: 5px;
+  background-image: linear-gradient(to bottom, #EA0A0A, #630100);
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: condensed;
+  font-style: normal;
+  line-height: 1.32;
+  letter-spacing: -0.34px;
+  text-align: left;
+  color: #EEEEEE;
+  outline: 0 !important;
+  border: 0;
+  text-align: center;
+  height: 38px;
+  transition: all 0.3s !important;
+  margin-right: 30px;
+}
+
+/* .cancelButton {
+  background-color: #0080ff;
+  border: none;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-weight: 400;
+  font-size: 13px;
+  padding: 12px 2em;
+  min-width: 98px;
+  min-height: 37px;
+  margin-right: 0.5em;
+  cursor: pointer;
+} */
+
+.signOutHeading {
+  color: white;
+  font-weight: 400;
+  font-size: 3rem;
+  margin: 0 0 0.55em;
+}
+
+.subText {
+  color: white;
+  font-size: 1.4rem;
+  margin-right: 15px;
+}
