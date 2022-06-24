@@ -848,7 +848,7 @@ const SignIn = (props) => {
               <div className="col col-9 col-lg-6 col-xl-6 col-xxl-4">
                 <h3 className="H3">Welcome Back!</h3>
                 <div>
-                  {/* <div rel="noopener" target="_self">
+                  <div rel="noopener" target="_self">
                     <button className="button buttonLarge buttonBlock registerFacebook">
                       <div className="buttonBg rounderbutton"></div>
                       <FacebookLogin
@@ -867,7 +867,7 @@ const SignIn = (props) => {
                       <div className="orText">OR</div>
                     </div>
                     <div className="orDivider"></div>
-                  </div> */}
+                  </div>
                   {isForgot && (
                     <div id="forgotId">
                       <h5 className="H5 signFormHeading">Forgot Password</h5>
