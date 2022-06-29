@@ -2418,6 +2418,7 @@ body {
   top: 44px;
   border-radius: 1px 1px 8px 8px;
   box-shadow: 4px 2px 14px #151414;
+  z-index: 1;
 }
 
 .suggestion__loading {
@@ -7016,6 +7017,12 @@ a.headerMenuItems:hover {
 
 .searchWrapper .searchResultMargin {
   margin: 1rem 60px 2rem;
+}
+
+@media (max-width: 441px) {
+  .searchWrapper .searchResultMargin {
+    margin: 1rem 10px 2rem;
+  }
 }
 
 .searchWrapper .searchResultMargin ._18Y8d {

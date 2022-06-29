@@ -19,13 +19,11 @@ const Header = () => {
 
   const [input, setInput] = useState([]);
   const [timeOut, setTimeOut] = useState(0);
-  const [category, setCategory] = useState([]);
   const [listCategory, setListCategory] = useState([]);
   let userName = localStorage.getItem("userName");
   const [typing, setTyping] = useState(false);
   const [background, setBackground] = useState(false);
   const [mouseHover, setMouseHover] = useState(false);
-  const [update, setUpdate] = useState(true);
 
   const [downloadHoverStyle, setDownloadHoverStyle] = useState([]);
   const [downloadHover, setDownloadHover] = useState(false);
@@ -57,13 +55,8 @@ const Header = () => {
     if (isLoggedIn === "true" && userId) {
       dispatch({ type: "LOGIN" });
     }
-    service.getshowsbyCategory().then((response) => {
-      if (response.message == "invalid token") {
-        history.go(0);
-      } else {
-        setCategory(response.data);
-      }
-    });
+    
+
     service.getshowsbyListCategory().then((response) => {
       //console.log(`resp func called`, response);
       if (response.message == "invalid token") {
@@ -331,8 +324,8 @@ let device = checkOperatingSystem();
                   <div className="menuWrapper">
                     <div className="mobileSearch">
                       
-                      <section className="searchContainer mobileSearchBG">
-                        {
+                    <section className="searchContainer mobileSearchBG">
+                    {
                         login === true ? (
                           <div>
                             <svg
@@ -354,15 +347,9 @@ let device = checkOperatingSystem();
                                 placeholder="Search"
                                 required=""
                                 onChange={onChangeNewHandler}
-                                value={
-                                  parsed.show_id
-                                    ? typing === true
-                                      ? input
-                                      : ""
-                                    : input
-                                }
+                                value={input}
+                                autoComplete="off"
                               />
-                            
                             </form>
                             <svg
                               className="svgIcon searchClose"
@@ -376,8 +363,7 @@ let device = checkOperatingSystem();
                                 d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                               ></path>
                             </svg>
-                            
-                          {searching == true && (
+                            {searching == true && (
                               <div className="search__suggestion__container">
                                 {suggestionLoading == true ? (
                                   <div className="suggestion__loading">
@@ -417,6 +403,7 @@ let device = checkOperatingSystem();
                                             callSearchAPI(item);
                                           }}
                                           className="search__suggestion__item"
+                                          style={{color: "white"}}
                                         >
                                           {item.toUpperCase()}
                                         </li>
@@ -428,8 +415,7 @@ let device = checkOperatingSystem();
                             )}
                           </div>
                         ) : null}
-                        
-                      </section>
+                    </section>
                     </div>
                     <div
                       className="menuRowItem"
@@ -478,25 +464,45 @@ let device = checkOperatingSystem();
 
                             <div className="menuItemHead">Main Links</div>
                             <div className="menuListItems">
-                              <Link to={{ pathname: "/aboutus" }}>
-                                <div className="linkButton headerMenuItems">
-                                  About Us
-                                </div>
-                              </Link>
+                              {/* <Link to={{ pathname: '/aboutus' }}> */}
+                              <div className="linkButton headerMenuItems">
+                                About Us
+                              </div>
+                              {/* </Link> */}
                             </div>
-                            {/* <div className="menuListItems">
+                            <div className="menuListItems">
                               <a
-                                href="https://boondocknation.com/shop"
+                                href="http://discoverwisconsin.com/nowtrending/"
+                                target="_blank"
+                              >
+                                <div className="linkButton headerMenuItems">
+                                  Now Trending
+                                </div>
+                              </a>
+                            </div>
+                            <div className="menuListItems">
+                              <a
+                                href="http://discoverwisconsin.com/events/"
+                                target="_blank"
+                              >
+                                <div className="linkButton headerMenuItems">
+                                  Events
+                                </div>
+                              </a>
+                            </div>
+                            <div className="menuListItems">
+                              <a
+                                href="https://shop.discoverwisconsin.com/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
                                   Shop
                                 </div>
                               </a>
-                            </div> */}
+                            </div>
                             <div className="menuListItems">
                               <a
-                                href="https://watch.runwaytv.com/"
+                                href="http://discoverwisconsin.com/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -516,7 +522,7 @@ let device = checkOperatingSystem();
                               <div className="menuInnerCol">
                                 {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if ((listCategory.length / 3) > index) {
+                                    if (((listCategory.length)/3) > index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -539,42 +545,16 @@ let device = checkOperatingSystem();
                                   })}
                               </div>
                             </div>
-                            {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
-                                                        <div className="menuListItems">
-                                                            <div className="menuInnerCol">
-                                                                {
-                                                                    category &&
-                                                                    category.map((item, index) => {
-                                                                        if (category.length / 3 - 2 > index) {
-                                                                            return (
-                                                                                <div key={index}>
-                                                                                    {
-                                                                                        item.category_name &&
-                                                                                        <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
-                                                                                            <div className="linkButton headerMenuItems">{item.category_name}</div>
-                                                                                        </Link>
-                                                                                    }
-                                                                                </div>
-                                                                            );
-                                                                        }
-
-                                                                    })
-                                                                }
-                                                            </div>
-                                                        </div> */}
                           </div>
                         </div>
-                        <div
-                          className="menuWidth20 menuBGcolor menuWidth40"
-                          style={{ height: "auto" }}
-                        >
-                          <div className="menuCol">
+                        <div className="menuWidth20 menuBGcolor menuWidth40">
+                        <div className="menuCol">
                             <div className="menuItemHead">More Categories</div>
                             <div className="menuListItems">
                               <div className="menuInnerCol">
                                 {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if ((listCategory.length / 3) < index) {
+                                    if (((listCategory.length)/3) <= index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -998,13 +978,8 @@ let device = checkOperatingSystem();
                                 placeholder="Search"
                                 required=""
                                 onChange={onChangeNewHandler}
-                                value={
-                                  parsed.show_id
-                                    ? typing === true
-                                      ? input
-                                      : ""
-                                    : input
-                                }
+                                value={input}
+                                autoComplete="off"
                               />
                             </form>
                             <svg
@@ -1019,7 +994,7 @@ let device = checkOperatingSystem();
                                 d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                               ></path>
                             </svg>
-                          {searching == true && (
+                            {searching == true && (
                               <div className="search__suggestion__container">
                                 {suggestionLoading == true ? (
                                   <div className="suggestion__loading">
@@ -1059,6 +1034,7 @@ let device = checkOperatingSystem();
                                             callSearchAPI(item);
                                           }}
                                           className="search__suggestion__item"
+                                          style={{color: "white"}}
                                         >
                                           {item.toUpperCase()}
                                         </li>
@@ -1125,19 +1101,39 @@ let device = checkOperatingSystem();
                               </div>
                             </Link>
                           </div>
-                          {/* <div className="menuListItems">
+                          <div className="menuListItems">
                             <a
-                              href="https://boondocknation.com/shop"
+                              href="http://discoverwisconsin.com/nowtrending/"
+                              target="_blank"
+                            >
+                              <div className="linkButton headerMenuItems">
+                                Now Trending
+                              </div>
+                            </a>
+                          </div>
+                          <div className="menuListItems">
+                            <a
+                              href="http://discoverwisconsin.com/events/"
+                              target="_blank"
+                            >
+                              <div className="linkButton headerMenuItems">
+                                Events
+                              </div>
+                            </a>
+                          </div>
+                          <div className="menuListItems">
+                            <a
+                              href="https://shop.discoverwisconsin.com/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
                                 Shop
                               </div>
                             </a>
-                          </div> */}
+                          </div>
                           <div className="menuListItems">
                             <a
-                              href="https://watch.runwaytv.com/"
+                              href="http://discoverwisconsin.com/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -1157,7 +1153,7 @@ let device = checkOperatingSystem();
                               <div className="menuInnerCol">
                                 {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if ((listCategory.length / 3) > index) {
+                                    if (((listCategory.length)/3) > index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -1180,61 +1176,38 @@ let device = checkOperatingSystem();
                                   })}
                               </div>
                             </div>
-                          {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
-                                                    <div className="menuListItems">
-                                                        <div className="menuInnerCol">
-                                                            {
-                                                                category &&
-                                                                category.map((item, index) => {
-                                                                    if (category.length / 3 - 2 > index) {
-                                                                        return (
-                                                                            <div key={index}>
-                                                                                {
-                                                                                    item.category_name &&
-                                                                                    <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
-                                                                                        <div className="linkButton headerMenuItems">{item.category_name}</div>
-                                                                                    </Link>
-                                                                                }
-                                                                            </div>
-                                                                        );
-                                                                    }
-
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div> */}
                         </div>
                       </div>
                       <div className="menuWidth20 menuBGcolor menuWidth40">
-                        <div className="menuCol">
-                          <div className="menuItemHead">Categories</div>
+                      <div className="menuCol">
+                          <div className="menuItemHead">More Categories</div>
                           <div className="menuListItems">
-                            <div className="menuInnerCol">
-                              {listCategory &&
-                                listCategory.map((item, index) => {
-                                  if ((listCategory.length / 3)  < index) {
-                                    return (
-                                      <div key={index}>
-                                        {item.categoryname && (
-                                          <Link
-                                            to={{
-                                              pathname: "/home/categorylist",
-                                              search: encodeURI(
-                                                `category_id=${item.categoryid}&category_name=${item.categoryname}`
-                                              ),
-                                            }}
-                                          >
-                                            <div className="linkButton headerMenuItems">
-                                              {item.categoryname}
-                                            </div>
-                                          </Link>
-                                        )}
-                                      </div>
-                                    );
-                                  }
-                                })}
+                              <div className="menuInnerCol">
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if (((listCategory.length)/3) <= index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
+                              </div>
                             </div>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -1287,13 +1260,8 @@ let device = checkOperatingSystem();
                                 placeholder="Search"
                                 required=""
                                 onChange={onChangeNewHandler}
-                                value={
-                                  parsed.show_id
-                                    ? typing === true
-                                      ? input
-                                      : ""
-                                    : input
-                                }
+                                value={input}
+                                autoComplete="off"
                               />
                             </form>
                             <svg

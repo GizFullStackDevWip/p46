@@ -125,6 +125,7 @@ const VideoDetails = (categoryId, episode) => {
             "&token=" +
             tokenResponse.data.data +
             "&type=trailer";
+            
         } else {
           newURL = "";
         }
