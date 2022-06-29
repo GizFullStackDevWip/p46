@@ -284,11 +284,12 @@ const FooterInfo = () => {
             </div >
             <div className="footerCopyright">
                 <div className="footerCopyText" style={{color: "black"}}>
-                    <div style={{color: "white"}}>Copyright &copy; 2022 RunwayTV, Inc.</div>
-                    <div style={{color: "white"}}> All rights reserved.</div>
+                    <div style={{color: "white"}}>Copyright &copy; 2022 – All Rights Reserved – “Project Forty-Six”</div>
+                    <div style={{color: "white"}}> Site Created By </div>
                 </div>
             </div>
         </div>
     );
 }
 export default FooterInfo;
+{/* */ }

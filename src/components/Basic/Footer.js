@@ -28,7 +28,7 @@ const Footer = () => {
               <div className="socialLinkContainer">
                 <div className="footerSLWrapper">
                 <a
-                    href="https://www.Facebook.com/runwaytv"
+                    href="#"
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerFacebook"
@@ -47,7 +47,7 @@ const Footer = () => {
                     </svg>
                   </a>
                   <a
-                    href="https://www.instagram.com/runwaytv/?hl=en"
+                    href="#"
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerInsta"
@@ -67,7 +67,7 @@ const Footer = () => {
                   
 
                   <a
-                    href="https://www.Twitter.com/runwaytv"
+                    href=""
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerTwitter"
@@ -116,7 +116,7 @@ const Footer = () => {
                   <a
                     rel="noopener"
                     target="_blank"
-                    href="https://watch.runwaytv.com/"
+                    href="#"
                     style={{ color: "#fff" }}
                     className="linkButton"
                   >
@@ -201,7 +201,7 @@ const Footer = () => {
                     style={{ color: "#fff" }}
                     onClick={() => {
                       window.open(
-                        "https://play.google.com/store/apps/details?id=com.runway.androidtv"
+                        "#"
                       );
                     }}
                     rel="noopener"
@@ -216,7 +216,7 @@ const Footer = () => {
                     style={{ color: "#fff" }}
                     onClick={() => {
                       window.open(
-                        "https://channelstore.roku.com/details/a7088d4e53090842812815e0c681a4bd/runway-tv"
+                        "#"
                       );
                     }}
                     rel="noopener"
@@ -231,7 +231,7 @@ const Footer = () => {
                     style={{ color: "#fff" }}
                     onClick={() => {
                       window.open(
-                        "https://www.amazon.com/Runway-TV/dp/B0B3MXCGMR/ref=sr_1_1?crid=2KBAYJ58VUDPB&keywords=runway+tv&qid=1655379684&rnid=2941120011&s=mobile-apps&sprefix=runway+tv%2Caps%2C310&sr=1-1"
+                        "#"
                       );
                     }}
                     rel="noopener"
@@ -246,7 +246,7 @@ const Footer = () => {
                     style={{ color: "#fff" }}
                     onClick={() => {
                       window.open(
-                        "https://play.google.com/store/apps/details?id=com.runway.androidtv"
+                        "#"
                       );
                     }}
                     rel="noopener"

@@ -30,7 +30,7 @@ const AboutUs = () => {
                                 ></div>
                                 <div className="header-content" >
                                   <h1 style={{color:"black"}}>
-Runway TV                                    <span style={{color:"black"}}>	RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world. Book a talent to come work for you, read about the newest celebrity news and see our picks from the world's top runway collections and read up on beauty & fashion tips all in one place.		
+                                  <span style={{color:"black"}}>content 	
                                     </span>
                                   </h1>{" "}
                                 </div>

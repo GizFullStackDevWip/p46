@@ -9961,3 +9961,85 @@ body {
   }
 
 }
+
+/*##########banner for P46##########################*/
+.bannerWrapper{
+  margin-top: 30px;
+  position: relative;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: black 1px solid;
+}
+
+/*.bannerImages{
+  background-color: black
+}*/
+.bannerImage{
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
+}
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  right: 32px;
+  font-size: 3rem;
+  color: white;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+
+.left-arrow {
+  position: absolute;
+  top: 50%;
+  left: 32px;
+  font-size: 3rem;
+  color: white;
+  z-index: 10;
+  cursor: pointer;
+  user-select: none;
+}
+ 
+.slide {
+  opacity: 0;
+  transition-duration: 1s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+}
+/*##########banner for P46 ##########################*/
+
+
+#AboutUsContent{
+  font-size: 16px;
+  font-family: sans-serif,'Segoe UI', Tahoma,  Verdana;
+  margin-top: 10px;
+}
+
+
+#main-bg{
+  top: 10px;
+  height: 100%;
+  bottom: 100px;
+  
+  
+}
+#entry-content{
+  margin-bottom: -68px;
+
+}
+
+
+
+
+
+
+
+
+

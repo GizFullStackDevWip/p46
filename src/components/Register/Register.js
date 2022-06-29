@@ -804,7 +804,7 @@ const Register = (state) => {
                         )}
                         <div className="regnAgreeContent">
                           <p>
-                            By registering, you agree to Runway TV
+                            By registering, you agree to Project forty six
                             {/* <Link to="/termsandconditions"> */}
                             <div
                               className="linkButton"
@@ -889,7 +889,7 @@ const Register = (state) => {
                       </form>
                       <div className="regnAgreeContent">
                         <p>
-                          By registering, you agree to Runway TV
+                          By registering, you agree to Project forty six
                           {/* <Link to="/termsandconditions"> */}
                           <div
                             className="linkButton"

@@ -589,7 +589,7 @@ let device = checkOperatingSystem();
                     isDesktop === true
                       ? {
                           cursor: "pointer",
-                          width: "50%",
+                          width: "80%",
                           paddingLeft: "18px",
                         }
                       : { width: "60%", paddingLeft: "8px" }
@@ -1218,8 +1218,8 @@ let device = checkOperatingSystem();
                 src={require("../../images/logo.png")}
                 style={
                   isDesktop === true
-                    ? { cursor: "pointer", width: "50%", paddingLeft: "18px" }
-                    : { width: "50%", paddingLeft: "8px" }
+                    ? { cursor: "pointer", width: "90%", paddingLeft: "18px" }
+                    : { width: "90%", paddingLeft: "8px" }
                 }
                 onClick={() => {
                   setInput("");

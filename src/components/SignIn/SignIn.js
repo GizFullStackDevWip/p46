@@ -1135,7 +1135,7 @@ const SignIn = (props) => {
 
                         <div className="signAgree">
                           <p>
-                            By registering, you agree to Runway TV
+                            By registering, you agree to Project46
                             {/* <Link to="/termsandconditions"> */}
                             <div
                               className="linkButton"

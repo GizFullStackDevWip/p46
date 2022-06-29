@@ -6,6 +6,7 @@ import LiveContainer from "./LiveContainer";
 import LiveSchedule from "./LiveSchedule";
 import Notification from "../../common/Notification";
 import $ from "jquery";
+import Banner from "../P46Banner.js/Banner";
 // import Banner from "./Banner";
 const Home = () => {
   const [category, setCategory] = useState([]);
@@ -112,10 +113,9 @@ const Home = () => {
       <div className="topContainer">
         <div className="homepageWrapper menuCloseJS closeMenuWrapper">
           {signInBlock === true ? <Notification /> : null}
-
-          <LiveContainer param={playLink} playing={playStatus} />
-          <LiveSchedule />
-          {/* <Banner /> */}
+          <Banner/>
+          {/* <LiveContainer param={playLink} playing={playStatus} />
+          <LiveSchedule />  <Banner /> */}
           <div className="allCategoryContainer" id="allCategoryContainer">
             {/* {continueWatching.length > 0 &&
             continueWatching.map((item, index) => {

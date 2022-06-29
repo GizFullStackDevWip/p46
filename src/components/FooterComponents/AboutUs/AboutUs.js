@@ -17,7 +17,7 @@ const AboutUs = () => {
                     id="post-39"
                     className="post-39 page type-page status-publish hentry"
                   >
-                    <div className="entry-content">
+                    <div className="entry-content" id="entry-content">
                       <div className="vc_row wpb_row vc_row-fluid vc_custom_1584031025503 bb_custom_1584031025503">
                         <div className="wpb_column vc_column_container vc_col-sm-12">
                           <div className="vc_column-inner">
@@ -26,12 +26,37 @@ const AboutUs = () => {
                                 <div
                                   id="main-bg"
                                   className="main-bg"
-                                  style={{ top: "0px" }}
+                                  
                                 ></div>
                                 <div className="header-content" >
-                                	<div className="header-content">
-																	<h1>RunwayTV<span>
-																	RUNWAY® TV is lifestyle brand which includes a state of the art geolocation work application, a TV station and a premiere quarterly print high fashion and celebrity review magazine with a focus on runway shows and designers from around the world. Book a talent to come work for you, read about the newest celebrity news and see our picks from the world's top runway collections and read up on beauty & fashion tips all in one place.																		</span></h1> </div>
+                                	<div className="header-content" id="header-content" >
+																	<h1>Project Forty-Six<span>
+																	</span></h1>
+                              <div id="AboutUsContent"> <p>   Project Forty-Six is a conservative news and information service that was 
+                                created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square.</p> 
+
+                              <p>Our goal is to provide insight into Oklahoma’s most pressing social and political issues.We bring you
+                                 original content, in-depth interviews, and inside information you will not find anywhere else. Our focus
+                                  is to maximize awareness of the issues that matter most to you and those that you can affect the most.</p>
+
+                             
+                             
+                                                            
+                              
+                              
+                              
+                              
+                              
+                              
+                              </div> 
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   
+                                   </div>
 															{/* </div> */}
                                 </div>
                               </div>
