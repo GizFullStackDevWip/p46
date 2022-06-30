@@ -1,4 +1,4 @@
-.discover-header > .main-bg:after {
+ > .main-bg:after {
     background-image: url(../images/advertise/main-bg.JPG);
 }
 .discover-header {
@@ -16,7 +16,8 @@
 }
 @media screen and (max-width: 768px) {
     .discover-header {
-        height: 608px;
+        /* height: 608px; */
+		height: 110px;
     }    
 }
 

@@ -26,38 +26,57 @@ const AboutUs = () => {
                                 <div
                                   id="main-bg"
                                   className="main-bg"
-                                  
+
                                 ></div>
                                 <div className="header-content" >
-                                	<div className="header-content" id="header-content" >
-																	<h1>Project Forty-Six<span>
-																	</span></h1>
-                              <div id="AboutUsContent"> <p>   Project Forty-Six is a conservative news and information service that was 
-                                created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square.</p> 
+                                  <div className="Newheader-content" id="Newheader-content" >
+                                    
+                                    <div id=""> <p>   Project Forty-Six is a conservative news and information service that was
+                                      created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square.</p>
 
-                              <p>Our goal is to provide insight into Oklahoma’s most pressing social and political issues.We bring you
-                                 original content, in-depth interviews, and inside information you will not find anywhere else. Our focus
-                                  is to maximize awareness of the issues that matter most to you and those that you can affect the most.</p>
+                                      <p>Our goal is to provide insight into Oklahoma’s most pressing social and political issues.We bring you
+                                        original content, in-depth interviews, and inside information you will not find anywhere else. Our focus
+                                        is to maximize awareness of the issues that matter most to you and those that you can affect the most.</p>
 
-                             
-                             
-                                                            
-                              
-                              
-                              
-                              
-                              
-                              
-                              </div> 
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   
-                                   </div>
-															{/* </div> */}
+                                      <p>Project Forty-Six aims to offer you content that provides you with the information you need at the local level.
+                                        What happens in our communities matters so much more than what’s going on in DC.</p>
+
+                                      <p>We will keep you engaged and informed at the State Capitol, at School Board meetings, and at City Council meetings.
+                                        Wherever public policy is being decided, Project Forty-Six will bring you to the frontlines of every battlefield.</p>
+
+                                      <p>Conservatives must be informed and engaged at every level of Oklahoma politics.
+                                        The values we cherish in Oklahoma — life, liberty, and the pursuit of happiness — are under a coordinated attack
+                                        by Marxist radicals who intend to destroy every American institution. The legacy media refuses to acknowledge or
+                                        address this crisis — so we are stepping up.</p>
+                                      <p>We invite you to enjoy our free content and we encourage you to subscribe. A monthly subscription will give you access 
+                                        to exclusive interviews, insightful articles from Oklahoma’s leading conservatives, and you will help support a critical public
+                                         service — a conservative source for Oklahoma news and information</p>
+                                         <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives. We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left like we have witnessed in other states over the years.
+
+                                           This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
+
+                                           <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives. We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left like we have witnessed in other states over the years.
+
+                                   This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
+
+                                  <h1>Who is Behind Project Forty-Six?</h1>
+
+
+
+
+
+
+
+                                    </div>
+
+
+
+
+
+
+
+                                  </div>
+                                  {/* </div> */}
                                 </div>
                               </div>
                             </div>

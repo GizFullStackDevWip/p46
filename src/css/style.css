@@ -2781,6 +2781,12 @@ html.is-ps5 {
   display: flex;
   justify-content: flex-start;
 }
+@media(max-width: 480px){
+  .headerMenu{
+width: auto;
+padding: 10px;
+  }
+}
 
 @media (min-width: 960px) {
   .headerMenu .headerWrapper .logosection {
@@ -9967,12 +9973,16 @@ body {
   margin-top: 30px;
   position: relative;
   height: 550px;
+  
   display: flex;
   justify-content: center;
   align-items: center;
   border: black 1px solid;
 }
-
+@media  screen and (max-device-width: 890px) {
+  .bannerWrapper{padding: 10px;width:auto;}
+   .bannerimages{width: 97%;padding: 3px;}
+}
 /*.bannerImages{
   background-color: black
 }*/
@@ -10013,15 +10023,42 @@ body {
   transition-duration: 1s;
   transform: scale(1.08);
 }
-/*##########banner for P46 ##########################*/
+/*########## banner for P46 ##########################*/
 
 
 #AboutUsContent{
   font-size: 16px;
-  font-family: sans-serif,'Segoe UI', Tahoma,  Verdana;
-  margin-top: 10px;
+  font-family: Helvetica, sans-serif,Arial;
+  margin-top: -23px;
+  margin-bottom: 200px;
+ text-align: justify;  
+ 
 }
 
+@media  screen and (max-device-width: 890px) {
+  #AboutUsContent {
+    padding:5%;
+    /* height: 2000px; */
+    margin-bottom: 100px;
+    margin-top: 0px;
+    height: 75%;
+}
+  
+}
+
+.AboutUsQuotes{
+  font-style: italic;
+  font-size: 20px;
+  padding-left: 40px;
+  
+}
+.AboutUsQuotesAuthorName{
+  font-size: 22px;
+  float: right;
+}
+.HeadingAboutUsQuotes{
+  text-align:start ;
+}
 
 #main-bg{
   top: 10px;
