@@ -13,16 +13,13 @@ const AboutUs = () => {
             <div id="content" className="site-content">
               <div id="primary" className="content-area">
                 <main id="main" className="site-main">
-                  <article
-                    id="post-39"
-                    className="post-39 page type-page status-publish hentry"
-                  >
+                  <article id="post-39" className="post-39 page type-page status-publish hentry" >
                     <div className="entry-content" id="entry-content">
                       <div className="vc_row wpb_row vc_row-fluid vc_custom_1584031025503 bb_custom_1584031025503">
                         <div className="wpb_column vc_column_container vc_col-sm-12">
                           <div className="vc_column-inner">
                             <div className="wpb_wrapper">
-                              <div className=" discover-header">
+                              <div className=" discover-header ">
                                 <div
                                   id="main-bg"
                                   className="main-bg"
@@ -30,11 +27,11 @@ const AboutUs = () => {
                                 ></div>
                                 <div className="header-content" >
                                   <div className="Newheader-content" id="Newheader-content" >
-                                    
-                                    <div id=""> <p>   Project Forty-Six is a conservative news and information service that was
+
+                                    <div id="AboutUsContent"> <p id="paraone">   Project Forty-Six is a conservative news and information service that was
                                       created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square.</p>
 
-                                      <p>Our goal is to provide insight into Oklahoma’s most pressing social and political issues.We bring you
+                                      <p id="paratwo">Our goal is to provide insight into Oklahoma’s most pressing social and political issues.We bring you
                                         original content, in-depth interviews, and inside information you will not find anywhere else. Our focus
                                         is to maximize awareness of the issues that matter most to you and those that you can affect the most.</p>
 
@@ -48,23 +45,41 @@ const AboutUs = () => {
                                         The values we cherish in Oklahoma — life, liberty, and the pursuit of happiness — are under a coordinated attack
                                         by Marxist radicals who intend to destroy every American institution. The legacy media refuses to acknowledge or
                                         address this crisis — so we are stepping up.</p>
-                                      <p>We invite you to enjoy our free content and we encourage you to subscribe. A monthly subscription will give you access 
+                                      <p>We invite you to enjoy our free content and we encourage you to subscribe. A monthly subscription will give you access
                                         to exclusive interviews, insightful articles from Oklahoma’s leading conservatives, and you will help support a critical public
-                                         service — a conservative source for Oklahoma news and information</p>
-                                         <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives. We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left like we have witnessed in other states over the years.
+                                        service — a conservative source for Oklahoma news and information</p>
+                                      <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives.
+                                        We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left like
+                                        we have witnessed in other states over the years.</p>
 
-                                           This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
+                                      <p> This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
 
-                                           <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives. We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left like we have witnessed in other states over the years.
+                                      <p>Being engaged and informed is a charge that Conservatives MUST adhere to, especially Oklahoma Conservatives.
+                                        We have an obligation to keep our GREAT state RED and ensure it does not fall into the hands of the radical Left
+                                        like we have witnessed in other states over the years.</p>
 
-                                   This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
+                                      <p>This is a FIGHT, a fight against Big Tech and a complicit media that has lost credibility.</p>
 
-                                  <h1>Who is Behind Project Forty-Six?</h1>
+                                      <div><h1 className="AboutUsContentSecondHeading">Who is Behind Project Forty-Six?</h1></div> <br/>
 
+                                      <p>Co-Founder Miles Rahimi returned from serving on Active Duty in the United States Navy in 2020 and unsuccessfully ran for Congress.
+                                        Despite the loss, he gained a deep understanding of just how fractured Conservatives are in Oklahoma.</p>
+                                      <p>During the 2020 Election, Miles witnessed firsthand how biased the mainstream media was and how the need for
+                                        focused local media was desperately needed.</p>
 
+                                      <p className="AboutUsQuotes">“….national Conservative talk radio, podcasts, and the like have one goal and that is to get you
+                                        upset on the issues you can’t control.</p>
+                                        <p className="AboutUsQuotes"> Every community has their own Rush Limbaugh, Glenn Beck, or Ben Shapiro, and we need to raise up those voices so we can drive action on the
+                                        issues we can control.” <div className=".AboutUsQuotesAuthorName">-Miles Rahimi, 2020 </div></p>
+                                        
 
+                                      <p>Armed with the knowledge that God didn’t bring him out of
+                                        the Navy to lose a Congressional race, Miles and his wife, Colin, put forth their gifts and talents to create Project Forty-Six.</p>
 
-
+                                      <p>Since its launch, Project Forty-Six has quickly become Oklahoma’s fastest growing digital platform.</p>
+                                      <p>Project Forty-Six does not rely on YouTube,
+                                        Facebook, Vimeo, or any video platform and is entirely self-sustaining
+                                        to ensure that Conservatives are not censored nor taken off the air.</p>
 
 
                                     </div>
