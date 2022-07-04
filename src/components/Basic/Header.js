@@ -482,7 +482,7 @@ let device = checkOperatingSystem();
                             </div>
                             <div className="menuListItems">
                               <a
-                                href="http://discoverwisconsin.com/events/"
+                                href="#"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -492,7 +492,7 @@ let device = checkOperatingSystem();
                             </div>
                             <div className="menuListItems">
                               <a
-                                href="https://shop.discoverwisconsin.com/"
+                                href="#"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -502,7 +502,7 @@ let device = checkOperatingSystem();
                             </div>
                             <div className="menuListItems">
                               <a
-                                href="http://discoverwisconsin.com/"
+                                href="#"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -1103,7 +1103,7 @@ let device = checkOperatingSystem();
                           </div>
                           <div className="menuListItems">
                             <a
-                              href="http://discoverwisconsin.com/nowtrending/"
+                              href="#"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -1113,7 +1113,7 @@ let device = checkOperatingSystem();
                           </div>
                           <div className="menuListItems">
                             <a
-                              href="http://discoverwisconsin.com/events/"
+                              href="#"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -1123,7 +1123,7 @@ let device = checkOperatingSystem();
                           </div>
                           <div className="menuListItems">
                             <a
-                              href="https://shop.discoverwisconsin.com/"
+                              href="#"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -1133,7 +1133,7 @@ let device = checkOperatingSystem();
                           </div>
                           <div className="menuListItems">
                             <a
-                              href="http://discoverwisconsin.com/"
+                              href="#"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">

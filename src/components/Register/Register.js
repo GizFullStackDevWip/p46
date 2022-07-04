@@ -768,7 +768,7 @@ const Register = (state) => {
                               type="submit"
                             >
                               <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent" style={{color:"black"}}>Register</div>
+                              <div className="buttonContent" style={{color:"white"}}>Register</div>
                             </button>
                           </div>
                         ) : (
@@ -780,7 +780,7 @@ const Register = (state) => {
                                 type="submit"
                               >
                                 <div className="buttonBg rounderbutton"></div>
-                                <div className="buttonContent" style={{color:"black"}}>Register</div>
+                                <div className="buttonContent" style={{color:"white"}}>Register</div>
                               </button>
                             </div>
                             <div className="regnSubmitWrapper">
@@ -883,7 +883,7 @@ const Register = (state) => {
                             type="submit"
                           >
                             <div className="buttonBg rounderbutton"></div>
-                            <div className="buttonContent" style={{color:"black"}}>Verify</div>
+                            <div className="buttonContent" style={{color:"white"}}>Verify</div>
                           </button>
                         </div>
                       </form>

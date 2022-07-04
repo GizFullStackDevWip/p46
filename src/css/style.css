@@ -10100,7 +10100,16 @@ body {
 
 
 
-
+@media (max-width: 460px){
+  .registerFacebook {
+      text-align: center;
+  }
+  }
+  @media (max-width: 460px){
+    .button , .buttonLarge, .buttonBlock, .registerFacebook, .metro {
+        margin-top: 3px;
+    }
+    }
 
 
 
