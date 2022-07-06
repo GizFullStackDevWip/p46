@@ -1,15 +1,11 @@
-import React, { useState, useEffect, Fragment } from "react";
+
+  
+import React, { useState, useEffect } from "react";
 import { service } from "../../network/GetVideos/service";
 import Carousel from "react-multi-carousel";
 import ReactHlsPlayer from "react-hls-player";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useHistory, Redirect } from "react-router-dom";
-// import "../../css/Imagestyle.css";
-import { convertAdUrl } from "../../Utils/utils";
-import { ToastsContainer, ToastsStore } from "react-toasts";
-// import ReadMoreAndLess from "react-read-more-less";
-import freeimg from "../../images/free.png";
-import { confirmAlert } from "react-confirm-alert";
+import { useHistory } from "react-router-dom";
 import {
   convertTime,
   deviceDetect,
@@ -17,14 +13,21 @@ import {
   convertSecondsToMin,
 } from "../../Utils/utils";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
-// import videothumbnail from "../../images/videothumbnail.png";
-var videothumbnail =
-  "https://gizmeon.s.llnwi.net/vod/ChicanoHollywood/main.jpg";
-var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
+import KeyArtWork from "./KeyArtWork1";
+import videothumbnail from "../../images/boondock.jpg";
+import { ToastsContainer, ToastsStore } from "react-toasts";
+import { clearUserData } from "../../Utils/utils";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import freeTag from "../../images/free1.png";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
+
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
-// var newsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/news/";
+var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
+
 var details = [];
-var isSafari = false;
+
 const handleScroll = () => {
   let playerId = "singleVideo";
   if (deviceDetect() === true) {
@@ -48,27 +51,18 @@ const VideoDetails = (categoryId, episode) => {
   const [videoPlayer, setVideoPlayer] = useState();
   const [categories, setCategories] = useState([]);
   const [isDesktop, setIsDesktop] = useState(deviceDetect());
-  //   const [watchBtnDisable, setWatchBtnDisable] = useState(true);
-  //   const [categoryID, setCategoryID] = useState([]);
   const dispatch = useDispatch();
   const border = {
     "border-radius": "12px",
-    width: '100%',
-    height: '100%',
   };
 
-  useEffect(() => {
-    isSafari =
-      [
-        "iPad Simulator",
-        "iPhone Simulator",
-        "iPod Simulator",
-        "iPad",
-        "iPhone",
-        "iPod",
-      ].includes(navigator.platform) ||
-      (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+  const [currentSeason, setCurrentSeason] = useState([]);
+  const [allSeasonList, setAllSeasonList] = useState([]);
+  const [numberOfSeason, setNumberOfSeason] = useState(-1);
+  const [optionsS, setOptionsS] = useState([]);
+  const [defaultOptions, setDefaultOptions] = useState([]);
 
+  useEffect(() => {
     window.scrollTo(0, 0);
     if (categoryId.categoryId.show_id == "undefined") {
       categoryId.categoryId.show_id = localStorage.getItem("showId");
@@ -76,14 +70,45 @@ const VideoDetails = (categoryId, episode) => {
     }
     service.getShowDetails(categoryId.categoryId.show_id).then((response) => {
       var data = response.data;
-      setEpisodeLength(response.data.videos.length);
-      //   if (response.success === true) {
+      console.log("quo", data);
+      setEpisodeLength(
+        response.data.videos
+          ? response.data.videos
+          : response.data.videos.length
+      );
+      // if (data.length > 0) {
       var videoDetail = "";
       dispatch({ type: "SHOW_ID", payload: response.data.show_id });
       setShowDetails(response.data);
-      // setCategoryID(response.data.category_id);
       setCategories(response.data.categories);
-      setEpisodeList(response.data.videos);
+      // setEpisodeList(response.data.videos);
+      setEpisodeList(
+        response.data.videos
+          ? response.data.videos
+          : response.data.videos[0].videos
+      );
+      setAllSeasonList(response.data.videos);
+      setCurrentSeason(
+        response.data.videos
+          ? response.data.videos
+          : response.data.videos[0].videos
+      );
+      let defaultOpt = [];
+      defaultOpt.push(response.data.videos[0]);
+      setDefaultOptions(defaultOpt);
+      let option = [];
+      response.data.videos &&
+        response.data.videos.map((item, index) => {
+          let data = {};
+          data.value = item.season;
+          data.label =
+            item.season == null ? `Season 0` : `Season ${item.season}`;
+          data.className = "myOptionClassName";
+          option.push(data);
+        });
+      console.log("option", option);
+      setOptionsS(option);
+      setNumberOfSeason(response.data.videos.length);
       videoDetail = response.data;
       service.playerToken().then((tokenResponse) => {
         let newURL = "";
@@ -95,66 +120,174 @@ const VideoDetails = (categoryId, episode) => {
             "&token=" +
             tokenResponse.data.data +
             "&type=trailer";
-          // newURL = 'https://ads.poppo.tv/vmap?pid=275&width=[WIDTH]&height=[HEIGHT]&dnt=[DNT]&ip=[IP_ADDRESS]&lat=[LATITUDE]&lon=[LONGITUDE]&ua=[USER_AGENT]&advid=[DEVICE_IFA]&uuid=[UUID]&country=[COUNTRY]&deviceid=[DEVICE_ID]&kwds=[KEYWORDS]&device_model=[DEVICE_MODEL]&device_make=[DEVICE_MAKE]&channelid=[CHANNEL_ID]&videoid=[VIDEO_ID]&bundleid=[BUNDLE]&appname=[APP_NAME]&totalduration=[DURATION]&description_url=[APP_STORE_URL]'
         } else {
           newURL = "";
-          // setWatchBtnDisable(false);
-          // setTimeout(() => {
-          //     if (videoDetail.premium_flag == 1 || videoDetail.payper_flag == 1 || videoDetail.rental_flag == 1) {
-          //         let isLoggedIn = localStorage.getItem('isLoggedIn');
-
-          //         if (isLoggedIn == 'false' || isLoggedIn == null) {
-          //             localStorage.setItem('currentUrl', window.location.pathname);
-          //             history.push({
-          //                 pathname: '/signin'
-          //             });
-          //         }
-          //     }
-          // }, 500)
-
-          // newURL = "";
         }
-
         setVideoPlayer(
-          !isSafari ? (
-            <ReactHlsPlayer
-              id="singleVideo"
-              url={newURL}
-              autoplay={true}
-              controls={true}
-              width={"100%"}
-              poster={videothumbnail}
-              height={"100%"}
-              //   onReady={onPlayerReady}
-              //   onPlay={onVideoPlay(videoDetail.videos[0].video_id)}
-              //   onPause={onVideoPause}
-              //   onEnd={onVideoEnd}
-            />
-          ) : (
-            <video
-              controls={true}
-              id="singleVideo"
-              className="video-js vjs-default-skin"
-              autoPlay={true}
-              style={border}
-            >
-              <source src={newURL} type="application/x-mpegURL" />
-            </video>
-          )
+          <ReactHlsPlayer
+            id="singleVideo"
+            url={newURL}
+            // url="https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"
+            autoplay={true}
+            controls={true}
+            width={"100%"}
+            height={"100%"}
+            style={border}
+            poster={videothumbnail}
+          />
         );
       });
       details = videoDetail;
       service.similarShow(videoDetail.show_id).then((response) => {
-        if (response.success === true && response.data.length > 0) {
+        if (response.success == true && response.data.length > 0) {
           setSimilarShows(response.data);
         }
       });
-      //   }
+      // }
     });
     setUpdate(false);
-    // window.addEventListener('scroll', handleScroll)
-  }, [update, login]);
-  const freeVideoPopup = (onClickYes, onClickNo) => {
+    window.addEventListener("scroll", handleScroll);
+  }, [update]);
+
+  const responsive = {
+    superLargeDesktop: {
+      breakpoint: { max: 4000, min: 3000 },
+      items: 5,
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 3,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+
+  const functionOnclick = (show) => {
+    history.push({
+      pathname: "/home/movies",
+      search: encodeURI(`show_id=${show.show_id}`),
+    });
+    setUpdate(true);
+  };
+  const hoverFunction = (flag, index) => {
+    setHover(flag);
+    setFocusedId(index);
+  };
+  const addtoMylistFunction = (show) => {
+    ;
+    let isLoggedIn = localStorage.getItem("isLoggedIn");
+    let userId = service.getCookie("userId");
+    if (isLoggedIn === "true" && userId) {
+      service.addToMyPlayList(show.show_id, 1).then((response) => {
+        if (response.success === true) {
+          service
+            .getShowDetails(categoryId.categoryId.show_id)
+            .then((response) => {
+              var data = response.data;
+              // if (data.length > 0) {
+              var videoDetail = "";
+              dispatch({
+                type: "SHOW_ID",
+                payload: categoryId.categoryId.show_id,
+              });
+              setShowDetails(response.data);
+              setCategories(response.data.categories);
+              setEpisodeList(response.data.videos);
+              setAllSeasonList(response.data.videos);
+              setCurrentSeason(response.data.videos[0].videos);
+              let option = [];
+              response.data.videos &&
+                response.data.videos.map((item, index) => {
+                  let data = {};
+                  data.value = item.season;
+                  data.label =
+                    item.season == null ? `Season 0` : `Season ${item.season}`;
+                  data.className = "myOptionClassName";
+                  option.push(data);
+                });
+              setOptionsS(option);
+              videoDetail = response.data;
+              details = videoDetail;
+              service
+                .similarShow(categoryId.categoryId.show_id)
+                .then((response) => {
+                  if (response.success == true && response.data.length > 0) {
+                    setSimilarShows(response.data);
+                  }
+                });
+              // }
+            });
+        }
+      });
+    } else {
+      dispatch({ type: "SIGN_IN_BLOCK" });
+    }
+  };
+  const removeFromMylistFunction = (show) => {
+    let isLoggedIn = localStorage.getItem("isLoggedIn");
+    let userId = service.getCookie("userId");
+    if (isLoggedIn === "true" && userId) {
+      service.addToMyPlayList(show.show_id, 0).then((response) => {
+        if (response.success === true) {
+          service
+            .getShowDetails(categoryId.categoryId.show_id)
+            .then((response) => {
+              var data = response.data;
+              // if (data.length > 0) {
+              var videoDetail = "";
+              dispatch({
+                type: "SHOW_ID",
+                payload: categoryId.categoryId.show_id,
+              });
+              setShowDetails(response.data);
+              setCategories(response.data.categories);
+              setEpisodeList(response.data.videos);
+              setAllSeasonList(response.data.videos);
+              setCurrentSeason(response.data.videos[0].videos);
+              let option = [];
+              response.data.videos &&
+                response.data.videos.map((item, index) => {
+                  let data = {};
+                  data.value = item.season;
+                  data.label =
+                    item.season == null ? `Season 0` : `Season ${item.season}`;
+                  data.className = "myOptionClassName";
+                  option.push(data);
+                });
+              console.log("option", option);
+              setOptionsS(option);
+              videoDetail = response.data;
+              details = videoDetail;
+              service
+                .similarShow(categoryId.categoryId.show_id)
+                .then((response) => {
+                  if (response.success == true && response.data.length > 0) {
+                    setSimilarShows(response.data);
+                  }
+                });
+              // }
+            });
+        }
+      });
+    } else {
+      dispatch({ type: "SIGN_IN_BLOCK" });
+    }
+  };
+
+  const redirectToLogin = () => {
+    clearUserData();
+    setTimeout(() => {
+      window.location.href = "/signin";
+    }, 1500);
+  };
+
+  const WatchWithoutAdsPopUp = (onClickYes, onClickNo) => {
     confirmAlert({
       title: "",
       message: "Watch without ads?",
@@ -175,405 +308,239 @@ const VideoDetails = (categoryId, episode) => {
     });
   };
 
-  const redirectToLogin = () => {
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userId");
-    localStorage.removeItem("deviceAnalytics");
-    service.setCookie("isLoggedIn", false, 30);
-    localStorage.removeItem("isLoggedIn");
-    service.eraseCookie("showId");
-
-    // dispatch({ type: "LOGOUT" });
-    // setMouseHover(false);
-    service.eraseCookie("userName");
-    service.eraseCookie("userId");
-    service.eraseCookie("userEmail");
-    service.eraseCookie("subscriptionId");
-    sessionStorage.removeItem("applaunch");
-    setTimeout(() => {
-      window.location.href = "/signin";
-    }, 1500);
-  };
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-  const onPlayerReady = () => {
-    let event = "POP02";
-    service.onVideoPlayFunction(details, event).then((response) => {});
-  };
-  const onVideoPlay = (videoId) => {
-    // setWatchBtnDisable(false);
-    // let isLoggedIn = localStorage.getItem('isLoggedIn');
-    // if (isLoggedIn == 'false' || isLoggedIn == null) {
-    //     localStorage.setItem('currentUrl', window.location.pathname);
-    //     history.push({
-    //         pathname: '/signin'
-    //     });
-    // }
-    // service.onVideoPlayFunction(details).then((response) => {});
-
-    service.checkVideoSubscription(videoId).then((response) => {
-      let videoDetails = response.data[0];
-      if (
-        videoDetails.premium_flag == 1 ||
-        videoDetails.payper_flag == 1 ||
-        videoDetails.rental_flag == 1
-      ) {
-        service.checkUserSubscription().then((useResponse) => {
-          if (useResponse.data.length == 0) {
-            let isLoggedIn = localStorage.getItem("isLoggedIn");
-            if (isLoggedIn == "false") {
-              history.push({
-                pathname: "/signin",
-              });
-            }
-            // window.location.href = 'http://stagingweb.staging.discovermediaworks.com/homeSub?sh=' + videoId;
-          }
-          // if (useResponse.forcibleLogout === true) {
-          //     // signOut()
-          // }
-        });
-      } else {
-        // console.log('playing...');
-      }
-    });
-    let event = "POP03";
-    service.onVideoPlayFunction(details, event).then((response) => {});
-  };
-  const signOut = () => {
-    let ui = localStorage.getItem("userId");
-    setTimeout(function () {
-      eraseCookie("userName");
-      eraseCookie("userId");
-      eraseCookie("userEmail");
-      eraseCookie("subscriptionId");
-    }, 10);
-    setTimeout(function () {
-      // history.push({
-      //     pathname: '/signin'
-      // });
-      // window.location.href = "http://stagingweb.adventuresportstv.net/login?lo=1&ui=" + ui;
-    }, 100);
-  };
-  const eraseCookie = (name) => {
-    document.cookie = name + "=; Max-Age=-99999999;";
-  };
-  const onVideoPause = () => {
-    let event = "POP05";
-    service.onVideoPlayFunction(details, event).then((response) => {});
-  };
-  const onVideoEnd = () => {
-    let event = "POP05";
-    service.onVideoPlayFunction(details).then((response) => {});
-  };
-  const functionOnclick = (show) => {
-    history.push({
-      pathname: "/home/movies",
-      search: encodeURI(`show_id=${show.show_id}`),
-    });
-
-    setUpdate(true);
-  };
-  const hoverFunction = (flag, index) => {
-    setHover(flag);
-    setFocusedId(index);
-  };
-  const addtoMylistFunction = (show) => {
-    let isLoggedIn = localStorage.getItem("isLoggedIn");
-    let userId = service.getCookie("userId");
-    if (isLoggedIn === "true" && userId) {
-      service.addToMyPlayList(show.show_id, 1).then((response) => {
-        if (response.success === true) {
-          service
-            .getShowDetails(categoryId.categoryId.show_id)
-            .then((response) => {
-              var data = response.data;
-              //   if (response.success === true) {
-              var videoDetail = "";
-              dispatch({
-                type: "SHOW_ID",
-                payload: categoryId.categoryId.show_id,
-              });
-              setShowDetails(response.data);
-              setCategories(response.data.categories);
-              setEpisodeList(response.data.videos);
-              videoDetail = response.data;
-              details = videoDetail;
-              service.similarShow(videoDetail.video_id).then((response) => {
-                if (response.success === true) {
-                  setSimilarShows(response.data);
-                }
-              });
-              //   }
-            });
-        }
-      });
-    } else {
-      dispatch({ type: "SIGN_IN_BLOCK" });
-    }
-  };
-  const removeFromMylistFunction = (show) => {
-    let isLoggedIn = localStorage.getItem("isLoggedIn");
-    let userId = service.getCookie("userId");
-    if (isLoggedIn === "true" && userId) {
-      service.addToMyPlayList(show.show_id, 0).then((response) => {
-        if (response.success === true) {
-          service
-            .getShowDetails(categoryId.categoryId.show_id)
-            .then((response) => {
-              var data = response.data;
-              //   if (response.success === true) {
-              var videoDetail = "";
-              dispatch({
-                type: "SHOW_ID",
-                payload: categoryId.categoryId.show_id,
-              });
-              setShowDetails(response.data);
-              setCategories(response.data.categories);
-              setEpisodeList(response.data.videos);
-              videoDetail = response.data;
-              details = videoDetail;
-              service
-                .similarShow(videoDetail.videos[0].show_id)
-                .then((response) => {
-                  if (response.success === true && response.data.length > 0) {
-                    setSimilarShows(response.data);
-                  }
-                });
-              //   }
-            });
-        }
-      });
-    } else {
-      dispatch({ type: "SIGN_IN_BLOCK" });
-    }
-  };
-
-  const onEpisodePlay = (video) => {
-    console.log("showDetailsqt", showDetails);
-    console.log("episode,...", video);
+  const onWatchBtnClick = (videoDetails, singleVideo, showId) => {
+    console.log("watch btn click");
     ;
     let user_id = service.getCookie("userId");
-    if (
-      user_id == undefined ||
-      user_id == null ||
-      user_id == service.getCookie("guestUserId")
-    ) {
-      history.push({
-        pathname: "/signin",
-      });
-    } else {
-      if (video && video.free_video != true) {
-        service.videoSubscription(video.video_id).then((response) => {
-          let videoDetails = response.data;
-          let subFlag = true;
+    let countryName =
+      localStorage.getItem("currentLocation") &&
+      JSON.parse(localStorage.getItem("currentLocation")).country_name;
+    // if (
+    //   countryName != "United States" &&
+    //   countryName != "United States of America"
+    // ) {
+      if (user_id == null || user_id == service.getCookie("guestUserId")) {
+        history.push({
+          pathname: "/signin",
+        });
+      } else {
+        if (
+          videoDetails &&
+          videoDetails.free_video != true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length > 0
+        ) {
+          // history.push({
+          //   pathname: "/SubscriptionList",
+          //   state: {
+          //     videoData: videoDetails.video_id,
+          //   },
+          // });
+          service.videoSubscription(videoDetails.video_id).then((response) => {
+            let videoSubLists = response.data;
+            let subFlag = true;
+            let uId = service.getCookie("guestUserId");
+            let user_id = service.getCookie("userId");
+            if (user_id) {
+              uId = user_id;
+            }
+
+            service.checkUserSubscription(uId).then((useResponse) => {
+              var userData = useResponse.data;
+              if (useResponse.success == true) {
+                if (useResponse.forcibleLogout === true) {
+                  alert(
+                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                  );
+                  service.logoutAll(uId).then((res) => {
+                    setTimeout(() => {
+                      redirectToLogin();
+                    }, 1000);
+                  });
+                } else if (useResponse.session_expired === true) {
+                  ToastsStore.warning("Sorry! Session Has Expired");
+                  redirectToLogin();
+                } else {
+                  videoSubLists.map(function (subscription, index) {
+                    if (useResponse.data.length == 0 && subFlag) {
+                      subFlag = false;
+                      service.setCookie("showId", showId, 10);
+                      service.setCookie("videoId", videoDetails.video_id, 10);
+                      history.push({
+                        pathname: "/SubscriptionList",
+                        state: {
+                          videoData: videoDetails.video_id,
+                        },
+                      });
+                    } else {
+                      let subscribedVideo = userData.filter(
+                        (e) =>
+                          e.sub_id == subscription.publisher_subscription_id
+                      );
+                      if (
+                        subscribedVideo.length == 0 &&
+                        index + 1 < videoSubLists.length
+                      ) {
+                        return;
+                      }
+                      if (
+                        subscribedVideo.length == 0 &&
+                        subFlag &&
+                        index + 1 == videoSubLists.length
+                      ) {
+                        subFlag = false;
+                        service.setCookie("showId", showId, 10);
+                        service.setCookie("videoId", videoDetails.video_id, 10);
+                        history.push({
+                          pathname: "/SubscriptionList",
+                          state: {
+                            videoData: videoDetails.video_id,
+                          },
+                        });
+                      } else if (subFlag) {
+                        subFlag = false;
+                        service.setCookie("showId", showId, 10);
+                        localStorage.setItem("ContinueWatching", "true");
+                        history.push({
+                          pathname: "/videoplayer",
+                          state: {
+                            show_details: videoDetails,
+                            singleVideo: singleVideo,
+                            showId: showId,
+                          },
+                        });
+                      }
+                    }
+                  });
+                }
+              }
+            });
+          });
+        } else if (
+          videoDetails &&
+          videoDetails.free_video === true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length > 0
+        ) {
           let uId = service.getCookie("guestUserId");
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
           }
-          service.userSubscription(uId).then((useResponse) => {
-            var userData = useResponse.data;
 
-            if (useResponse.success == true) {
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                videoDetails.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    service.setCookie("showId", showDetails.show_id, 10);
-                    service.setCookie("videoId", video.video_id, 10);
-                    history.push({
-                      pathname: "/SubscriptionList",
-                      state: {
-                        videoData: video.video_id,
-                      },
-                    });
-                  } else {
-                    let subscribedVideo = userData.filter(
-                      (e) => e.sub_id == subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoDetails.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoDetails.length
-                    ) {
+          const onClickNo = () => {
+            localStorage.setItem("ContinueWatching", "true");
+            history.push({
+              pathname: "/videoplayer",
+              state: {
+                show_details: videoDetails,
+                singleVideo: singleVideo,
+                showId: showId,
+              },
+            });
+          };
+
+          const onClickYes = () => {
+            service.setCookie("showId", showId, 10);
+            service.setCookie("videoId", videoDetails.video_id, 10);
+            history.push({
+              pathname: "/SubscriptionList",
+              state: {
+                videoData: videoDetails.video_id,
+              },
+            });
+          };
+
+          service.videoSubscription(videoDetails.video_id).then((response) => {
+            let videoSubDetails = response.data;
+            let subFlag = true;
+            service.checkUserSubscription(uId).then((useResponse) => {
+              if (useResponse.success == true) {
+                var userSubDetails = useResponse.data;
+                if (useResponse.forcibleLogout === true) {
+                  alert(
+                    "Sorry, You’ve reached the maximum Device limit. Please log in again!"
+                  );
+                  service.logoutAll(uId).then((res) => {
+                    setTimeout(() => {
+                      redirectToLogin();
+                    }, 1000);
+                  });
+                } else if (useResponse.session_expired === true) {
+                  ToastsStore.warning("Sorry! Session Has Expired");
+                  redirectToLogin();
+                } else {
+                  videoSubDetails.map(function (subscription, index) {
+                    if (useResponse.data.length == 0 && subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
-                      service.setCookie("videoId", video.video_id, 10);
-                      history.push({
-                        pathname: "/SubscriptionList",
-                        state: {
-                          videoData: video.video_id,
-                        },
-                      });
-                    } else if (subFlag) {
-                      subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoDetails",
-                        state: { movie: video, show_id: showDetails.show_id },
-                      });
+                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                    } else {
+                      let subscribedVideo = userSubDetails.filter(
+                        (e) =>
+                          e.sub_id == subscription.publisher_subscription_id
+                      );
+                      if (
+                        subscribedVideo.length == 0 &&
+                        index + 1 < videoSubDetails.length
+                      ) {
+                        return;
+                      }
+                      if (
+                        subscribedVideo.length == 0 &&
+                        subFlag &&
+                        index + 1 == videoSubDetails.length
+                      ) {
+                        subFlag = false;
+                        WatchWithoutAdsPopUp(onClickYes, onClickNo);
+                      } else if (subFlag) {
+                        subFlag = false;
+                        localStorage.setItem("ContinueWatching", "true");
+                        history.push({
+                          pathname: "/videoplayer",
+                          state: {
+                            show_details: videoDetails,
+                            singleVideo: singleVideo,
+                            showId: showId,
+                          },
+                        });
+                      }
                     }
-                  }
-                });
+                  });
+                }
               }
-            }
+            });
           });
-        });
-      } else if (
-        video &&
-        video.free_video == true &&
-        video.subscriptions &&
-        video.subscriptions.length > 0
-      ) {
-        let uId = service.getCookie("guestUserId");
-        let user_id = service.getCookie("userId");
-        if (user_id) {
-          uId = user_id;
-        }
-        const onClickNo = () => {
-          service.setCookie("showId", showDetails.show_id, 10);
+        } else if (
+          videoDetails &&
+          videoDetails.free_video === true &&
+          videoDetails.subscriptions &&
+          videoDetails.subscriptions.length === 0
+        ) {
           localStorage.setItem("ContinueWatching", "true");
           history.push({
-            pathname: "/videoDetails",
-            state: { movie: video, show_id: showDetails.show_id },
-          });
-        };
-
-        const onClickYes = () => {
-          service.setCookie("showId", showDetails.show_id, 10);
-          service.setCookie("videoId", video.video_id, 10);
-          history.push({
-            pathname: "/SubscriptionList",
+            pathname: "/videoplayer",
             state: {
-              videoData: video.video_id,
+              show_details: videoDetails,
+              singleVideo: singleVideo,
+              showId: showId,
             },
           });
-        };
-
-        service.videoSubscription(video.video_id).then((response) => {
-          let videoSubDetails = response.data;
-          let subFlag = true;
-          service.userSubscription(uId).then((useResponse) => {
-            if (useResponse.success == true) {
-              var userSubDetails = useResponse.data;
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                videoSubDetails.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    freeVideoPopup(onClickYes, onClickNo);
-                  } else {
-                    let subscribedVideo = userSubDetails.filter(
-                      (e) => e.sub_id == subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoSubDetails.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoSubDetails.length
-                    ) {
-                      subFlag = false;
-                      freeVideoPopup(onClickYes, onClickNo);
-                    } else if (subFlag) {
-                      subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoDetails",
-                        state: { movie: video, show_id: showDetails.show_id },
-                      });
-                    }
-                  }
-                });
-                // }
-              }
-            }
-          });
-        });
-      } else if (
-        video &&
-        video.free_video == true &&
-        video.subscriptions &&
-        video.subscriptions.length == 0
-      ) {
-        service.setCookie("showId", showDetails.show_id, 10);
-        localStorage.setItem("ContinueWatching", "true");
-        history.push({
-          pathname: "/videoDetails",
-          state: { movie: video, show_id: showDetails.show_id },
-        });
+        } else {
+          ToastsStore.error("Oops! Something went wrong.");
+        }
       }
-      // }
-    }
+    // } else {
+    //   history.push({
+    //     pathname: "/unavailable",
+    //   });
+    // }
   };
-
-  // const onEpisodePlay = (videoDetails, singleVideo, showId) => {
-  //   console.clear();
-  //   // console.log("episode click", videoDetails, singleVideo, showId);
-  //   history.push({
-  //     pathname: "/videoplayer",
-  //     state: {
-  //       show_details: videoDetails,
-  //       singleVideo: singleVideo,
-  //       showId: showId,
-  //     },
-  //   });
-  // };
-
-  const onWatchClick = (showDetails) => {
+  const onNewsClick = (videoDetails) => {
+    ToastsStore.warning("Oops!!! There is no video for this news...");
+  };
+  const onWatchClick = (videoDetails) => {
     // ;
-    // console.log("showDetailsq", showDetails);
+    console.log("showDetailsq", videoDetails);
     let user_id = service.getCookie("userId");
     if (user_id == null || user_id == service.getCookie("guestUserId")) {
       history.push({
@@ -581,12 +548,12 @@ const VideoDetails = (categoryId, episode) => {
       });
     } else {
       if (
-        showDetails &&
-        showDetails.videos &&
-        showDetails.videos[0] &&
-        showDetails.videos[0].free_video != true
+        videoDetails &&
+        videoDetails.videos &&
+        videoDetails.videos[0] &&
+        videoDetails.videos[0].free_video != true
       ) {
-        let movie = showDetails.videos[0];
+        let movie = videoDetails.videos[0];
         service.videoSubscription(movie.video_id).then((response) => {
           let videoDetails = response.data;
           let subFlag = true;
@@ -615,7 +582,7 @@ const VideoDetails = (categoryId, episode) => {
                 videoDetails.map(function (subscription, index) {
                   if (useResponse.data.length == 0 && subFlag) {
                     subFlag = false;
-                    service.setCookie("showId", showDetails.show_id, 10);
+                    service.setCookie("showId", videoDetails.show_id, 10);
                     service.setCookie("videoId", movie.video_id, 10);
                     history.push({
                       pathname: "/SubscriptionList",
@@ -625,8 +592,8 @@ const VideoDetails = (categoryId, episode) => {
                     });
                   } else {
                     let subscribedVideo = userData.filter(
-                      (showDetails) =>
-                        showDetails.sub_id ==
+                      (videoDetails) =>
+                        videoDetails.sub_id ==
                         subscription.publisher_subscription_id
                     );
                     if (
@@ -641,7 +608,7 @@ const VideoDetails = (categoryId, episode) => {
                       index + 1 == videoDetails.length
                     ) {
                       subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
+                      service.setCookie("showId", videoDetails.show_id, 10);
                       service.setCookie("videoId", movie.video_id, 10);
                       history.push({
                         pathname: "/SubscriptionList",
@@ -651,11 +618,15 @@ const VideoDetails = (categoryId, episode) => {
                       });
                     } else if (subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
+                      service.setCookie("showId", videoDetails.show_id, 10);
                       localStorage.setItem("ContinueWatching", "true");
                       history.push({
-                        pathname: "/videoDetails",
-                        state: { movie: movie, show_id: showDetails.show_id },
+                        pathname: "/videoplayer",
+                        state: {
+                          show_details: videoDetails,
+                          showId: videoDetails.show_id,
+                        },
+                        // state: { movie: movie, show_id: showDetails.show_id },
                       });
                     }
                   }
@@ -664,6 +635,8 @@ const VideoDetails = (categoryId, episode) => {
             }
           });
         });
+      } else if (videoDetails && videoDetails.videos[0] === null) {
+        ToastsStore.warning("Oops!!! There is no video for this news...");
       } else if (
         // {
         // if (
@@ -679,30 +652,34 @@ const VideoDetails = (categoryId, episode) => {
         //     state: { movie: movie, show_id: showDetails.show_id },
         //   });
         // } else if
-        showDetails &&
+        videoDetails &&
         // showDetails.videos &&
         // showDetails.videos[0] &&
-        showDetails.videos[0].free_video == true &&
-        showDetails.videos[0].subscriptions &&
-        showDetails.videos[0].subscriptions.length > 0
+        videoDetails.videos[0].free_video == true &&
+        videoDetails.videos[0].subscriptions &&
+        videoDetails.videos[0].subscriptions.length > 0
       ) {
         let uId = service.getCookie("guestUserId");
         let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;
         }
-        let movie = showDetails.videos[0];
+        let movie = videoDetails.videos[0];
         const onClickNo = () => {
-          service.setCookie("showId", showDetails.show_id, 10);
+          service.setCookie("showId", videoDetails.show_id, 10);
           localStorage.setItem("ContinueWatching", "true");
           history.push({
-            pathname: "/videoDetails",
-            state: { movie: movie, show_id: showDetails.show_id },
+            pathname: "/videoplayer",
+            state: {
+              show_details: videoDetails,
+              showId: videoDetails.show_id,
+            },
+            // state: { movie: movie, show_id: showDetails.show_id },
           });
         };
 
         const onClickYes = () => {
-          service.setCookie("showId", showDetails.show_id, 10);
+          service.setCookie("showId", videoDetails.show_id, 10);
           service.setCookie("videoId", movie.video_id, 10);
           history.push({
             pathname: "/SubscriptionList",
@@ -734,7 +711,7 @@ const VideoDetails = (categoryId, episode) => {
                 videoSubDetails.map(function (subscription, index) {
                   if (useResponse.data.length == 0 && subFlag) {
                     subFlag = false;
-                    freeVideoPopup(onClickYes, onClickNo);
+                    WatchWithoutAdsPopUp(onClickYes, onClickNo);
                   } else {
                     let subscribedVideo = userSubDetails.filter(
                       (e) => e.sub_id == subscription.publisher_subscription_id
@@ -751,14 +728,18 @@ const VideoDetails = (categoryId, episode) => {
                       index + 1 == videoSubDetails.length
                     ) {
                       subFlag = false;
-                      freeVideoPopup(onClickYes, onClickNo);
+                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
                     } else if (subFlag) {
                       subFlag = false;
-                      service.setCookie("showId", showDetails.show_id, 10);
+                      service.setCookie("showId", videoDetails.show_id, 10);
                       localStorage.setItem("ContinueWatching", "true");
                       history.push({
-                        pathname: "/videoDetails",
-                        state: { movie: movie, show_id: showDetails.show_id },
+                        pathname: "/videoplayer",
+                        state: {
+                          show_details: videoDetails,
+                          showId: videoDetails.show_id,
+                        },
+                        // state: { movie: movie, show_id: showDetails.show_id },
                       });
                     }
                   }
@@ -769,19 +750,23 @@ const VideoDetails = (categoryId, episode) => {
           });
         });
       } else if (
-        showDetails &&
+        videoDetails &&
         // showDetails.videos &&
         // showDetails.videos[0] &&
-        showDetails.videos[0].free_video == true &&
-        showDetails.videos[0].subscriptions &&
-        showDetails.videos[0].subscriptions.length == 0
+        videoDetails.videos[0].free_video == true &&
+        videoDetails.videos[0].subscriptions &&
+        videoDetails.videos[0].subscriptions.length == 0
       ) {
-        let movie = showDetails.videos[0];
-        service.setCookie("showId", showDetails.show_id, 10);
+        let movie = videoDetails.videos[0];
+        service.setCookie("showId", videoDetails.show_id, 10);
         localStorage.setItem("ContinueWatching", "true");
         history.push({
-          pathname: "/videoDetails",
-          state: { movie: movie, show_id: showDetails.show_id },
+          pathname: "/videoplayer",
+          state: {
+            show_details: videoDetails,
+            showId: videoDetails.show_id,
+          },
+          // state: { movie: movie, show_id: showDetails.show_id },
         });
         // }
       }
@@ -790,35 +775,32 @@ const VideoDetails = (categoryId, episode) => {
   return (
     <div className="menuCloseJS closeMenuWrapper">
       <div className="videoPage">
+        <ToastsContainer store={ToastsStore} />
         <div className="videoPageContainer">
-          {/* {showDetails.is_free_video === true ? (
-            <img
-              src={freeimg}
-              style={{
-                width: "20%",
-                height: "13%",
-                position: "absolute",
-                zIndex: "1",
-              }}
-            />
-          ) : (
-            ""
-          )} */}
-          {showDetails.single_video === 0 ? (
+          {showDetails.single_video == 0 ? (
             <div
               className="videoPageBGimg"
               style={{
                 backgroundImage: `url(${
-                  videoImageUrl + showDetails.logo
-                  // showsImageUrl + showDetails.logo
+                  showDetails.type === "linear_event"
+                    ? showDetails.logo
+                    : showDetails.type === "news"
+                    ? showDetails.logo_thumb
+                    : showsImageUrl + showDetails.logo
                 })`,
               }}
             ></div>
-          ) : showDetails.single_video === 1 ? (
+          ) : showDetails.single_video == 1 ? (
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${videoImageUrl + showDetails.logo})`,
+                backgroundImage: `url(${
+                  showDetails.type === "linear_event"
+                    ? showDetails.logo
+                    : showDetails.type === "news"
+                    ? showDetails.logo_thumb
+                    : showsImageUrl + showDetails.logo
+                })`,
               }}
             ></div>
           ) : null}
@@ -850,11 +832,12 @@ const VideoDetails = (categoryId, episode) => {
               )}
             </div>
           )}
+
           <div
             className={
               showDetails.teaser
                 ? "videoPageContentWrapper videoPageContentPadding"
-                : "videoPageContentWrapper videoPageContentPadding detailTopAdj"
+                : " videoPageContentWrapper videoPageContentPadding paddingtop"
             }
           >
             <div className="vpContent">
@@ -868,37 +851,44 @@ const VideoDetails = (categoryId, episode) => {
                 >
                   {showDetails.show_name && (
                     <div className="vpMiddleHeading">
-                      <h1 className="vpMiddleh1" style={{ display: "flex" }}>
-                        {showDetails.show_name}
-                      </h1>
+                      <h1 className="vpMiddleh1">{showDetails.show_name}</h1>
                     </div>
                   )}
-                  {/* <div className="col col-2-5"> */}
                   <div
-                    className={
-                      showDetails.teaser ? "col col-2-5" : "col col-1-5"
-                    }
+                    className={showDetails.teaser ? "col col-9" : "col col-4"}
                   >
                     <div className="vpLeftSection">
-                      {/* {showDetails.is_free_video === true ? (
-                        <img
-                          src={freeimg}
-                          style={{
-                            width: "20%",
-                            height: "13%",
-                            position: "absolute",
-                            zIndex: "1",
-                          }}
-                        />
-                      ) : (
-                        ""
-                      )} */}
-                      {showDetails.single_video === 0 ? (
+                      {/* {showDetails.single_video === 0 ? (
                         <div
                           className="vpPoster"
                           style={{
                             backgroundImage: `url(${
                               showsImageUrl + showDetails.logo
+                            })`,
+                            marginLeft: "7px",
+                          }}
+                        ></div>
+                      ) : showDetails.single_video === 1 ? (
+                        <div
+                          className="vpPoster"
+                          style={{
+                            backgroundImage: `url(${
+                              showsImageUrl + showDetails.logo
+                            })`,
+                            marginLeft: "7px",
+                          }}
+                        ></div>
+                      ) : null} */}
+                      {showDetails.single_video === 0 ? (
+                        <div
+                          className="vpPoster"
+                          style={{
+                            backgroundImage: `url(${
+                              showDetails.type === "linear_event"
+                                ? showDetails.logo
+                                : showDetails.type === "news"
+                                ? showDetails.logo_thumb
+                                : showsImageUrl + showDetails.logo
                             })`,
                             marginLeft: "7px",
                             // height: "385px",
@@ -908,11 +898,21 @@ const VideoDetails = (categoryId, episode) => {
                         <div
                           className="vpPoster"
                           style={{
-                            backgroundImage: `url(${
-                              // showDetails.logo == null ?  showsImageUrl+showDetails.logo : showDetails.logo
-                              // videoImageUrl + showDetails.logo == null ? showDetails.logo :  videoImageUrl + showDetails.logo
-                              showsImageUrl+showDetails.logo
-                            })`,
+                            backgroundImage:
+                              // `url(${
+                              // showDetails.logo
+                              `url(${
+                                showDetails.type === "linear_event"
+                                  ? showDetails.logo
+                                  : showDetails.type === "news"
+                                  ? showDetails.logo_thumb
+                                  : showsImageUrl + showDetails.logo
+                              })`,
+                            // (!showsImageUrl+showDetails.logo )? showsImageUrl+showDetails.logo :showDetails.logo_thumb
+                            // showDetails.logo_thumb  ? showDetails.logo_thumb :showsImageUrl+showDetails.logo
+                            // videoImageUrl + showDetails.logo
+                            // showsImageUrl+showDetails.logo
+                            // })`,
                             marginLeft: "7px",
                             // height: "365px",
                           }}
@@ -923,48 +923,61 @@ const VideoDetails = (categoryId, episode) => {
                         style={{ marginTop: "7px" }}
                       >
                         <div className="vpLeftButtons">
-                          <button
-                            className="button buttonLarge buttonBlock vpWatchSeason"
-                            // style={{ height: "41px" }}
-                            onClick={() => {
-                              onWatchClick(showDetails);
-                            }}
-                          >
-                            <div className="buttonBg"></div>
-                            <div className="buttonContent">
-                              {/* {showDetails.ad_link != null
-                                      ? (
-                                        window.alert("Do you want to continue watching???")
-                                      ) : (
-                                        ""
-                                      )} */}
-
-                              {showDetails.single_video === 0 ? (
-                                <Fragment>
+                          {showDetails.type === "news" ||
+                          showDetails.video == [] ? (
+                            <div> </div>
+                          ) : (
+                            <button
+                              className="button buttonLarge buttonBlock vpWatchSeason innerPageBtnMargin"
+                              style={{ height: "41px" }}
+                              onClick={() => {
+                                if (
+                                  showDetails.type === "news" ||
+                                  showDetails.video == []
+                                ) {
+                                  onNewsClick();
+                                } else if (showDetails.single_video === 1) {
+                                  onWatchClick(showDetails);
+                                } else {
+                                  onWatchBtnClick(
+                                    defaultOptions[0].videos[0],
+                                    showDetails.single_video,
+                                    showDetails.show_id
+                                  );
+                                }
+                              }}
+                            >
+                              <div className="buttonBg rounderbutton"></div>
+                              <div className="buttonContent">
+                                {showDetails.single_video === 0 &&
+                                defaultOptions &&
+                                defaultOptions.length > 0 ? (
+                                  <div className="vpWatchSeasonText">
+                                    {defaultOptions[0].season == null
+                                      ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
+                                      : `Watch S0${defaultOptions[0].season}:E0${defaultOptions[0].videos[0].video_order}`}
+                                  </div>
+                                ) : showDetails.type === "news" ||
+                                  showDetails.video == [] ? (
                                   <div
                                     className="vpWatchSeasonText"
-                                    onClick={() => {
-                                      onEpisodePlay(episodeList[0]);
-                                    }}
+                                    style={{ display: "none" }}
                                   >
-                                    Watch S01:E01
+                                    {" "}
+                                    News
                                   </div>
-                                </Fragment>
-                              ) : showDetails.single_video === 1 ? (
-                                <div
-                                  className="vpWatchSeasonText"
-                                  onClick={() => {
-                                    onWatchClick(showDetails);
-                                  }}
-                                >
-                                  Watch Now
-                                </div>
-                              ) : null}
-                            </div>
-                          </button>
+                                ) : showDetails.single_video === 1 ? (
+                                  <div className="vpWatchSeasonText">
+                                    Watch Now
+                                  </div>
+                                ) : null}
+                              </div>
+                            </button>
+                          )}
+
                           {showDetails.watchlist_flag === 1 ? (
                             <button
-                              className="button buttonSecondary buttonBlock vpAddButton"
+                              className="button buttonSecondary buttonBlock vpAddButton innerPageBtnMargin"
                               onClick={() => {
                                 removeFromMylistFunction(showDetails);
                               }}
@@ -977,7 +990,7 @@ const VideoDetails = (categoryId, episode) => {
                           ) : showDetails.watchlist_flag === null ||
                             showDetails.watchlist_flag === 0 ? (
                             <button
-                              className="button buttonSecondary buttonBlock vpAddButton"
+                              className="button buttonSecondary buttonBlock vpAddButton innerPageBtnMargin"
                               onClick={() => {
                                 addtoMylistFunction(showDetails);
                               }}
@@ -991,7 +1004,12 @@ const VideoDetails = (categoryId, episode) => {
                           <div className="vpTwoButton">
                             <button
                               className="button buttonTransparent vpShareButton"
-                              style={{ width: "0px" }}
+                              onMouseEnter={() => {
+                                setShare(true);
+                              }}
+                              onMouseLeave={() => {
+                                setShare(false);
+                              }}
                               onClick={() => {
                                 !share ? setShare(!share) : setShare(share);
                               }}
@@ -1001,11 +1019,17 @@ const VideoDetails = (categoryId, episode) => {
                                 <span>Share</span>
                               </div>
                             </button>
+
                             <button
                               className="button buttonTransparent vpReportButton"
                               onClick={() => {
-                                // setOther(!other);
                                 !other ? setOther(!other) : setOther(other);
+                              }}
+                              onMouseEnter={() => {
+                                setOther(true);
+                              }}
+                              onMouseLeave={() => {
+                                setOther(false);
                               }}
                             >
                               <div className="buttonBg"></div>
@@ -1023,19 +1047,20 @@ const VideoDetails = (categoryId, episode) => {
                                 }}
                               >
                                 <div
-                                  className="_1TcfH _1Dgjh"
+                                  className="_1TcfH _1Dgjh dropAdj"
                                   style={{ left: "7px" }}
                                 >
+                                  {console.log(`show details are:`, showDetails)}
                                   <FacebookShareButton
                                     url={
-                                      "https://chicanohollywood.tv/home/movies?show_id="+
-                                      //   "https://adventuresportstv.net/home/movies?show_id=" +
-                                      // "watch.chicanohollywood.com/home/movies?show_id=" +
+                                      "staging.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
+                                    
+                                    
                                     quote={
-                                      //   showDetails.show_name +
-                                      //   " || " +
+                                      showDetails.show_name +
+                                      " || " +
                                       (showDetails.videos
                                         ? showDetails.videos[0].video_title
                                         : "") +
@@ -1064,10 +1089,10 @@ const VideoDetails = (categoryId, episode) => {
                                       <span className="_3SXQW">Facebook</span>
                                     </span>
                                   </FacebookShareButton>
+
                                   <TwitterShareButton
                                     url={
-                                      "https://chicanohollywood.tv/home/movies?show_id="+
-                                      // "watch.chicanohollywood.com/home/movies?show_id=" +
+                                      "staging.runwaytv.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={
@@ -1109,7 +1134,7 @@ const VideoDetails = (categoryId, episode) => {
                                   setOther(false);
                                 }}
                               >
-                                <div className="_9gMn_ R8UiN">
+                                <div className="_9gMn_ R8UiN dropAdj reportAdj">
                                   <div
                                     onClick={() => {
                                       history.push({
@@ -1137,29 +1162,31 @@ const VideoDetails = (categoryId, episode) => {
                         : "col col-5 movieTagsMob"
                     }
                   >
-                    <div
-                      className={
-                        showDetails.teaser
-                          ? "vpMiddleInfoSection vpInfoPadding nonTrailerPadding"
-                          : "vpMiddleInfoSection vpInfoPadding"
-                      }
-                    >
+                    <div className="vpMiddleInfoSection vpInfoPadding">
                       <div className="vpLengthCensor">
                         <div className="vpLengthYear">
-                          {showDetails.year ? `(${showDetails.year}) . ` : ""}
-                          {showDetails.duration_text && (
-                            <div
-                              className="movieLength"
-                              style={{
-                                fontSize: "14px",
-                              }}
-                            >
-                              {showDetails.duration_text}
-                              <span className="vpYearBreak"></span>
+                          {showDetails && (
+                            <div className="movieLength">
+                              {showDetails.year && `(${showDetails.year})`}
+                              {showDetails.year &&
+                                showDetails.videos &&
+                                showDetails.videos[0] &&
+                                showDetails.videos[0].duration_text &&
+                                " . "}
+                              {showDetails.videos &&
+                                showDetails.videos[0] &&
+                                showDetails.videos[0].duration_text &&
+                                showDetails.videos[0].duration_text}
                             </div>
                           )}
                         </div>
                         <div className="vpCCwrapper">
+                          {/* <svg className="svgIcon vpCCicon" preserveAspectRatio="xMidYMid meet" viewBox="0 0 28 18" style={{ fill: 'currentcolor' }}>
+                                                        <g fill="currentColor" fillRule="evenodd">
+                                                            <path fillRule="nonzero" d="M2 9c0 3.867 3.13 7 6.994 7h10.012C22.868 16 26 12.866 26 9c0-3.867-3.13-7-6.994-7H8.994C5.132 2 2 5.134 2 9zM0 9c0-4.97 4.027-9 8.994-9h10.012C23.973 0 28 4.028 28 9c0 4.97-4.027 9-8.994 9H8.994C4.027 18 0 13.972 0 9z"></path>
+                                                            <path d="M11.844 10.195c-.088.836-.517 1.375-1.32 1.375-1.21 0-1.606-1.22-1.606-2.475 0-1.287.374-2.464 1.606-2.464.803 0 1.232.53 1.342 1.354h1.815c-.252-1.716-1.363-2.98-3.156-2.98-2.42 0-3.443 1.858-3.443 4.09 0 2.278 1.057 4.07 3.433 4.07 1.804 0 3.07-1.286 3.212-2.97h-1.88zm7.38 0c-.087.836-.516 1.375-1.32 1.375-1.21 0-1.605-1.22-1.605-2.475 0-1.287.373-2.464 1.605-2.464.803 0 1.232.53 1.342 1.354h1.815c-.253-1.716-1.364-2.98-3.157-2.98-2.42 0-3.443 1.858-3.443 4.09 0 2.278 1.056 4.07 3.432 4.07 1.804 0 3.07-1.286 3.212-2.97h-1.88z"></path>
+                                                        </g>
+                                                    </svg> //cc*/}
                           {showDetails.rating && (
                             <div className="movieCensorBox">
                               {showDetails.rating}
@@ -1168,115 +1195,114 @@ const VideoDetails = (categoryId, episode) => {
                           <br />
                         </div>
                       </div>
-
                       <div className="vpMovieCategory">
                         <div className="vpCategoryFlex vpCategoryMargin">
                           {categories &&
                             categories.map((item, index) => {
-                              if (categories.length === index + 1) {
-                                return (
-                                  <div
-                                    key={index}
-                                    className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                    style={{
-                                      cursor: "pointer",
-                                      fontSize: "12px",
-                                    }}
-                                    onClick={() => {
-                                      // categorySelect(item);
-                                      history.push({
-                                        pathname: "/home/categorylist",
-                                        search: encodeURI(
-                                          `category_id=${item.category_id}&category_name=${item.category_name}`
-                                        ),
-                                      });
-                                    }}
-                                  >
-                                    {item.category_name}
-                                  </div>
-                                );
-                              } else {
-                                return (
-                                  <div
-                                    key={index}
-                                    className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                    style={{
-                                      cursor: "pointer",
-                                      fontSize: "12px",
-                                    }}
-                                    onClick={() => {
-                                      // categorySelect(item);
-                                      history.push({
-                                        pathname: "/home/categorylist",
-                                        search: encodeURI(
-                                          `category_id=${item.category_id}&category_name=${item.category_name}`
-                                        ),
-                                      });
-                                    }}
-                                  >
-                                    {item.category_name}
-                                  </div>
-                                );
-                              }
+                              return (
+                                <div
+                                  key={index}
+                                  className="movieCensorBox vpMovieType vpMovieTypeMargin linkhover"
+                                  onClick={() => {
+                                    history.push({
+                                      pathname: "/home/categorylist",
+                                      search: encodeURI(
+                                        `category_id=${item.category_id}&category_name=${item.category_name}`
+                                      ),
+                                    });
+                                  }}
+                                >
+                                  {item.category_name}
+                                </div>
+                              );
                             })}
                         </div>
                       </div>
-                      {isDesktop === true ? (
-                        showDetails.single_video === 0 ? (
-                          <div className="vpMiddleDesc">
-                            <br />
-                            {showDetails.videos[0].video_description}
-                          </div>
-                        ) : (
-                          <div className="vpMiddleDesc">
-                            {showDetails.synopsis}
-                          </div>
-                        )
-                      ) : null}
                     </div>
+                    {isDesktop === true ? (
+                      showDetails.single_video === 0 ? (
+                        <div className="vpMiddleDesc">
+                          Seasons : {numberOfSeason}
+                          <br />
+                          {showDetails.synopsis && showDetails.synopsis}
+                        </div>
+                      ) : (
+                        <div className="vpMiddleDesc">
+                          {showDetails.synopsis && showDetails.synopsis}
+                        </div>
+                      )
+                    ) : null}
                   </div>
                 </div>
                 {isDesktop === false ? (
                   showDetails.single_video === 0 ? (
                     <div className="">
+                      Seasons : {numberOfSeason}
                       <br />
+                      {showDetails.synopsis && showDetails.synopsis}
                     </div>
                   ) : (
-                    <div className="">{showDetails.synopsis}</div>
+                    <div className="">
+                      {showDetails.synopsis && showDetails.synopsis}
+                    </div>
                   )
                 ) : null}
                 {showDetails && showDetails.single_video === 0 ? (
                   <div className="row vp3Section youMayLike">
                     <div className="col">
                       <div>
-                        <div
-                          className="heading"
-                          style={{
-                            paddingBottom: "7px",
-                            fontSize: "15pt",
-                          }}
-                        >
-                          Season 1
-                        </div>
+                        {optionsS && optionsS.length === 1 && (
+                          <div
+                            className="heading"
+                            style={{
+                              fontWeight: "800",
+                              paddingBottom: "7px",
+                              fontSize: "15pt",
+                            }}
+                          >
+                            Season 1
+                          </div>
+                        )}
+                        {optionsS && optionsS.length > 1 && (
+                          <div style={{ width: "200px", marginBottom: "20px" }}>
+                            <Dropdown
+                              options={optionsS}
+                              onChange={(item) => {
+                                console.log("dd", item.value, item.label);
+                                let newSeason = allSeasonList.filter(function (
+                                  e
+                                ) {
+                                  return e.season === item.value;
+                                });
+                                console.log("newSeason", newSeason);
+                                if (newSeason && newSeason.length > 0) {
+                                  setCurrentSeason(newSeason[0].videos);
+                                }
+                              }}
+                              value={optionsS[0]}
+                              controlClassName="myControlClassName"
+                            />
+                          </div>
+                        )}
                         <div className="carousel carouselNoMask">
-                          <div className="carouselContent">
+                          <div className="carouselContent categoryShowWrapperDetails">
                             <Carousel
                               className="row carouselRow"
                               responsive={responsive}
                             >
-                              {episodeList &&
-                                episodeList.map((show, index) => {
+                              {currentSeason &&
+                                currentSeason.map((show, index) => {
                                   return (
                                     <div className="col col-3" key={index}>
                                       <div className="movieTile">
                                         <div
-                                          className="movieTileImage"
-                                          // className={
-                                          //   hover === true &&
-                                          //   focusedId === index
-                                          //     ? "movieTileImage movieTileImageOpen"
-                                          //     : "movieTileImage"
-                                          // }
+                                          // className="movieTileImage"
+                                          className={
+                                            hover === true &&
+                                            focusedId === index
+                                              ? "movieTileImage movieTileImageOpen"
+                                              : "movieTileImage"
+                                          }
                                           id={index}
                                           onMouseOver={() => {
                                             hoverFunction(true, index);
@@ -1286,7 +1312,13 @@ const VideoDetails = (categoryId, episode) => {
                                           }}
                                         >
                                           <div
-                                            onClick={() => onEpisodePlay(show)}
+                                            onClick={() => {
+                                              onWatchBtnClick(
+                                                show,
+                                                showDetails.single_video,
+                                                showDetails.show_id
+                                              );
+                                            }}
                                             className={
                                               hover === true &&
                                               focusedId === index
@@ -1301,9 +1333,6 @@ const VideoDetails = (categoryId, episode) => {
                                                 preserveAspectRatio="xMidYMid meet"
                                                 viewBox="0 0 62 62"
                                                 style={{ fill: "currentcolor" }}
-                                                // onClick={() => {
-                                                //   functionOnclick(show);
-                                                // }}
                                               >
                                                 <circle
                                                   r="30"
@@ -1320,27 +1349,13 @@ const VideoDetails = (categoryId, episode) => {
                                               </svg>
                                             ) : null}
                                           </div>
-                                          {/* {show.free_video === true ? (
-                                            <img
-                                              src={freeimg}
-                                              style={{
-                                                width: "20%",
-                                                height: "13%",
-                                                position: "absolute",
-                                                zIndex: "1",
-                                              }}
-                                            />
-                                          ) : (
-                                            ""
-                                          )} */}
                                           {show.thumbnail_350_200 && (
                                             <div
                                               className="moviePoster"
                                               style={{
-                                                // height: "320px",
-                                                // width: "210px",
                                                 backgroundImage: `url(${
-                                                  videoImageUrl + show.thumbnail
+                                                  videoImageUrl +
+                                                  show.thumbnail_350_200
                                                 })`,
                                               }}
                                             >
@@ -1370,9 +1385,11 @@ const VideoDetails = (categoryId, episode) => {
                                                   backgroundPosition:
                                                     "center bottom",
                                                   backgroundSize: "cover",
+                                                  width: "260px",
                                                 }}
                                               ></div>
-                                              {show.watchlist_flag === 1 ? (
+                                              {showDetails.watchlist_flag ===
+                                              1 ? (
                                                 <div className="wishlistTextWrapper">
                                                   <div
                                                     className="wishlistText"
@@ -1385,9 +1402,10 @@ const VideoDetails = (categoryId, episode) => {
                                                     Remove from My List{" "}
                                                   </div>
                                                 </div>
-                                              ) : show.watchlist_flag ===
+                                              ) : showDetails.watchlist_flag ===
                                                   null ||
-                                                show.watchlist_flag === 0 ? (
+                                                showDetails.watchlist_flag ===
+                                                  0 ? (
                                                 <div className="wishlistTextWrapper">
                                                   <div
                                                     className="wishlistText"
@@ -1403,6 +1421,11 @@ const VideoDetails = (categoryId, episode) => {
                                               ) : null}
                                             </div>
                                           </div>
+                                          {show.free_video == false ? (
+                                            <div className="freeTagWrapper">
+                                              <img src={freeTag} />
+                                            </div>
+                                          ) : null}
                                         </div>
                                         <section className="movieTextWrapper movieTextWrapperPadding">
                                           <div className="movieTextFlex">
@@ -1410,167 +1433,69 @@ const VideoDetails = (categoryId, episode) => {
                                               <a
                                                 className="linkButton movieTextHeading"
                                                 onClick={() => {
-                                                  history.push({
-                                                    pathname: "/videoplayer",
-                                                    //   search: encodeURI(
-                                                    //     `show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${show.video_id}`
-                                                    //   ),
-                                                    state: {
-                                                      show_details: show,
-                                                      singleVideo:
-                                                        showDetails.single_video,
-                                                      showId:
-                                                        showDetails.show_id,
-                                                    },
-                                                  });
+                                                  onWatchBtnClick(
+                                                    show,
+                                                    showDetails.single_video,
+                                                    showDetails.show_id
+                                                  );
                                                 }}
                                               >
-                                                {/* {show.free_video ===
-                                                            true ? (
-                                                              <img
-                                                                src={freeimg}
-                                                                style={{
-                                                                  width: "20%",
-                                                                  height: "45%",
-                                                                }}
-                                                              />
-                                                            ) : (
-                                                              ""
-                                                            )} */}
                                                 {show.video_title}
-                                                {show.videos &&
-                                                  show.videos.map(
-                                                    (item, index) => {
-                                                      if (
-                                                        show.videos.length ===
-                                                        index + 1
-                                                      ) {
-                                                        return (
-                                                          <div
-                                                            key={index}
-                                                            // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                          ></div>
-                                                        );
-                                                      } else {
-                                                        return (
-                                                          <div
-                                                            key={index}
-                                                            // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                          ></div>
-                                                        );
-                                                      }
-                                                    }
-                                                  )}
                                               </a>
                                             </h3>
-                                            <div
-                                              className="movieCatYear"
-                                              style={{ display: "contents" }}
-                                            >
+                                            <div className="movieCatYear">
                                               <div>
-                                                
-                                                {show && (
-                                                  <div className="movieYear">
-                                                    <div
-                                                      className="_1MmGl"
-                                                      style={{
-                                                        marginRight: "auto",
-                                                      }}
-                                                    >
-
-                                                      {showDetails.year
-                                                        ? `(${showDetails.year})`
-                                                        : ""}
-                                                      {showDetails.year &&
-                                                      show.duration_text
-                                                        ? " . "
-                                                        : ""}
-                                                      {show.duration_text &&
-                                                        show.duration_text}
-                                                    </div>
-                                                    {showDetails.rating && (
-                                                      <div className="movieCensorBox moviecensorText">
-                                                        {showDetails.rating}
-                                                      </div>
-                                                    )}
-                                                  </div>
-                                                )}
-                                              </div>
-                                              {console.log(
-                                                "season",
-                                                showDetails.categories
-                                              )}
-                                              <div className="vpMovieCategory">
-                                                <div className="vpCategoryFlex vpCategoryMargin">
-                                                  {categories &&
-                                                    categories.map(
+                                                <div className="_1MmGl">
+                                                  {showDetails.year
+                                                    ? `(${showDetails.year})`
+                                                    : null}
+                                                  {showDetails.year &&
+                                                  show.duration_text
+                                                    ? " . "
+                                                    : null}
+                                                  {show.duration_text
+                                                    ? show.duration_text
+                                                    : null}
+                                                </div>
+                                                <div className="movieCategory mcMargin">
+                                                  {showDetails.categories &&
+                                                    showDetails.categories.map(
                                                       (item, index) => {
                                                         if (
-                                                          categories.length ===
-                                                          index + 1
+                                                          index ===
+                                                          showDetails.categories
+                                                            .length -
+                                                            1
                                                         ) {
-                                                          return (
-                                                            <div
-                                                              key={index}
-                                                              // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                              style={{
-                                                                cursor:
-                                                                  "pointer",
-                                                                fontSize:
-                                                                  "12px",
-                                                              }}
-                                                              onClick={() => {
-                                                                // categorySelect(item);
-                                                                history.push({
-                                                                  pathname:
-                                                                    "/home/categorylist",
-                                                                  search:
-                                                                    encodeURI(
-                                                                      `category_id=${item.category_id}&category_name=${item.category_name}`
-                                                                    ),
-                                                                });
-                                                              }}
-                                                            >
-                                                              {
-                                                                item.category_name
-                                                              }
-                                                            </div>
-                                                          );
+                                                          return item.category_name;
                                                         } else {
                                                           return (
-                                                            <div
-                                                              key={index}
-                                                              // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                              style={{
-                                                                cursor:
-                                                                  "pointer",
-                                                                fontSize:
-                                                                  "12px",
-                                                              }}
-                                                              onClick={() => {
-                                                                // categorySelect(item);
-                                                                history.push({
-                                                                  pathname:
-                                                                    "/home/categorylist",
-                                                                  search:
-                                                                    encodeURI(
-                                                                      `category_id=${item.category_id}&category_name=${item.category_name}`
-                                                                    ),
-                                                                });
-                                                              }}
-                                                            >
-                                                              {
-                                                                item.category_name
-                                                              }
-                                                              {","}
-                                                            </div>
+                                                            item.category_name +
+                                                            ","
                                                           );
                                                         }
                                                       }
                                                     )}
                                                 </div>
-                                              </div>{" "}
+                                              </div>
+                                              <div>
+                                                {showDetails.rating && (
+                                                  <div className="movieCensorBox moviecensorText">
+                                                    {showDetails.rating}
+                                                  </div>
+                                                )}
+                                              </div>
                                             </div>
+                                            {/* {show.video_description && (
+                                              <div className="_2GgQ0 epi_desc">
+                                                <div className="_2GgQ0 epi_desc">
+                                                  {show.video_description.substring(
+                                                    0,
+                                                    80
+                                                  ) + "..."}
+                                                </div>
+                                              </div>
+                                            )} */}
                                           </div>
                                         </section>
                                       </div>
@@ -1584,13 +1509,21 @@ const VideoDetails = (categoryId, episode) => {
                     </div>
                   </div>
                 ) : null}
-                <div className="row vp3Section youMayLike">
+                {showDetails.key_art_work &&
+                showDetails.key_art_work.length > 0 ? (
+                  <KeyArtWork keyartWork={showDetails.key_art_work} />
+                ) : null}
+                <div
+                  className="row vp3Section youMayLike"
+                  style={{ marginTop: "35px", paddingTop: "0" }}
+                >
                   <div className="col">
                     <div>
                       {similarShows.length > 0 && (
                         <div
                           className="heading"
                           style={{
+                            fontWeight: "800",
                             paddingBottom: "7px",
                             fontSize: "15pt",
                           }}
@@ -1599,292 +1532,203 @@ const VideoDetails = (categoryId, episode) => {
                         </div>
                       )}
                       <div className="carousel carouselNoMask">
-                        <div className="carouselContent ">
+                        <div className="carouselContent categoryShowWrapperDetails">
                           <Carousel
                             className="row carouselRow"
                             responsive={responsive}
                           >
-                            {similarShows.map((show, index) => {
-                              return (
-                                <div className="col col-3" key={index}>
-                                  <div className="movieTile">
-                                    <div
-                                      className="movieTileImage"
-                                      // className={
-                                      //   hover === true &&
-                                      //   focusedId === index + "key"
-                                      //     ? "movieTileImage movieTileImageOpen"
-                                      //     : "movieTileImage"
-                                      // }
-                                      id={index + "key"}
-                                      onMouseOver={() => {
-                                        hoverFunction(true, index + "key");
-                                      }}
-                                      onMouseLeave={() => {
-                                        hoverFunction(false, index + "key");
-                                      }}
-                                    >
+                            {similarShows &&
+                              similarShows.map((show, index) => {
+                                return (
+                                  <div className="col col-3" key={index}>
+                                    <div className="movieTile">
                                       <div
-                                        onClick={() => {
-                                          functionOnclick(show);
-                                        }}
+                                        // className="movieTileImage"
                                         className={
                                           hover === true &&
                                           focusedId === index + "key"
-                                            ? "movieTileIcon "
-                                            : "movieTileIcon  movieTileHoverOpened"
+                                            ? "movieTileImage movieTileImageOpen"
+                                            : "movieTileImage"
                                         }
+                                        id={index + "key"}
+                                        onMouseOver={() => {
+                                          hoverFunction(true, index + "key");
+                                        }}
+                                        onMouseLeave={() => {
+                                          hoverFunction(false, index + "key");
+                                        }}
                                       >
-                                        {hover === true &&
-                                        focusedId === index + "key" ? (
-                                          <svg
-                                            className="svgIcon movieTilePlayIcon"
-                                            preserveAspectRatio="xMidYMid meet"
-                                            viewBox="0 0 62 62"
-                                            style={{ fill: "currentcolor" }}
-                                            // onClick={() => {
-                                            //   functionOnclick(show);
-                                            // }}
-                                          >
-                                            <circle
-                                              r="30"
-                                              stroke="currentColor"
-                                              fill="none"
-                                              strokeWidth="2"
-                                              cx="31"
-                                              cy="31"
-                                            ></circle>
-                                            <path
-                                              fill="currentColor"
-                                              d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"
-                                            ></path>
-                                          </svg>
-                                        ) : null}
-                                      </div>
-                                      {/* {show.single_video == 0 ? ( */}
-                                      {/* {show.is_free_video === true ? (
-                                        <img
-                                          src={freeimg}
-                                          style={{
-                                            width: "20%",
-                                            height: "13%",
-                                            position: "absolute",
-                                            zIndex: "1",
+                                        <div
+                                          onClick={() => {
+                                            functionOnclick(show);
                                           }}
-                                        />
-                                      ) : (
-                                        ""
-                                      )} */}
-                                      <div
-                                        className="moviePoster"
-                                        style={{
-                                          // height: "320px",
-                                          // width: "210px",
-                                          backgroundImage: `url(${
-                                            showsImageUrl + show.logo
-                                          })`,
-                                        }}
-                                      >
-                                        <div className="FeNml"></div>
-                                      </div>
-
-                                      <div
-                                        className={
-                                          hover === true &&
-                                          focusedId === index + "key"
-                                            ? "wishlistPosition wishlistTranslate wishlistParentOpen"
-                                            : "wishlistPosition wishlistTranslate wishlistParentClose"
-                                        }
-                                      >
-                                        <div className="wishlistButton">
-                                          <div
-                                            className={
-                                              hover === true &&
-                                              focusedId === index + "key"
-                                                ? "wlgradientPosition wlgradientTranslate wlgradientOpen"
-                                                : "wlgradientPosition wlgradientTranslate wlgradientClose"
-                                            }
-                                            style={{
-                                              backgroundImage:
-                                                "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))",
-                                              backgroundPosition:
-                                                "center bottom",
-                                              backgroundSize: "cover",
-                                            }}
-                                          ></div>
-                                          {show.watchlist_flag === 1 ? (
-                                            <div className="wishlistTextWrapper">
-                                              <div
-                                                className="wishlistText"
-                                                onClick={() => {
-                                                  removeFromMylistFunction(
-                                                    show
-                                                  );
-                                                }}
-                                              >
-                                                Remove from My List{" "}
-                                              </div>
-                                            </div>
-                                          ) : show.watchlist_flag === null ||
-                                            show.watchlist_flag === 0 ? (
-                                            <div className="wishlistTextWrapper">
-                                              <div
-                                                className="wishlistText"
-                                                onClick={() => {
-                                                  addtoMylistFunction(show);
-                                                }}
-                                              >
-                                                Add to My List
-                                              </div>
-                                            </div>
+                                          className={
+                                            hover === true &&
+                                            focusedId === index + "key"
+                                              ? "movieTileIcon "
+                                              : "movieTileIcon  movieTileHoverOpened"
+                                          }
+                                        >
+                                          {hover === true &&
+                                          focusedId === index + "key" ? (
+                                            <svg
+                                              className="svgIcon movieTilePlayIcon"
+                                              preserveAspectRatio="xMidYMid meet"
+                                              viewBox="0 0 62 62"
+                                              style={{ fill: "currentcolor" }}
+                                              // onClick={() => {
+                                              //   functionOnclick(show);
+                                              // }}
+                                            >
+                                              <circle
+                                                r="30"
+                                                stroke="currentColor"
+                                                fill="none"
+                                                strokeWidth="2"
+                                                cx="31"
+                                                cy="31"
+                                              ></circle>
+                                              <path
+                                                fill="currentColor"
+                                                d="M28.42,37.6c-2,1-3.42,0-3.42-2.35v-8.5c0-2.34,1.38-3.39,3.42-2.35l9,4.7c2,1,2.11,2.76.07,3.8Z"
+                                              ></path>
+                                            </svg>
                                           ) : null}
                                         </div>
-                                      </div>
-                                    </div>
 
-                                    <section className="movieTextWrapper movieTextWrapperPadding">
-                                      <div className="movieTextFlex">
-                                        <h3>
-                                          <a
-                                            className="linkButton movieTextHeading"
-                                            onClick={() => {
-                                              history.push({
-                                                pathname: "/videoplayer",
-                                                  search: encodeURI(
-                                                    `show_id=${showDetails.show_id}&single_video=${showDetails.single_video}&video_id=${show.video_id}`
-                                                  ),
-                                                // state: {
-                                                //   show_details: show,
-                                                //   singleVideo:
-                                                //     show.single_video,
-                                                //   showId: show.show_id,
-                                                // },
-                                              });
-                                            }}
-                                          >
-                                            {/* {show.is_free_video === true ? (
-                                              <img
-                                                src={freeimg}
-                                                style={{
-                                                  width: "20%",
-                                                  height: "45%",
-                                                }}
-                                              />
-                                            ) : (
-                                              ""
-                                            )} */}
-                                            {show.show_name}
-                                          </a>
-                                        </h3>
                                         <div
-                                          className="movieCatYear"
-                                          style={{ display: "contents" }}
+                                          className="moviePoster"
+                                          style={{
+                                            backgroundImage: `url(${
+                                              showDetails.type ===
+                                              "linear_event"
+                                                ? showDetails.logo
+                                                : showDetails.type === "news"
+                                                ? showDetails.logo_thumb
+                                                : showsImageUrl +
+                                                  showDetails.logo
+                                            })`,
+                                          }}
                                         >
-                                          <div>
-                                            {show && (
-                                              <div className="movieYear">
+                                          <div className="FeNml"></div>
+                                        </div>
+                                        <div
+                                          className={
+                                            hover === true &&
+                                            focusedId === index + "key"
+                                              ? "wishlistPosition wishlistTranslate wishlistParentOpen"
+                                              : "wishlistPosition wishlistTranslate wishlistParentClose"
+                                          }
+                                        >
+                                          <div className="wishlistButton">
+                                            <div
+                                              className={
+                                                hover === true &&
+                                                focusedId === index + "key"
+                                                  ? "wlgradientPosition wlgradientTranslate wlgradientOpen"
+                                                  : "wlgradientPosition wlgradientTranslate wlgradientClose"
+                                              }
+                                              style={{
+                                                backgroundImage:
+                                                  "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))",
+                                                backgroundPosition:
+                                                  "center bottom",
+                                                backgroundSize: "cover",
+                                                width: "260px",
+                                              }}
+                                            ></div>
+                                            {show.watchlist_flag === 1 ? (
+                                              <div className="wishlistTextWrapper">
                                                 <div
-                                                  className="_1MmGl"
-                                                  style={{
-                                                    marginRight: "auto",
+                                                  className="wishlistText"
+                                                  onClick={() => {
+                                                    removeFromMylistFunction(
+                                                      show
+                                                    );
                                                   }}
                                                 >
-                                                  {show.year
-                                                    ? `(${show.year})`
-                                                    : ""}
-                                                  {show.year &&
-                                                  show.duration_text
-                                                    ? " . "
-                                                    : ""}
-                                                  {show.duration_text &&
-                                                    show.duration_text}
+                                                  Remove from My List{" "}
                                                 </div>
-                                                {show.rating && (
-                                                  <div className="movieCensorBox moviecensorText">
-                                                    {show.rating}
-                                                  </div>
-                                                )}
                                               </div>
-                                            )}
-                                          </div>
-                                          {/* {show.category_names && (
-                                            <div className="movieCategory mcMargin">
-                                              <div>{show.category_names}
-                                             </div>
-                                            </div>
-                                          )} */}
-
-                                          {/* {show.category_names &&
-                                            show.category_names.map(
-                                              (item, index) => {
-                                                if (
-                                                  show.category_names.length ===
-                                                  index + 1
-                                                ) {
-                                                  return (
-                                                    <div
-                                                      key={index}
-                                                      // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                    >
-                                                      {show.category_names}
-                                                      {item.category_names}
-                                                    </div>
-                                                  );
-                                                } else {
-                                                  return (
-                                                    <div
-                                                      key={index}
-                                                      // className="movieCensorBox vpMovieType vpMovieTypeMargin"
-                                                    >  {show.category_names}
-                                                      {item.category_names}
-                                                      {","}
-                                                    </div>
-                                                  );
-                                                }
-                                              }
-                                            )} */}
-                                          {show.category_names && (
-                                            <div className="movieCategory mcMargin">
-                                              <div>{show.category_names}</div>
-                                            </div>
-                                          )}
-                                        </div>
-                                        <div className="movieCatYear">
-                                          <div>
-                                            <div className="movieYear"></div>
-                                            <div className="movieCategory mcMargin">
-                                              {/* {show.category_names &&
-                                                show.category_names.map(
-                                                  (item, index) => {
-                                                    if (
-                                                      index ===
-                                                      show.category_names
-                                                        .length -
-                                                        1
-                                                    ) {
-                                                      return (
-                                                        <div key={index}>
-                                                          {item.category_names}
-                                                        </div>
-                                                      );
-                                                    } else {
-                                                      return (
-                                                        <div key={index}>
-                                                          {item.category_names}
-                                                        </div>
-                                                      );
-                                                    }
-                                                  }
-                                                )} */}
-                                            </div>
+                                            ) : show.watchlist_flag === null ||
+                                              show.watchlist_flag === 0 ? (
+                                              <div className="wishlistTextWrapper">
+                                                <div
+                                                  className="wishlistText"
+                                                  onClick={() => {
+                                                    addtoMylistFunction(show);
+                                                  }}
+                                                >
+                                                  Add to My List
+                                                </div>
+                                              </div>
+                                            ) : null}
                                           </div>
                                         </div>
+                                        {show.is_free_video == false ? (
+                                          <div className="freeTagWrapper">
+                                            <img src={freeTag} />
+                                          </div>
+                                        ) : null}
                                       </div>
-                                    </section>
+                                      <section className="movieTextWrapper movieTextWrapperPadding">
+                                        <div className="movieTextFlex">
+                                          <h3>
+                                            <a
+                                              className="linkButton movieTextHeading"
+                                              onClick={() => {
+                                                functionOnclick(show);
+                                              }}
+                                            >
+                                              {show.show_name}
+                                            </a>
+                                          </h3>
+                                          <div className="movieCatYear">
+                                            <div>
+                                              {/* <div className="movieYear">
+                                                                                                <div className="_1MmGl">{convertTime(show.duration)}</div>
+                                                                                            </div> */}
+                                              <div className="_1MmGl">
+                                                {show.year
+                                                  ? `(${show.year})`
+                                                  : null}
+                                                {show.year && show.duration_text
+                                                  ? " . "
+                                                  : null}
+                                                {show.duration_text
+                                                  ? show.duration_text
+                                                  : null}
+                                              </div>
+                                              {/* {show.year ? (
+                                              <div className="_1MmGl">
+                                                ({show.year}) ·{" "}
+                                                {convertTime(show.duration)}
+                                              </div>
+                                            ) : (
+                                              <div className="_1MmGl">
+                                                {convertTime(show.duration)}
+                                              </div>
+                                            )} */}
+                                              {show.category_names && (
+                                                <div className="movieCategory mcMargin">
+                                                  {show.category_names}
+                                                </div>
+                                              )}
+                                            </div>
+                                            <div>
+                                              {show.rating && (
+                                                <div className="movieCensorBox moviecensorText">
+                                                  {show.rating}
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </section>
+                                    </div>
                                   </div>
-                                </div>
-                              );
-                            })}
+                                );
+                              })}
                           </Carousel>
                         </div>
                       </div>

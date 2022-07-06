@@ -302,10 +302,10 @@ const VideoDetails = (categoryId, episode) => {
     let countryName =
       localStorage.getItem("currentLocation") &&
       JSON.parse(localStorage.getItem("currentLocation")).country_name;
-    // if (
-    //   countryName != "United States" &&
-    //   countryName != "United States of America"
-    // ) {
+    if (
+      countryName != "United States" &&
+      countryName != "United States of America"
+    ) {
       if (user_id == null || user_id == service.getCookie("guestUserId")) {
         history.push({
           pathname: "/signin",
@@ -516,11 +516,11 @@ const VideoDetails = (categoryId, episode) => {
           ToastsStore.error("Oops! Something went wrong.");
         }
       }
-    // } else {
-    //   history.push({
-    //     pathname: "/unavailable",
-    //   });
-    // }
+    } else {
+      history.push({
+        pathname: "/unavailable",
+      });
+    }
   };
 
   return (
@@ -740,13 +740,13 @@ const VideoDetails = (categoryId, episode) => {
                                       "staging.outdoormax.tv/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
-                                    quote={
-                                      (showDetails.videos
-                                        ? showDetails.videos[0].video_title
-                                        : "") +
-                                      " || " +
-                                      showDetails.synopsis
-                                    }
+                                    // quote={
+                                    //   (showDetails.videos
+                                    //     ? showDetails.videos[0].video_title
+                                    //     : "") +
+                                    //   " || " +
+                                    //   showDetails.synopsis
+                                    // }
                                     className="share"
                                     style={{
                                       display: "flex",
@@ -976,7 +976,7 @@ const VideoDetails = (categoryId, episode) => {
                                     <div className="col col-3" key={index}>
                                       <div className="movieTile">
                                         <div
-                                          // className="movieTileImage"
+                                          className="movieTileImage"
                                           className={
                                             hover === true &&
                                             focusedId === index
@@ -1222,7 +1222,7 @@ const VideoDetails = (categoryId, episode) => {
                                   <div className="col col-3" key={index}>
                                     <div className="movieTile">
                                       <div
-                                        // className="movieTileImage"
+                                        className="movieTileImage"
                                         className={
                                           hover === true &&
                                           focusedId === index + "key"

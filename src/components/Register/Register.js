@@ -13,11 +13,6 @@ import $ from "jquery";
 
 const Register = (state) => {
   let location = useLocation();
-  var detailWatchNowClicked = localStorage.getItem('detailWatchNowClicked')
-  var detailsPath = '';
-  if (detailWatchNowClicked) {
-    detailsPath = `/home/movies?show_id=9640`
-  }
   console.log(location.state);
   if (location.state && location.state.from) {
     localStorage.setItem("location", location.state.from.pathname);
@@ -36,14 +31,8 @@ const Register = (state) => {
     .replace("https://", "")
     .split(/[/?#]/)[0];
   if (isLoggedIn === "true" && userId) {
-    if (detailWatchNowClicked) {
-      window.location.href = detailsPath
-    } else {
-      return <Redirect to="/home" />;
-    }
+    return <Redirect to="/home" />;
   }
-
-  
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -323,11 +312,7 @@ const Register = (state) => {
             if (prevLocation === "/tv") {
               history.push("/tv");
             } else {
-              if (detailWatchNowClicked) {
-                window.location.href = detailsPath
-              } else {
-                return <Redirect to="/home" />;
-              }
+              window.location.href = "/home";
             }
           }
         } else if (response.success == false) {
@@ -621,18 +606,20 @@ const Register = (state) => {
             isRegister ? "regnPage" : "regnPage1"
           }`}
         >
-          <div className="container">
+          <div className="container" style={{overflow : 'hidden'}}>
             <div className="row regnWrapper">
               <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
-                <h3 className="H3">Let's get you set up!</h3>
+
+                <h3 className="H3" id="getSetUp">Let's get you set up!</h3>
+
                 <div>
-                  {isFbAcive && (
+                  {/* {isFbAcive && (
                     <div>
                       <div rel="noopener" target="_self">
                         <button className="button buttonLarge buttonBlock registerFacebook">
                           <div className="buttonBg rounderbutton"></div>
                           <FacebookLogin
-                            appId="3330890933834435"
+                            appId="1430150390779794"
                             fields="name,email,picture,first_name"
                             callback={responseFacebook}
                             cssClass="button buttonLarge buttonBlock registerFacebook"
@@ -649,11 +636,11 @@ const Register = (state) => {
                         <div className="orDivider"></div>
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {isRegister ? (
                     <div id="registerId">
-                      <h5 className="H5 regnFormHeading">Register via Email</h5>
+                      <h5 className="H5 regnFormHeading" id="regVmail">Register via Email</h5>
                       <form
                         className="regnformContainer"
                         noValidate
@@ -804,7 +791,7 @@ const Register = (state) => {
                         )}
                         <div className="regnAgreeContent">
                           <p>
-                            By registering, you agree to Project forty six
+                            By registering, you agree to Project Forty-Six
                             {/* <Link to="/termsandconditions"> */}
                             <div
                               className="linkButton"
@@ -881,6 +868,7 @@ const Register = (state) => {
                           <button
                             className="button buttonLarge regnSubmit"
                             type="submit"
+                         
                           >
                             <div className="buttonBg rounderbutton"></div>
                             <div className="buttonContent" style={{color:"white"}}>Verify</div>
@@ -889,9 +877,10 @@ const Register = (state) => {
                       </form>
                       <div className="regnAgreeContent">
                         <p>
-                          By registering, you agree to Project forty six
+                          By registering, you agree to Project Forty-Six
                           {/* <Link to="/termsandconditions"> */}
                           <div
+                          style={{color:'white'}}
                             className="linkButton"
                             onClick={() => {
                               functionOnclick("/termsandconditions");
@@ -903,7 +892,7 @@ const Register = (state) => {
                             // }}
                           >
                             {" "}
-                            &nbsp;Terms of Use
+                            <span id="termsofuseRegPage"  >&nbsp;Terms of Use </span>
                           </div>
                           {/* </Link> */}
                           &nbsp; and

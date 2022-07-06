@@ -46,7 +46,7 @@ function onVideoPlayFunction(videoDetails, event, videoTime) {
     user_id: uId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 160,
+    app_id: 140,
     channel_id: videoDetails.channel_id,
     event_type: event,
     video_id: videoDetails.video_id,

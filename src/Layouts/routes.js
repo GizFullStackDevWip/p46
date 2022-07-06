@@ -44,94 +44,102 @@ import Payment from "../components/Payment/Payment";
 const routes = () => {
   const isAndroid = useSelector((state) => state.isAndroid);
   let isCoutryAllowed = true;
-  let countryName =
-    localStorage.getItem("currentLocation") &&
-    JSON.parse(localStorage.getItem("currentLocation")).country_name;
+  // let countryName =
+  //   localStorage.getItem("currentLocation") &&
+  //   JSON.parse(localStorage.getItem("currentLocation")).country_name;
+  // if (
+  //   countryName == "United States" ||
+  //   countryName == "United States of America"
+  // ) {
+  //   isCoutryAllowed = false;
+  // }
 
   return (
     <Router>
-      {!isAndroid && <Header />}
-
-      <>
-        <div className="closeMenuWrapper">
-          <Switch>
-            <PublicRoute path="/" exact component={Home} />
-            {/* <PublicRoute path="/test" exact component={Landing} /> */}
-            <PublicRoute path="/home" exact component={Home} />
-            <PublicRoute path="/home/movies" exact component={Movies} />
-            <PublicRoute
-              path="/home/categorylist"
-              exact
-              component={CategoryList}
-            />
-            <PublicRoute
-              path="/home/recentlyadded"
-              exact
-              component={RecentlyAdded}
-            />
-            <Route path="/signin" exact component={SignIn} />
-            {/* <Route path="/unavailable" exact component={LandingUS} /> */}
-            <Route path="/register" exact component={Register} />
-            <PublicRoute path="/aboutus" exact component={AboutUs} />
-            <PublicRoute path="/search" exact component={Search} />
-            <PublicRoute path="/videoplayer" exact component={VideoPlayer} />
-            <PublicRoute path="/termsofuse" exact component={TermsOfUse} />
-            <PublicRoute
-              path="/policydarkmode"
-              exact
-              component={PrivacyPolicy}
-            />
-            <PublicRoute
-              path="/pressrelease"
-              exact
-              component={PressRelease}
-            />
-            <PublicRoute
-              path="/contactsupport"
-              exact
-              component={ContactSupport}
-            />
-            <PublicRoute
-              path="/termsandconditions"
-              exact
-              component={TermsOfUse}
-            />
-            <PublicRoute
-              path="/privacypolicy"
-              exact
-              component={PrivacyPolicy}
-            />
-            <PrivateRoute path="/tv" exact component={Activate} />
-            <PrivateRoute path="/account" exact component={Account} />
-            <PrivateRoute
-              path="/manageDevice"
-              exact
-              component={ManageDevice}
-            />
-            <PrivateRoute path="/signout" exact component={SignOutAll} />
-            <PrivateRoute
-              path="/changePassword"
-              exact
-              component={ChangePassword}
-            />
-            <PrivateRoute
-              path="/BilingActivity"
-              exact
-              component={BilingActivity}
-            />
-            <PublicRoute
-              path="/SubscriptionList"
-              exact
-              component={SubscriptionList}
-            />
-            <PrivateRoute path="/payment" exact component={Payment} />
-            <PrivateRoute path="/success" exact component={Success} />
-            <PrivateRoute path="/error" exact component={Error} />
-          </Switch>
-        </div>
-        <Footer />
-      </>
-
+      {!isAndroid && isCoutryAllowed && <Header />}
+      {isCoutryAllowed ? (
+        <>
+          <div className="closeMenuWrapper">
+            <Switch>
+              <PublicRoute path="/" exact component={Home} />
+              {/* <PublicRoute path="/test" exact component={Landing} /> */}
+              <PublicRoute path="/home" exact component={Home} />
+              <PublicRoute path="/home/movies" exact component={Movies} />
+              <PublicRoute
+                path="/home/categorylist"
+                exact
+                component={CategoryList}
+              />
+              <PublicRoute
+                path="/home/recentlyadded"
+                exact
+                component={RecentlyAdded}
+              />
+              <Route path="/signin" exact component={SignIn} />
+              <Route path="/unavailable" exact component={LandingUS} />
+              <Route path="/register" exact component={Register} />
+              <PublicRoute path="/aboutus" exact component={AboutUs} />
+              <PublicRoute path="/search" exact component={Search} />
+              <PublicRoute path="/videoplayer" exact component={VideoPlayer} />
+              <PublicRoute path="/termsofuse" exact component={TermsOfUse} />
+              <PublicRoute
+                path="/policydarkmode"
+                exact
+                component={PrivacyPolicy}
+              />
+              <PublicRoute
+                path="/pressrelease"
+                exact
+                component={PressRelease}
+              />
+              <PublicRoute
+                path="/contactsupport"
+                exact
+                component={ContactSupport}
+              />
+              <PublicRoute
+                path="/termsandconditions"
+                exact
+                component={TermsOfUse}
+              />
+              <PublicRoute
+                path="/privacypolicy"
+                exact
+                component={PrivacyPolicy}
+              />
+              <PrivateRoute path="/tv" exact component={Activate} />
+              <PrivateRoute path="/account" exact component={Account} />
+              <PrivateRoute
+                path="/manageDevice"
+                exact
+                component={ManageDevice}
+              />
+              <PrivateRoute path="/signout" exact component={SignOutAll} />
+              <PrivateRoute
+                path="/changePassword"
+                exact
+                component={ChangePassword}
+              />
+              <PrivateRoute
+                path="/BilingActivity"
+                exact
+                component={BilingActivity}
+              />
+              <PublicRoute
+                path="/SubscriptionList"
+                exact
+                component={SubscriptionList}
+              />
+              <PrivateRoute path="/payment" exact component={Payment} />
+              <PrivateRoute path="/success" exact component={Success} />
+              <PrivateRoute path="/error" exact component={Error} />
+            </Switch>
+          </div>
+          <Footer />
+        </>
+      ) : (
+        <LandingUS />
+      )}
     </Router>
   );
 };

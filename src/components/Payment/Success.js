@@ -16,7 +16,6 @@ const Success = () => {
       console.log("testing success (prevurl == true)");
       const vshowId = service.getCookie("showId");
       if (vshowId) {
-        console.log("redirection to movies",vshowId);
         history.push({
           pathname: "/home/movies",
           search: encodeURI(`show_id=${vshowId}`),
@@ -25,7 +24,6 @@ const Success = () => {
         history.push({
           pathname: "/home",
         });
-        console.log(`redirection to home`,vshowId);
       }
     } else {
       setFromVP(true);
@@ -38,10 +36,9 @@ const Success = () => {
     var urlParams = new URLSearchParams(window.location.search);
     var sessionId = urlParams.get("session_id");
     // let paypalData = urlParams.get("amt");  // live
-    let paypalData = urlParams.get("PayerID")
-      ? urlParams.get("PayerID") // sandbox
-      : urlParams.get("token") ? urlParams.get("token") :  urlParams.get("amt"); // live
-      // console.log("PayerID",PayerID);
+    let paypalData = urlParams.get("token")
+      ? urlParams.get("token") // sandbox
+      : urlParams.get("amt"); // live
     if (sessionId) {
       service.stripeDecode(sessionId).then((response) => {
         if (response.success != false) {

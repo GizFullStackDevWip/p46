@@ -38,7 +38,6 @@ function getShowDetails(showId) {
     });
 }
 
-
 function getVideoDetails(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -74,11 +73,6 @@ function getVideoDetails(videoId) {
       return [];
     });
 }
-
-
-
-
-
 
 function userSubscription(userLoggedId) {
   var token = localStorage.getItem("access-token");
@@ -175,6 +169,7 @@ function checkUserSubscription() {
   return axios
     .get(process.env.REACT_APP_API_URL + "subscription/user", customConfig)
     .then((response) => {
+      console.log(`user sub check response`, response)
       return response.data;
     })
     .catch((error) => {
@@ -233,7 +228,7 @@ function onVideoPlayFunction(values, event) {
     user_id: uId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 160,
+    app_id: 140,
     channel_id: values.channel_id,
     event_type: event,
     video_id: values.video_id,
@@ -365,6 +360,7 @@ function videoSubscription(selectedVideoId) {
   return axios
     .get(process.env.REACT_APP_API_URL + "subscription/active", customConfig)
     .then((response) => {
+      console.log(`video sub response`, response)
       return response.data;
     })
     .catch((error) => {
@@ -414,8 +410,8 @@ function setCookie(name, value, days) {
 
 export const service = {
   getShowDetails,
-  getVideoDetails,
   similarShow,
+  getVideoDetails,
   onVideoPlayFunction,
   playerToken,
   checkVideoSubscription,

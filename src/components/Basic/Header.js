@@ -19,11 +19,15 @@ const Header = () => {
 
   const [input, setInput] = useState([]);
   const [timeOut, setTimeOut] = useState(0);
+  const [category, setCategory] = useState([]);
+
   const [listCategory, setListCategory] = useState([]);
+
   let userName = localStorage.getItem("userName");
   const [typing, setTyping] = useState(false);
   const [background, setBackground] = useState(false);
   const [mouseHover, setMouseHover] = useState(false);
+  const [update, setUpdate] = useState(true);
 
   const [downloadHoverStyle, setDownloadHoverStyle] = useState([]);
   const [downloadHover, setDownloadHover] = useState(false);
@@ -55,17 +59,25 @@ const Header = () => {
     if (isLoggedIn === "true" && userId) {
       dispatch({ type: "LOGIN" });
     }
-    
+    service.getshowsbyCategory().then((response) => {
+      if (response.message == "invalid token") {
+        history.go(0);
+      } else {
+        setCategory(response.data);
+      }
+    });
 
     service.getshowsbyListCategory().then((response) => {
       //console.log(`resp func called`, response);
       if (response.message == "invalid token") {
         history.go(0);
       } else {
+        console.log(`response.categories`,response.categories)
         setListCategory(response.categories);
       }
     });
-let device = checkOperatingSystem();
+
+    let device = checkOperatingSystem();
     setDeviceType(device);
     if (device === "none" || device === "window" || device === "mac") {
       setDownloadHover(false);
@@ -189,14 +201,14 @@ let device = checkOperatingSystem();
   const functionLogout = () => {
     let user = localStorage.getItem("userId");
     service.logoutFunction(user).then((response) => {
-      //console.log("resposne", response);
+      console.log("resposne", response);
       if (response.success == true) {
         clearUserData();
         dispatch({ type: "LOGOUT" });
         setMouseHover(false);
         window.location.href = "/home";
       } else {
-        //console.log("somthing went wrong!");
+        console.log("somthing went wrong!");
       }
     });
   };
@@ -220,12 +232,12 @@ let device = checkOperatingSystem();
     return null;
   } else if (currentPath === "/" || currentPath === "/home/movies") {
     return (
-      <div style={{ paddingTop: downloadHoverStyle , background: "#d4d4d4"}}>
+      <div style={{ paddingTop: downloadHoverStyle }}>
         {downloadHover === true && (
           <header
             className="headerMenu headerWhite headerGradient"
             style={{
-              backgroundColor: "#d4d4d4",
+              backgroundColor: "#d9d7d7",
               marginTop: "-80px",
               padding: "0px",
             }}
@@ -234,23 +246,22 @@ let device = checkOperatingSystem();
               <img
                 src={require("../../images/logo.png")}
                 style={{ cursor: "pointer" }}
-                width={65}
+                width={50}
               />
               <div className="logosection" style={{ paddingBottom: "10px" }}>
                 <div
                   className="logoContain"
                   style={
                     isDesktop
-                      ? 
-                      { width: "250px", paddingTop: "4px" }
-                      : { width: "188px", paddingTop: "25px" , marginTop: "8px" }
+                      ? { width: "250px", paddingTop: "4px" }
+                      : { width: "188px", paddingTop: "13px" }
                   }
                 >
                   <span style={{ fontSize: "14px", fontWeight: "700" }}>
                     Watch Movies & TV Shows
                     <br />
                     <span style={{ fontSize: "10px", fontWeight: "600" }}>
-                       <b>Open in the Runway TV app</b>
+                      Open in the ISG TV app
                     </span>
                   </span>
                 </div>
@@ -323,99 +334,96 @@ let device = checkOperatingSystem();
                 >
                   <div className="menuWrapper">
                     <div className="mobileSearch">
-                      
-                    <section className="searchContainer mobileSearchBG">
-                    {
-                        login === true ? (
+                      <section className="searchContainer mobileSearchBG">
+                        {login === true ? (
                           <div>
-                            <svg
-                              className="svgIcon searchIcon"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 18.07 18.07"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                              ></path>
-                            </svg>
-                            <form onSubmit={submitSearch}>
-                              <input
-                                className="searchInput"
-                                id="searchInput"
-                                type="search"
-                                placeholder="Search"
-                                required=""
-                                onChange={onChangeNewHandler}
-                                value={input}
-                                autoComplete="off"
-                              />
-                            </form>
-                            <svg
-                              className="svgIcon searchClose"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 13 13"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                fillRule="evenodd"
-                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                              ></path>
-                            </svg>
-                            {searching == true && (
-                              <div className="search__suggestion__container">
-                                {suggestionLoading == true ? (
-                                  <div className="suggestion__loading">
-                                    Loading...
-                                  </div>
-                                ) : suggestionList.length == 0 ? (
-                                  <div
-                                    onClick={() => {
-                                      callSearchAPI();
-                                    }}
-                                    className="search__suggestion__item"
-                                  >
-                                    More Results
-                                  </div>
-                                ) : (
-                                  // <div className="suggestion__loading" >
-                                  //  {/* {suggestionList.map((item, index) => { */}
-                                  //   {/* return ( */}
-                                  //     <div
-                                  //       onClick={() => {
-                                  //         callSearchAPI('hollywood')
-                                  //       }}
-                                  //       className="search__suggestion__item"
-                                  //     >222222
-                                  //       {/* {item} */}
-                                  //     </div>
-                                  //   {/* ); */}
-                                  // {/* })} */}
-                                  //   No results found
+                          <svg
+                            className="svgIcon searchIcon"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 18.07 18.07"
+                            style={{ fill: "currentcolor" }}
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                            ></path>
+                          </svg>
+                          <form onSubmit={submitSearch}>
+                            <input
+                              className="searchInput"
+                              id="searchInput"
+                              type="search"
+                              placeholder="Search"
+                              required=""
+                              onChange={onChangeNewHandler}
+                              value={input}
+                              autoComplete="off"
+                            />
+                          </form>
+                          <svg
+                            className="svgIcon searchClose"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 13 13"
+                            style={{ fill: "currentcolor" }}
+                          >
+                            <path
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                            ></path>
+                          </svg>
+                        {searching == true && (
+                            <div className="search__suggestion__container">
+                              {suggestionLoading == true ? (
+                                <div className="suggestion__loading">
+                                  Loading...
+                                </div>
+                              ) : suggestionList.length == 0 ? (
+                                <div
+                                  onClick={() => {
+                                    callSearchAPI();
+                                  }}
+                                  className="search__suggestion__item"
+                                >
+                                  More Results
+                                </div>
+                              ) : (
+                                // <div className="suggestion__loading" >
+                                //  {/* {suggestionList.map((item, index) => { */}
+                                //   {/* return ( */}
+                                //     <div
+                                //       onClick={() => {
+                                //         callSearchAPI('hollywood')
+                                //       }}
+                                //       className="search__suggestion__item"
+                                //     >222222
+                                //       {/* {item} */}
+                                //     </div>
+                                //   {/* ); */}
+                                // {/* })} */}
+                                //   No results found
 
-                                  // </div>
-                                  <ul className="search__suggestion__list">
-                                    {suggestionList.map((item, index) => {
-                                      return (
-                                        <li
-                                          onClick={() => {
-                                            callSearchAPI(item);
-                                          }}
-                                          className="search__suggestion__item"
-                                          style={{color: "white"}}
-                                        >
-                                          {item.toUpperCase()}
-                                        </li>
-                                      );
-                                    })}
-                                  </ul>
-                                )}
-                              </div>
-                            )}
-                          </div>
+                                // </div>
+                                <ul className="search__suggestion__list">
+                                  {suggestionList.map((item, index) => {
+                                    return (
+                                      <li
+                                        onClick={() => {
+                                          callSearchAPI(item);
+                                        }}
+                                        className="search__suggestion__item"
+                                      >
+                                        {item.toUpperCase()}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              )}
+                            </div>
+                          )}
+                        </div>
                         ) : null}
-                    </section>
+                      </section>
                     </div>
                     <div
                       className="menuRowItem"
@@ -464,45 +472,25 @@ let device = checkOperatingSystem();
 
                             <div className="menuItemHead">Main Links</div>
                             <div className="menuListItems">
-                              {/* <Link to={{ pathname: '/aboutus' }}> */}
-                              <div className="linkButton headerMenuItems">
-                                About Us
-                              </div>
-                              {/* </Link> */}
-                            </div>
-                            <div className="menuListItems">
-                              <a
-                                href="http://discoverwisconsin.com/nowtrending/"
-                                target="_blank"
-                              >
+                              <Link to={{ pathname: "/aboutus" }}>
                                 <div className="linkButton headerMenuItems">
-                                  Now Trending
+                                  About Us
                                 </div>
-                              </a>
+                              </Link>
                             </div>
-                            <div className="menuListItems">
+                            {/* <div className="menuListItems">
                               <a
-                                href="#"
-                                target="_blank"
-                              >
-                                <div className="linkButton headerMenuItems">
-                                  Events
-                                </div>
-                              </a>
-                            </div>
-                            <div className="menuListItems">
-                              <a
-                                href="#"
+                                href="https://boondocknation.com/shop"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
                                   Shop
                                 </div>
                               </a>
-                            </div>
+                            </div> */}
                             <div className="menuListItems">
                               <a
-                                href="#"
+                                href="https://weboc.poppo.tv/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -545,14 +533,18 @@ let device = checkOperatingSystem();
                                   })}
                               </div>
                             </div>
+                           
                           </div>
                         </div>
-                        <div className="menuWidth20 menuBGcolor menuWidth40">
-                        <div className="menuCol">
+                        <div
+                          className="menuWidth20 menuBGcolor menuWidth40"
+                          style={{ height: "auto" }}
+                        >
+                          <div className="menuCol">
                             <div className="menuItemHead">More Categories</div>
                             <div className="menuListItems">
                               <div className="menuInnerCol">
-                                {listCategory &&
+                              {listCategory &&
                                   listCategory.map((item, index) => {
                                     if (((listCategory.length)/3) <= index) {
                                       return (
@@ -589,10 +581,10 @@ let device = checkOperatingSystem();
                     isDesktop === true
                       ? {
                           cursor: "pointer",
-                          width: "80%",
+                          width: "100%",
                           paddingLeft: "18px",
                         }
-                      : { width: "60%", paddingLeft: "8px" }
+                      : { width: "100%", paddingLeft: "8px" }
                   }
                   onClick={() => {
                     setInput("");
@@ -730,10 +722,10 @@ let device = checkOperatingSystem();
                           setMouseHover(true);
                           setBackground(true);
                         }}
-                        style={{ color: "#ff3f3f" }}
+                        style={{ color: "black" }}
                       >
                         Hi,{" "}
-                        <span className="_4wVtj">{capitalize(userName).split(" ")[0] }</span>
+                        <span className="_4wVtj">{capitalize(userName)}</span>
                       </div>
                     ) : (
                       <div
@@ -744,7 +736,7 @@ let device = checkOperatingSystem();
                         }}
                       >
                         Hi,{" "}
-                        <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
+                        <span className="_4wVtj">{capitalize(userName)}</span>
                       </div>
                     )}
                     {mouseHover === true ? (
@@ -994,7 +986,7 @@ let device = checkOperatingSystem();
                                 d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                               ></path>
                             </svg>
-                            {searching == true && (
+                          {searching == true && (
                               <div className="search__suggestion__container">
                                 {suggestionLoading == true ? (
                                   <div className="suggestion__loading">
@@ -1034,7 +1026,6 @@ let device = checkOperatingSystem();
                                             callSearchAPI(item);
                                           }}
                                           className="search__suggestion__item"
-                                          style={{color: "white"}}
                                         >
                                           {item.toUpperCase()}
                                         </li>
@@ -1101,39 +1092,19 @@ let device = checkOperatingSystem();
                               </div>
                             </Link>
                           </div>
-                          <div className="menuListItems">
+                          {/* <div className="menuListItems">
                             <a
-                              href="#"
-                              target="_blank"
-                            >
-                              <div className="linkButton headerMenuItems">
-                                Now Trending
-                              </div>
-                            </a>
-                          </div>
-                          <div className="menuListItems">
-                            <a
-                              href="#"
-                              target="_blank"
-                            >
-                              <div className="linkButton headerMenuItems">
-                                Events
-                              </div>
-                            </a>
-                          </div>
-                          <div className="menuListItems">
-                            <a
-                              href="#"
+                              href="https://boondocknation.com/shop"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
                                 Shop
                               </div>
                             </a>
-                          </div>
+                          </div> */}
                           <div className="menuListItems">
                             <a
-                              href="#"
+                              href="https://weboc.poppo.tv/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -1176,16 +1147,17 @@ let device = checkOperatingSystem();
                                   })}
                               </div>
                             </div>
+                          
                         </div>
                       </div>
                       <div className="menuWidth20 menuBGcolor menuWidth40">
-                      <div className="menuCol">
+                        <div className="menuCol">
                           <div className="menuItemHead">More Categories</div>
                           <div className="menuListItems">
-                              <div className="menuInnerCol">
-                                {listCategory &&
+                            <div className="menuInnerCol">
+                            {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if (((listCategory.length)/3) <= index) {
+                                    if ((listCategory.length / 3) <= index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -1206,8 +1178,8 @@ let device = checkOperatingSystem();
                                       );
                                     }
                                   })}
-                              </div>
                             </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1218,8 +1190,8 @@ let device = checkOperatingSystem();
                 src={require("../../images/logo.png")}
                 style={
                   isDesktop === true
-                    ? { cursor: "pointer", width: "90%", paddingLeft: "18px" }
-                    : { width: "90%", paddingLeft: "8px" }
+                    ? { cursor: "pointer", width: "100%", paddingLeft: "18px" }
+                    : { width: "100%", paddingLeft: "8px" }
                 }
                 onClick={() => {
                   setInput("");
@@ -1350,9 +1322,9 @@ let device = checkOperatingSystem();
                         setMouseHover(true);
                         setBackground(true);
                       }}
-                      style={{ color: "red" }}
+                      style={{ color: "black" }}
                     >
-                      Hi, <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
+                      Hi, <span className="_4wVtj">{capitalize(userName)}</span>
                     </div>
                   ) : (
                     <div
@@ -1362,7 +1334,7 @@ let device = checkOperatingSystem();
                         setBackground(true);
                       }}
                     >
-                      Hi, <span className="_4wVtj">{capitalize(userName).split(" ")[0]}</span>
+                      Hi, <span className="_4wVtj">{capitalize(userName)}</span>
                     </div>
                   )}
                   {mouseHover === true ? (

@@ -4,7 +4,7 @@
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 200pxpx;
+  height: 80px;
 }
 
 .App-header {
@@ -45,11 +45,11 @@
   --error-color: #f2110f;
 } */
 :root {
-  --primarybg-color: rgb(253, 27, 27);
-  --primary-color: rgb(253, 27, 27);
-  --selectionbgColor: rgb(253, 27, 27);
-  --primarybg-color-30per: rgb(253, 27, 27);
+  --primarybg-color: #c2d501;
+  --primary-color: #c2d501;
+  --selectionbgColor: #c2d501;
+  --primarybg-color-30per: #c2d501;
   --selectionTextColor: #ffffff;
   --success-color: #82ce34;
-  --error-color: rgb(253, 27, 27);
+  --error-color: #c2d501;
 }

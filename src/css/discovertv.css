@@ -2260,7 +2260,7 @@ figure {
 .discover-header {
   position: relative;
   width: 100%;
-  /* height: 650px; */
+  height: 585px;
   overflow: hidden;
   /*margin-bottom: 4.2vw;*/
   /*	padding-top: 46%;*/
@@ -2276,9 +2276,9 @@ figure {
   -ms-flex-pack: center;
   justify-content: center;
 }
-@media screen and (max-width: 768px) { /*affects about us page */
+@media screen and (max-width: 768px) {
   .discover-header {
-    /* height: 600px; */
+    height: 600px;
     background-position: 43% 0;
   }
 }
@@ -2295,14 +2295,11 @@ figure {
 .discover-header > .main-bg:after {
   content: "";
   position: absolute;
-  background-color: black;
-  background: black;
-  /* background-image: url("../images/aboutUs-bg.png"); */
+  background-image: url("../images/download.jpeg");
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 897;
   background-size: cover;
   background-position: center;
 }
@@ -2322,7 +2319,7 @@ figure {
 }
 .discover-header .header-content h1 {
   color: #ffffff;
-  /*text-align: center; */    
+  text-align: center;
   width: 100%;
   padding: 0 30px;
   margin: auto;
@@ -2332,14 +2329,10 @@ figure {
   -webkit-animation: fadein2 1s;
   animation: fadein2 1s;
 }
-@media screen and (max-width: 581px) {
+@media screen and (max-width: 768px) {
   .discover-header .header-content h1 {
-    /* line-height: 1.12; */
-    /* letter-spacing: 0.05rem; */
-    margin-bottom: 36px;
-    padding: 0 0;
-
-
+    line-height: 1.12;
+    letter-spacing: 0.05rem;
   }
 }
 .discover-header .header-content h1 span {
@@ -2350,11 +2343,9 @@ figure {
 }
 .discover-header .header-content > div {
   color: #ffffff;
-  background-color: black;
-
   text-align: center;
   width: 100%;
-  /* padding: 0 30px; */
+  padding: 0 30px;
   margin: auto;
   line-height: 0.95;
   max-width: 860px;
@@ -2367,21 +2358,8 @@ figure {
     letter-spacing: 0.05rem;
   }
 }
-.discover-header .header-content > div > * {/* this is parent to AboutUsContent */
+.discover-header .header-content > div > * {
   color: #ffffff;
-  background: black;
- 
-  text-align: inherit;
-  width: 900px;
-  font-size: 20px;
-}
-@media (max-device-width: 967px) {
-  .discover-header .header-content > div > * {
-width: 700px;
-    height: 900px;
-    margin-top: 110px;
-  }
-  
 }
 .discover-header .header-content > div span {
   font-size: 18px;

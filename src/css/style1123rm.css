@@ -388,7 +388,7 @@ body {
 }
 
 .buttonSecondary .buttonBg {
-  background: #c30000;
+  background: #fff;
 }
 
 .buttonSecondary.buttonInverse {
@@ -3749,7 +3749,7 @@ html.is-ps5 {
 
 .headerMenu.headerWhite {
   background: #fff;
-  border-bottom: 1px solid red;
+  border-bottom: 1px solid rgba(38, 38, 45, 0.1);
 }
 
 .headerMenu.headerWhite .logosection .logoLink .brandLogo {

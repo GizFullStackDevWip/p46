@@ -53,10 +53,8 @@ function getshowsbyCategory(offset = null) {
       "access-token": token,
       'uid': uId,
       'pubid': process.env.REACT_APP_PUBID,
-      // 'pubid': 50012,
       'country_code': countryCode,
       'channelid': process.env.REACT_APP_CHANNELID,
-      // 'channelid': 275,
       'dev_id': deviceId,
       'ip': ipaddress,
       'device_type': "web",
@@ -87,7 +85,7 @@ function getshowsbyCategory(offset = null) {
   
   
 }
-function freeVideos(offset) {
+function freeVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -113,31 +111,49 @@ function freeVideos(offset) {
       device_type: "web",
     },
   };
-  if (offset=== null){
-  return (
-    axios
+  return axios
     .get(process.env.REACT_APP_API_URL + "show/free/list", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
+    });
+}
+function newsVideos() {
+  var token = localStorage.getItem("access-token");
+  let ipaddress = localStorage.getItem("ipaddress");
+  let deviceId = localStorage.getItem("deviceId");
+  let uId = 291;
+  let user_id = getCookie("userId");
+  let countryCode = getCookie("country_code");
+  if (user_id) {
+    uId = user_id;
+  }
+
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": true,
+      crossorigin: true,
+      "access-token": token,
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
+    },
+  };
+  return axios
+    .get(process.env.REACT_APP_API_URL + "news/list", customConfig)
+    .then((response) => {
+      return response.data;
     })
-  );
-  }
-  else
-  {
-    return (
-      axios
-      .get(process.env.REACT_APP_API_URL + `show/free/list?offset=${offset}`, customConfig)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    .catch((error) => {
+      return [];
+    });
 }
 
 function getshowsbyPartner(partner_id) {
@@ -216,7 +232,7 @@ function getRecentlyAddedShows() {
     });
 }
 
-function getContinueWatchingVideos(offset= null) {
+function getContinueWatchingVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -241,9 +257,7 @@ function getContinueWatchingVideos(offset= null) {
       device_type: "web",
     },
   };
-  if (offset === null){
-  return (
-    axios
+  return axios
     .get(
       process.env.REACT_APP_API_URL + "show/continueWatching/list",
       customConfig
@@ -253,70 +267,8 @@ function getContinueWatchingVideos(offset= null) {
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else
-  {
-    return (
-      axios
-      .get(
-        process.env.REACT_APP_API_URL + `show/continueWatching/list?offset=${offset}`,
-        customConfig
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
-
-function getNews() {
-  var token = localStorage.getItem("access-token");
-  let ipaddress = localStorage.getItem("ipaddress");
-  let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
-  let user_id = getCookie("userId");
-  let countryCode = getCookie("country_code");
-  if (user_id) {
-    uId = user_id;
-  }
-  const customConfig = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Access-Control-Allow-Origin": true,
-      crossorigin: true,
-      "access-token": token,
-      uid: uId,
-      pubid: process.env.REACT_APP_PUBID,
-      country_code: countryCode,
-      channelid: process.env.REACT_APP_CHANNELID,
-      dev_id: deviceId,
-      ip: ipaddress,
-      device_type: "web",
-    },
-  };
-  return (
-    axios
-    .get(
-      process.env.REACT_APP_API_URL + "news/list",
-      customConfig
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return [];
-    })
-  );
-  
- 
-}
-
-
 function getLiveChannels() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -560,7 +512,7 @@ function addToMyPlayList(id, flag) {
     });
 }
 
-function playList(offset = null) {
+function playList() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -585,30 +537,14 @@ function playList(offset = null) {
       device_type: "web",
     },
   };
-  if (offset === null){
-  return (
-    axios
+  return axios
     .get(process.env.REACT_APP_API_URL + "show/watchlist", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else{
-    return (
-      axios
-      .get(process.env.REACT_APP_API_URL + `show/watchlist?offset=${offset}`, customConfig)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
 function getShows(key) {
   var token = localStorage.getItem("access-token");
@@ -647,8 +583,7 @@ function getShows(key) {
       return [];
     });
 }
-function showsByCategory(id , offset= null) {
-  console.log(`inside show cat` , id)
+function showsByCategory(id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -673,9 +608,7 @@ function showsByCategory(id , offset= null) {
       device_type: "web",
     },
   };
-  if (offset=== null){
-  return (
-    axios
+  return axios
   // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
     .get(
       process.env.REACT_APP_API_URL + "category/" + id + "/shows/list",
@@ -686,26 +619,7 @@ function showsByCategory(id , offset= null) {
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else
-  {
-    return (
-      axios
-    // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
-      .get(
-        process.env.REACT_APP_API_URL + `category/` + id + `/shows/list?offset=${offset}`,
-        customConfig
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
 function getCookie(name) {
   var nameEQ = name + "=";
@@ -883,12 +797,12 @@ export const service = {
   showsByCategory,
   getCookie,
   freeVideos,
+  newsVideos,
   getContinueWatchingVideos,
   getVideoDetails,
   videoSubscription,
   checkUserSubscription,
   onVideoPlayFunction,
   logoutAll,
-  getNews,
   setCookie,
 };

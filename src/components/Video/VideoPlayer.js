@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { service } from "../../network/Video/service";
@@ -10,7 +9,9 @@ import { clearUserData } from "../../Utils/utils";
 import closepanel from "../../img/icon-closepanel.png";
 import "./videoPlayer.css";
 
+var details = [];
 
+var videoDetailUtils = [];
 const VideoPlayer = (history) => {
   var videoStarted = false;
   let isFreeVideo = false;
@@ -42,15 +43,12 @@ const VideoPlayer = (history) => {
     let userId = service.getCookie("userId");
     if (isLoggedIn === "true" && userId) {
       let videoId = "";
-            console.log(`(history.location`,history.location)
-
       if (history.location.state.show_details) {
         ;
         console.log(
           "showid videoid state",
           history.location.state.show_details
         );
-        // debugger
         if (history.location.state.show_details.type === 'linear_event') {
           console.log(`flag changed to` , videoFlag)
           setVideoflag('1')
@@ -59,45 +57,19 @@ const VideoPlayer = (history) => {
           
         }
 
-if(history.location.state.show_details.videos != null){
-  videoId = history.location.state.show_details.videos[0].video_id;
-}
-
-else{
-  if(history.location.state.show_details[0] != null)
-  {
-
-    console.log(" history.location.state.show_details.video_id", history.location.state.show_details.video_id);
-      videoId = history.location.state.show_details[0].video_id;
-  }
-  else{
-    videoId = history.location.state.show_details.video_id;
-  }
-  
-}
-
-
-
-
-
-
-
-        // if (history.location.state.show_details.type == "live_event") {
-        //   videoId = history.location.state.show_details.videos[0].video_id;
-        // } else if (history.location.state.show_details.video_id != null) {
-        //   videoId = history.location.state.show_details.video_id;
-        //   console.log("1 history.location.state.show_details.video_id", history.location.state.show_details.video_id);
-        // }  else if (history.location.state.show_details[0].video_id != null) {
-        //   videoId = history.location.state.show_details[0].video_id;
-        //   console.log("3  history.location.state.show_details[0].video_id", history.location.state.show_details[0].video_id);
-        // } else if (history.location.state.show_details.videos[0].show_id != null) {
-        //   videoId = history.location.state.show_details.videos[0].show_id;  
-        //   console.log("4  history.location.state.show_details.videos[0].video_id", history.location.state.show_details.videos[0].video_id);
-        // }
-        // else if (history.location.state.show_details.show_id != null) {
-        //   videoId = history.location.state.show_details.show_id;  
-        //   console.log("2  history.location.state.show_details.show_id", history.location.state.show_details.show_id);
-        // }
+        if (history.location.state.show_details.type == "live_event") {
+          videoId = history.location.state.show_details.videos[0].video_id;
+        } else if (history.location.state.show_details.video_id != null) {
+          videoId = history.location.state.show_details.video_id;
+        } else if (
+          history.location.state.show_details.videos[0].video_id != null
+        ) {
+          videoId = history.location.state.show_details.videos[0].video_id;
+        } else if (history.location.state.show_details.show_id != null) {
+          videoId = history.location.state.show_details.show_id;
+        } else if (history.location.state.show_details[0].video_id != null) {
+          videoId = history.location.state.show_details[0].video_id;
+        }
 
         // videoId =history.location.state.show_details.video_id ? history.location.state.show_details.video_id :history.location.state.show_details.videos[0].video_id
         // videoId =history.location.state.show_details.video_id ?history.location.state.show_details.video_id :history.location.state.show_details.videos[0].video_id
