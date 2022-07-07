@@ -32,7 +32,7 @@ const CategoryList = () => {
   const updateUseEffect = () => {
     // 
     console.log("list");
-    if (parsed.category_id === "99991") {
+    if ( parsed.category_id === "99991" ) {
       console.log("list",parsed.category_id);
       let isLoggedIn = localStorage.getItem("isLoggedIn");
       let userId = service.getCookie("userId");

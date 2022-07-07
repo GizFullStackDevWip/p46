@@ -28,7 +28,7 @@ const RecentlyAdded = () => {
   }, [search]);
 
   const updateUseEffect = () => {
-    service.getRecentlyAddedShows().then((response) => {
+    service.getRecentlyAddedShows().then((response) => { 
       var data = response.data;
       setShowList(data);
     });

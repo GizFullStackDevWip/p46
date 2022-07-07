@@ -432,19 +432,18 @@ const Show = ({ param, update, categoryId ,funcc}) => {
                       }}
                     >
                       <div className="FeNml"></div>
-                    </div>
-                  ): 
-                  <div
+                    </div> 
+                  )
+                
+                   : <div
                       className="moviePoster"
                       style={{
                         backgroundImage: `url(${logo})`,
                       }}
                     >
-                
-                 
-                
-                  <div className="FeNml"></div>
-                </div>}
+                   <div className="FeNml"></div>
+                </div>           // div removed to remove "live now" section for p46
+              }
 
                   <div
                     className={

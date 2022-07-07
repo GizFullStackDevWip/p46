@@ -72,7 +72,7 @@ const Header = () => {
       if (response.message == "invalid token") {
         history.go(0);
       } else {
-        console.log(`response.categories`,response.categories)
+        console.log(`response.categories`, response.categories)
         setListCategory(response.categories);
       }
     });
@@ -261,7 +261,7 @@ const Header = () => {
                     Watch Movies & TV Shows
                     <br />
                     <span style={{ fontSize: "10px", fontWeight: "600" }}>
-                      Open in the ISG TV app
+                      Open in the  TV app
                     </span>
                   </span>
                 </div>
@@ -297,7 +297,7 @@ const Header = () => {
                 className="logoContain"
                 style={
                   isDesktop
-                    ? { width: "250px", paddingTop: "4px" }
+                    ? { width: "250px", paddingTop: "4px", cursor:'pointer' }
                     : { width: "150px", paddingTop: "12px" }
                 }
               >

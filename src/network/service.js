@@ -169,7 +169,7 @@ function getshowsbyCategory() {
 }
 
 function getshowsbyListCategory() {
-  var token = localStorage.getItem("access-token");
+  var token     = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
   let uId = 291;
