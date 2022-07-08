@@ -10,8 +10,8 @@ const CategoryContainer = (param) => {
   }, [param]);
 
   const historyPush = (type) => {
-// console.log("inddddd", id);
-    if (type === "NEW_RELEASES"){
+    // console.log("inddddd", id);
+    if (type === "NEW_RELEASES") {
       console.log("inside if");
       history.push({
         pathname: "/home/recentlyadded",
@@ -21,7 +21,9 @@ const CategoryContainer = (param) => {
       history.push({
         pathname: "/home/categorylist",
         search: encodeURI(
-          `category_id=${category.category_id}&category_type=${type}&category_name=${"Free Videos"}`
+          `category_id=${
+            category.category_id
+          }&category_type=${type}&category_name=${"Free Videos"}`
         ),
       });
     } else if (type === "NEWS") {
@@ -29,7 +31,9 @@ const CategoryContainer = (param) => {
       history.push({
         pathname: "/home/categorylist",
         search: encodeURI(
-          `category_id=${category.category_id}&category_type=${type}&category_name=${"Latest News"}`
+          `category_id=${
+            category.category_id
+          }&category_type=${type}&category_name=${"Latest News"}`
         ),
       });
     } else {
@@ -49,36 +53,38 @@ const CategoryContainer = (param) => {
       <div className="container categoryHeadWrapper">
         {category.category_name && category.category_id && (
           <div className="categoryLinkWrapper">
-            <div className="categoryHeading" style={{ cursor: "pointer" }}>{console.log("$$category",category)}
-              {
-              category.type === "LIVE" ? 
-               <div className="_2hvCx"
-              > 
-                <h2 className="_1mK3G"
-                 onClick={() => {
-                  historyPush(category.type);
-                }}
-                style={{ paddingBottom: "15px" }}> 
-                  {category.category_name}{console.log(`$$`,category.type)}
-                </h2>    
-               </div>
-             :
-             category.type === "FEATURED" ?  
-                <div 
-                className="_2hvCx"
-                onClick={() => {
-                  historyPush(category.type);
-                }}
-                
-                >
-                  <h2 className="_1mK3G"
+            <div className="categoryHeading" style={{ cursor: "pointer" }}>
+              {console.log("$$category", category)}
+              {category.type === "LIVE" ? (
+                <div className="_2hvCx">
+                  <h2
+                    className="_1mK3G"
+                    onClick={() => {
+                      historyPush(category.type);
+                    }}
+                    style={{ paddingBottom: "15px" }}
+                  >
+                    {category.category_name}
+                  </h2>
+                </div>
+              ) : category.type === "FEATURED" ? (
+                <div
+                  className="_2hvCx"
                   onClick={() => {
                     historyPush(category.type);
                   }}
-                   style={{ paddingBottom: "15px" }}>
+                >
+                  <h2
+                    className="_1mK3G"
+                    onClick={() => {
+                      historyPush(category.type);
+                    }}
+                    style={{ paddingBottom: "15px" }}
+                  >
                     {category.category_name}
                   </h2>
-                </div> : category.type === "ENDED_EVENTS" ?  
+                </div>
+              ) : category.type === "ENDED_EVENTS" ? (
                 <div
                   className="_2hvCx"
                   onClick={() => {
@@ -87,33 +93,39 @@ const CategoryContainer = (param) => {
                     }
                   }}
                 >
-                  <h2 className="_1mK3G" 
-                   onClick={() => {
-                    historyPush(category.type);
-                  }}
-                   style={{ paddingBottom: "15px" }}>
+                  <h2
+                    className="_1mK3G"
+                    onClick={() => {
+                      historyPush(category.type);
+                    }}
+                    style={{ paddingBottom: "15px" }}
+                  >
                     {category.category_name}
                   </h2>
-                </div> : (
+                </div>
+              ) : (
                 <div
                   className="_2hvCx"
-                  onClick={() => {
-                    if (category.category_id != "continuewatching") {
-                      historyPush(category.category_id);
-                    }
-                  }}
+                  // onClick={() => {
+                  //   if (category.category_id != "continuewatching") {
+                  //     historyPush(category.category_id);
+                  //   }
+                  // }}
                 >
-                  <h2 className="_1mK3G"  
-                   onClick={() => {
-                    historyPush(category.type);
-                  }}
-                  style={{ paddingBottom: "15px" }}>
+                  <h2
+                    className="_1mK3G"
+                    onClick={() => {
+                      historyPush(category.type);
+                    }}
+                    style={{ paddingBottom: "15px" }}
+                  >
                     {category.category_name}
                   </h2>
                 </div>
               )}
             </div>
-            {category.type === "LIVE" ? null : category.type === "FEATURED" ? null : category.type === "ENDED_EVENTS" ? null : (
+            {category.type === "LIVE" ? null : category.type ===
+              "FEATURED" ? null : category.type === "ENDED_EVENTS" ? null : (
               <div
                 className="categoryDotsWrapper"
                 style={{ cursor: "pointer", fontWeight: "900" }}
