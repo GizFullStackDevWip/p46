@@ -1,9 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import './banner.css';
 
 
-const Banner = ()=>{
+const BannerP = ()=>{
     const SliderData = [
         {
           image:
@@ -42,27 +43,23 @@ const Banner = ()=>{
 
     return(
         <>
-        <div className="bannerWrapper">
-           <div className="bannerImages">
-           {/* <div className="entireBanner" id="live">
-              <div className="hpLiveBanner">
-              <div className="liveVideoWrapper" style={{marginTop:"80px", display:"flex",justifyContent:"center"}}> */}
-           <FaArrowAltCircleLeft className='left-arrow' onClick={prevSlide}  />
-           <FaArrowAltCircleRight className='right-arrow' onClick={nextSlide} />
-             {SliderData.map((item, index)=>{
-                return (
-                  <>
-                  <div className={index === current ? 'slide active' : 'slide'} key={index}>
-                  {index === current && (
-                  <img className="bannerImage" src={item.image} alt="Banner Images"/>)}
-                  </div>
-                  </>
-                )
-                })
+        <div id="slider">
+            <figure>
+                {SliderData.map((item, index)=>{
+                    return (
+                    <>
+                    <div>
+
+                        <img src={item.image}></img>
+                        
+                    </div>
+                    </>
+                    
+                    )
+            })
                 }
+                </figure>
                 </div>
-            </div>
-            {/* </div> */}
         
         
         </>
@@ -70,4 +67,4 @@ const Banner = ()=>{
 
         }
 
-export default Banner;
+export default BannerP;

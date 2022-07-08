@@ -10019,26 +10019,48 @@ body {
 
 /*##########banner for P46##########################*/
 .bannerWrapper{
-  margin-top: 30px;
+  /* margin-top: 30px;
   position: relative;
   height: 550px;
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: black 1px solid; */
+  margin-top: 7%;
+  position: relative;
+  height: 110vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border: black 1px solid;
+
 }
+/*1289px   */
 @media  screen and (max-device-width: 890px) {
-  .bannerWrapper{padding: 10px;width:auto;}
-   .bannerimages{width: 97%;padding: 3px;}
+   .bannerWrapper{padding: 10px;width:auto;}
+   .bannerimage{width: 97%;padding: 3px;}
 }
+
+@media  screen and (max-device-width: 1289px) {
+  .bannerWrapper{padding: 10px;width:auto;}
+  .bannerimage{width: 97%;padding: 3px;}
+}
+
+
+
 /*.bannerImages{
   background-color: black
 }*/
 .bannerImage{
-  width: 100%;
-  height: 500px;
-  border-radius: 10px;
+   width: 100%;
+   height: 85vh;
+   border-radius: 10px;
+
+
+
+
+
+
 }
 .right-arrow {
   position: absolute;

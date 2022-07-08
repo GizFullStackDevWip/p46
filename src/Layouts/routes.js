@@ -40,6 +40,7 @@ import ChangePassword from "../components/Changepassword/changePassword";
 import BilingActivity from "../components/BillingDetails/BilingActivity";
 import SubscriptionList from "../components/SubscriptionList/SubscriptionList";
 import Payment from "../components/Payment/Payment";
+import BannerP from "../components/BannerP46/BannerP"
 
 const routes = () => {
   const isAndroid = useSelector((state) => state.isAndroid);
@@ -63,6 +64,7 @@ const routes = () => {
             <Switch>
               <PublicRoute path="/" exact component={Home} />
               {/* <PublicRoute path="/test" exact component={Landing} /> */}
+              <PublicRoute path="/BannerP"  component={BannerP} />
               <PublicRoute path="/home" exact component={Home} />
               <PublicRoute path="/home/movies" exact component={Movies} />
               <PublicRoute
@@ -133,6 +135,7 @@ const routes = () => {
               <PrivateRoute path="/payment" exact component={Payment} />
               <PrivateRoute path="/success" exact component={Success} />
               <PrivateRoute path="/error" exact component={Error} />
+            
             </Switch>
           </div>
           <Footer />

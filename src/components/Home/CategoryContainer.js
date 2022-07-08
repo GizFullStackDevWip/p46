@@ -54,30 +54,32 @@ const CategoryContainer = (param) => {
         {category.category_name && category.category_id && (
           <div className="categoryLinkWrapper">
             <div className="categoryHeading" style={{ cursor: "pointer" }}>
-              {console.log("$$category", category)}
-              {category.type === "LIVE" ? (
+              {console.log("$$category", category,"ooo",category.type === "LIVE"  &&  category.shows.length > 1 )}
+              {category.type === "LIVE"  ?  (
+
                 <div className="_2hvCx">
+                  
                   <h2
                     className="_1mK3G"
                     onClick={() => {
-                      historyPush(category.type);
+                      return null;
                     }}
                     style={{ paddingBottom: "15px" }}
                   >
                     {category.category_name}
                   </h2>
                 </div>
-              ) : category.type === "FEATURED" ? (
+              ) : category.type === "FEATURED" ?  (
                 <div
                   className="_2hvCx"
-                  onClick={() => {
-                    historyPush(category.type);
-                  }}
+                  // onClick={() => {
+                  //   return null;
+                  // }}
                 >
                   <h2
                     className="_1mK3G"
                     onClick={() => {
-                      historyPush(category.type);
+                     return null;
                     }}
                     style={{ paddingBottom: "15px" }}
                   >

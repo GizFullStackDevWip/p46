@@ -7,6 +7,7 @@ import LiveSchedule from "./LiveSchedule";
 import Notification from "../../common/Notification";
 import $ from "jquery";
 import Banner from "../Banner/Banner";
+import BannerP from "../BannerP46/BannerP";
 
 const Home = () => {
   const [category, setCategory] = useState([]);
@@ -90,7 +91,8 @@ const Home = () => {
           {signInBlock === true ? <Notification /> : null}
           {/* <LiveContainer param={playLink}  />
           <LiveSchedule /> */}
-           <Banner/>
+           {/* <Banner/> */}
+           <BannerP/>
           <div className="allCategoryContainer">
                    {/* {continueWatching.length > 0 &&
             continueWatching.map((item, index) => {
