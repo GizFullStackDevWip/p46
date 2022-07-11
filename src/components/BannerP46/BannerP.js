@@ -1,70 +1,83 @@
 import React from "react";
 import { useState } from "react";
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
-import './banner.css';
+import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+import "./style.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
+import Image from "./1655804111972.jpg";
+import Imagea from "./1656051544092.jpg";
+import Imageb from "./1656052487839.jpg";
+import Imagec from "./1656056640391.jpg";
+import Imaged from "./1657518986663.jpg";
+import Landscapea from "./1657518755751.jpg";
+import Landscapeb from "./1657518755751.jpg";
+import Landscapec from "./1657522456266.jpg";
 
-const BannerP = ()=>{
-    const SliderData = [
-        {
-          image:
-          'https://www.projectfortysix.com/wp-content/uploads/2021/12/Oklahoma-Conservative-News-Media.png'
-         },
-        {
-          image:'https://cdn5.anyclip.com/cE20M30BumV05oWs-a2H/1637250110587_248x140_thumbnail.jpg?wid=0016900002hO7xy_13313'
-         
-        },
-        {
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiUwEsxPFDWzfTaTbumkJLq40q38-Ln7toUw&usqp=CAU'
-            
-        },
-        {
-          image:'https://cdn5.anyclip.com/LyiGhYABVAAjy6w6_pux/1651507719905_248x140_thumbnail.jpg?wid=0016900002hO7xy_13313'
-            
-        },
-        {
-          image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTvNhQJ2ZLKR3dTkwOTgdXxd3QqWOcSr_ezQ&usqp=CAU'
-        }
-      ];
+const BannerP = () => {
+  const SliderData = [
+    {
+      image: Imagea,
+    },
+    {
+      image: Imageb,
+    },
+    {
+      image: Imagec,
+    },
+  ];
+  const LandscapeImage = [
+    {
+      image: Image,
+    },
+    {
+      image: Landscapea,
+    },
+    {
+      image: Landscapeb,
+    },
+    {
+      image: Landscapec,
+    },
+  ];
 
-      const [current, setCurrent] = useState(0);
-      const length = SliderData.length;
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    autoplay: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
-      if (!Array.isArray(SliderData) || SliderData.length <= 0) {
-        return null;
-      }
-      const nextSlide = () => {
-        setCurrent(current === length - 1 ? 0 : current + 1);
-      };
-      const prevSlide = () => {
-        setCurrent(current === 0 ? length - 1 : current - 1);
-      };
+  return (
+    <>
+      <div style={{ marginTop: "100px" }} className="LandScape">
+        <Slider {...settings}>
+          {LandscapeImage.map((item, index) => {
+            return (
+              <>
+                <img style={{ width: "100%" }} src={item.image}></img>
+              </>
+            );
+          })}
+        </Slider>
+      </div>
 
-
-    return(
-        <>
-        <div id="slider">
-            <figure>
-                {SliderData.map((item, index)=>{
-                    return (
-                    <>
-                    <div>
-
-                        <img src={item.image}></img>
-                        
-                    </div>
-                    </>
-                    
-                    )
-            })
-                }
-                </figure>
-                </div>
-        
-        
-        </>
-    )
-
-        }
+      <div style={{ marginTop: "100px" }} className="Portrait">
+        <Slider {...settings}>
+          {SliderData.map((item, index) => {
+            return (
+              <>
+                <img style={{ width: "100%" }} src={item.image}></img>
+              </>
+            );
+          })}
+        </Slider>
+      </div>
+    </>
+  );
+};
 
 export default BannerP;

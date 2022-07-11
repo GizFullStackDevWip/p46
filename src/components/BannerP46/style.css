@@ -1,0 +1,17 @@
+@media (max-width: 750px) {
+  .Portrait {
+    display: block;
+  }
+  .LandScape {
+    display: none;
+  }
+}
+
+@media (min-width: 751px) {
+  .Portrait {
+    display: none;
+  }
+  .LandScape {
+    display: block;
+  }
+}

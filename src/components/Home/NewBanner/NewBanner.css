@@ -1,0 +1,72 @@
+.carousel{
+    display: flex;
+    justify-content: center;
+}
+
+.carousel .control-dots{
+    position: absolute;
+    bottom:0;
+    /* margin:1px 0 0; */
+    padding:0 ;
+    text-align: center;
+    width:100%;
+    z-index: 1;
+}
+.carousel .slide{
+    height:80vh;
+   
+}
+.carousel .slides .img {
+    /* padding: 0 5px; */
+    max-height: 50vh;
+    width:auto
+}
+.CarImages{
+    /* margin: 0 auto; */
+    height:100%;
+    width:auto;
+}
+
+@media screen and (max-width:1200px) {
+    .carousel{
+        height:90vh
+    }
+    .carousel .slide{
+        margin: 10vh auto;
+        width:100vh;
+
+    }
+}
+
+@media screen and (max-width:900px) {
+    .carousel{
+        height:80vh
+    }
+    .carousel .slide{
+        margin: 10vh auto;
+        width:100vh;
+
+    }
+}
+
+@media screen and (max-width:750px) {
+    .carousel{
+        height:70vh
+    }
+    .carousel .slide{
+        margin: 10vh auto;
+        width:100vh;
+
+    }
+}
+
+/* @media screen and (max-width:750px) {
+    .carousel{
+        height:70vh
+    }
+    .carousel .slide{
+        margin: 10vh auto;
+        width:100vh;
+
+    }
+} */

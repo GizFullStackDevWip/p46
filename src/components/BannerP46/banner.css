@@ -1,5 +1,5 @@
 @keyframes slidy {
-    0% { left: 0%; }
+    0%  { left: 0%; }
     20% { left: 0%; }
     25% { left: -100%; }
     45% { left: -100%; }
@@ -11,9 +11,9 @@
     }
     
     body { margin: 0; } 
-    div#slider { overflow: hidden; }
-    div#slider figure img { width: 20%; float: left;padding-top: 1%; }
-    div#slider figure { 
+    div#slider { overflow: hidden; margin-top: 100px; }
+    div#slider .figure img { width: 20%; float: left; }
+    div#slider .figure { 
       position: relative;
       width: 500%;
       margin: 0;
@@ -23,9 +23,24 @@
       animation: 20s slidy infinite; 
     }
     
-    @media  screen and (max-device-width: 890px) {
-        .bannerWrapper{padding: 10px;width:auto;}
-        .bannerimage{width: 97%;padding: 3px;}
+    @media (max-width: 750px) {
+
+        /* .bannerWrapper{padding: 10px;width:auto;}
+        .bannerimage{width: 97%;padding: 3px;} */
+        
+        .Portrait{display: block;}
+        .LandScape{display: none;}
+        
      }
+
+     @media (min-width: 751px) {
+
+      /* .bannerWrapper{padding: 10px;width:auto;}
+      .bannerimage{width: 97%;padding: 3px;} */
+      
+      .Portrait{display: none;}
+      .LandScape{display: block;}
+      
+   }
 
     

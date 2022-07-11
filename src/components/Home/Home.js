@@ -6,8 +6,9 @@ import LiveContainer from "./LiveContainer";
 import LiveSchedule from "./LiveSchedule";
 import Notification from "../../common/Notification";
 import $ from "jquery";
-import Banner from "../Banner/Banner";
-import BannerP from "../BannerP46/BannerP";
+import Banner from "../Banner/Banner"; /*intial*/ 
+import BannerP from "../BannerP46/BannerP";/**Second-One*/
+import NewBanner from "./NewBanner/NewBanner";/*most recent one*/ 
 
 const Home = () => {
   const [category, setCategory] = useState([]);
@@ -93,6 +94,8 @@ const Home = () => {
           <LiveSchedule /> */}
            {/* <Banner/> */}
            <BannerP/>
+           {/* <NewBanner/> */}
+          
           <div className="allCategoryContainer">
                    {/* {continueWatching.length > 0 &&
             continueWatching.map((item, index) => {

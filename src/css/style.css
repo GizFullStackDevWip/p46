@@ -2352,18 +2352,47 @@ body {
 }
 
 .row {
+  
   display: flex;
   flex-wrap: wrap;
-  margin-right: -5px;
-  margin-left: -5px;
+ 
+   /* gap: 4%; */
+   margin-left: -5px;
+   margin-right: -5px;
+  
 }
+@media (min-width: 960px){
+.col-lg-4 {
+    flex: 0 0 33.33333%;
+    max-width: 33.33333%;
+}}
+@media (min-width: 1400)  { 
+ .row{
+  display : flex;
+  flex-wrap: wrap;
+  gap:10%
+}
+}
+/* @media (max-width: 1700px) {
+  .row {
+  
 
-@media (max-width: 767px) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+   
+  }
+} */
+
+
+
+/* @media (max-width: 767px) {1442px -
   .row {
     margin-right: -2px;
     margin-left: -2px;
   }
-}
+} */
 
 .input {
   position: relative;
@@ -2820,6 +2849,7 @@ html.is-ps5 {
   pointer-events: none;
   /* Replace CSS */
   display: none;
+  /* background-color: black; */
 }
 
 .headerMenu .headerWrapper .searchBar {
@@ -4814,6 +4844,7 @@ background: red;
 
 .movieTile .movieTileImage .moviePoster .FeNml {
   height: 100%;
+  margin:0 1%;
   width: 100%;
   position: absolute;
   top: 0;
@@ -4859,9 +4890,10 @@ background: red;
   margin: initial;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1700px) {
   .movieTile .movieTextWrapperPadding h3 {
     font-size: 14px;
+    margin: 0px 20px 0px 20px;
   }
 }
 
@@ -5279,9 +5311,10 @@ background: red;
   justify-content: space-between;
 }
 
-.footer .footerSeperator .footerLine {
+.footer .footerSeperator .footerLine {/*changed for p46*/
   height: 1px;
-  background-color: hsla(0, 0%, 100%, 0.1);
+  /* background-color: hsla(0, 0%, 100%, 0.1); */
+  background-color: black;
 }
 
 .footer .footerMenu {
@@ -7006,8 +7039,13 @@ background: red;
 }
 
 .searchWrapper {
+  background-color: black;
   margin-top: 155px;
   min-height: calc(100vh - 445px);
+  margin: 0 0 ;
+  max-width: 100vw;
+  
+  
 }
 
 .searchWrapper .searchResultMargin {
