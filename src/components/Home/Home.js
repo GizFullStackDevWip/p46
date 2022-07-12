@@ -1,159 +1,274 @@
-import React, { useState, useEffect, useRef, lazy, FC, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import CategoryContainer from "./CategoryContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { service } from "../../network/Home/service";
-import LiveContainer from "./LiveContainer";
-import LiveSchedule from "./LiveSchedule";
 import Notification from "../../common/Notification";
+import BannerContainer from "./BannerContainer";
 import $ from "jquery";
-import Banner from "./Banner";
+
 const Home = () => {
   const [category, setCategory] = useState([]);
-  const [playLink, setPlayLink] = useState(``);
+  const [loadMore, setLoadMore] = useState(false);
+  const [newArrivals, setNewArrivals] = useState([]);
+  const [freeVideos, setFreeVideos] = useState([]);
   const [continueWatching, setContinueWatching] = useState([]);
-  const [playStatus, setplayStatus] = useState(true);
+  const [categoryOrgLength, setCategoryOrgLength] = useState([]);
   const signInBlock = useSelector((state) => state.signInBlock);
   const login = useSelector((state) => state.login);
-  let offset = 0;
-  let scrollHeight = 100;
-  let maxScrollExceed = false;
-  let loadedRows = [];
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    $(".menuItemContainer").addClass("menuClose");
-    var singleObj = [];
-    service.getshowsbyCategory().then((response) => {
-      if (response.success === true && response.data.length > 0) {
-        var data = response.data;
-        data.map((item, index) => {
-          singleObj.push(item);
-        });
-        setCategory(singleObj);
-        loadedRows = singleObj;
-      }
-    });
-  }, [login]);
 
   useEffect(() => {
-    let prevPosition = 0;
-    let newPosition = 0;
-    let currentPosition = 0;
-    window.addEventListener("scroll", (e) => {
-      newPosition = window.pageYOffset;
-      //console.log(`Y offset is`, newPosition);
-      // if (newPosition > 250) {
-      //   let sts = true;
-      //   setplayStatus(true);
-      //   //console.log(`from home mute status should be :`, sts)
-      // } else {
-      //   setplayStatus(false);
-      //   let sts = false;
-      //   //console.log(`from home mute status should be :`, sts)
-      // }
-      currentPosition += 1;
-      if (
-        !maxScrollExceed &&
-        prevPosition < newPosition &&
-        currentPosition > scrollHeight
-      ) {
-        currentPosition = 0;
-        offset += 10;
-        fetchData();
-      } else if (prevPosition > newPosition) {
+    window.scrollTo(0, 0);
+    console.clear();
+    console.log("Home Page");
+    $(".menuItemContainer").addClass("menuClose");
+    var singleObj = [];
+    let newArrivalsArray = [];
+    let freeVideosArray = [];
+    let continueWatchingArray = [];
+    service.getshowsbyCategory().then((response) => {
+      if (response.success === true && response.data.length > 0) {
+        setCategoryOrgLength(response.data.length);
+        var data = response.data;
+        data.map((item, index) => {
+          if (index < 4) {
+            singleObj.push(item);
+          }
+        });
+        setCategory(singleObj);
       }
-      prevPosition = newPosition;
+      service.getRecentlyAddedShows().then((response) => {
+        if (response.data && response.data.length > 0) {
+          let newArrivals = {};
+          newArrivals.category_id = "0";
+          newArrivals.category_name = "New Releases";
+          newArrivals.shows = response.data.slice(0, 10);
+          newArrivalsArray.push(newArrivals);
+          setNewArrivals(newArrivalsArray);
+        }
+      });
+      service.freeVideos().then((response) => {
+        if (
+          response.success == true &&
+          response.data &&
+          response.data.length > 0
+        ) {
+          let freeVideos = {};
+          freeVideos.category_id = "free__videos";
+          freeVideos.category_name = "Free Videos";
+          freeVideos.shows = response.data;
+          freeVideosArray.push(freeVideos);
+          setFreeVideos(freeVideosArray);
+        }
+      });
+      let isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn == "true") {
+        service.getContinueWatchingVideos().then((response) => {
+          if (
+            response.success == true &&
+            response.data &&
+            response.data.length > 0
+          ) {
+            let continueWatching = {};
+            continueWatching.category_id = "continuewatching";
+            continueWatching.category_name = "Continue Watching";
+            continueWatching.shows = response.data;
+            continueWatchingArray.push(continueWatching);
+            setContinueWatching(continueWatchingArray);
+          }
+        });
+      }
     });
   }, []);
 
-  // useEffect(() => {
-  //   let newPosition = 0;
-  //   window.addEventListener("scroll", (e) => {
-  //     newPosition = window.pageYOffset;
-  //     //console.log(`Y offset is`, newPosition);
-  //     let livePlayer = document.getElementById('singleVideo_html5_api');
-  //     if (newPosition > 250) {
-  //       livePlayer.pause()
-  //     } else {
-  //       (livePlayer) && (livePlayer.paused ? livePlayer.play() : livePlayer.pause())
-  //     }
-
-  //   })
-  // }, []);
-
-  const liveFetch = (linkForLive) => {
-    setPlayLink(linkForLive);
-    //console.log(`from home:`, linkForLive);
-  };
-  const fetchData = async () => {
-    setTimeout(async () => {
-      service.getshowsbyCategory(offset).then((response) => {
-        if (response.success === true && response.data.length > 0) {
-          var data = response.data;
-          let singleObj = [];
-          data.map((item, index) => {
-            singleObj.push(item);
-          });
-          loadedRows = [...loadedRows, ...singleObj];
-          setCategory(loadedRows);
-        } else if (response.data.length == 0) {
-          maxScrollExceed = true;
-        }
-      });
-    }, 1000);
+  const loadMoreCategory = () => {
+    setLoadMore(true);
+    service.getshowsbyCategory().then((response) => {
+      if (response.success === true && response.data.length > 0) {
+        setCategoryOrgLength(0);
+        var data = response.data;
+        setCategory(data);
+      }
+    });
   };
   const updateFuction = () => {
-    //console.log("updated");
+    if (loadMore === true) {
+      let newArrivalsArray = [];
+      let freeVideosArray = [];
+      let continueWatchingArray = [];
+      service.getshowsbyCategory().then((response) => {
+        if (response.success === true && response.data.length > 0) {
+          setCategoryOrgLength(0);
+          var data = response.data;
+          setCategory(data);
+          service.getRecentlyAddedShows().then((response) => {
+            if (response.data && response.data.length > 0) {
+              let newArrivals = {};
+              newArrivals.category_id = "0";
+              newArrivals.category_name = "New Releases";
+              newArrivals.shows = response.data.slice(0, 10);
+              newArrivalsArray.push(newArrivals);
+              setNewArrivals(newArrivalsArray);
+            }
+          });
+          service.freeVideos().then((response) => {
+            if (
+              response.success == true &&
+              response.data &&
+              response.data.length > 0
+            ) {
+              let freeVideos = {};
+              freeVideos.category_id = "free__videos";
+              freeVideos.category_name = "Free Videos";
+              freeVideos.shows = response.data;
+              freeVideosArray.push(freeVideos);
+              setFreeVideos(freeVideosArray);
+            }
+          });
+          let isLoggedIn = localStorage.getItem("isLoggedIn");
+          if (isLoggedIn == "true") {
+            service.getContinueWatchingVideos().then((response) => {
+              if (
+                response.success == true &&
+                response.data &&
+                response.data.length > 0
+              ) {
+                let continueWatching = {};
+                continueWatching.category_id = "continuewatching";
+                continueWatching.category_name = "Continue Watching";
+                continueWatching.shows = response.data;
+                continueWatchingArray.push(continueWatching);
+                setContinueWatching(continueWatchingArray);
+              }
+            });
+          }
+        }
+      });
+    } else {
+      var singleObj = [];
+      let newArrivalsArray = [];
+      let freeVideosArray = [];
+      let continueWatchingArray = [];
+      service.getshowsbyCategory().then((response) => {
+        if (response.success === true && response.data.length > 0) {
+          setCategoryOrgLength(response.data.length);
+          var data = response.data;
+          data.map((item, index) => {
+            if (index < 4) {
+              singleObj.push(item);
+            }
+          });
+          setCategory(singleObj);
+          service.getRecentlyAddedShows().then((response) => {
+            if (response.data) {
+              let newArrivals = {};
+              newArrivals.category_id = "0";
+              newArrivals.category_name = "New Releases";
+              newArrivals.shows = response.data.slice(0, 10);
+              newArrivalsArray.push(newArrivals);
+              setNewArrivals(newArrivalsArray);
+            }
+          });
+          service.freeVideos().then((response) => {
+            if (response.success == true && response.data) {
+              let freeVideos = {};
+              freeVideos.category_id = "free__videos";
+              freeVideos.category_name = "Free Videos";
+              freeVideos.shows = response.data;
+              freeVideosArray.push(freeVideos);
+              setFreeVideos(freeVideosArray);
+            }
+          });
+          let isLoggedIn = localStorage.getItem("isLoggedIn");
+          if (isLoggedIn == "true") {
+            service.getContinueWatchingVideos().then((response) => {
+              if (
+                response.success == true &&
+                response.data &&
+                response.data.length > 0
+              ) {
+                let continueWatching = {};
+                continueWatching.category_id = "continuewatching";
+                continueWatching.category_name = "Continue Watching";
+                continueWatching.shows = response.data;
+                continueWatchingArray.push(continueWatching);
+                setContinueWatching(continueWatchingArray);
+              }
+            });
+          }
+        }
+      });
+    }
   };
-  window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  };
+
   return (
     <div className="pageWrapper searchPageMain">
       <div className="topContainer">
-      <Banner/>
         <div className="homepageWrapper menuCloseJS closeMenuWrapper">
           {signInBlock === true ? <Notification /> : null}
-
-          {/*<LiveContainer param={playLink} playing={playStatus} /><LiveSchedule />*/}
-          {/* <Banner /> */}
-          <div className="allCategoryContainer" id="allCategoryContainer">
-            {/* {continueWatching.length > 0 &&
-            continueWatching.map((item, index) => {
-                if (item.show_count !== "0") {
+          <BannerContainer />
+          <div className="allCategoryContainer">
+            {freeVideos.length > 0 &&
+              freeVideos.map((freeVideo, index) => {
+                if (freeVideo.show_count !== "0") {
                   return (
                     <div key={index}>
                       <CategoryContainer
-                  param={item}
+                        param={freeVideo}
                         clickHandler={updateFuction}
                       />
                     </div>
                   );
                 }
-              })} */}
-            {category &&
-              category.show_count !== "0" &&
-              category.map((category, index) => {
-                // if(category.type === "CONTINUE_WATCHING"){
-                // return (
-                //   <div key={index}>
-                //     <CategoryContainer
-                //       param={category}
-                //     />
-                //   </div>
-                // );
-                // }else{
-                return (
-                  <div key={index}>
-                    <CategoryContainer
-                      param={category}
-                      funcc={liveFetch}
-                      playing={playStatus}
-                      clickHandler={updateFuction}
-                    />
-                  </div>
-                );
-                // }
               })}
+            {continueWatching.length > 0 &&
+              continueWatching.map((item, index) => {
+                if (item.show_count !== "0") {
+                  return (
+                    <div key={index}>
+                      <CategoryContainer
+                        param={item}
+                        clickHandler={updateFuction}
+                      />
+                    </div>
+                  );
+                }
+              })}
+            {newArrivals.length > 0 &&
+              newArrivals.slice(0, 10).map((newArrivals, index) => {
+                if (newArrivals.show_count !== "0") {
+                  return (
+                    <div key={index}>
+                      <CategoryContainer
+                        param={newArrivals}
+                        clickHandler={updateFuction}
+                      />
+                    </div>
+                  );
+                }
+              })}
+            {category &&
+              category.map((category, index) => {
+                if (category.show_count !== "0") {
+                  return (
+                    <div key={index}>
+                      <CategoryContainer
+                        param={category}
+                        clickHandler={updateFuction}
+                      />
+                    </div>
+                  );
+                }
+              })}
+            {categoryOrgLength > 4 && (
+              <div className="container" onClick={loadMoreCategory}>
+                <div className="row loadMoreContainer">
+                  <button className="button buttonLarge buttonSecondary">
+                    <div className="buttonBg"></div>
+                    <div className="buttonContent">Load More</div>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

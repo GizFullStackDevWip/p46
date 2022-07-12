@@ -35,11 +35,11 @@ function fetchHomeBannerDetails() {
       return [];
     });
 }
-function getshowsbyCategory(offset = null) {
+function getshowsbyCategory() {
   var token = localStorage.getItem("access-token");
-  let ipaddress = getCookie("ipaddress");
-  let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+  let device_id = localStorage.getItem("deviceId");
+  let ipaddress = localStorage.getItem("ipaddress");
+  let uId = 291;
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -51,21 +51,16 @@ function getshowsbyCategory(offset = null) {
       "Access-Control-Allow-Origin": true,
       crossorigin: true,
       "access-token": token,
-      'uid': uId,
-      'pubid': process.env.REACT_APP_PUBID,
-      // 'pubid': 50012,
-      'country_code': countryCode,
-      'channelid': process.env.REACT_APP_CHANNELID,
-      // 'channelid': 275,
-      'dev_id': deviceId,
-      'ip': ipaddress,
-      'device_type': "web",
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: device_id,
+      ip: ipaddress,
+      device_type: "web",
     },
   };
- 
-  if(offset === null){
-    return axios
-    // .get(`https://staging.poppo.tv/test/api/show/list`, customConfig)
+  return axios
     .get(process.env.REACT_APP_API_URL + "show/list", customConfig)
     .then((response) => {
       return response.data;
@@ -73,21 +68,9 @@ function getshowsbyCategory(offset = null) {
     .catch((error) => {
       return [];
     });
-  }else{
-    return axios
-    // .get(process.env.REACT_APP_API_URL + "show/list?offset=${offset}", customConfig)
-    .get(`https://api.gizmott.com/api/v1/show/list?offset=${offset}`, customConfig)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return [];
-    });
-  }
-  
-  
 }
-function freeVideos(offset) {
+
+function freeVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -113,31 +96,14 @@ function freeVideos(offset) {
       device_type: "web",
     },
   };
-  if (offset=== null){
-  return (
-    axios
+  return axios
     .get(process.env.REACT_APP_API_URL + "show/free/list", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else
-  {
-    return (
-      axios
-      .get(process.env.REACT_APP_API_URL + `show/free/list?offset=${offset}`, customConfig)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
 
 function getshowsbyPartner(partner_id) {
@@ -216,7 +182,7 @@ function getRecentlyAddedShows() {
     });
 }
 
-function getContinueWatchingVideos(offset= null) {
+function getContinueWatchingVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -241,9 +207,7 @@ function getContinueWatchingVideos(offset= null) {
       device_type: "web",
     },
   };
-  if (offset === null){
-  return (
-    axios
+  return axios
     .get(
       process.env.REACT_APP_API_URL + "show/continueWatching/list",
       customConfig
@@ -253,70 +217,8 @@ function getContinueWatchingVideos(offset= null) {
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else
-  {
-    return (
-      axios
-      .get(
-        process.env.REACT_APP_API_URL + `show/continueWatching/list?offset=${offset}`,
-        customConfig
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
-
-function getNews() {
-  var token = localStorage.getItem("access-token");
-  let ipaddress = localStorage.getItem("ipaddress");
-  let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
-  let user_id = getCookie("userId");
-  let countryCode = getCookie("country_code");
-  if (user_id) {
-    uId = user_id;
-  }
-  const customConfig = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Access-Control-Allow-Origin": true,
-      crossorigin: true,
-      "access-token": token,
-      uid: uId,
-      pubid: process.env.REACT_APP_PUBID,
-      country_code: countryCode,
-      channelid: process.env.REACT_APP_CHANNELID,
-      dev_id: deviceId,
-      ip: ipaddress,
-      device_type: "web",
-    },
-  };
-  return (
-    axios
-    .get(
-      process.env.REACT_APP_API_URL + "news/list",
-      customConfig
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return [];
-    })
-  );
-  
- 
-}
-
-
 function getLiveChannels() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -343,7 +245,7 @@ function getLiveChannels() {
     },
   };
   return axios
-    .get(process.env.REACT_APP_API_URL + "channel/list", customConfig)
+    .get(process.env.REACT_APP_API_URL + "Getallchannels", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -449,72 +351,13 @@ function getLiveSchedule(id) {
       ip: ipaddress,
       device_type: "web",
     },
-    // params: {
-    //   channelid: id,
-    //   country_code: countryCode,
-    // },
-  };
-  return axios
-    .get(process.env.REACT_APP_API_URL + "schedule/guide/" + id, customConfig)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return [];
-    });
-}
-function onVideoPlayFunction(values, event) {
-  let video_id;
-  let video_title;
-  console.log("length",values);
-  // if(values.videos.length !=0){
-  //   video_id = values.videos[0].video_id;
-  //   video_title = values.videos[0].video_title;
-  // } 
-  let categories="";
-  // values.categories.map((item,index) => {
-  //   categories = categories + item.category_name + ","
-  // })
-  
-  let countryCode = getCookie("country_code");
-  let sessionId = localStorage.getItem("session_id");
-  let uId = 74961;
-  let user_id = getCookie("userId");
-  if (user_id) {
-    uId = user_id;
-  }
-  let device_id = localStorage.getItem("deviceId");
-  let ctimestamp = Date.now().toString();
-  let ctime = ctimestamp.slice(0, 10);
-  let appid = 73;
-  const requestBody = {
-    session_id: sessionId,
-    user_id: uId,
-    device_id: device_id,
-    publisherid: process.env.REACT_APP_PUBID,
-    app_id: appid,
-    channel_id: process.env.REACT_APP_CHANNELID,
-    event_type: event,
-    video_id: video_id,
-    video_title: video_title,
-    category: categories.slice(0, -1),
-    timestamp: ctime,
-  };
-  var token = localStorage.getItem("access-token");
-  const customConfig = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Access-Control-Allow-Origin": true,
-      crossorigin: true,
-      "access-token": token,
+    params: {
+      channelid: id,
+      country_code: countryCode,
     },
   };
   return axios
-    .post(
-      "https://analytics.poppo.tv/event",
-      qs.stringify(requestBody),
-      customConfig
-    )
+    .get(process.env.REACT_APP_API_URL + "liveSchedule", customConfig)
     .then((response) => {
       return response.data;
     })
@@ -522,6 +365,7 @@ function onVideoPlayFunction(values, event) {
       return [];
     });
 }
+
 function addToMyPlayList(id, flag) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -560,7 +404,7 @@ function addToMyPlayList(id, flag) {
     });
 }
 
-function playList(offset = null) {
+function playList() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -585,30 +429,14 @@ function playList(offset = null) {
       device_type: "web",
     },
   };
-  if (offset === null){
-  return (
-    axios
+  return axios
     .get(process.env.REACT_APP_API_URL + "show/watchlist", customConfig)
     .then((response) => {
       return response.data;
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else{
-    return (
-      axios
-      .get(process.env.REACT_APP_API_URL + `show/watchlist?offset=${offset}`, customConfig)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
 function getShows(key) {
   var token = localStorage.getItem("access-token");
@@ -647,8 +475,7 @@ function getShows(key) {
       return [];
     });
 }
-function showsByCategory(id , offset= null) {
-  console.log(`inside show cat` , id)
+function showsByCategory(id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
@@ -673,10 +500,7 @@ function showsByCategory(id , offset= null) {
       device_type: "web",
     },
   };
-  if (offset=== null){
-  return (
-    axios
-  // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
+  return axios
     .get(
       process.env.REACT_APP_API_URL + "category/" + id + "/shows/list",
       customConfig
@@ -686,26 +510,7 @@ function showsByCategory(id , offset= null) {
     })
     .catch((error) => {
       return [];
-    })
-  );
-  }
-  else
-  {
-    return (
-      axios
-    // .get("https://staging.poppo.tv/test/api/category/"+id+"/shows/list", customConfig)
-      .get(
-        process.env.REACT_APP_API_URL + `category/` + id + `/shows/list?offset=${offset}`,
-        customConfig
-      )
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        return [];
-      })
-    );
-  }
+    });
 }
 function getCookie(name) {
   var nameEQ = name + "=";
@@ -887,8 +692,6 @@ export const service = {
   getVideoDetails,
   videoSubscription,
   checkUserSubscription,
-  onVideoPlayFunction,
   logoutAll,
-  getNews,
   setCookie,
 };

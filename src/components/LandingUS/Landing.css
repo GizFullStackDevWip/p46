@@ -118,7 +118,7 @@
   line-height: 24px;
   letter-spacing: 0.5px;
   max-width: 650px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .platform__Logos__Image {

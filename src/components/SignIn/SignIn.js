@@ -10,20 +10,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { deviceDetect } from "../../Utils/utils";
 import $ from "jquery";
 const SignIn = (props) => {
-  var detailWatchNowClicked = localStorage.getItem('detailWatchNowClicked')
-  var detailsPath = '';
-  if (detailWatchNowClicked) {
-    detailsPath = `/home/movies?show_id=9640`
-  }
   let isLoggedIn = localStorage.getItem("isLoggedIn");
   let userId = service.getCookie("userId");
   if (isLoggedIn === "true" && userId) {
-    if (detailWatchNowClicked) {
-      window.location.href = detailsPath
-    } else {
-      return <Redirect to="/home" />;
-    }
-
+    return <Redirect to="/home" />;
   }
   let location = useLocation();
   const history = useHistory();
@@ -272,7 +262,7 @@ const SignIn = (props) => {
       });
   }
   const responseFacebook = (response) => {
-    ;
+    debugger;
     console.log("fb login response", response);
     setFacebookData(response);
     FBData = response;
@@ -281,7 +271,7 @@ const SignIn = (props) => {
     setAccessTokenFB(response.accessToken);
     var name = response.first_name;
     // if (response) {
-    ;
+    debugger;
     console.log("inside this respose", response);
     service
       .facebookLogin(response.id, response.email, name)
@@ -484,7 +474,7 @@ const SignIn = (props) => {
   };
   const onFBLink = () => {
     console.log("onFBLink link");
-    ;
+    debugger;
     service.facebokLink(FBData.id, FBData.email).then((response) => {
       console.log("onFBLinklogin", response);
       let loginFBData = response.data[0];
@@ -645,16 +635,11 @@ const SignIn = (props) => {
                   });
                 } else {
                   // history.goBack();
-                  ;
+                  debugger;
                   if (prevDomain == currentDomain) {
                     history.goBack();
                   } else {
-                    if (detailWatchNowClicked) {
-                      console.log('detailsPath', detailsPath, typeof detailsPath)
-                      window.location.href = detailsPath
-                    } else {
-                      return <Redirect to="/home" />;
-                    }
+                    window.location.href = "/home";
                   }
                 }
                 // window.location.reload(false);
@@ -676,15 +661,11 @@ const SignIn = (props) => {
                   });
                 } else {
                   // history.goBack();
-                  ;
+                  debugger;
                   if (prevDomain == currentDomain) {
                     history.goBack();
                   } else {
-                    if (detailWatchNowClicked) {
-                      window.location.href = detailsPath
-                    } else {
-                      return <Redirect to="/home" />;
-                    }
+                    window.location.href = "/home";
                   }
                 }
                 // window.location.reload(false);
@@ -852,7 +833,7 @@ const SignIn = (props) => {
                     <button className="button buttonLarge buttonBlock registerFacebook">
                       <div className="buttonBg rounderbutton"></div>
                       <FacebookLogin
-                        appId="3330890933834435"
+                        appId="4691963010825217"
                         isMobile={false}
                         fields="name,email,picture,first_name,last_name"
                         callback={responseFacebook}
@@ -917,7 +898,7 @@ const SignIn = (props) => {
                               Already have an account?{" "}
                               <span
                                 className="linkButton"
-
+                                
                                 onClick={() => {
                                   setIsLogin(true);
                                   setIsForgot(false);
@@ -988,7 +969,7 @@ const SignIn = (props) => {
                           <p>
                             <span>
                               Already have an account?{" "}
-                              <a className="linkButton" href="/signin" style={{ color: "black" }}>
+                              <a className="linkButton" href="/signin" style={{color:"#fff"}}>
                                 Sign In
                               </a>
                             </span>{" "}
@@ -1102,7 +1083,7 @@ const SignIn = (props) => {
                               type="submit"
                             >
                               <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent" style={{ color: "white" }}>Sign In</div>
+                              <div className="buttonContent" style={{color:"#fff"}}>Sign In</div>
                             </button>
                           </div>
                         ) : (
@@ -1114,7 +1095,7 @@ const SignIn = (props) => {
                                 type="submit"
                               >
                                 <div className="buttonBg rounderbutton"></div>
-                                <div className="buttonContent" style={{ color: "white" }}>Sign In</div>
+                                <div className="buttonContent" style={{color:"#fff"}}>Sign In</div>
                               </button>
                             </div>
                             <div className="regnSubmitWrapper">
@@ -1135,18 +1116,18 @@ const SignIn = (props) => {
 
                         <div className="signAgree">
                           <p>
-                            By registering, you agree to Runway TV
+                            By registering, you agree to Project Forty-Six
                             {/* <Link to="/termsandconditions"> */}
                             <div
                               className="linkButton"
                               onClick={() => {
                                 functionOnclick("/termsandconditions");
                               }}
-                            // onClick={() => {
-                            //   window.open(
-                            //     "https://www.outdoorchannel.com/terms/99078"
-                            //   );
-                            // }}
+                              // onClick={() => {
+                              //   window.open(
+                              //     "https://dev.projectfortysix.com/terms/99078"
+                              //   );
+                              // }}
                             >
                               &nbsp;Terms of Use
                             </div>
@@ -1159,11 +1140,11 @@ const SignIn = (props) => {
                               onClick={() => {
                                 functionOnclick("/privacypolicy");
                               }}
-                            // onClick={() => {
-                            //   window.open(
-                            //     "https://www.outdoorchannel.com/privacy/247031"
-                            //   );
-                            // }}
+                              // onClick={() => {
+                              //   window.open(
+                              //     "https://dev.projectfortysix.com/privacy/247031"
+                              //   );
+                              // }}
                             >
                               &nbsp;Privacy Policy
                             </div>

@@ -28,7 +28,6 @@ function getShowDetails(showId) {
   };
 
   return axios
-  // .get("https://staging.poppo.tv/test/api/show/"+ showId, customConfig)
     .get(process.env.REACT_APP_API_URL + "show/" + showId, customConfig)
     .then((response) => {
       return response.data;
@@ -37,36 +36,7 @@ function getShowDetails(showId) {
       return [];
     });
 }
-function userSubscription(userLoggedId) {
-  var token = localStorage.getItem("access-token");
-  let ipaddress = getCookie("ipaddress");
-  let deviceId = localStorage.getItem("deviceId");
-  let countryCode = getCookie("country_code");
 
-  const customConfig = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Access-Control-Allow-Origin": true,
-      crossorigin: true,
-      "access-token": token,
-      uid: userLoggedId ? userLoggedId : localStorage.getItem("userId"),
-      pubid: process.env.REACT_APP_PUBID,
-      country_code: countryCode,
-      channelid: process.env.REACT_APP_CHANNELID,
-      dev_id: deviceId,
-      ip: ipaddress,
-      device_type: "web",
-    },
-  };
-  return axios
-    .get(process.env.REACT_APP_API_URL + "subscription/user", customConfig)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      return [];
-    });
-}
 function checkVideoSubscription(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
@@ -190,7 +160,7 @@ function onVideoPlayFunction(values, event) {
     user_id: uId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 160,
+    app_id: 140,
     channel_id: values.channel_id,
     event_type: event,
     video_id: values.video_id,
@@ -376,7 +346,6 @@ export const service = {
   playerToken,
   checkVideoSubscription,
   checkUserSubscription,
-  userSubscription,
   addToMyPlayList,
   getCookie,
   videoSubscription,

@@ -21,9 +21,9 @@ const CookiePolicy = () => {
                                 <h5>Definitions</h5>
                                 <p>For the purposes of this Cookies Policy:</p>
                                 <ul>
-                                    <li><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Cookies Policy) refers to HappiTV, 7155 Hawthorn Ave, Apt 5 Los Angeles.</li>
+                                    <li><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Cookies Policy) refers to Boondock Nation, 7155 Hawthorn Ave, Apt 5 Los Angeles.</li>
                                     <li><strong>Cookies</strong> means small files that are placed on Your computer, mobile device or any other device by a website, containing details of your browsing history on that website among its many uses.</li>
-                                    <li><strong>Website</strong> refers to RunwayTV, accessible from <a href="http://www.watch.Runwaytv.com/" rel="external nofollow noopener" target="_blank">http://www.gethappi.tv</a></li>
+                                    <li><strong>Website</strong> refers to Boondock Nation, accessible from <a href="http://www.staging.discovermediaworks.com" rel="external nofollow noopener" target="_blank">http://www.staging.discovermediaworks.com</a></li>
                                     <li><strong>You</strong> means the individual accessing or using the Website, or a company, or any legal entity on behalf of which such individual is accessing or using the Website, as applicable.</li>
                                 </ul>
                                 <h1>The use of the Cookies</h1>
@@ -90,7 +90,7 @@ const CookiePolicy = () => {
                                         <p>By email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0a797f7a7a65787e4a6d6f7e626b7a7a63247e7c">[email&#160;protected]</a></p>
                                     </li>
                                     <li>
-                                        <p>By visiting this page on our website: <a href="https://gethappi.tv/contactsupport" rel="external nofollow noopener" target="_blank">https://gethappi.tv/contactsupport</a></p>
+                                        <p>By visiting this page on our website: <a href="watch.boondocknation.com/contactsupport" rel="external nofollow noopener" target="_blank">watch.boondocknation.com/contactsupport</a></p>
                                     </li>
                                 </ul><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"rayId":"5e5e3d093f15ebb9","version":"2020.9.1","si":10}'></script>
                             </div>

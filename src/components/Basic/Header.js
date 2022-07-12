@@ -156,37 +156,36 @@ const Header = () => {
     return null;
   } else if (currentPath === "/" || currentPath === "/home/movies") {
     return (
-      <div style={{ paddingTop: downloadHoverStyle , background: "#d4d4d4"}}>
+      <div style={{ paddingTop: downloadHoverStyle }}>
         {downloadHover === true && (
           <header
             className="headerMenu headerWhite headerGradient"
             style={{
-              backgroundColor: "#d4d4d4",
+              backgroundColor: "#d9d7d7",
               marginTop: "-80px",
               padding: "0px",
             }}
           >
-            <div className="container headerWrapper">
+            <div className="container headerWrapper" style={{background: 'red'}}>
               <img
                 src={require("../../images/logo.png")}
                 style={{ cursor: "pointer" }}
-                width={65}
+                width={70}
               />
               <div className="logosection" style={{ paddingBottom: "10px" }}>
                 <div
                   className="logoContain"
                   style={
                     isDesktop
-                      ? 
-                      { width: "250px", paddingTop: "4px" }
-                      : { width: "188px", paddingTop: "25px" , marginTop: "8px" }
+                      ? { width: "250px", paddingTop: "4px" }
+                      : { width: "188px", paddingTop: "13px" }
                   }
                 >
                   <span style={{ fontSize: "14px", fontWeight: "700" }}>
                     Watch Movies & TV Shows
                     <br />
                     <span style={{ fontSize: "10px", fontWeight: "600" }}>
-                       <b>Open in the Runway TV app</b>
+                      Open in the Project Forty-Six app
                     </span>
                   </span>
                 </div>
@@ -371,7 +370,7 @@ const Header = () => {
                             </div> */}
                             <div className="menuListItems">
                               <a
-                                href="https://watch.runwaytv.com/"
+                                href="https://www.projectfortysix.com/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -456,10 +455,10 @@ const Header = () => {
                     isDesktop === true
                       ? {
                           cursor: "pointer",
-                          width: "50%",
+                          width: "90%",
                           paddingLeft: "18px",
                         }
-                      : { width: "60%", paddingLeft: "8px" }
+                      : { width: "80%", paddingLeft: "8px" }
                   }
                   onClick={() => {
                     setInput("");
@@ -546,7 +545,7 @@ const Header = () => {
                           setMouseHover(true);
                           setBackground(true);
                         }}
-                        style={{ color: "#ff3f3f" }}
+                        style={{ color: "black" }}
                       >
                         Hi,{" "}
                         <span className="_4wVtj">{capitalize(userName)}</span>
@@ -643,7 +642,13 @@ const Header = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        Sign In
+                        <button
+                          className="button buttonSecondary buttonBlock"
+                          tabIndex="-1"
+                        >
+                          <div className="buttonBg rounderbutton"></div>
+                          <div className="buttonContent">Sign In</div>
+                        </button>
                       </a>
                     </li>
                   </ul>
@@ -698,7 +703,13 @@ const Header = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        Sign In
+                         <button
+                          className="button buttonSecondary buttonBlock"
+                          tabIndex="-1"
+                        >
+                          <div className="buttonBg rounderbutton"></div>
+                          <div className="buttonContent">Sign In</div>
+                        </button>
                       </a>
                     </li>
                   </ul>
@@ -884,7 +895,7 @@ const Header = () => {
                           </div> */}
                           <div className="menuListItems">
                             <a
-                              href="https://watch.runwaytv.com/"
+                              href="https://www.projectfortysix.com/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -964,8 +975,8 @@ const Header = () => {
                 src={require("../../images/logo.png")}
                 style={
                   isDesktop === true
-                    ? { cursor: "pointer", width: "50%", paddingLeft: "18px" }
-                    : { width: "50%", paddingLeft: "8px" }
+                    ? { cursor: "pointer", width: "75%", paddingLeft: "18px" }
+                    : { width: "75%", paddingLeft: "8px" }
                 }
                 onClick={() => {
                   setInput("");
@@ -1047,7 +1058,7 @@ const Header = () => {
                         setMouseHover(true);
                         setBackground(true);
                       }}
-                      style={{ color: "red" }}
+                      style={{ color: "black" }}
                     >
                       Hi, <span className="_4wVtj">{capitalize(userName)}</span>
                     </div>
@@ -1103,7 +1114,13 @@ const Header = () => {
                       style={{ cursor: "pointer" }}
                       className="headerSignInButton"
                     >
-                      Sign In
+                       <button
+                          className="button buttonSecondary buttonBlock"
+                          tabIndex="-1"
+                        >
+                          <div className="buttonBg rounderbutton"></div>
+                          <div className="buttonContent">Sign In</div>
+                        </button>
                     </a>
                   </li>
                 </ul>

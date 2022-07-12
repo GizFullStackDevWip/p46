@@ -8,41 +8,196 @@ const WebTermsOfUse = () => {
             <div className="menuCloseJS closeMenuWrapper">
                 <div className="privacyTermsFlex privacyTermsColor">
                     <div className="privacyTermsWidth">
-                        <h1 className="privacyTermsHeading">Terms of Use</h1>
+                        <h2 className="privacyTermsHeading">Terms and Conditions</h2>
                         <div className="privacyTermsWrapper">
                             <div className="privacyTermsContent">
-                               <p>Welcome to RunwayTV.com. This site is provided by Runway Beauty, Inc (referred to throughout this site as “RunwayTV.com”) as a service to our customers. Please review the following basic rules that govern your use of our Site (the “Agreement”). Please note that your use of our Site constitutes your unconditional agreement to follow and be bound by these Terms and Conditions. Although you may “bookmark” a particular portion of this Site and thereby bypass this Agreement, your use of this Site still binds you to the Terms. RunwayTV.com reserves the right to update or modify these Terms and Conditions at any time without prior notice. Your use of the RunwayTV.com Web site following any such change constitutes your unconditional agreement to follow and be bound by the Terms and Conditions as changed. For this reason, we encourage you to review these Terms and Conditions whenever you use this Web site.</p>
-                            <li style={{fontWeight:"800", color:"black"}}>Site Security </li>
-                            <p>Users are prohibited from violating or attempting to violate the security of the Site, including, without limitation, (a) accessing data not intended for such user or logging onto a server or an account which the user is not authorized to access; (b) attempting to probe, scan or test the vulnerability of a system or network or to breach security or authentication measures without proper authorization; (c) attempting to interfere with service to any user, host or network, including, without limitation, via means of submitting a virus to the Site, overloading, “flooding,” “spamming,” “mailbombing” or “crashing;” (d) sending unsolicited email, including promotions and/or advertising of products or services; or (e) forging any TCP/IP packet header or any part of the header information in any email or newsgroup posting. Violations of system or network security may result in civil or criminal liability. RunwayTV.com will investigate occurrences that may involve such violations and may involve, and cooperate with, law enforcement authorities in prosecuting users who are involved in such violations. You agree not to use any device, software or routine to interfere or attempt to interfere with the proper working of this Site or any activity being conducted on this site. You agree, further, not to use or attempt to use any engine, software, tool, agent or other device or mechanism (including without limitation browsers, spiders, robots, avatars or intelligent agents) to navigate or search this Site other than the search engine and search agents available from RunwayTV.com on this Site and other than generally available third party web browsers (e.g., Netscape Navigator, Microsoft Explorer).</p>
-                            <li style={{fontWeight:"800", color:"black"}}>Order Acceptance</li>
-                            <p>Please note that there may be certain orders that we are unable to accept and must cancel. We reserve the right, at our sole discretion, to refuse or cancel any order for any reason. For your convenience, you will not be charged until your payment method is authorized, the order information is verified for accuracy and your order is shipped. Some situations that may result in your order being canceled include limitations on quantities available for purchase, inaccuracies or errors in product or pricing information, or problems identified by our credit and fraud avoidance department. We may also require additional verifications or information before accepting any order. We will contact you if all or any portion of your order is canceled or if additional information is required to accept your order. If your order is canceled after your credit card has been charged, we will issue a credit to your credit card in the amount of the charge.
+                                <h4>License</h4><br/>
+                                <p>Unless otherwise stated, Boondock Nation and/or it’s licensors own the intellectual property rights for
+                                all material on Boondock Nation. All intellectual property rights are reserved. You may view and/or print
+                                pages from <a href="watch.boondocknation.com" target="_blank"><font color="blue" >watch.boondocknation.com</font>
+                                    </a> for your own personal use subject to restrictions set in these
+                                 terms and conditions.</p>
+                                <p>You must not:</p>
+                                <p>
+                                    <ol>
+                                        <li>
+                                            Republish material from <a href="watch.boondocknation.com" target="_blank"><font color="blue" >watch.boondocknation.com.</font>
+                                    </a>
+                                        </li>
+                                        <li>
+                                            Sell, rent or sub-license material from <a href="watch.boondocknation.com" target="_blank"><font color="blue" >watch.boondocknation.com.</font>
+                                    </a>
+                                         </li>
+                                        <li>
+                                            Reproduce, duplicate or copy material from <a href="watch.boondocknation.com" target="_blank"><font color="blue" >watch.boondocknation.com.</font>
+                                    </a>
+                                         </li>
+                                    </ol>
+                                </p>
+                                <p>
+                                    Redistribute content from Boondock Nation (unless content is specifically made for redistribution).
+                                </p>
+                                <h4>Hyperlinking to our Content</h4><br/>
+                                <ol>
+                                    <li>
+                                        The following organizations may link to our Web site without prior written approval:
+                                    </li>
+                                    <div style={{ paddingLeft: '50px' }}>
+                                        <ol>
+                                            <li>
+                                                Government agencies;
+                                        </li>
+                                            <li>
+                                                Search engines;
+                                        </li>
+                                            <li>
+                                                News organizations;
+                                        </li>
+                                            <li>
+                                                Online directory distributors when they list us in the directory may link to our Web site in the same
+                                                manner as they hyperlink to the Web sites of other listed businesses; and
+                                        </li>
+                                            <li>
+                                                Systemwide Accredited Businesses except soliciting non-profit organizations, charity shopping malls,
+                                                and charity fundraising groups which may not hyperlink to our Web site.
+                                        </li>
+                                        </ol>
+                                    </div>
+                                    <li>
+                                        These organizations may link to our home page, to publications or to other Web site information so long
+                                        as the link: (a) is not in any way misleading; (b) does not falsely imply sponsorship, endorsement or
+                                        approval of the linking party and its products or services; and (c) fits within the context of the linking
+                                        party’s site.
+                                    </li>
+                                    <li>
+                                        We may consider and approve in our sole discretion other link requests from the following types of organizations:
+                                    </li>
+                                    <div style={{ paddingLeft: '50px' }}>
+                                        <ol>
+                                            <li>
+                                                Commonly-known consumer and/or business information sources such as Chambers of Commerce, American
+                                                Automobile Association, AARP and Consumers Union;
+                                        </li>
+                                            <li>
+                                                dot.com community sites;
+                                        </li>
+                                            <li>
+                                                Associations or other groups representing charities, including charity giving sites,
+                                        </li>
+                                            <li>
+                                                Online directory distributors;
+                                        </li>
+                                            <li>
+                                                Internet portals;
+                                        </li>
+                                            <li>
+                                                Accounting, law and consulting firms whose primary clients are businesses; and
+                                        </li>
+                                            <li>
+                                                Educational institutions and trade associations.
+                                        </li>
 
-</p>
-                            
-                       <li style={{fontWeight:"800", color:"black"}}>
-                       Pricing Information   </li>     
-                          <p>While RunwayTV.com strives to provide accurate product and pricing information, pricing or typographical errors may occur. RunwayTV.com cannot confirm the price of an item until after you order. In the event that an item is listed at an incorrect price or with incorrect information due to an error in pricing or product information, RunwayTV.com shall have the right, at our sole discretion, to refuse or cancel any orders placed for that item. In the event that an item is mispriced, RunwayTV.com may, at our discretion, either contact you for instructions or cancel your order and notify you of such cancellation.</p>  
-                            <p>We strive to provide you with the lowest prices possible on RunwayTV.com as well as in our stores. However, sometimes a price online does not match the price in a store. In our effort to be the lowest price provider in your particular geographic region, store pricing will sometimes differ from online prices.Prices and availability are subject to change without notice.</p>
-                           <li style={{fontWeight:"800", color:"black"}}>Quantity Limits & Dealer Sales</li>
-                           <p>RunwayTV.com reserves the right to limit the quantity of items purchased per person, per household or per order. These restrictions may be applicable to orders placed by the same Vipsalon account, the same credit card, and also to orders that use the same billing and/or shipping address. We will provide notification to the customer e-mail and/or billing address provided should such limits be applied. RunwayTV.com also reserves the right to prohibit sales to dealers. If you are interested in purchasing multiple quantities of items for a corporation or institution, please contact us by email at service@vipsalononline.com. Top of Page General</p>
-                           <p>This Agreement represents the complete agreement between the parties and supersedes all prior agreementsand representations between them. If any provision of this Agreement is held to be unenforceable for any reason, such provision shall be reformed only to the extent necessary to make it enforceable and the other terms of this Agreement shall remain in full force and effect. The failure of RunwayTV.com to act with respect to a breach of this Agreement by you or others does not constitute a waiver and shall not limit RunwayTV.com’s rights with respect to such breach or any subsequent breaches. This Agreement shall be governed by and construed under California law as such law applies to agreements between California residents entered into and to be performed within California. Any action or proceeding arising out of or related to this Agreement or your use of this Site must be brought in the state or federal courts of California.</p>
-                           <li style={{fontWeight:"800", color:"black"}}>User Reviews, Feedback, Submissions</li>
-<p>All reviews, comments, feedback, postcards, suggestions, ideas, and other submissions disclosed, submitted or offered to RunwayTV.com on or by this Site or otherwise disclosed, submitted or offered in connection with your use of this Site (collectively, the “Comments”) shall be and remain RunwayTV.com’s property. Such disclosure, submission or offer of any Comments shall constitute an assignment to RunwayTV.com of all worldwide rights, titles and interests in all copyrights and other intellectual properties in the Comments.</p>
-<p>Thus, RunwayTV.com will own exclusively all such rights, titles and interests and shall not be limited in any way in its use, commercial or otherwise, of any Comments. RunwayTV.com will be entitled to use, reproduce, disclose, modify, adapt, create derivative works from, publish, display and distribute any Comments you submit for any purpose whatsoever, without restriction and without compensating you in any way.</p>
-<p>RunwayTV.com is and shall be under no obligation (1) to maintain any Comments in confidence; (2) to pay to user any compensation for any Comments; or (3) to respond to any user Comments. You agree that any Comments submitted by you to the Site will not violate this policy or any right of any third party, including copyright, trademark, privacy or other personal or proprietary right(s), and will not cause injury to any person or entity. You further agree that no Comments submitted by you to the Site will be or contain libelous or otherwise unlawful, abusive or obscene material, or contain software viruses, political campaigning, commercial solicitation, chain letters, mass mailings or any form of “spam”.
-RunwayTV.com does not regularly review posted Comments, but does reserve the right (but not the obligation) to monitor and edit or remove any Comments submitted to the Site. You grant RunwayTV.com the right to use the name that you submit in connection with any Comments. You agree not to use a false email address, impersonate any person or entity, or otherwise mislead as to the origin of any Comments you submit. You are and shall remain solely responsible for the content of any Comments you make and you agree to indemnify RunwayTV.com and its affiliates for all claims resulting from any Comments you submit. RunwayTV.com and its affiliates take no responsibility and assume no liability for any Comments submitted by you or any third party.</p>
-             <li style={{fontWeight:"800", color:"black"}}>Indemnification</li>               
-                  <p>You agree to defend, indemnify and hold RunwayTV.com harmless from and against any and all claims, damages, costs and expenses, including attorneys’ fees, arising from or related to your use of the Site.</p>          
-                    <li style={{fontWeight:"800", color:"black"}}>Termination</li>       
-                     <p>These terms are effective unless and until terminated by either you or RunwayTV.com. You may terminate this Agreement at any time, provided that you discontinue any further use of this Site. RunwayTV.com also may terminate this Agreement at any time and may do so immediately without notice, and accordingly deny you access to the Site, if in RunwayTV.com’s sole discretion you fail to comply with any term or provision of this Agreement. Upon any termination of the Agreement by either you or RunwayTV.com, you must promptly destroy all materials downloaded or otherwise obtained from this Site, as well as all copies of such materials, whether made under the terms of use or otherwise.These terms are effective unless and until terminated by either you or RunwayTV.com. You may terminate this Agreement at any time, provided that you discontinue any further use of this Site. RunwayTV.com also may terminate this Agreement at any time and may do so immediately without notice, and accordingly deny you access to the Site, if in RunwayTV.com’s sole discretion you fail to comply with any term or provision of this Agreement. Upon any termination of the Agreement by either you or RunwayTV.com, you must promptly destroy all materials downloaded or otherwise obtained from this Site, as well as all copies of such materials, whether made under the terms of use or otherwise.</p>       
-                         <li style={{fontWeight:"800", color:"black"}}>Disclaimer</li>   
-<p>THIS SITE IS PROVIDED BY RUNWAY BEAUTY, INC. ON AN “AS IS” AND “AS AVAILABLE” BASIS. RUNWAYTV.COM MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, AS TO THE OPERATION OF THE SITE OR THE INFORMATION, CONTENT, MATERIALS, OR PRODUCTS INCLUDED ON THIS SITE. TO THE FULL EXTENT PERMISSIBLE BY APPLICABLE LAW, RUNWAYTV.COM DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. WITHOUT LIMITING THE FOREGOING, RUNWAYTV.COM DISCLAIMS ANY AND ALL WARRANTIES, EXPRESS OR IMPLIED, FOR ANY MERCHANDISE OFFERED ON THIS SITE. YOU ACKNOWLEDGE, BY YOUR USE OF THE RUNWAYTV.COM WEB SITE, THAT YOUR USE OF THE SITE IS AT YOUR SOLE RISK. THIS DISCLAIMER DOES NOT APPLY TO ANY PRODUCT WARRANTY OFFERED BY THE MANUFACTURER OF THE ITEM. THIS DISCLAIMER CONSTITUTES AN ESSENTIAL PART OF THIS AGREEMENT. SOME STATES DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS, SO THE FOREGOING LIMITATIONS MAY NOT APPLY TO YOU.</p>
-<li style={{fontWeight:"800", color:"black"}}>Limitation of Liability</li>
-<p>UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL OR EQUITABLE THEORY, WHETHER IN TORT, CONTRACT, STRICT LIABILITY OR OTHERWISE, SHALL RUNWAYTV.COM OR ANY OF ITS AFFILIATES, EMPLOYEES, DIRECTORS, OFFICERS, AGENTS, VENDORS OR SUPPLIERS BE LIABLE TO YOU OR TO ANY OTHER PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL LOSSES OR DAMAGES OF ANY NATURE ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE THE RunwayTV.com WEB SITE, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOST PROFITS, LOSS OF GOODWILL, LOSS OF DATA, WORK STOPPAGE, ACCURACY OF RESULTS, OR COMPUTER FAILURE OR MALFUNCTION, EVEN IF AN AUTHORIZED REPRESENTATIVE OF RUNWAYTV.COM HAS BEEN ADVISED OF OR SHOULD HAVE KNOWN OF THE POSSIBILITY OF SUCH DAMAGES. IN NO EVENT WILL RUNWAYTV.COM BE LIABLE FOR ANY DAMAGES IN EXCESS OF THE FEES PAID BY YOU IN CONNECTION WITH YOUR USE OF THE SITE DURING THE SIX MONTH PERIOD PRECEDING THE DATE ON WHICH THE CLAIM AROSE.</p>
-<li style={{fontWeight:"800", color:"black"}}>Copyrights and Trademarks </li>
-<p>This Internet site is not sponsored, endorsed by or otherwise affiliated with any Manufacturer, Products or Brand Names being offered within this website. Manufacturers are the Owners of the Registered Trademarks, Trade Dress and Copyrights in said Products and Trademarks.</p>
-        <p style={{fontWeight:"800", color:"black"}}>© 2022 Runway Beauty, INC. All Rights Reserved.</p>                    
-                            
+                                        </ol>
+                                    </div>
+                                </ol>
+                                <br />
+                                <p>
+                                    We will approve link requests from these organizations if we determine that: (a) the link would not reflect
+                                    unfavorably on us or our accredited businesses (for example, trade associations or other organizations
+                                    representing inherently suspect types of business, such as work-at-home opportunities, shall not be allowed
+                                    to link); (b)the organization does not have an unsatisfactory record with us; (c) the benefit to us from
+                                    the visibility associated with the hyperlink outweighs the absence of Boondock Nation; and (d) where the
+                                    link is in the context of general resource information or is otherwise consistent with editorial content
+                                    in a newsletter or similar product furthering the mission of the organization.
+                                </p>
+                                <p>
+                                    These organizations may link to our home page, to publications or to other Web site information so long as
+                                    the link: (a) is not in any way misleading; (b) does not falsely imply sponsorship, endorsement or approval
+                                    of the linking party and it products or services; and (c) fits within the context of the linking party’s
+                                    site.
+                                </p>
+                                <p>
+                                    If you are among the organizations listed in paragraph 2 above and are interested in linking to our website,
+                                    you must notify us by sending an e-mail to <a href="mailto:ott@discovermediaworks.com"><font color="blue">ott@discovermediaworks.com</font></a>.
+                                    Please include your name, your organization name, contact information (such as a phone number and/or e-mail
+                                    address) as well as the URL of your site, a list of any URLs from which you intend to link to our Web site,
+                                    and a list of the URL(s) on our site to which you would like to link. Allow 2-3 weeks for a response.
+                                </p>
+                                <p>
+                                    Approved organizations may hyperlink to our Web site as follows:
+                                </p>
+                                <ol>
+                                    <li>
+                                        By use of our corporate name; or
+                                    </li>
+                                    <li>
+                                        By use of the uniform resource locator (Web address) being linked to; or
+                                    </li>
+                                    <li>
+                                        By use of any other description of our Web site or material being linked to that makes sense within the
+                                        context and format of content on the linking party’s site.
+                                    </li>
+                                </ol>
+                                <br />
+                                <p>
+                                    No use of Boondock Nation’s logo or other artwork will be allowed for linking absent a trademark license
+                                    agreement.
+                                </p>
+                                <h4>Reservation of Rights</h4><br/>
+                                <p>
+                                    We reserve the right at any time and in its sole discretion to request that you remove all links or any particular
+                                    link to our Web site. You agree to immediately remove all links to our Web site upon such request. We also
+                                    reserve the right to amend these terms and conditions and its linking policy at any time. By continuing
+                                    to link to our Web site, you agree to be bound to and abide by these linking terms and conditions.
+                                </p>
+                                <h4>Removal of links from our website</h4><br/>
+                                <p>
+                                    If you find any link on our Web site or any linked web site objectionable for any reason, you may contact
+                                    us about this. We will consider requests to remove links but will have no obligation to do so or to respond
+                                    directly to you.
+                                </p>
+                                <p>
+                                    Whilst we endeavour to ensure that the information on this website is correct, we do not warrant its completeness
+                                    or accuracy; nor do we commit to ensuring that the website remains available or that the material on the
+                                    website is kept up to date.
+                                </p>
+                                <h4>Content Liability</h4><br/>
+                                <p>
+                                    We shall have no responsibility or liability for any content appearing on your Web site. You agree to indemnify
+                                    and defend us against all claims arising out of or based upon your Website. No link(s) may appear on any
+                                    page on your Web site or within any context containing content or materials that may be interpreted as
+                                    libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or
+                                    other violation of, any third party rights.
+                                    </p>
+                                <h4>Disclaimer</h4><br/>
+                                <p>
+                                    To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website (including, without limitation, any warranties implied by law in respect of satisfactory quality, fitness for purpose and/or the use of reasonable care and skill). Nothing in this disclaimer will:
+                                    </p>
+                                <ol>
+                                    <li>
+                                        Limit or exclude our or your liability for death or personal injury resulting from negligence;
+                                        </li>
+                                    <li>
+                                        Limit or exclude our or your liability for fraud or fraudulent misrepresentation;
+                                        </li>
+                                    <li>
+                                        Limit any of our or your liabilities in any way that is not permitted under applicable law; or
+                                        </li>
+                                    <li>
+                                        Exclude any of our or your liabilities that may not be excluded under applicable law.
+                                        </li>
+
+                                </ol>
+                                <p>
+                                    The limitations and exclusions of liability set out in this Section and elsewhere in this disclaimer: (a)
+                                    are subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer or
+                                    in relation to the subject matter of this disclaimer, including liabilities arising in contract, in tort
+                                    (including negligence) and for breach of statutory duty.
+                                    </p>
+                                <p>
+                                    To the extent that the website and the information and services on the website are provided free of charge,
+                                    we will not be liable for any loss or damage of any nature.
+                                    </p>
                             </div>
                         </div>
                     </div>

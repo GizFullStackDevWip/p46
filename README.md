@@ -1,10 +1,10 @@
-## Runway-TV adding dynamic metadata tags server side with Create React App
+## boondock adding dynamic metadata tags server side with Create React App
 
 To try the demo, first clone this repo.
 
 ```
-git clone https://github.com/GizFullStackDevWip/Runway-TV.git
-cd Runway-TV
+git clone https://github.com/GizFullStackDevWip/boondock.git
+cd boondock
 npm install
 npm run build
 node server.js

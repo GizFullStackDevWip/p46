@@ -45,13 +45,13 @@ const Payment = (state) => {
         subscription_id: tempData.publisher_subscription_id,
         uid: userId,
         amount: tempData.price,
-        pubid: process.env.REACT_APP_PUBID,
+        pubid: 50012,
         country_code: countryCode,
         device_type: deviceType,
       };
       var user_details = encodeURIComponent(JSON.stringify(user_data));
-      let link = `https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${tempData.paypal_keyword}&custom=${user_details}&discount=10&currency_code=USD&upload=1`;
-      // let link = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${tempData.paypal_keyword}&custom=${user_details}&discount=10&currency_code=USD&upload=1`;
+      // let link = `https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${tempData.paypal_keyword}&custom=${user_details}&discount=10&currency_code=USD&upload=1`;
+      let link = `https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=${tempData.paypal_keyword}&custom=${user_details}&discount=10&currency_code=USD&upload=1`;
       setPaypalLink(link);
     } else if (isLoggedIn == "true") {
       // history.push("/home");
@@ -110,7 +110,7 @@ const Payment = (state) => {
     const session = await service.stripeSession(
       paymentData.publisher_subscription_id
     );
-    ;
+    debugger;
     console.log("session", session);
     const stripe = await stripePromise;
     const result = await stripe.redirectToCheckout({
@@ -135,7 +135,7 @@ const Payment = (state) => {
                 <legend className="payment-box">
                   Select a payment gateway
                 </legend>
-                {/* <img
+                <img
                   className="cards1"
                   style={{ marginLeft: "15px" }}
                   src={mastercard}
@@ -152,10 +152,10 @@ const Payment = (state) => {
                   style={{ marginLeft: "15px" }}
                   src={american}
                   onClick={handleClick}
-                ></img> */}
-                <a href={paypalLink}>
+                ></img>
+                {/* <a href={paypalLink}>
                   <img className="cards1" src={paypal}></img>
-                </a>
+                </a> */}
               </fieldset>
               <SubscriptionContainer param={subscription} />
             </div>

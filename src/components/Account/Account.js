@@ -51,7 +51,7 @@ const Account = () => {
   }, []);
 
   const onClickHandler = () => {
-    ;
+    debugger;
     service.unsubscribe(subId).then((response) => {
       if (response.success == true) {
         setCancelButton({

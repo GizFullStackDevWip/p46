@@ -67,7 +67,6 @@ function logoutFunction(userId) {
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
   let countryCode = getCookie("country_code");
-  
   const customConfig = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",

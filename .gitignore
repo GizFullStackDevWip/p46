@@ -11,8 +11,8 @@ build
 package-lock.json
 
 #.env file
-.env
-/.env
+# .env
+# /.env
 
 # testing
 /coverage

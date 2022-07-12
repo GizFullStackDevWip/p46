@@ -104,7 +104,7 @@ const EpisodeDetails = (categoryId) => {
 
   const onClickPlay = (videoDetails, singleVideo, showId) => {
     console.log("onClickPlay", videoDetails, singleVideo, showId);
-    ;
+    debugger;
     let user_id = service.getCookie("userId");
     if (user_id == null || user_id == service.getCookie("guestUserId")) {
       history.push({
@@ -458,7 +458,7 @@ const EpisodeDetails = (categoryId) => {
                                 >
                                   <FacebookShareButton
                                     url={
-                                      "weboc.poppo.tv/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     quote={
@@ -491,7 +491,7 @@ const EpisodeDetails = (categoryId) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "weboc.poppo.tv/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={showDetails.video_title}

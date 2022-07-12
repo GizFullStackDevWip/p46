@@ -44,12 +44,22 @@
   --success-color: #82ce34;
   --error-color: #f2110f;
 } */
-:root {
-  --primarybg-color: rgb(253, 27, 27);
-  --primary-color: rgb(253, 27, 27);
-  --selectionbgColor: rgb(253, 27, 27);
-  --primarybg-color-30per: rgb(253, 27, 27);
+/* :root {
+  --primarybg-color: #d70e1d;
+  --primary-color: #d70e1d;
+  --selectionbgColor: #d70e1d;
+  --primarybg-color-30per: #d70e1d;
   --selectionTextColor: #ffffff;
   --success-color: #82ce34;
-  --error-color: rgb(253, 27, 27);
+  --error-color: #d70e1d;
+} */
+
+:root {
+  --primarybg-color: #d70e1d;
+  --primary-color: #d70e1d;
+  --selectionbgColor: #d70e1d;
+  --primarybg-color-30per: #d70e1d;
+  --selectionTextColor: #ffffff;
+  --success-color: #d70e1d;
+  --error-color: #d70e1d;
 }

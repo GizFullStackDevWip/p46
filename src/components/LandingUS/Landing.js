@@ -4,7 +4,7 @@ import "./Landing.css";
 import "./landingSlider.css";
 import { service } from "../../network/service";
 import deviceLogoM from "../../images/device-logos.png";
-import deviceLogoD from "../../images/revry-LOGOS.png";
+import deviceLogoD from "../../images/landing/revry-LOGOS.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -250,7 +250,7 @@ const Landing = () => {
           </div>
           <div className="platform__Logos__Text">
             <h2 className="pl__Heading">
-              Sorry! Outdoor MAX content is unavailable in your country.
+              Sorry! Project Forty-Six content is unavailable in your country.
             </h2>
           </div>
         </div>

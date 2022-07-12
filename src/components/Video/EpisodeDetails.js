@@ -14,7 +14,7 @@ import { ToastsContainer, ToastsStore } from "react-toasts";
 import { clearUserData } from "../../Utils/utils";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-import freeTag from "../../images/free1.png";
+import freeTag from "../../images/free.png";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
@@ -54,7 +54,8 @@ const EpisodeDetails = (props) => {
     window.scrollTo(0, 0);
     var subItem = [];
     service.getShowDetails(props.statesDetails.show.showId).then((response) => {
-      var data = response.data.videos[0].videos;
+      // var data = response.data.videos[0].videos;
+      var data = response.data.videos;
       var videoDetail = "";
       setShowDetails(response.data);
       console.log("response", response.data);
@@ -606,7 +607,7 @@ const EpisodeDetails = (props) => {
                                 >
                                   <FacebookShareButton
                                     url={
-                                      "weboc.poppo.tv/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     quote={
@@ -639,7 +640,7 @@ const EpisodeDetails = (props) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "weboc.poppo.tv/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={showDetails.video_title}
@@ -842,7 +843,6 @@ const EpisodeDetails = (props) => {
                                     <div className="col col-3" key={index}>
                                       <div className="movieTile">
                                         <div
-                                          className="movieTileImage"
                                           className={
                                             hover === true &&
                                             focusedId === index
@@ -966,7 +966,7 @@ const EpisodeDetails = (props) => {
                                               ) : null}
                                             </div>
                                           </div>
-                                          {show.free_video == false ? (
+                                          {show.free_video == true ? (
                                             <div className="freeTagWrapper">
                                               <img src={freeTag} />
                                             </div>
@@ -1075,7 +1075,6 @@ const EpisodeDetails = (props) => {
                                 <div className="col col-3" key={index}>
                                   <div className="movieTile">
                                     <div
-                                      className="movieTileImage"
                                       className={
                                         hover === true &&
                                         focusedId === index + "key"
@@ -1190,7 +1189,7 @@ const EpisodeDetails = (props) => {
                                           ) : null}
                                         </div>
                                       </div>
-                                      {show.is_free_video == false ? (
+                                      {show.is_free_video == true ? (
                                         <div className="freeTagWrapper">
                                           <img src={freeTag} />
                                         </div>

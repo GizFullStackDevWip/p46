@@ -13,11 +13,6 @@ import $ from "jquery";
 
 const Register = (state) => {
   let location = useLocation();
-  var detailWatchNowClicked = localStorage.getItem('detailWatchNowClicked')
-  var detailsPath = '';
-  if (detailWatchNowClicked) {
-    detailsPath = `/home/movies?show_id=9640`
-  }
   console.log(location.state);
   if (location.state && location.state.from) {
     localStorage.setItem("location", location.state.from.pathname);
@@ -36,14 +31,8 @@ const Register = (state) => {
     .replace("https://", "")
     .split(/[/?#]/)[0];
   if (isLoggedIn === "true" && userId) {
-    if (detailWatchNowClicked) {
-      window.location.href = detailsPath
-    } else {
-      return <Redirect to="/home" />;
-    }
+    return <Redirect to="/home" />;
   }
-
-  
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -312,7 +301,7 @@ const Register = (state) => {
           }, 5000);
           dispatch({ type: "LOGIN", payload: true });
           let prevLocation = localStorage.getItem("location");
-          ;
+          debugger;
           if (prevDomain == currentDomain) {
             if (prevLocation === "/tv") {
               history.push("/tv");
@@ -323,11 +312,7 @@ const Register = (state) => {
             if (prevLocation === "/tv") {
               history.push("/tv");
             } else {
-              if (detailWatchNowClicked) {
-                window.location.href = detailsPath
-              } else {
-                return <Redirect to="/home" />;
-              }
+              window.location.href = "/home";
             }
           }
         } else if (response.success == false) {
@@ -371,7 +356,7 @@ const Register = (state) => {
       });
   }
   const responseFacebook = (response) => {
-    ;
+    debugger;
     console.log("faceboook response", response);
     FBData = response;
     setFacebookId(FBData.id);
@@ -546,7 +531,7 @@ const Register = (state) => {
     // }
   };
   const onFBLink = () => {
-    ;
+    debugger;
     console.log("onFBLink response");
     service.facebokLink(FBData.id, FBData.email).then((response) => {
       localStorage.setItem("isLoggedIn", true);
@@ -626,13 +611,13 @@ const Register = (state) => {
               <div className="col col-9 col-lg-6 col-xl-6 col-xxl-5">
                 <h3 className="H3">Let's get you set up!</h3>
                 <div>
-                  {isFbAcive && (
+                  {/* {isFbAcive && (
                     <div>
                       <div rel="noopener" target="_self">
                         <button className="button buttonLarge buttonBlock registerFacebook">
                           <div className="buttonBg rounderbutton"></div>
                           <FacebookLogin
-                            appId="3330890933834435"
+                            appId="4691963010825217"
                             fields="name,email,picture,first_name"
                             callback={responseFacebook}
                             cssClass="button buttonLarge buttonBlock registerFacebook"
@@ -649,7 +634,7 @@ const Register = (state) => {
                         <div className="orDivider"></div>
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {isRegister ? (
                     <div id="registerId">
@@ -768,7 +753,7 @@ const Register = (state) => {
                               type="submit"
                             >
                               <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent" style={{color:"black"}}>Register</div>
+                              <div className="buttonContent" style={{color:"#fff"}}>Register</div>
                             </button>
                           </div>
                         ) : (
@@ -780,7 +765,7 @@ const Register = (state) => {
                                 type="submit"
                               >
                                 <div className="buttonBg rounderbutton"></div>
-                                <div className="buttonContent" style={{color:"black"}}>Register</div>
+                                <div className="buttonContent" style={{color:"#fff"}}>Register</div>
                               </button>
                             </div>
                             <div className="regnSubmitWrapper">
@@ -804,7 +789,7 @@ const Register = (state) => {
                         )}
                         <div className="regnAgreeContent">
                           <p>
-                            By registering, you agree to Runway TV
+                            By registering, you agree to Project Forty-Six
                             {/* <Link to="/termsandconditions"> */}
                             <div
                               className="linkButton"
@@ -813,7 +798,7 @@ const Register = (state) => {
                               }}
                               // onClick={() => {
                               //   window.open(
-                              //     "https://www.outdoorchannel.com/terms/99078"
+                              //     "https://dev.projectfortysix.com/terms/99078"
                               //   );
                               // }}
                             >
@@ -829,7 +814,7 @@ const Register = (state) => {
                               }}
                               // onClick={() => {
                               //   window.open(
-                              //     "https://www.outdoorchannel.com/privacy/247031"
+                              //     "https://dev.projectfortysix.com/privacy/247031"
                               //   );
                               // }}
                             >
@@ -889,7 +874,7 @@ const Register = (state) => {
                       </form>
                       <div className="regnAgreeContent">
                         <p>
-                          By registering, you agree to Runway TV
+                          By registering, you agree to Project Forty-Six
                           {/* <Link to="/termsandconditions"> */}
                           <div
                             className="linkButton"
@@ -898,7 +883,7 @@ const Register = (state) => {
                             }}
                             // onClick={() => {
                             //   window.open(
-                            //     "https://www.outdoorchannel.com/terms/99078"
+                            //     "https://dev.projectfortysix.com/terms/99078"
                             //   );
                             // }}
                           >
@@ -915,7 +900,7 @@ const Register = (state) => {
                             }}
                             // onClick={() => {
                             //   window.open(
-                            //     "https://www.outdoorchannel.com/privacy/247031"
+                            //     "https://dev.projectfortysix.com/privacy/247031"
                             //   );
                             // }}
                           >

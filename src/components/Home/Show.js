@@ -6,19 +6,18 @@ import { service } from "../../network/Home/service";
 import { convertTime } from "../../Utils/utils";
 import { useSelector, useDispatch } from "react-redux";
 import "./show.css";
-import freeTag from "../../images/free1.png";
+import freeTag from "../../images/free.png";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { clearUserData } from "../../Utils/utils";
-import logo from '../../images/placeholder.png';
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 
-const Show = ({ param, update, categoryType, funcc , playing }) => {
+const Show = ({ param, update, categoryId }) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [eventLink, setEventLink] = useState("");
+
   const [shows, setShows] = useState([]);
   const [hover, setHover] = useState(false);
   const [focusedId, setFocusedId] = useState(-1);
@@ -103,6 +102,7 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
   };
 
   const onClickPlaybutton = (showId, videoId, singleVideo) => {
+    debugger;
     // ToastsStore.warning(`${showId},${videoId},${singleVideo}`);
     console.log("continueWatching", showId, videoId, singleVideo);
     if (showId && videoId) {
@@ -352,9 +352,7 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                 >
                   <div
                     onClick={() => {
-                      console.log("clicked", show.live_url);
-
-                      if (categoryType == "CONTINUE_WATCHING") {
+                      if (categoryId == "continuewatching") {
                         console.log(
                           "continuewatching click",
                           show.show_id,
@@ -366,16 +364,6 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                           show.video_id,
                           show.single_video
                         );
-                      } else if (show.type === "LIVE_EVENT") {
-                        setEventLink(show.event_id);
-                        console.log(`live link active:`, eventLink);
-                        funcc(show.live_url);
-                      } else if (show.type === "LIVE") {
-                        setEventLink(show.event_id);
-                        console.log(`live link active:`, eventLink);
-                        funcc(show.live_link);
-                      } else if (show.type === "UPCOMING_EVENT") {
-                        alert("This Event Will be Live Soon");
                       } else {
                         console.log(
                           "Non continuewatching click",
@@ -414,31 +402,13 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                       ></path>
                     </svg>
                   </div>
-                  {/* {show.logo_thumb && (
+                  {show.logo && (
                     <div
                       className="moviePoster"
                       style={{
-                        backgroundImage: `url(${ show.logo_thumb})`,
+                        backgroundImage: `url(${showsImageUrl + show.logo})`,
                       }}
                     >
-                      <div className="FeNml"></div>
-                    </div>
-                  )} */}
-                  {show.logo_thumb ? (
-                    <div
-                      className="moviePoster"
-                      style={{
-                        backgroundImage: `url(${show.logo_thumb})`,
-                      }}
-                    >
-                      <div className="FeNml"></div>
-                    </div>
-                  ) : (
-                    <div className="moviePoster" 
-                    style={{
-                      backgroundImage: `url(${logo})`,
-                    }}>
-                     
                       <div className="FeNml"></div>
                     </div>
                   )}
@@ -461,7 +431,7 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                           backgroundImage:
                             "linear-gradient(rgba(38, 38, 45, 0.5), rgba(38, 38, 45, 0.5))",
                           backgroundPosition: "center bottom",
-                          backgroundSize: "cover", width: "260px"
+                          backgroundSize: "cover",
                         }}
                       ></div>
                       {show.watchlist_flag === 1 ? (
@@ -490,8 +460,8 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                       ) : null}
                     </div>
                   </div>
-                  {show.is_free_video == false ||
-                  categoryType == "free__videos" ? (
+                  {show.is_free_video == true ||
+                  categoryId == "free__videos" ? (
                     <div className="freeTagWrapper">
                       <img src={freeTag} />
                     </div>
@@ -521,7 +491,7 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                         <div
                           className="linkButton movieTextHeading"
                           onClick={() => {
-                            if (categoryType == "CONTINUE_WATCHING") {
+                            if (categoryId == "continuewatching") {
                               console.log(
                                 "continuewatching click",
                                 show.show_id,
@@ -546,9 +516,7 @@ const Show = ({ param, update, categoryType, funcc , playing }) => {
                             }
                           }}
                         >
-                          {
-                          (show.show_name).toUpperCase()
-                          }
+                          {show.show_name}
                         </div>
                       )}
                     </h3>

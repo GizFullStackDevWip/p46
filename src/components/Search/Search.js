@@ -5,7 +5,7 @@ import { convertTime } from "../../Utils/utils";
 import { useSelector, useDispatch } from "react-redux";
 import Notification from "../../common/Notification";
 import $ from "jquery";
-import freeTag from "../../images/free1.png";
+import freeTag from "../../images/free.png";
 const queryString = require("query-string");
 
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
@@ -221,7 +221,7 @@ const Search = ({ history }) => {
                                 ) : null}
                               </div>
                             </div>
-                            {show.is_free_video == false ? (
+                            {show.is_free_video == true ? (
                               <div className="freeTagWrapper">
                                 <img src={freeTag} />
                               </div>

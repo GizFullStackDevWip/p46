@@ -118,7 +118,7 @@
   line-height: 24px;
   letter-spacing: 0.5px;
   max-width: 650px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }
 
 .platform__Logos__Image {
@@ -145,6 +145,12 @@ h2.pl__Heading {
   .landing__Page__Wrapper .lpBanner__Section {
     height: 56.25vw;
     /* height: 60.25vw; */
+  }
+  .heading_land{
+    font-size:3.8rem;
+  }
+  .head_land{
+    font-size: 3.8rem;
   }
   .landing__Page__Wrapper .lpBanner__Section .lpBanner__wrapper .Xd2tG {
     position: absolute;
@@ -203,6 +209,21 @@ h2.pl__Heading {
     .lpMain__Container
     .lpFlex__Center {
     align-items: center;
+  }
+  .landing__Page__Wrapper .lpBanner__Section {
+    height: 40.25vh;
+    /* height: 60.25vw; */
+  }
+  .lpBanner__wrapper{
+    /* display: none; */
+    height: 20px;
+    size: 30px;
+  }
+  .heading_land{
+    size: 30px;
+  }
+  .head_land{
+    font-size: 1.8rem;
   }
 }
 

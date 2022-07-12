@@ -12,12 +12,11 @@ import {
 } from "../../Utils/utils";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import KeyArtWork from "./KeyArtWork1";
-import videothumbnail from "../../images/boondock.jpg";
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { clearUserData } from "../../Utils/utils";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-import freeTag from "../../images/free1.png";
+import freeTag from "../../images/free.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
@@ -50,7 +49,6 @@ const VideoDetails = (categoryId, episode) => {
   const [categories, setCategories] = useState([]);
   const [isDesktop, setIsDesktop] = useState(deviceDetect());
   const dispatch = useDispatch();
-  const [ShwID, setShwID] = useState('')
   const border = {
     "border-radius": "12px",
   };
@@ -63,41 +61,22 @@ const VideoDetails = (categoryId, episode) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    localStorage.removeItem('detailWatchNowClicked')
-    var urlParams = new URLSearchParams(window.location.search);
-    let Shw_ID = urlParams.get("show_id");
-    console.log(`show id from url params:`, Shw_ID);
-    setShwID(Shw_ID)
     if (categoryId.categoryId.show_id == "undefined") {
       categoryId.categoryId.show_id = localStorage.getItem("showId");
       history.goBack();
     }
     service.getShowDetails(categoryId.categoryId.show_id).then((response) => {
       var data = response.data;
-      console.log("quo", data);
-      setEpisodeLength(
-        response.data.videos
-          ? response.data.videos
-          : response.data.videos.length
-      );
+      console.log("data", data);
+      setEpisodeLength(response.data.videos.length);
       // if (data.length > 0) {
       var videoDetail = "";
       dispatch({ type: "SHOW_ID", payload: response.data.show_id });
       setShowDetails(response.data);
       setCategories(response.data.categories);
-      // setEpisodeList(response.data.videos);
-      setEpisodeList(
-        response.data.videos
-          ? response.data.videos
-          : response.data.videos[0].videos
-      );
+      setEpisodeList(response.data.videos[0].videos);
       setAllSeasonList(response.data.videos);
-      // debugger
-      setCurrentSeason(
-        response.data.videos
-          ? response.data.videos[0].videos
-          : []
-      );
+      setCurrentSeason(response.data.videos[0].videos);
       let defaultOpt = [];
       defaultOpt.push(response.data.videos[0]);
       setDefaultOptions(defaultOpt);
@@ -128,19 +107,35 @@ const VideoDetails = (categoryId, episode) => {
         } else {
           newURL = "";
         }
+
+        let trailerId = "trailer_video" + new Date().valueOf();
         setVideoPlayer(
-          <ReactHlsPlayer
-            id="singleVideo"
-            url={newURL}
-            // url="https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"
-            autoplay={true}
-            controls={true}
+          <video
+            id={trailerId}
+            className="video-js vjs-default-skin vjs-big-play-centered trailerPlayer"
+            controls
+            preload="auto"
+            playsinline
             width={"100%"}
             height={"100%"}
             style={border}
-            poster={videothumbnail}
-          />
-        );
+          ></video>
+        )
+        window.playTrailerPlayer(trailerId, newURL)
+
+        // setVideoPlayer(
+        //   <ReactHlsPlayer
+        //     id="singleVideo"
+        //     url={newURL}
+        //     // url="https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8"
+        //     autoplay={true}
+        //     controls={true}
+        //     width={"100%"}
+        //     height={"100%"}
+        //     style={border}
+        //   // poster={videothumbnail}
+        //   />
+        // );
       });
       details = videoDetail;
       service.similarShow(videoDetail.show_id).then((response) => {
@@ -185,7 +180,6 @@ const VideoDetails = (categoryId, episode) => {
     setFocusedId(index);
   };
   const addtoMylistFunction = (show) => {
-    ;
     let isLoggedIn = localStorage.getItem("isLoggedIn");
     let userId = service.getCookie("userId");
     if (isLoggedIn === "true" && userId) {
@@ -243,7 +237,6 @@ const VideoDetails = (categoryId, episode) => {
           service
             .getShowDetails(categoryId.categoryId.show_id)
             .then((response) => {
-
               var data = response.data;
               // if (data.length > 0) {
               var videoDetail = "";
@@ -273,7 +266,6 @@ const VideoDetails = (categoryId, episode) => {
               service
                 .similarShow(categoryId.categoryId.show_id)
                 .then((response) => {
-
                   if (response.success == true && response.data.length > 0) {
                     setSimilarShows(response.data);
                   }
@@ -289,11 +281,8 @@ const VideoDetails = (categoryId, episode) => {
 
   const redirectToLogin = () => {
     clearUserData();
-    localStorage.setItem('detailWatchNowClicked', ShwID)
     setTimeout(() => {
-      history.push({
-        pathname: "/signin",
-      });
+      window.location.href = "/signin";
     }, 1500);
   };
 
@@ -320,7 +309,7 @@ const VideoDetails = (categoryId, episode) => {
 
   const onWatchBtnClick = (videoDetails, singleVideo, showId) => {
     console.log("watch btn click");
-    ;
+
     let user_id = service.getCookie("userId");
     let countryName =
       localStorage.getItem("currentLocation") &&
@@ -330,12 +319,9 @@ const VideoDetails = (categoryId, episode) => {
     //   countryName != "United States of America"
     // ) {
     if (user_id == null || user_id == service.getCookie("guestUserId")) {
-      localStorage.setItem('detailWatchNowClicked', ShwID)
-      setTimeout(() => {
-        history.push({
-          pathname: "/signin",
-        });
-      }, 1000);
+      history.push({
+        pathname: "/signin",
+      });
     } else {
       if (
         videoDetails &&
@@ -548,247 +534,7 @@ const VideoDetails = (categoryId, episode) => {
     //   });
     // }
   };
-  const onNewsClick = (videoDetails) => {
-    ToastsStore.warning("Oops!!! There is no video for this news...");
-  };
-  const onWatchClick = (videoDetails) => {
-    // ;
-    console.log("showDetailsq", videoDetails);
-    let user_id = service.getCookie("userId");
-    if (user_id == null || user_id == service.getCookie("guestUserId")) {
-      localStorage.setItem('detailWatchNowClicked', ShwID)
-      setTimeout(() => {
-        history.push({
-          pathname: "/signin",
-        });
-      }, 1000);
-    } else {
-      if (
-        videoDetails &&
-        videoDetails.videos &&
-        videoDetails.videos[0] &&
-        videoDetails.videos[0].free_video != true
-      ) {
-        let movie = videoDetails.videos[0];
-        service.videoSubscription(movie.video_id).then((response) => {
-          let videoDetails = response.data;
-          let subFlag = true;
-          let uId = service.getCookie("guestUserId");
-          let user_id = service.getCookie("userId");
-          if (user_id) {
-            uId = user_id;
-          }
-          service.userSubscription(uId).then((useResponse) => {
-            var userData = useResponse.data;
 
-            if (useResponse.success == true) {
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                console.log(`the video details are :`, videoDetails);
-                videoDetails.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    service.setCookie("showId", ShwID, 10);
-                    service.setCookie("videoId", movie.video_id, 10);
-                    history.push({
-                      pathname: "/SubscriptionList",
-                      state: {
-                        videoData: movie.video_id,
-                      },
-                    });
-                  } else {
-                    let subscribedVideo = userData.filter(
-                      (videoDetails) =>
-                        videoDetails.sub_id ==
-                        subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoDetails.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoDetails.length
-                    ) {
-                      subFlag = false;
-                      service.setCookie("showId", ShwID, 10);
-                      service.setCookie("videoId", movie.video_id, 10);
-                      history.push({
-                        pathname: "/SubscriptionList",
-                        state: {
-                          videoData: movie.video_id,
-                        },
-                      });
-                    } else if (subFlag) {
-                      subFlag = false;
-                      service.setCookie("showId", ShwID, 10);
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoplayer",
-                        state: {
-                          show_details: videoDetails,
-                          showId: videoDetails.show_id,
-                        },
-                        // state: { movie: movie, show_id: showDetails.show_id },
-                      });
-                    }
-                  }
-                });
-              }
-            }
-          });
-        });
-      } else if (videoDetails && videoDetails.videos[0] === null) {
-        ToastsStore.warning("Oops!!! There is no video for this news...");
-      } else if (
-        // {
-        // if (
-        //   showDetails &&
-        //   showDetails.videos &&
-        //   showDetails.videos[0]
-        // ) {
-        //   let movie = showDetails.videos[0];
-        //   service.setCookie("showId", showDetails.show_id, 10);
-        //   localStorage.setItem("ContinueWatching", "true");
-        //   history.push({
-        //     pathname: "/videoDetails",
-        //     state: { movie: movie, show_id: showDetails.show_id },
-        //   });
-        // } else if
-        videoDetails &&
-        // showDetails.videos &&
-        // showDetails.videos[0] &&
-        videoDetails.videos[0].free_video == true &&
-        videoDetails.videos[0].subscriptions &&
-        videoDetails.videos[0].subscriptions.length > 0
-      ) {
-        let uId = service.getCookie("guestUserId");
-        let user_id = service.getCookie("userId");
-        if (user_id) {
-          uId = user_id;
-        }
-        let movie = videoDetails.videos[0];
-        const onClickNo = () => {
-          service.setCookie("showId", ShwID, 10);
-          localStorage.setItem("ContinueWatching", "true");
-          history.push({
-            pathname: "/videoplayer",
-            state: {
-              show_details: videoDetails,
-              showId: videoDetails.show_id,
-            },
-            // state: { movie: movie, show_id: showDetails.show_id },
-          });
-        };
-
-        const onClickYes = () => {
-          service.setCookie("showId", ShwID, 10);
-          service.setCookie("videoId", movie.video_id, 10);
-          history.push({
-            pathname: "/SubscriptionList",
-            state: {
-              videoData: movie.video_id,
-            },
-          });
-        };
-
-        service.videoSubscription(movie.video_id).then((response) => {
-          let videoSubDetails = response.data;
-          let subFlag = true;
-          service.userSubscription(uId).then((useResponse) => {
-            if (useResponse.success == true) {
-              var userSubDetails = useResponse.data;
-              if (useResponse.forcibleLogout === true) {
-                alert(
-                  "Sorry, You’ve reached the maximum Device limit. Please log in again!"
-                );
-                service.logoutAll(uId).then((res) => {
-                  setTimeout(() => {
-                    redirectToLogin();
-                  }, 1000);
-                });
-              } else if (useResponse.session_expired === true) {
-                ToastsStore.warning("Sorry! Session Has Expired");
-                redirectToLogin();
-              } else {
-                videoSubDetails.map(function (subscription, index) {
-                  if (useResponse.data.length == 0 && subFlag) {
-                    subFlag = false;
-                    WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                  } else {
-                    let subscribedVideo = userSubDetails.filter(
-                      (e) => e.sub_id == subscription.publisher_subscription_id
-                    );
-                    if (
-                      subscribedVideo.length == 0 &&
-                      index + 1 < videoSubDetails.length
-                    ) {
-                      return;
-                    }
-                    if (
-                      subscribedVideo.length == 0 &&
-                      subFlag &&
-                      index + 1 == videoSubDetails.length
-                    ) {
-                      subFlag = false;
-                      WatchWithoutAdsPopUp(onClickYes, onClickNo);
-                    } else if (subFlag) {
-                      subFlag = false;
-                      service.setCookie("showId", ShwID, 10);
-                      localStorage.setItem("ContinueWatching", "true");
-                      history.push({
-                        pathname: "/videoplayer",
-                        state: {
-                          show_details: videoDetails,
-                          showId: videoDetails.show_id,
-                        },
-                        // state: { movie: movie, show_id: showDetails.show_id },
-                      });
-                    }
-                  }
-                });
-                // }
-              }
-            }
-          });
-        });
-      } else if (
-        videoDetails &&
-        // showDetails.videos &&
-        // showDetails.videos[0] &&
-        videoDetails.videos[0].free_video == true &&
-        videoDetails.videos[0].subscriptions &&
-        videoDetails.videos[0].subscriptions.length == 0
-      ) {
-        let movie = videoDetails.videos[0];
-        service.setCookie("showId", ShwID, 10);
-        localStorage.setItem("ContinueWatching", "true");
-        history.push({
-          pathname: "/videoplayer",
-          state: {
-            show_details: videoDetails,
-            showId: videoDetails.show_id,
-          },
-          // state: { movie: movie, show_id: showDetails.show_id },
-        });
-        // }
-      }
-    }
-  };
   return (
     <div className="menuCloseJS closeMenuWrapper">
       <div className="videoPage">
@@ -798,24 +544,14 @@ const VideoDetails = (categoryId, episode) => {
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${showDetails.type === "linear_event"
-                    ? showDetails.logo
-                    : showDetails.type === "news"
-                      ? showDetails.logo_thumb
-                      : showsImageUrl + showDetails.logo_thumb
-                  })`,
+                backgroundImage: `url(${showsImageUrl + showDetails.logo_thumb})`,
               }}
             ></div>
           ) : showDetails.single_video == 1 ? (
             <div
               className="videoPageBGimg"
               style={{
-                backgroundImage: `url(${showDetails.type === "linear_event"
-                    ? showDetails.logo
-                    : showDetails.type === "news"
-                      ? showDetails.logo_thumb
-                      : showsImageUrl + showDetails.logo_thumb
-                  })`,
+                backgroundImage: `url(${showsImageUrl + showDetails.logo_thumb})`,
               }}
             ></div>
           ) : null}
@@ -823,7 +559,7 @@ const VideoDetails = (categoryId, episode) => {
             className="videoPageBGimg"
             style={{
               backgroundImage:
-                "linear-gradient(to top, rgb(0 0 0), rgb(60 59 59 / 40%) 83%, rgb(0 0 0 / 63%))",
+                "linear-gradient(to top, rgb(38, 38, 45), rgba(38, 38, 45, 0.4) 83%, rgba(38, 38, 45, 0.2))",
             }}
           ></div>
           {showDetails.teaser && (
@@ -867,46 +603,28 @@ const VideoDetails = (categoryId, episode) => {
                   {showDetails.show_name && (
                     <div className="vpMiddleHeading">
                       <h1 className="vpMiddleh1">{showDetails.show_name}</h1>
-                      <input className="vpInputSearch"></input>
-                      <button className="vpInputSearchButton"></button>
-                      
                     </div>
                   )}
                   <div
                     className={showDetails.teaser ? "col col-9" : "col col-4"}
                   >
                     <div className="vpLeftSection">
-
                       {showDetails.single_video === 0 ? (
                         <div
                           className="vpPoster"
                           style={{
-                            backgroundImage: `url(${showDetails.type === "linear_event"
-                                ? showDetails.logo
-                                : showDetails.type === "news"
-                                  ? showDetails.logo_thumb
-                                  : showsImageUrl + showDetails.logo_thumb
+                            backgroundImage: `url(${showsImageUrl + showDetails.logo_thumb
                               })`,
                             marginLeft: "7px",
-                            // height: "385px",
                           }}
                         ></div>
                       ) : showDetails.single_video === 1 ? (
                         <div
                           className="vpPoster"
                           style={{
-                            backgroundImage:
-                              // `url(${
-                              // showDetails.logo
-                              `url(${showDetails.type === "linear_event"
-                                ? showDetails.logo
-                                : showDetails.type === "news"
-                                  ? showDetails.logo_thumb
-                                  : videoImageUrl + showDetails.logo_thumb
+                            backgroundImage: `url(${showsImageUrl + showDetails.logo_thumb
                               })`,
-
                             marginLeft: "7px",
-                            // height: "365px",
                           }}
                         ></div>
                       ) : null}
@@ -915,57 +633,36 @@ const VideoDetails = (categoryId, episode) => {
                         style={{ marginTop: "7px" }}
                       >
                         <div className="vpLeftButtons">
-                          {showDetails.type === "news" ||
-                            showDetails.video == [] ? (
-                            <div> </div>
-                          ) : (
-                            <button
-                              className="button buttonLarge buttonBlock vpWatchSeason innerPageBtnMargin"
-                              style={{ height: "41px" }}
-                              onClick={() => {
-                                if (
-                                  showDetails.type === "news" ||
-                                  showDetails.video == []
-                                ) {
-                                  onNewsClick();
-                                } else if (showDetails.single_video === 1) {
-                                  onWatchClick(showDetails);
-                                } else {
-                                  onWatchBtnClick(
-                                    defaultOptions[0].videos[0],
-                                    showDetails.single_video,
-                                    showDetails.show_id
-                                  );
-                                }
-                              }}
-                            >
-                              <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent">
-                                {showDetails.single_video === 0 &&
-                                  defaultOptions &&
-                                  defaultOptions.length > 0 ? (
-                                  <div className="vpWatchSeasonText">
-                                    {defaultOptions[0].season == null
-                                      ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
-                                      : `Watch S0${defaultOptions[0].season}:E0${defaultOptions[0].videos[0].video_order}`}
-                                  </div>
-                                ) : showDetails.type === "news" ||
-                                  showDetails.video == [] ? (
-                                  <div
-                                    className="vpWatchSeasonText"
-                                    style={{ display: "none" }}
-                                  >
-                                    {" "}
-                                    News
-                                  </div>
-                                ) : showDetails.single_video === 1 ? (
-                                  <div className="vpWatchSeasonText">
-                                    Watch Now
-                                  </div>
-                                ) : null}
-                              </div>
-                            </button>
-                          )}
+                          <button
+                            className="button buttonLarge buttonBlock vpWatchSeason innerPageBtnMargin"
+                            style={{ height: "41px" }}
+                            onClick={() => {
+                              debugger;
+                              onWatchBtnClick(
+                                // defaultOptions && defaultOptions[0].videos && defaultOptions[0].videos[0],
+                                defaultOptions[0],
+                                showDetails.single_video,
+                                showDetails.show_id
+                              );
+                            }}
+                          >
+                            <div className="buttonBg rounderbutton"></div>
+                            <div className="buttonContent">
+                              {showDetails.single_video === 0 &&
+                                defaultOptions &&
+                                defaultOptions.length > 0 ? (
+                                <div className="vpWatchSeasonText">
+                                  {defaultOptions[0].season == null
+                                    ? `Watch S00:E0${defaultOptions[0].videos[0].video_order}`
+                                    : `Watch S0${defaultOptions[0].season}:E0${defaultOptions[0].videos[0].video_order}`}
+                                </div>
+                              ) : showDetails.single_video === 1 ? (
+                                <div className="vpWatchSeasonText">
+                                  Watch Now
+                                </div>
+                              ) : null}
+                            </div>
+                          </button>
 
                           {showDetails.watchlist_flag === 1 ? (
                             <button
@@ -1042,17 +739,12 @@ const VideoDetails = (categoryId, episode) => {
                                   className="_1TcfH _1Dgjh dropAdj"
                                   style={{ left: "7px" }}
                                 >
-                                  {console.log(`show details are:`, showDetails)}
                                   <FacebookShareButton
                                     url={
-                                      "watch.runwaytv.com/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
-
-
                                     quote={
-                                      showDetails.show_name +
-                                      " || " +
                                       (showDetails.videos
                                         ? showDetails.videos[0].video_title
                                         : "") +
@@ -1084,7 +776,7 @@ const VideoDetails = (categoryId, episode) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "watch.runwaytv.com/home/movies?show_id=" +
+                                      "dev.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={
@@ -1211,7 +903,6 @@ const VideoDetails = (categoryId, episode) => {
                         </div>
                       </div>
                     </div>
-                    {console.log("showdetails season", showDetails)}
                     {isDesktop === true ? (
                       showDetails.single_video === 0 ? (
                         <div className="vpMiddleDesc">
@@ -1289,7 +980,6 @@ const VideoDetails = (categoryId, episode) => {
                                     <div className="col col-3" key={index}>
                                       <div className="movieTile">
                                         <div
-                                          // className="movieTileImage"
                                           className={
                                             hover === true &&
                                               focusedId === index
@@ -1377,7 +1067,6 @@ const VideoDetails = (categoryId, episode) => {
                                                   backgroundPosition:
                                                     "center bottom",
                                                   backgroundSize: "cover",
-                                                  width: "260px",
                                                 }}
                                               ></div>
                                               {showDetails.watchlist_flag ===
@@ -1413,7 +1102,7 @@ const VideoDetails = (categoryId, episode) => {
                                               ) : null}
                                             </div>
                                           </div>
-                                          {show.free_video == false ? (
+                                          {show.free_video == true ? (
                                             <div className="freeTagWrapper">
                                               <img src={freeTag} />
                                             </div>
@@ -1535,7 +1224,6 @@ const VideoDetails = (categoryId, episode) => {
                                   <div className="col col-3" key={index}>
                                     <div className="movieTile">
                                       <div
-                                        // className="movieTileImage"
                                         className={
                                           hover === true &&
                                             focusedId === index + "key"
@@ -1619,7 +1307,6 @@ const VideoDetails = (categoryId, episode) => {
                                                 backgroundPosition:
                                                   "center bottom",
                                                 backgroundSize: "cover",
-                                                width: "260px",
                                               }}
                                             ></div>
                                             {show.watchlist_flag === 1 ? (
@@ -1650,7 +1337,7 @@ const VideoDetails = (categoryId, episode) => {
                                             ) : null}
                                           </div>
                                         </div>
-                                        {show.is_free_video == false ? (
+                                        {show.is_free_video == true ? (
                                           <div className="freeTagWrapper">
                                             <img src={freeTag} />
                                           </div>
@@ -1665,7 +1352,7 @@ const VideoDetails = (categoryId, episode) => {
                                                 functionOnclick(show);
                                               }}
                                             >
-                                              {(show.show_name).toUpperCase()}
+                                              {show.show_name}
                                             </a>
                                           </h3>
                                           <div className="movieCatYear">

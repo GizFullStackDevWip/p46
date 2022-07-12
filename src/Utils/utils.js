@@ -221,7 +221,7 @@ export const convertAdUrl = (videoDetails) => {
   const userId = uId;
   const videoId = videoDetails.video_id;
   const bundleId = "";
-  const appName = "outdoormax.tv";
+  const appName = "project46";
   const duration = Math.floor(videoDetails.video_duration); //videoduration
   const appstoreUrl = window.location.href;
   const city = currentLocation.city;

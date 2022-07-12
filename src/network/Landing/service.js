@@ -27,10 +27,7 @@ function getshowsbyCategory(){
         },
        
     };
-    return axios
-    // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
-    .get(process.env.REACT_APP_API_URL+'show/list', customConfig)
-    .then(
+    return axios.get(process.env.REACT_APP_API_URL+'show/list', customConfig).then(
         response => {
             return response.data;
         })
@@ -64,7 +61,7 @@ function getLiveChannels(){
         },
        
     };
-    return axios.get(process.env.REACT_APP_API_URL + "channel/list", customConfig).then(
+    return axios.get(process.env.REACT_APP_API_URL+'Getallchannels', customConfig).then(
         response => {
             return response.data;
         })

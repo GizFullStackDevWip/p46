@@ -23,7 +23,7 @@ const SubscriptionContainer = (param, androidData, isAndroid) => {
                       <p
                         style={{
                           fontSize: "21px",
-                          color: "rgb(253, 27, 27)",
+                          color: "rgb(203, 10, 61)",
                           textAlign: "center",
                         }}
                       >

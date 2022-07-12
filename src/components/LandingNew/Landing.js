@@ -4,17 +4,10 @@ import "./Landing.css";
 import "./landingSlider.css";
 import { service } from "../../network/service";
 import deviceLogoM from "../../images/device-logos.png";
-import deviceLogoD from "../../images/revry-LOGOS.png";
+import deviceLogoD from "../../images/landing/revry-LOGOS.png";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import image1 from "./Images/image1.jpg";
-import image2 from "./Images/image2.jpg";
-import image3 from "./Images/image3.jpg";
-import image4 from "./Images/image4.jpg";
-import image5 from "./Images/image5.jpg";
-import image6 from "./Images/image6.jpg";
-import image7 from "./Images/image7.jpg";
 
 
 var mobileImgList = [
@@ -101,8 +94,14 @@ var desktopImgList = [
   },
 ];
 
-let topSliderImage = [image1,
-  image2, image3, image4, image5, image6, image7
+let topSliderImage = [
+'  https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner3.jpg',
+ " https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner4.jpg",
+  "https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner5.jpg",
+ " https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner6.jpg",
+ " https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner7.jpg",
+ " https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner8.jpg",
+  "https://gizmeon.s.llnwi.net/vod/outdoorchannel-static-files/banner9.jpg"
 ];
 
 const SamplePrevArrow = (props) => {
@@ -237,6 +236,43 @@ const Landing = () => {
   return (
     <div className="top__container">
       <div className="landing__Page__Wrapper menuCloseJS closeMenuWrapper">
+      <div className="lpBanner__wrapper" style={{zIndex:"9999999999"}}>
+                      <div className="Xd2tG"></div>
+                      <div className="container lpMain__Container"  style={{zIndex:"1"}}>
+                        <div className="row lpSection__Wrapper"  >
+                          <div className="col col-12 col-md-12 lpFlex__Center"  >
+                            <h1 className="H1 heading_land"   style={{zIndex:"9999999999"}}>
+                              <span className="head_land" style={{color:"white",fontWeight:"800",marginTop:"25%",textAlign:"start"}}>
+                              {/* REAL */}
+                                <br />
+                              </span>
+                              <span className="head_land" style={{color:"white",fontWeight:"800",textAlign:"start"}}>
+                              {/* LIFE */}
+                                <br />
+                              </span>
+                              <span className="head_land" style={{color:"white",fontWeight:"800",textAlign:"start"}}>
+                              {/* ADVENTURE */}
+                                <br />
+                              </span>
+                            </h1>
+                            {/* <div className="lpSection__Font lpSection__Text__Center"  style={{zIndex:"9999999999",color:"white",fontWeight:"900",textAlign:"start"}}>
+                            ADVENTURE
+                            </div> */}
+                            <a href="/home">
+                              <button className="button buttonLarge"  >
+                                <div className="buttonBg"  ></div>
+                                <div
+                                  className="buttonContent"
+                                  style={{ color: "#fff"}}
+                                >
+                                  Start Watching
+                                </div>
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
         <Slider {...topsliderSettings}>
           {topSliderImage &&
             topSliderImage.map((item, index) => {
@@ -250,45 +286,14 @@ const Landing = () => {
                       color: "red",
                     }}
                   >
-                    <div className="lpBanner__wrapper">
-                      <div className="Xd2tG"></div>
-                      <div className="container lpMain__Container">
-                        <div className="row lpSection__Wrapper">
-                          <div className="col col-12 col-md-12 lpFlex__Center">
-                            <h1 className="H1">
-                              <span>
-                                VOD &amp; TV
-                                <br />
-                              </span>
-                              <span>
-                                Fewer Ads than Cable
-                                <br />
-                              </span>
-                            </h1>
-                            <div className="lpSection__Font lpSection__Text__Center">
-                              Thousands of series and TV shows. 100% Legal.
-                            </div>
-                            <a href="/home">
-                              <button className="button buttonLarge">
-                                <div className="buttonBg"></div>
-                                <div
-                                  className="buttonContent"
-                                  style={{ color: "black" }}
-                                >
-                                  Start Watching
-                                </div>
-                              </button>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  
                   </div>
+                
                 </div>
               );
             })}
         </Slider>
-        <div className="platform__Logos__Wrapper">
+        <div className="platform__Logos__Wrapper" style={{marginTop:"-1%"}}>
           <div className="platform__Logos__Image mobile__Platform__Logo">
             <img src={deviceLogoM} alt="" />
           </div>
@@ -297,7 +302,7 @@ const Landing = () => {
           </div>
           <div className="platform__Logos__Text">
             <h2 className="pl__Heading">
-              Outdoor MAX is available on Android, iOS, Roku, Android TV, Apple
+              Project Forty-Six is available on Android, iOS, Roku, Android TV, Apple
               TV, Amazon Fire TV and the Web.
             </h2>
           </div>
@@ -381,11 +386,11 @@ const Landing = () => {
                                         <a className="feature-link" href="#">
                                           <div className="feature-top">
                                             {" "}
-                                            <span>Channels </span>
+                                            <span>Live </span>
                                             <strong>
-                                              On
+                                              Channel
                                               <br />
-                                              Demand
+                                              
                                             </strong>
                                           </div>
                                           <br />

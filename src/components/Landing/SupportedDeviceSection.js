@@ -22,7 +22,7 @@ const SupportedDeviceSection = () => {
         <div className="col col-12 col-md-6">
           <div className="lpSectionFont lpSectionBlack lpSectionTextCenter">
             {" "}
-             Runway TV is available on Android, iOS, Roku, Android&nbsp;TV,
+            Project Forty-Six is available on Android, iOS, Roku, Android&nbsp;TV,
             Amazon Fire TV and the Web.
           </div>
           <div className="lpSectionFont lpSectionBlack lpSectionTextCenter"></div>

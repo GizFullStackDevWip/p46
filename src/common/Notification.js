@@ -30,8 +30,7 @@ const Notification = () => {
                         }}>Close</div>
                     </div>
                 </div>
-            }
-        </div>
+            </div>
         </div>
     );
 }

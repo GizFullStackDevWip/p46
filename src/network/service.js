@@ -158,7 +158,6 @@ function getshowsbyCategory() {
     },
   };
   return axios
-  // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
     .get(process.env.REACT_APP_API_URL + "show/list", customConfig)
     .then((response) => {
       return response.data;
@@ -1024,7 +1023,7 @@ function analytics() {
     session_id: sessionId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 160,
+    app_id: 140,
     channelid: process.env.REACT_APP_CHANNELID,
     user_id: uId,
     ip_address: currentLocation.IPv4,
@@ -1140,7 +1139,7 @@ function onVideoPlayFunction() {
     user_id: uId,
     device_id: device_id,
     publisherid: process.env.REACT_APP_PUBID,
-    app_id: 160,
+    app_id: 140,
     channel_id: process.env.REACT_APP_CHANNELID,
     event_type: "POP01",
     timestamp: ctime,
@@ -1330,7 +1329,6 @@ function getShowDetails(showId) {
   };
 
   return axios
-  // .get("https://staging.poppo.tv/test/api/show/"+ showId, customConfig)
     .get(process.env.REACT_APP_API_URL + "show/" + showId, customConfig)
     .then((response) => {
       return response.data;

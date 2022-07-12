@@ -35,27 +35,27 @@ const BannerContainer = () => {
       nav1: slider1.current,
       nav2: slider2.current,
     });
-    // service.fetchHomeBannerDetails().then((response) => {
-    //   setSelectedSlider(response.data);
-    //   if (response.success == true && response.data.length > 0) {
-    //     var data = response.data;
-    //     setBannerSliderShows(data);
-    //     data.map((item, index) => {
-    //       singleObj.push(item);
-    //     });
-    //     if (response.data.length < 5) {
-    //       let length = 5 - response.data.length;
-    //       for (var i = 0; i < length; i++) {
-    //         if (response.data[i] == undefined) {
-    //           length = length - i;
-    //           i = 0;
-    //         }
-    //         singleObj.push(response.data[i]);
-    //       }
-    //     }
-    //     setBannerThumbnail(singleObj);
-    //   }
-    // });
+    service.fetchHomeBannerDetails().then((response) => {
+      setSelectedSlider(response.data);
+      if (response.success == true && response.data.length > 0) {
+        var data = response.data;
+        setBannerSliderShows(data);
+        data.map((item, index) => {
+          singleObj.push(item);
+        });
+        if (response.data.length < 5) {
+          let length = 5 - response.data.length;
+          for (var i = 0; i < length; i++) {
+            if (response.data[i] == undefined) {
+              length = length - i;
+              i = 0;
+            }
+            singleObj.push(response.data[i]);
+          }
+        }
+        setBannerThumbnail(singleObj);
+      }
+    });
   }, []);
   const { nav1, nav2 } = state;
 
