@@ -20,6 +20,9 @@ const Header = () => {
   const [input, setInput] = useState([]);
   const [timeOut, setTimeOut] = useState(0);
   const [category, setCategory] = useState([]);
+
+  const [listCategory, setListCategory] = useState([]);
+
   let userName = localStorage.getItem("userName");
   const [typing, setTyping] = useState(false);
   const [background, setBackground] = useState(false);
@@ -32,6 +35,10 @@ const Header = () => {
   // const [menuClose, setMenuClose] = useState('menuItemContainer menuClose');
   const [menuClose, setMenuClose] = useState(false);
   const [isDesktop, setIsDesktop] = useState(deviceDetect());
+
+  const [suggestionLoading, setSuggestionLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
+  const [suggestionList, setSuggestionList] = useState([]);
 
   currentPathStrings =
     currentPath === "/register" ||
@@ -59,6 +66,17 @@ const Header = () => {
         setCategory(response.data);
       }
     });
+
+    service.getshowsbyListCategory().then((response) => {
+      //console.log(`resp func called`, response);
+      if (response.message == "invalid token") {
+        history.go(0);
+      } else {
+        console.log(`response.categories`, response.categories)
+        setListCategory(response.categories);
+      }
+    });
+
     let device = checkOperatingSystem();
     setDeviceType(device);
     if (device === "none" || device === "window" || device === "mac") {
@@ -78,6 +96,64 @@ const Header = () => {
       });
     }
   }, []);
+
+  const handler = (event) => {
+    if (event.key === "Enter") {
+      callSearchAPI(input);
+    }
+  };
+
+  const onChangeNewHandler = (e) => {
+    const inputValue = e.target.value;
+    setInput(e.target.value);
+    if (e.which === 13) {
+      callSearchAPI(inputValue);
+    }
+    if (inputValue.length > 0) {
+      if (timeOut) {
+        clearTimeout(timeOut);
+      }
+      setSuggestionLoading(true);
+      setSearching(true);
+      setTimeOut(
+        setTimeout(function () {
+          service.getSearchSuggestion(inputValue).then((response) => {
+            if (response.success == true) {
+              console.log(response);
+              setSuggestionLoading(false);
+              setSuggestionList(response.data.slice(0, 10));
+            }
+          });
+        }, 500)
+      );
+    } else {
+      setSearching(false);
+    }
+  };
+
+  const callSearchAPI = (key) => {
+    setSearching(false);
+    setSuggestionList([]);
+    setInput("");
+    if (key) {
+      service.searchShow(key).then((response) => {
+        if (response.data && response.data.length > 0) {
+          setMenuClose(false);
+          history.push({
+            pathname: "/search",
+            search: encodeURI(`input=${key}`),
+            state: { item: response.data },
+          });
+        } else {
+          history.push({
+            pathname: "/search",
+            search: encodeURI(`input=${key}`),
+            state: { item: [] },
+          });
+        }
+      });
+    }
+  };
 
   const onChangeHandler = (e) => {
     setTyping(true);
@@ -166,11 +242,11 @@ const Header = () => {
               padding: "0px",
             }}
           >
-            <div className="container headerWrapper" style={{background: 'red'}}>
+            <div className="container headerWrapper">
               <img
                 src={require("../../images/logo.png")}
                 style={{ cursor: "pointer" }}
-                width={70}
+                width={50}
               />
               <div className="logosection" style={{ paddingBottom: "10px" }}>
                 <div
@@ -185,7 +261,7 @@ const Header = () => {
                     Watch Movies & TV Shows
                     <br />
                     <span style={{ fontSize: "10px", fontWeight: "600" }}>
-                      Open in the Project Forty-Six app
+                      Open in the  TV app
                     </span>
                   </span>
                 </div>
@@ -221,7 +297,7 @@ const Header = () => {
                 className="logoContain"
                 style={
                   isDesktop
-                    ? { width: "250px", paddingTop: "4px" }
+                    ? { width: "250px", paddingTop: "4px", cursor:'pointer' }
                     : { width: "150px", paddingTop: "12px" }
                 }
               >
@@ -261,47 +337,91 @@ const Header = () => {
                       <section className="searchContainer mobileSearchBG">
                         {login === true ? (
                           <div>
-                            <svg
-                              className="svgIcon searchIcon"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 18.07 18.07"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                              ></path>
-                            </svg>
-                            <form onSubmit={submitSearch}>
-                              <input
-                                className="searchInput"
-                                id="searchInput"
-                                type="search"
-                                placeholder="Search"
-                                required=""
-                                onChange={onChangeHandler}
-                                value={
-                                  parsed.show_id
-                                    ? typing === true
-                                      ? input
-                                      : ""
-                                    : input
-                                }
-                              />
-                            </form>
-                            <svg
-                              className="svgIcon searchClose"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 13 13"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                fillRule="evenodd"
-                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                              ></path>
-                            </svg>
-                          </div>
+                          <svg
+                            className="svgIcon searchIcon"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 18.07 18.07"
+                            style={{ fill: "currentcolor" }}
+                          >
+                            <path
+                              fill="currentColor"
+                              d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                            ></path>
+                          </svg>
+                          <form onSubmit={submitSearch}>
+                            <input
+                              className="searchInput"
+                              id="searchInput"
+                              type="search"
+                              placeholder="Search"
+                              required=""
+                              onChange={onChangeNewHandler}
+                              value={input}
+                              autoComplete="off"
+                            />
+                          </form>
+                          <svg
+                            className="svgIcon searchClose"
+                            preserveAspectRatio="xMidYMid meet"
+                            viewBox="0 0 13 13"
+                            style={{ fill: "currentcolor" }}
+                          >
+                            <path
+                              fill="currentColor"
+                              fillRule="evenodd"
+                              d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                            ></path>
+                          </svg>
+                        {searching == true && (
+                            <div className="search__suggestion__container">
+                              {suggestionLoading == true ? (
+                                <div className="suggestion__loading">
+                                  Loading...
+                                </div>
+                              ) : suggestionList.length == 0 ? (
+                                <div
+                                  onClick={() => {
+                                    callSearchAPI();
+                                  }}
+                                  className="search__suggestion__item"
+                                >
+                                  More Results
+                                </div>
+                              ) : (
+                                // <div className="suggestion__loading" >
+                                //  {/* {suggestionList.map((item, index) => { */}
+                                //   {/* return ( */}
+                                //     <div
+                                //       onClick={() => {
+                                //         callSearchAPI('hollywood')
+                                //       }}
+                                //       className="search__suggestion__item"
+                                //     >222222
+                                //       {/* {item} */}
+                                //     </div>
+                                //   {/* ); */}
+                                // {/* })} */}
+                                //   No results found
+
+                                // </div>
+                                <ul className="search__suggestion__list">
+                                  {suggestionList.map((item, index) => {
+                                    return (
+                                      <li
+                                        onClick={() => {
+                                          callSearchAPI(item);
+                                        }}
+                                        className="search__suggestion__item"
+                                      >
+                                        {item.toUpperCase()}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              )}
+                            </div>
+                          )}
+                        </div>
                         ) : null}
                       </section>
                     </div>
@@ -370,7 +490,7 @@ const Header = () => {
                             </div> */}
                             <div className="menuListItems">
                               <a
-                                href="https://www.projectfortysix.com/"
+                                href="https://weboc.poppo.tv/"
                                 target="_blank"
                               >
                                 <div className="linkButton headerMenuItems">
@@ -385,29 +505,35 @@ const Header = () => {
                                 </div>
                               </Link>
                             </div>
-                            {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
-                                                        <div className="menuListItems">
-                                                            <div className="menuInnerCol">
-                                                                {
-                                                                    category &&
-                                                                    category.map((item, index) => {
-                                                                        if (category.length / 3 - 2 > index) {
-                                                                            return (
-                                                                                <div key={index}>
-                                                                                    {
-                                                                                        item.category_name &&
-                                                                                        <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
-                                                                                            <div className="linkButton headerMenuItems">{item.category_name}</div>
-                                                                                        </Link>
-                                                                                    }
-                                                                                </div>
-                                                                            );
-                                                                        }
-
-                                                                    })
-                                                                }
-                                                            </div>
-                                                        </div> */}
+                            <div className="menuItemHead">Categories</div>
+                            <div className="menuListItems">
+                              <div className="menuInnerCol">
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if (((listCategory.length)/3) > index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
+                              </div>
+                            </div>
+                           
                           </div>
                         </div>
                         <div
@@ -415,25 +541,25 @@ const Header = () => {
                           style={{ height: "auto" }}
                         >
                           <div className="menuCol">
-                            <div className="menuItemHead">Categories</div>
+                            <div className="menuItemHead">More Categories</div>
                             <div className="menuListItems">
                               <div className="menuInnerCol">
-                                {category &&
-                                  category.map((item, index) => {
-                                    if (category.length / 3 - 2 < index) {
+                              {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if (((listCategory.length)/3) <= index) {
                                       return (
                                         <div key={index}>
-                                          {item.category_name && (
+                                          {item.categoryname && (
                                             <Link
                                               to={{
                                                 pathname: "/home/categorylist",
                                                 search: encodeURI(
-                                                  `category_id=${item.category_id}&category_name=${item.category_name}`
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
                                                 ),
                                               }}
                                             >
                                               <div className="linkButton headerMenuItems">
-                                                {item.category_name}
+                                                {item.categoryname}
                                               </div>
                                             </Link>
                                           )}
@@ -455,10 +581,10 @@ const Header = () => {
                     isDesktop === true
                       ? {
                           cursor: "pointer",
-                          width: "90%",
+                          width: "100%",
                           paddingLeft: "18px",
                         }
-                      : { width: "80%", paddingLeft: "8px" }
+                      : { width: "100%", paddingLeft: "8px" }
                   }
                   onClick={() => {
                     setInput("");
@@ -478,7 +604,7 @@ const Header = () => {
             ) : (
               <section className="searchContainer searchBar">
                 {login === true ? (
-                  <div>
+                  <div className="searchBox__wrapper">
                     <svg
                       className="svgIcon searchIcon"
                       preserveAspectRatio="xMidYMid meet"
@@ -497,14 +623,11 @@ const Header = () => {
                         type="search"
                         placeholder="Find movies, TV shows and more"
                         required=""
-                        onChange={onChangeHandler}
-                        value={
-                          parsed.show_id
-                            ? typing === true
-                              ? input
-                              : ""
-                            : input
-                        }
+                        onChange={onChangeNewHandler}
+                        // onKeyPress={callSearchAPI(input)}
+                        // onKeyPress={(e) => handler(e,input)}
+                        value={input}
+                        autoComplete="off"
                       />
                     </form>
 
@@ -520,6 +643,60 @@ const Header = () => {
                         d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                       ></path>
                     </svg>
+                    {searching == true && (
+                      <div className="search__suggestion__container">
+                        {suggestionLoading == true ? (
+                          <div className="suggestion__loading">Loading...</div>
+                        ) : suggestionList.length == 0 ? (
+                          <div
+                            onClick={() => {
+                              callSearchAPI();
+                            }}
+                            className="search__suggestion__item"
+                          >
+                            More Results
+                          </div>
+                        ) : (
+                          // <div className="suggestion__loading">
+                          //   No results found
+                          //   <div
+                          //               onClick={() => {
+                          //                 callSearchAPI('hollywood')
+                          //               }}
+                          //               className="search__suggestion__item"
+                          //             >3333333
+                          //               {/* {item} */}
+                          //             </div>
+                          //   {/* {searching.map((item, index) => {
+                          //           return (
+                          //             <li
+                          //               onKeyPress={() => {
+                          //                 callSearchAPI(item);
+                          //               }}
+                          //               className="search__suggestion__item"
+                          //             >
+                          //               {item}
+                          //             </li>
+                          //           );
+                          //         })} */}
+                          // </div>
+                          <ul className="search__suggestion__list">
+                            {suggestionList.map((item, index) => {
+                              return (
+                                <li
+                                  onClick={() => {
+                                    callSearchAPI(item);
+                                  }}
+                                  className="search__suggestion__item"
+                                >
+                                  {item.toUpperCase()}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ) : null}
               </section>
@@ -642,13 +819,7 @@ const Header = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                        <button
-                          className="button buttonSecondary buttonBlock"
-                          tabIndex="-1"
-                        >
-                          <div className="buttonBg rounderbutton"></div>
-                          <div className="buttonContent">Sign In</div>
-                        </button>
+                        Sign In
                       </a>
                     </li>
                   </ul>
@@ -703,13 +874,7 @@ const Header = () => {
                         }}
                         style={{ cursor: "pointer" }}
                       >
-                         <button
-                          className="button buttonSecondary buttonBlock"
-                          tabIndex="-1"
-                        >
-                          <div className="buttonBg rounderbutton"></div>
-                          <div className="buttonContent">Sign In</div>
-                        </button>
+                        Sign In
                       </a>
                     </li>
                   </ul>
@@ -783,51 +948,96 @@ const Header = () => {
                 <div className="menuWrapper">
                   <div className="mobileSearch">
                     <section className="searchContainer mobileSearchBG">
-                      {login === true ? (
-                        <div>
-                          <svg
-                            className="svgIcon searchIcon"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 18.07 18.07"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                            ></path>
-                          </svg>
-                          <form onSubmit={submitSearch}>
-                            <input
-                              className="searchInput"
-                              id="searchInput"
-                              type="search"
-                              placeholder="Search"
-                              required=""
-                              onChange={onChangeHandler}
-                              value={
-                                parsed.show_id
-                                  ? typing === true
-                                    ? input
-                                    : ""
-                                  : input
-                              }
-                            />
-                          </form>
+                    {
+                        login === true ? (
+                          <div>
+                            <svg
+                              className="svgIcon searchIcon"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 18.07 18.07"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                              ></path>
+                            </svg>
+                            <form onSubmit={submitSearch}>
+                              <input
+                              
+                                className="searchInput"
+                                id="searchInput"
+                                type="search"
+                                placeholder="Search"
+                                required=""
+                                onChange={onChangeNewHandler}
+                                value={input}
+                                autoComplete="off"
+                              />
+                            </form>
+                            <svg
+                              className="svgIcon searchClose"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 13 13"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                fillRule="evenodd"
+                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                              ></path>
+                            </svg>
+                          {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
 
-                          <svg
-                            className="svgIcon searchClose"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 13 13"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              fillRule="evenodd"
-                              d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                            ></path>
-                          </svg>
-                        </div>
-                      ) : null}
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
                     </section>
                   </div>
                   <div
@@ -895,7 +1105,7 @@ const Header = () => {
                           </div> */}
                           <div className="menuListItems">
                             <a
-                              href="https://www.projectfortysix.com/"
+                              href="https://weboc.poppo.tv/"
                               target="_blank"
                             >
                               <div className="linkButton headerMenuItems">
@@ -910,59 +1120,65 @@ const Header = () => {
                               </div>
                             </Link>
                           </div>
-                          {/* <div className="menuItemHead" style={{ marginTop: '10px' }}>Categories</div>
-                                                    <div className="menuListItems">
-                                                        <div className="menuInnerCol">
-                                                            {
-                                                                category &&
-                                                                category.map((item, index) => {
-                                                                    if (category.length / 3 - 2 > index) {
-                                                                        return (
-                                                                            <div key={index}>
-                                                                                {
-                                                                                    item.category_name &&
-                                                                                    <Link to={{ pathname: '/home/categorylist', search: encodeURI(`category_id=${item.category_id}&category_name=${item.category_name}`) }}>
-                                                                                        <div className="linkButton headerMenuItems">{item.category_name}</div>
-                                                                                    </Link>
-                                                                                }
-                                                                            </div>
-                                                                        );
-                                                                    }
-
-                                                                })
-                                                            }
-                                                        </div>
-                                                    </div> */}
+                          <div className="menuItemHead">Categories</div>
+                            <div className="menuListItems">
+                              <div className="menuInnerCol">
+                                {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if (((listCategory.length)/3) > index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
+                              </div>
+                            </div>
+                          
                         </div>
                       </div>
                       <div className="menuWidth20 menuBGcolor menuWidth40">
                         <div className="menuCol">
-                          <div className="menuItemHead">Categories</div>
+                          <div className="menuItemHead">More Categories</div>
                           <div className="menuListItems">
                             <div className="menuInnerCol">
-                              {category &&
-                                category.map((item, index) => {
-                                  if (category.length / 3 - 2 < index) {
-                                    return (
-                                      <div key={index}>
-                                        {item.category_name && (
-                                          <Link
-                                            to={{
-                                              pathname: "/home/categorylist",
-                                              search: encodeURI(
-                                                `category_id=${item.category_id}&category_name=${item.category_name}`
-                                              ),
-                                            }}
-                                          >
-                                            <div className="linkButton headerMenuItems">
-                                              {item.category_name}
-                                            </div>
-                                          </Link>
-                                        )}
-                                      </div>
-                                    );
-                                  }
-                                })}
+                            {listCategory &&
+                                  listCategory.map((item, index) => {
+                                    if ((listCategory.length / 3) <= index) {
+                                      return (
+                                        <div key={index}>
+                                          {item.categoryname && (
+                                            <Link
+                                              to={{
+                                                pathname: "/home/categorylist",
+                                                search: encodeURI(
+                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                                ),
+                                              }}
+                                            >
+                                              <div className="linkButton headerMenuItems">
+                                                {item.categoryname}
+                                              </div>
+                                            </Link>
+                                          )}
+                                        </div>
+                                      );
+                                    }
+                                  })}
                             </div>
                           </div>
                         </div>
@@ -975,8 +1191,8 @@ const Header = () => {
                 src={require("../../images/logo.png")}
                 style={
                   isDesktop === true
-                    ? { cursor: "pointer", width: "75%", paddingLeft: "18px" }
-                    : { width: "75%", paddingLeft: "8px" }
+                    ? { cursor: "pointer", width: "100%", paddingLeft: "18px" }
+                    : { width: "100%", paddingLeft: "8px" }
                 }
                 onClick={() => {
                   setInput("");
@@ -995,46 +1211,95 @@ const Header = () => {
             ></section>
           ) : (
             <section className="searchContainer searchBar">
-              {login === true ? (
-                <div>
-                  <svg
-                    className="svgIcon searchIcon"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 18.07 18.07"
-                    style={{ fill: "currentcolor" }}
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                    ></path>
-                  </svg>
-                  <form onSubmit={submitSearch}>
-                    <input
-                      className="searchInput"
-                      id="searchInput"
-                      type="search"
-                      placeholder="Find movies, TV shows and more"
-                      required=""
-                      onChange={onChangeHandler}
-                      value={
-                        parsed.show_id ? (typing === true ? input : "") : input
-                      }
-                    />
-                  </form>
-                  <svg
-                    className="svgIcon searchClose"
-                    preserveAspectRatio="xMidYMid meet"
-                    viewBox="0 0 13 13"
-                    style={{ fill: "currentcolor" }}
-                  >
-                    <path
-                      fill="currentColor"
-                      fillRule="evenodd"
-                      d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                    ></path>
-                  </svg>
-                </div>
-              ) : null}
+               {
+                        login === true ? (
+                          <div>
+                            <svg
+                              className="svgIcon searchIcon"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 18.07 18.07"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                              ></path>
+                            </svg>
+                            <form onSubmit={submitSearch}>
+                              <input
+                                className="searchInput"
+                                id="searchInput"
+                                type="search"
+                                placeholder="Search"
+                                required=""
+                                onChange={onChangeNewHandler}
+                                value={input}
+                                autoComplete="off"
+                              />
+                            </form>
+                            <svg
+                              className="svgIcon searchClose"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 13 13"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                fillRule="evenodd"
+                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                              ></path>
+                            </svg>
+                          {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
+
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : null}
             </section>
           )}
 
@@ -1114,13 +1379,7 @@ const Header = () => {
                       style={{ cursor: "pointer" }}
                       className="headerSignInButton"
                     >
-                       <button
-                          className="button buttonSecondary buttonBlock"
-                          tabIndex="-1"
-                        >
-                          <div className="buttonBg rounderbutton"></div>
-                          <div className="buttonContent">Sign In</div>
-                        </button>
+                      Sign In
                     </a>
                   </li>
                 </ul>
