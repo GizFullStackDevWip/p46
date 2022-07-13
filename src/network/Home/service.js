@@ -1,11 +1,13 @@
 const axios = require("axios");
 const qs = require("querystring");
+let uId = getCookie("guestUserId");
+
 
 function fetchHomeBannerDetails() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -39,7 +41,7 @@ function getshowsbyCategory() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -74,7 +76,7 @@ function freeVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -110,7 +112,7 @@ function getshowsbyPartner(partner_id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -151,7 +153,7 @@ function getRecentlyAddedShows() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -186,7 +188,7 @@ function getContinueWatchingVideos() {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -223,7 +225,7 @@ function getLiveChannels() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -258,7 +260,7 @@ function getPartners() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -293,7 +295,7 @@ function getChannelDetails(id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -331,7 +333,7 @@ function getLiveSchedule(id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -370,7 +372,7 @@ function addToMyPlayList(id, flag) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -408,7 +410,7 @@ function playList() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -442,7 +444,7 @@ function getShows(key) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -479,7 +481,7 @@ function showsByCategory(id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -527,7 +529,7 @@ function getVideoDetails(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -563,7 +565,7 @@ function videoSubscription(selectedVideoId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -601,7 +603,7 @@ function checkUserSubscription() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {

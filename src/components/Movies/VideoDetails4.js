@@ -18,6 +18,9 @@ import {
 } from "../../Utils/utils";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 // import videothumbnail from "../../images/videothumbnail.png";
+
+
+const uId = service.getCookie("guestUserId");
 var videothumbnail =
   "https://gizmeon.s.llnwi.net/vod/ChicanoHollywood/main.jpg";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
@@ -382,7 +385,7 @@ const VideoDetails = (categoryId, episode) => {
         service.videoSubscription(video.video_id).then((response) => {
           let videoDetails = response.data;
           let subFlag = true;
-          let uId = service.getCookie("guestUserId");
+          
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
@@ -460,7 +463,7 @@ const VideoDetails = (categoryId, episode) => {
         video.subscriptions &&
         video.subscriptions.length > 0
       ) {
-        let uId = service.getCookie("guestUserId");
+        
         let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;
@@ -590,7 +593,7 @@ const VideoDetails = (categoryId, episode) => {
         service.videoSubscription(movie.video_id).then((response) => {
           let videoDetails = response.data;
           let subFlag = true;
-          let uId = service.getCookie("guestUserId");
+          
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
@@ -686,7 +689,7 @@ const VideoDetails = (categoryId, episode) => {
         showDetails.videos[0].subscriptions &&
         showDetails.videos[0].subscriptions.length > 0
       ) {
-        let uId = service.getCookie("guestUserId");
+        
         let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;

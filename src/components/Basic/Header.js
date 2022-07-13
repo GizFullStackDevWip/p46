@@ -155,7 +155,7 @@ const Header = () => {
     }
   };
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = (e) => {{/**Old function for search */}
     setTyping(true);
     const inputValue = e.target.value;
     if (timeOut) {

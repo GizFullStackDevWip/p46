@@ -15,6 +15,7 @@ import { clearUserData } from "../../Utils/utils";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
+const uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 var details = [];
@@ -126,7 +127,7 @@ const EpisodeDetails = (categoryId) => {
         service.videoSubscription(videoDetails.video_id).then((response) => {
           let videoSubLists = response.data;
           let subFlag = true;
-          let uId = service.getCookie("guestUserId");
+          
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;

@@ -1,5 +1,6 @@
 const axios = require("axios");
 const qs = require("querystring");
+let uId = getCookie("guestUserId");
 
 function getCookie(name) {
   var nameEQ = name + "=";
@@ -15,7 +16,7 @@ function bilingDetails() {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = 74961;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {

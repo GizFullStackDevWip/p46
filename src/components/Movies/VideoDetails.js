@@ -20,6 +20,7 @@ import freeTag from "../../images/free.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
+const uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 
@@ -338,7 +339,7 @@ const VideoDetails = (categoryId, episode) => {
         service.videoSubscription(videoDetails.video_id).then((response) => {
           let videoSubLists = response.data;
           let subFlag = true;
-          let uId = service.getCookie("guestUserId");
+         
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
@@ -421,7 +422,7 @@ const VideoDetails = (categoryId, episode) => {
         videoDetails.subscriptions &&
         videoDetails.subscriptions.length > 0
       ) {
-        let uId = service.getCookie("guestUserId");
+       
         let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;

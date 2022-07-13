@@ -1,11 +1,13 @@
 const axios = require('axios');
 const qs = require('querystring');
+const uId = service.getCookie("guestUserId");
+
 
 function getshowsbyCategory(){
     var token = localStorage.getItem('access-token');
     let device_id = localStorage.getItem('deviceId');
     let ipaddress = localStorage.getItem('ipaddress');
-    let uId = 291;
+  
     let user_id = getCookie('userId');
     let countryCode = getCookie('country_code');
     if (user_id) {
@@ -39,7 +41,7 @@ function getLiveChannels(){
     var token = localStorage.getItem('access-token');
     let device_id = localStorage.getItem('deviceId');
     let ipaddress = localStorage.getItem('ipaddress');
-    let uId = 291;
+    
     let user_id = getCookie('userId');
     let countryCode = getCookie('country_code');
     if (user_id) {

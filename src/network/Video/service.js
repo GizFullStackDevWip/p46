@@ -1,5 +1,7 @@
 const axios = require("axios");
 const qs = require("querystring");
+let uId = getCookie("guestUserId");
+
 
 function playerToken() {
   const customConfig = {
@@ -33,7 +35,7 @@ function onVideoPlayFunction(videoDetails, event, videoTime) {
     });
   console.log("categories-->", categories);
   let sessionId = localStorage.getItem("session_id");
-  let uId = 291;
+ 
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -81,7 +83,7 @@ function checkVideoSubscription(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -117,7 +119,7 @@ function checkVideoSubscription(videoId) {
 //   var token = localStorage.getItem("access-token");
 //   let device_id = localStorage.getItem("deviceId");
 //   let ipaddress = localStorage.getItem("ipaddress");
-//   let uId = 291;
+//  
 //   let user_id = getCookie("userId");
 //   let countryCode = getCookie("country_code");
 //   if (user_id) {
@@ -152,7 +154,7 @@ function getShowDetails(showId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -199,7 +201,7 @@ function getVideoDetails(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -234,7 +236,7 @@ function videoSubscription(selectedVideoId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -271,7 +273,7 @@ function checkUserSubscription() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
