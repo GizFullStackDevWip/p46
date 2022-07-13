@@ -104,11 +104,13 @@ const SignIn = (props) => {
     $(".inputText").focusout(function () {
       $(this).parent(".input").removeClass("inputActive");
     });
-    document.getElementById("signInLink").style.display = "none";
+    // document.getElementById("signInLink").style.display = "none";
     if (isGetIP) {
       fetch("https://geolocation-db.com/json/")
         .then((res) => res.json())
-        .then((json) => localStorage.setItem("ipaddress", json.IPv4));
+        .then((json) => localStorage.setItem("ipaddress", json.IPv4)).catch((error) => {
+          console.log('geolocation', error)
+        });
       setIsGetIP(false);
     }
   }, []);
@@ -793,10 +795,10 @@ const SignIn = (props) => {
     }
   };
   const onClickForgot = () => {
-    document.getElementById("signInLink").style = {
-      display: "block",
-      "padding-top": "6px",
-    };
+    // document.getElementById("signInLink").style = {
+    //   display: "block",
+    //   "padding-top": "6px",
+    // };
     setIsLogin(false);
     setIsForgot(true);
   };
@@ -818,7 +820,7 @@ const SignIn = (props) => {
   window.signInTrigger = () => {
     setIsLogin(true);
     setIsForgot(false);
-    document.getElementById("signInLink").style.display = "none";
+    // document.getElementById("signInLink").style.display = "none";
   };
   return (
     <div className="pageWrapper">
@@ -898,7 +900,7 @@ const SignIn = (props) => {
                               Already have an account?{" "}
                               <span
                                 className="linkButton"
-                                
+
                                 onClick={() => {
                                   setIsLogin(true);
                                   setIsForgot(false);
@@ -969,7 +971,7 @@ const SignIn = (props) => {
                           <p>
                             <span>
                               Already have an account?{" "}
-                              <a className="linkButton" href="/signin" style={{color:"#fff"}}>
+                              <a className="linkButton" href="/signin" style={{ color: "#fff" }}>
                                 Sign In
                               </a>
                             </span>{" "}
@@ -1083,7 +1085,7 @@ const SignIn = (props) => {
                               type="submit"
                             >
                               <div className="buttonBg rounderbutton"></div>
-                              <div className="buttonContent" style={{color:"#fff"}}>Sign In</div>
+                              <div className="buttonContent" style={{ color: "#fff" }}>Sign In</div>
                             </button>
                           </div>
                         ) : (
@@ -1095,7 +1097,7 @@ const SignIn = (props) => {
                                 type="submit"
                               >
                                 <div className="buttonBg rounderbutton"></div>
-                                <div className="buttonContent" style={{color:"#fff"}}>Sign In</div>
+                                <div className="buttonContent" style={{ color: "#fff" }}>Sign In</div>
                               </button>
                             </div>
                             <div className="regnSubmitWrapper">
@@ -1123,11 +1125,11 @@ const SignIn = (props) => {
                               onClick={() => {
                                 functionOnclick("/termsandconditions");
                               }}
-                              // onClick={() => {
-                              //   window.open(
-                              //     "https://dev.projectfortysix.com/terms/99078"
-                              //   );
-                              // }}
+                            // onClick={() => {
+                            //   window.open(
+                            //     "https://dev.projectfortysix.com/terms/99078"
+                            //   );
+                            // }}
                             >
                               &nbsp;Terms of Use
                             </div>
@@ -1140,11 +1142,11 @@ const SignIn = (props) => {
                               onClick={() => {
                                 functionOnclick("/privacypolicy");
                               }}
-                              // onClick={() => {
-                              //   window.open(
-                              //     "https://dev.projectfortysix.com/privacy/247031"
-                              //   );
-                              // }}
+                            // onClick={() => {
+                            //   window.open(
+                            //     "https://dev.projectfortysix.com/privacy/247031"
+                            //   );
+                            // }}
                             >
                               &nbsp;Privacy Policy
                             </div>
