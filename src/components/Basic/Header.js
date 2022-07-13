@@ -1404,7 +1404,7 @@ const Header = () => {
                       </button>
                     </a>
                   </li>
-                  <li id="signInLink" style={{ display: "block" }}>
+                  <li id="signInLink" style={{ display: "none" }}>
                     <a
                       className="headerSignInButton"
                       onClick={() => {
