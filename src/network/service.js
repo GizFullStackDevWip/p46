@@ -1,8 +1,10 @@
 import { getDeviceType, getBrowserType } from "../Utils/utils";
 const axios = require("axios");
 const qs = require("querystring");
+let uId = getCookie("guestUserId");
+
 function authenticate() {
-  let uId = 291;
+  // 
   let countryCode = getCookie("country_code");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -89,7 +91,7 @@ function register(values, facebookId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -136,7 +138,7 @@ function getshowsbyCategory() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -167,11 +169,90 @@ function getshowsbyCategory() {
     });
 }
 
+function getshowsbyListCategory() {
+  var token     = localStorage.getItem("access-token");
+  let device_id = localStorage.getItem("deviceId");
+  let ipaddress = localStorage.getItem("ipaddress");
+  
+  let user_id = getCookie("userId");
+  let countryCode = getCookie("country_code");
+  if (user_id) {
+    uId = user_id;
+  }
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": true,
+      crossorigin: true,
+      "access-token": token,
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: device_id,
+      ip: ipaddress,
+      device_type: "web",
+    },
+  };
+  return axios
+  // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
+    .get(process.env.REACT_APP_API_URL + "category/list", customConfig)
+    .then((response) => {
+      return response.data;
+      console.log(`resp from listcat`,response.data)
+    })
+    .catch((error) => {
+      return [];
+    });
+}
+
+
+function searchShow(keyword) {
+  // cloud search
+  
+  let countryCode = getCookie("country_code");
+  let ipaddress = getCookie("ipaddress");
+  let deviceId = localStorage.getItem("deviceId");
+  let user_id = getCookie("userId");
+  let token = localStorage.getItem("access-token");
+  if (user_id) {
+    uId = user_id;
+  }
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": true,
+      crossorigin: true,
+      "access-token": token,
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
+    },
+    params: {
+      key: keyword,
+    },
+  };
+  return axios
+    .get(process.env.REACT_APP_API_URL + "search/shows", customConfig)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return [];
+    });
+}
+
+
+
 function getShows(key) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -209,7 +290,7 @@ function verifyEmail(values, userRegisterId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -247,7 +328,7 @@ async function login(values) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -297,7 +378,7 @@ function userSubscription(userLoggedId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -331,7 +412,7 @@ function forgotEmail(values) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -368,7 +449,7 @@ function logoutAll(user_id) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  // let uId = 291;
+  // 
   // let user_id = getCookie('userId');
   let countryCode = getCookie("country_code");
   // if (user_id) {
@@ -517,7 +598,7 @@ function stripeSession(sub_id) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -560,7 +641,7 @@ function stripeDecode(sessionId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -630,7 +711,7 @@ function paymentUpdate(subscription, mode_of_payment, status, phone) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -741,7 +822,7 @@ function paymentUpdate(subscription, mode_of_payment, status, phone) {
 // }
 function unsubscribe(receiptid, sub_id) {
   let countryCode = getCookie("country_code");
-  var uId = 291;
+  // var uId = 291;
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -810,7 +891,7 @@ function paypalSubscription() {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   let subId = localStorage.getItem("selectedSubId");
@@ -851,7 +932,7 @@ async function facebookLogin(facebook_id, facebook_email, name) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -918,7 +999,7 @@ function facebokLink(facebook_id, facebook_email) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -994,7 +1075,7 @@ function analytics() {
   let countryCode = getCookie("country_code");
   let sessionId = localStorage.getItem("session_id");
   // setCookie('device_analytics',true);
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let email_id = getCookie("userEmail");
   if (user_id) {
@@ -1053,7 +1134,7 @@ function analytics() {
     });
 }
 function cookiePlicy() {
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let token = localStorage.getItem("access-token");
   if (user_id) {
@@ -1084,7 +1165,7 @@ function cookiePlicy() {
     });
 }
 function generateTvLink() {
-  let uId = 291;
+  
   let countryCode = getCookie("country_code");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -1126,7 +1207,7 @@ function generateTvLink() {
 function onVideoPlayFunction() {
   let countryCode = getCookie("country_code");
   let sessionId = localStorage.getItem("session_id");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -1224,7 +1305,7 @@ function getGuestUser() {
 
 function applaunchEvent(event) {
   let sessionId = localStorage.getItem("session_id");
-  let uId = service.getCookie("guestUserId");
+ 
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -1306,7 +1387,7 @@ function getShowDetails(showId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -1337,12 +1418,50 @@ function getShowDetails(showId) {
       return [];
     });
 }
+function getSearchSuggestion(keyword) {
+  
+  let countryCode = getCookie("country_code");
+  let ipaddress = getCookie("ipaddress");
+  let deviceId = localStorage.getItem("deviceId");
+  let user_id = getCookie("userId");
+  let token = localStorage.getItem("access-token"); 
+  if (user_id) {
+    uId = user_id;
+  }
+
+  const customConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Access-Control-Allow-Origin": true,
+      crossorigin: true,
+      "access-token": token,
+      uid: uId,
+      pubid: process.env.REACT_APP_PUBID,
+      country_code: countryCode,
+      channelid: process.env.REACT_APP_CHANNELID,
+      dev_id: deviceId,
+      ip: ipaddress,
+      device_type: "web",
+    },
+    params: {
+      key: keyword,
+    },
+  };
+  return axios
+    .get(process.env.REACT_APP_API_URL + "search/suggestions", customConfig)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      return [];
+    });
+}
 
 function getVideoDetails(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  let uId = 291;
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -1376,9 +1495,12 @@ function getVideoDetails(videoId) {
 
 export const service = {
   authenticate,
+  getSearchSuggestion,
   keyAuthenticate,
+  searchShow,
   register,
   getshowsbyCategory,
+  getshowsbyListCategory,
   getShows,
   verifyEmail,
   login,

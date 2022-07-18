@@ -9,6 +9,9 @@ import { clearUserData } from "../../Utils/utils";
 import closepanel from "../../img/icon-closepanel.png";
 import "./videoPlayer.css";
 
+
+const uId = service.getCookie("guestUserId");
+
 var details = [];
 
 var videoDetailUtils = [];
@@ -99,7 +102,7 @@ const VideoPlayer = (history) => {
                   })}
               </video>
             );
-            let uId = service.getCookie("guestUserId");
+            
             let user_id = service.getCookie("userId");
             if (user_id) {
               uId = user_id;

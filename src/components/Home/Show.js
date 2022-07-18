@@ -12,6 +12,7 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { clearUserData } from "../../Utils/utils";
 
+const uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 
 const Show = ({ param, update, categoryId }) => {
@@ -117,7 +118,7 @@ const Show = ({ param, update, categoryId }) => {
               .then((response) => {
                 let videoSubLists = response.data;
                 let subFlag = true;
-                let uId = service.getCookie("guestUserId");
+               
                 let user_id = service.getCookie("userId");
                 if (user_id) {
                   uId = user_id;
@@ -205,7 +206,7 @@ const Show = ({ param, update, categoryId }) => {
               videoDetails.payper_flag == 1
             ) {
               //free video with subscription
-              let uId = service.getCookie("guestUserId");
+             
               let user_id = service.getCookie("userId");
               if (user_id) {
                 uId = user_id;

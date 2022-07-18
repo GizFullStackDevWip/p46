@@ -1,11 +1,12 @@
 const axios = require("axios");
 const qs = require("querystring");
+let uId = getCookie("guestUserId");
 
 function androidTokeDecode(antkn) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+ 
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -129,7 +130,7 @@ function publisherSubscription() {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -169,7 +170,7 @@ function videoSubscription(selectedVideoId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  let uId = service.getCookie("guestUserId");
+  
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {

@@ -18,6 +18,7 @@ import freeTag from "../../images/free.png";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
+const uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 var details = [];
@@ -169,8 +170,7 @@ const EpisodeDetails = (props) => {
         service.videoSubscription(videoDetails.video_id).then((response) => {
           let videoSubLists = response.data;
           let subFlag = true;
-          let uId = service.getCookie("guestUserId");
-          let user_id = service.getCookie("userId");
+                    let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
           }
@@ -253,8 +253,7 @@ const EpisodeDetails = (props) => {
         videoDetails.subscriptions &&
         videoDetails.subscriptions.length > 0 //free video with subscription
       ) {
-        let uId = service.getCookie("guestUserId");
-        let user_id = service.getCookie("userId");
+                let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;
         }

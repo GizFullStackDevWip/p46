@@ -1,5 +1,6 @@
 import moment from "moment";
 import { service } from "../network/service";
+const uId = service.getCookie("guestUserId");
 
 export const playerController = (position, playerId) => {
   let screenPosition = document.documentElement.scrollTop;
@@ -194,7 +195,7 @@ export const convertAdUrl = (videoDetails) => {
       }
     });
 
-  let uId = 291;
+ 
   let user_id = service.getCookie("userId");
   if (user_id) {
     uId = user_id;
