@@ -40,7 +40,7 @@ import ChangePassword from "../components/Changepassword/changePassword";
 import BilingActivity from "../components/BillingDetails/BilingActivity";
 import SubscriptionList from "../components/SubscriptionList/SubscriptionList";
 import Payment from "../components/Payment/Payment";
-
+import SubUpgrade from "../components/subscriptionUpgrade/SubUpgrade";
 const routes = () => {
   const isAndroid = useSelector((state) => state.isAndroid);
   let isCoutryAllowed = true;
@@ -119,6 +119,11 @@ const routes = () => {
                 path="/changePassword"
                 exact
                 component={ChangePassword}
+              />
+              <PrivateRoute
+                path="/subupgrade"
+                exact
+                component={SubUpgrade}
               />
               <PrivateRoute
                 path="/BilingActivity"
