@@ -748,9 +748,6 @@ const Header = () => {
                       >
                         <div className="_30s-L _13opw">
                           {/* <a className="ATag activeOnWhite" href="/account">Account Settings</a> */}
-                          <a href="/subupgrade" className="ATag activeOnWhite">
-                            Upgrade
-                          </a>
                           <a href="/account" className="ATag activeOnWhite">
                             Account Settings
                           </a>
@@ -1350,9 +1347,6 @@ const Header = () => {
                     >
                       <div className="_30s-L _13opw">
                         {/* <a className="ATag activeOnWhite" href="/account">Account Settings</a> */}
-                        <a href="/subupgrade" className="ATag activeOnWhite">
-                            Upgrade
-                          </a>
                         <a href="/account" className="ATag activeOnWhite">
                           Account Settings
                         </a>
