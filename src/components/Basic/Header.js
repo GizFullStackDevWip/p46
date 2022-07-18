@@ -621,7 +621,7 @@ const Header = () => {
                         className="searchInput"
                         id="searchInput"
                         type="search"
-                        placeholder="Find movies, TV shows and more"
+                        placeholder="Search"
                         required=""
                         onChange={onChangeNewHandler}
                         // onKeyPress={callSearchAPI(input)}
