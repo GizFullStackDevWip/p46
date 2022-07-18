@@ -15,7 +15,7 @@ function SubPage() {
               </h2>
               <p className="sub-title-small-inner">
                 Subscribe now to get unlimited access to stream from thousands
-                of hours of premium films, dramas and series. No Lock-IN
+                of hours of premium content. No Lock-IN
                 Contract and Cancel anytime.
               </p>
             </div>
@@ -178,8 +178,8 @@ function SubPage() {
                 <div className="col-12">
                   <p className="text-white">
                     P46 offers unlimited access to
-                    thousands of hours of entertainment, latest information on
-                    new TV shows and movies, documentaries, comedies, classic
+                    thousands of hours of content, latest information on
+                    new TV shows, documentaries, classic
                     catalogue and P46 original series.
                   </p>
                   <p>
@@ -196,8 +196,7 @@ function SubPage() {
                   </p>
                   <p style={{color:'#c00706'}}>
                     WARNING – Only fully paid subscribers have authority to
-                    access and view for their own personal use the dramas,
-                    movies and videos broadcast by P46. In all other
+                    access and view for their own personal use the videos broadcast by P46. In all other
                     circumstances you are notified that you may not use data
                     mining, screen scraping, copying or any other method to
                     enable you to reproduce or broadcast the content that
