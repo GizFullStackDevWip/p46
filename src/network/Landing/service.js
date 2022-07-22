@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('querystring');
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 
 
 function getshowsbyCategory(){

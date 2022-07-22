@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { service } from "../../network/service";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 const Success = () => {
   const history = useHistory();
   const [isSucess, setIsSucces] = useState(false);
@@ -9,8 +9,11 @@ const Success = () => {
   const [subscription, setSubscription] = useState([]);
   const [fromVP, setFromVP] = useState(false);
   const dispatch = useDispatch();
+  // const isUpgrade = useSelector((state) => state.isUpgrade);
+  let isUpgrade = localStorage.getItem('is_upgrade')
 
   useEffect(() => {
+    console.log('isUpgrade', isUpgrade)
     let prevurl = localStorage.getItem("fromVideoplayer");
     if (prevurl == "true") {
       console.log("testing success (prevurl == true)");
@@ -44,7 +47,7 @@ const Success = () => {
         if (response.success != false) {
           let subscription = response.data.subscription;
           service
-            .paymentUpdate(subscription, "stripe", "success")
+            .paymentUpdate(subscription, "stripe", "success", isUpgrade)
             .then((response) => {
               if (response.status == 200) {
                 let isAndroid = localStorage.getItem("isAndroid");
@@ -56,7 +59,7 @@ const Success = () => {
                 }
               } else {
                 service
-                  .paymentUpdate(subscription, "stripe", "failed")
+                  .paymentUpdate(subscription, "stripe", "failed", isUpgrade)
                   .then((response) => {
                     if (response.status == 201) {
                       let isAndroid = localStorage.getItem("isAndroid");

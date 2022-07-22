@@ -155,7 +155,8 @@ const Header = () => {
     }
   };
 
-  const onChangeHandler = (e) => {{/**Old function for search */}
+  const onChangeHandler = (e) => {
+    {/**Old function for search */ }
     setTyping(true);
     const inputValue = e.target.value;
     if (timeOut) {
@@ -297,7 +298,7 @@ const Header = () => {
                 className="logoContain"
                 style={
                   isDesktop
-                    ? { width: "250px", paddingTop: "4px", cursor:'pointer' }
+                    ? { width: "250px", paddingTop: "4px", cursor: 'pointer' }
                     : { width: "150px", paddingTop: "12px" }
                 }
               >
@@ -337,91 +338,91 @@ const Header = () => {
                       <section className="searchContainer mobileSearchBG">
                         {login === true ? (
                           <div>
-                          <svg
-                            className="svgIcon searchIcon"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 18.07 18.07"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                            ></path>
-                          </svg>
-                          <form onSubmit={submitSearch}>
-                            <input
-                              className="searchInput"
-                              id="searchInput"
-                              type="search"
-                              placeholder="Search"
-                              required=""
-                              onChange={onChangeNewHandler}
-                              value={input}
-                              autoComplete="off"
-                            />
-                          </form>
-                          <svg
-                            className="svgIcon searchClose"
-                            preserveAspectRatio="xMidYMid meet"
-                            viewBox="0 0 13 13"
-                            style={{ fill: "currentcolor" }}
-                          >
-                            <path
-                              fill="currentColor"
-                              fillRule="evenodd"
-                              d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                            ></path>
-                          </svg>
-                        {searching == true && (
-                            <div className="search__suggestion__container">
-                              {suggestionLoading == true ? (
-                                <div className="suggestion__loading">
-                                  Loading...
-                                </div>
-                              ) : suggestionList.length == 0 ? (
-                                <div
-                                  onClick={() => {
-                                    callSearchAPI();
-                                  }}
-                                  className="search__suggestion__item"
-                                >
-                                  More Results
-                                </div>
-                              ) : (
-                                // <div className="suggestion__loading" >
-                                //  {/* {suggestionList.map((item, index) => { */}
-                                //   {/* return ( */}
-                                //     <div
-                                //       onClick={() => {
-                                //         callSearchAPI('hollywood')
-                                //       }}
-                                //       className="search__suggestion__item"
-                                //     >222222
-                                //       {/* {item} */}
-                                //     </div>
-                                //   {/* ); */}
-                                // {/* })} */}
-                                //   No results found
+                            <svg
+                              className="svgIcon searchIcon"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 18.07 18.07"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                              ></path>
+                            </svg>
+                            <form onSubmit={submitSearch}>
+                              <input
+                                className="searchInput"
+                                id="searchInput"
+                                type="search"
+                                placeholder="Search"
+                                required=""
+                                onChange={onChangeNewHandler}
+                                value={input}
+                                autoComplete="off"
+                              />
+                            </form>
+                            <svg
+                              className="svgIcon searchClose"
+                              preserveAspectRatio="xMidYMid meet"
+                              viewBox="0 0 13 13"
+                              style={{ fill: "currentcolor" }}
+                            >
+                              <path
+                                fill="currentColor"
+                                fillRule="evenodd"
+                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                              ></path>
+                            </svg>
+                            {searching == true && (
+                              <div className="search__suggestion__container">
+                                {suggestionLoading == true ? (
+                                  <div className="suggestion__loading">
+                                    Loading...
+                                  </div>
+                                ) : suggestionList.length == 0 ? (
+                                  <div
+                                    onClick={() => {
+                                      callSearchAPI();
+                                    }}
+                                    className="search__suggestion__item"
+                                  >
+                                    More Results
+                                  </div>
+                                ) : (
+                                  // <div className="suggestion__loading" >
+                                  //  {/* {suggestionList.map((item, index) => { */}
+                                  //   {/* return ( */}
+                                  //     <div
+                                  //       onClick={() => {
+                                  //         callSearchAPI('hollywood')
+                                  //       }}
+                                  //       className="search__suggestion__item"
+                                  //     >222222
+                                  //       {/* {item} */}
+                                  //     </div>
+                                  //   {/* ); */}
+                                  // {/* })} */}
+                                  //   No results found
 
-                                // </div>
-                                <ul className="search__suggestion__list">
-                                  {suggestionList.map((item, index) => {
-                                    return (
-                                      <li
-                                        onClick={() => {
-                                          callSearchAPI(item);
-                                        }}
-                                        className="search__suggestion__item"
-                                      >
-                                        {item.toUpperCase()}
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              )}
-                            </div>
-                          )}
-                        </div>
+                                  // </div>
+                                  <ul className="search__suggestion__list">
+                                    {suggestionList.map((item, index) => {
+                                      return (
+                                        <li
+                                          onClick={() => {
+                                            callSearchAPI(item);
+                                          }}
+                                          className="search__suggestion__item"
+                                        >
+                                          {item.toUpperCase()}
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         ) : null}
                       </section>
                     </div>
@@ -510,7 +511,7 @@ const Header = () => {
                               <div className="menuInnerCol">
                                 {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if (((listCategory.length)/3) > index) {
+                                    if (((listCategory.length) / 3) > index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -533,7 +534,7 @@ const Header = () => {
                                   })}
                               </div>
                             </div>
-                           
+
                           </div>
                         </div>
                         <div
@@ -544,9 +545,9 @@ const Header = () => {
                             <div className="menuItemHead">More Categories</div>
                             <div className="menuListItems">
                               <div className="menuInnerCol">
-                              {listCategory &&
+                                {listCategory &&
                                   listCategory.map((item, index) => {
-                                    if (((listCategory.length)/3) <= index) {
+                                    if (((listCategory.length) / 3) <= index) {
                                       return (
                                         <div key={index}>
                                           {item.categoryname && (
@@ -580,10 +581,10 @@ const Header = () => {
                   style={
                     isDesktop === true
                       ? {
-                          cursor: "pointer",
-                          width: "100%",
-                          paddingLeft: "18px",
-                        }
+                        cursor: "pointer",
+                        width: "100%",
+                        paddingLeft: "18px",
+                      }
                       : { width: "100%", paddingLeft: "8px" }
                   }
                   onClick={() => {
@@ -592,7 +593,7 @@ const Header = () => {
                       pathname: "/home",
                     });
                   }}
-                  // width={100}
+                // width={100}
                 />
               </div>
             </div>
@@ -602,7 +603,7 @@ const Header = () => {
                 style={{ border: "none" }}
               ></section>
             ) : (
-              <section className="searchContainer searchBar">
+              <section className="searchContainer searchBar" style={{ background: '#0b4874' }}>
                 {login === true ? (
                   <div className="searchBox__wrapper">
                     <svg
@@ -948,7 +949,7 @@ const Header = () => {
                 <div className="menuWrapper">
                   <div className="mobileSearch">
                     <section className="searchContainer mobileSearchBG">
-                    {
+                      {
                         login === true ? (
                           <div>
                             <svg
@@ -964,7 +965,7 @@ const Header = () => {
                             </svg>
                             <form onSubmit={submitSearch}>
                               <input
-                              
+
                                 className="searchInput"
                                 id="searchInput"
                                 type="search"
@@ -987,7 +988,7 @@ const Header = () => {
                                 d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
                               ></path>
                             </svg>
-                          {searching == true && (
+                            {searching == true && (
                               <div className="search__suggestion__container">
                                 {suggestionLoading == true ? (
                                   <div className="suggestion__loading">
@@ -1121,34 +1122,34 @@ const Header = () => {
                             </Link>
                           </div>
                           <div className="menuItemHead">Categories</div>
-                            <div className="menuListItems">
-                              <div className="menuInnerCol">
-                                {listCategory &&
-                                  listCategory.map((item, index) => {
-                                    if (((listCategory.length)/3) > index) {
-                                      return (
-                                        <div key={index}>
-                                          {item.categoryname && (
-                                            <Link
-                                              to={{
-                                                pathname: "/home/categorylist",
-                                                search: encodeURI(
-                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
-                                                ),
-                                              }}
-                                            >
-                                              <div className="linkButton headerMenuItems">
-                                                {item.categoryname}
-                                              </div>
-                                            </Link>
-                                          )}
-                                        </div>
-                                      );
-                                    }
-                                  })}
-                              </div>
+                          <div className="menuListItems">
+                            <div className="menuInnerCol">
+                              {listCategory &&
+                                listCategory.map((item, index) => {
+                                  if (((listCategory.length) / 3) > index) {
+                                    return (
+                                      <div key={index}>
+                                        {item.categoryname && (
+                                          <Link
+                                            to={{
+                                              pathname: "/home/categorylist",
+                                              search: encodeURI(
+                                                `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                              ),
+                                            }}
+                                          >
+                                            <div className="linkButton headerMenuItems">
+                                              {item.categoryname}
+                                            </div>
+                                          </Link>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                })}
                             </div>
-                          
+                          </div>
+
                         </div>
                       </div>
                       <div className="menuWidth20 menuBGcolor menuWidth40">
@@ -1156,29 +1157,29 @@ const Header = () => {
                           <div className="menuItemHead">More Categories</div>
                           <div className="menuListItems">
                             <div className="menuInnerCol">
-                            {listCategory &&
-                                  listCategory.map((item, index) => {
-                                    if ((listCategory.length / 3) <= index) {
-                                      return (
-                                        <div key={index}>
-                                          {item.categoryname && (
-                                            <Link
-                                              to={{
-                                                pathname: "/home/categorylist",
-                                                search: encodeURI(
-                                                  `category_id=${item.categoryid}&category_name=${item.categoryname}`
-                                                ),
-                                              }}
-                                            >
-                                              <div className="linkButton headerMenuItems">
-                                                {item.categoryname}
-                                              </div>
-                                            </Link>
-                                          )}
-                                        </div>
-                                      );
-                                    }
-                                  })}
+                              {listCategory &&
+                                listCategory.map((item, index) => {
+                                  if ((listCategory.length / 3) <= index) {
+                                    return (
+                                      <div key={index}>
+                                        {item.categoryname && (
+                                          <Link
+                                            to={{
+                                              pathname: "/home/categorylist",
+                                              search: encodeURI(
+                                                `category_id=${item.categoryid}&category_name=${item.categoryname}`
+                                              ),
+                                            }}
+                                          >
+                                            <div className="linkButton headerMenuItems">
+                                              {item.categoryname}
+                                            </div>
+                                          </Link>
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                })}
                             </div>
                           </div>
                         </div>
@@ -1210,96 +1211,96 @@ const Header = () => {
               style={{ border: "none" }}
             ></section>
           ) : (
-            <section className="searchContainer searchBar">
-               {
-                        login === true ? (
-                          <div>
-                            <svg
-                              className="svgIcon searchIcon"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 18.07 18.07"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
-                              ></path>
-                            </svg>
-                            <form onSubmit={submitSearch}>
-                              <input
-                                className="searchInput"
-                                id="searchInput"
-                                type="search"
-                                placeholder="Search"
-                                required=""
-                                onChange={onChangeNewHandler}
-                                value={input}
-                                autoComplete="off"
-                              />
-                            </form>
-                            <svg
-                              className="svgIcon searchClose"
-                              preserveAspectRatio="xMidYMid meet"
-                              viewBox="0 0 13 13"
-                              style={{ fill: "currentcolor" }}
-                            >
-                              <path
-                                fill="currentColor"
-                                fillRule="evenodd"
-                                d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
-                              ></path>
-                            </svg>
-                          {searching == true && (
-                              <div className="search__suggestion__container">
-                                {suggestionLoading == true ? (
-                                  <div className="suggestion__loading">
-                                    Loading...
-                                  </div>
-                                ) : suggestionList.length == 0 ? (
-                                  <div
-                                    onClick={() => {
-                                      callSearchAPI();
-                                    }}
-                                    className="search__suggestion__item"
-                                  >
-                                    More Results
-                                  </div>
-                                ) : (
-                                  // <div className="suggestion__loading" >
-                                  //  {/* {suggestionList.map((item, index) => { */}
-                                  //   {/* return ( */}
-                                  //     <div
-                                  //       onClick={() => {
-                                  //         callSearchAPI('hollywood')
-                                  //       }}
-                                  //       className="search__suggestion__item"
-                                  //     >222222
-                                  //       {/* {item} */}
-                                  //     </div>
-                                  //   {/* ); */}
-                                  // {/* })} */}
-                                  //   No results found
-
-                                  // </div>
-                                  <ul className="search__suggestion__list">
-                                    {suggestionList.map((item, index) => {
-                                      return (
-                                        <li
-                                          onClick={() => {
-                                            callSearchAPI(item);
-                                          }}
-                                          className="search__suggestion__item"
-                                        >
-                                          {item.toUpperCase()}
-                                        </li>
-                                      );
-                                    })}
-                                  </ul>
-                                )}
-                              </div>
-                            )}
+            <section className="searchContainer searchBar" style={{ background: '#0b4874' }}>
+              {
+                login === true ? (
+                  <div>
+                    <svg
+                      className="svgIcon searchIcon"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 18.07 18.07"
+                      style={{ fill: "currentcolor" }}
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M7.5,13A5.5,5.5,0,1,0,2,7.5,5.5,5.5,0,0,0,7.5,13Zm4.55.46A7.5,7.5,0,1,1,13.46,12l4.31,4.31a1,1,0,1,1-1.41,1.41Z"
+                      ></path>
+                    </svg>
+                    <form onSubmit={submitSearch}>
+                      <input
+                        className="searchInput"
+                        id="searchInput"
+                        type="search"
+                        placeholder="Search"
+                        required=""
+                        onChange={onChangeNewHandler}
+                        value={input}
+                        autoComplete="off"
+                      />
+                    </form>
+                    <svg
+                      className="svgIcon searchClose"
+                      preserveAspectRatio="xMidYMid meet"
+                      viewBox="0 0 13 13"
+                      style={{ fill: "currentcolor" }}
+                    >
+                      <path
+                        fill="currentColor"
+                        fillRule="evenodd"
+                        d="M6.5 5.793l-2.12-2.12-.708.706 2.12 2.12-2.12 2.12.707.708 2.12-2.12 2.12 2.12.708-.707-2.12-2.12 2.12-2.12-.707-.708-2.12 2.12zM7 13c-4.09 0-7-2.91-7-6 0-4.09 2.91-7 7-7 3.09 0 6 2.91 6 7 0 3.09-2.91 6-6 6z"
+                      ></path>
+                    </svg>
+                    {searching == true && (
+                      <div className="search__suggestion__container">
+                        {suggestionLoading == true ? (
+                          <div className="suggestion__loading">
+                            Loading...
                           </div>
-                        ) : null}
+                        ) : suggestionList.length == 0 ? (
+                          <div
+                            onClick={() => {
+                              callSearchAPI();
+                            }}
+                            className="search__suggestion__item"
+                          >
+                            More Results
+                          </div>
+                        ) : (
+                          // <div className="suggestion__loading" >
+                          //  {/* {suggestionList.map((item, index) => { */}
+                          //   {/* return ( */}
+                          //     <div
+                          //       onClick={() => {
+                          //         callSearchAPI('hollywood')
+                          //       }}
+                          //       className="search__suggestion__item"
+                          //     >222222
+                          //       {/* {item} */}
+                          //     </div>
+                          //   {/* ); */}
+                          // {/* })} */}
+                          //   No results found
+
+                          // </div>
+                          <ul className="search__suggestion__list">
+                            {suggestionList.map((item, index) => {
+                              return (
+                                <li
+                                  onClick={() => {
+                                    callSearchAPI(item);
+                                  }}
+                                  className="search__suggestion__item"
+                                >
+                                  {item.toUpperCase()}
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ) : null}
             </section>
           )}
 

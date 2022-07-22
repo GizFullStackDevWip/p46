@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { service } from "./service";
 import "./SubscriptionList.css";
 
-const SubscriptionList = (state) => {
+const SubscriptionList = () => {
   const dispatch = useDispatch();
   const [subscription, setSubscription] = useState([]);
   const [userSubscription, setUserSubscription] = useState([]);
@@ -12,18 +12,21 @@ const SubscriptionList = (state) => {
   const [isAndroid, setIsAndroid] = useState(false);
   let urlParams = new URLSearchParams(window.location.search);
   let userID = service.getCookie("userId")
-
-  localStorage.setItem('is_upgrade', false)
+  var singleObj = [];
+  let currentPlan = urlParams.get("cp");
+  localStorage.setItem('previous_subscription_id', currentPlan)
+  localStorage.setItem('is_upgrade', true)
 
   useEffect(() => {
+    // var selectedVideoId =
+    //   state.location.state != undefined ? state.location.state.videoData : null;
+    console.log('currentPlan', currentPlan)
 
     dispatch({
       type: "IS_UPGRADE",
-      payload: false,
+      payload: true,
     });
-    var selectedVideoId =
-      state.location.state != undefined ? state.location.state.videoData : null;
-    var singleObj = [];
+
     let androidToken = urlParams.get("antkn");
     if (androidToken) {
       console.log("androidToken if");
@@ -32,7 +35,6 @@ const SubscriptionList = (state) => {
         localStorage.setItem("deviceId", deviceId);
       }
       dispatch({ type: "SET_ANDROID" });
-      selectedVideoId = urlParams.get("vd");
       service.androidTokeDecode(androidToken).then((response) => {
         if (response.success == true) {
           console.log("androidTokeDecode success");
@@ -47,34 +49,65 @@ const SubscriptionList = (state) => {
           localStorage.setItem("deviceType", "android-web");
           setAndroidData(response.data);
           setIsAndroid(true);
-          if (selectedVideoId) {
-            console.log("androidTokeDecode selectedVideoId");
-            service.videoSubscription(selectedVideoId).then((response) => {
-              var data = response.data;
-              if (data != undefined)
-                data.map((item, index) => {
-                  singleObj.push(item);
-                });
-              setSubscription(singleObj);
-            });
-          } else {
-            console.log("androidTokeDecode  selectedVideoId else");
-            service.publisherSubscription().then((response) => {
-              var data = response.data;
-              if (data != undefined)
-                data.map((item, index) => {
-                  singleObj.push(item);
-                });
-              setSubscription(singleObj);
-            });
-          }
+          fetchPremiumSubscriptions()
+          // if (selectedVideoId) {
+          //   console.log("androidTokeDecode selectedVideoId");
+          //   service.videoSubscription(selectedVideoId).then((response) => {
+          //     var data = response.data;
+          //     if (data != undefined)
+          //       data.map((item, index) => {
+          //         singleObj.push(item);
+          //       });
+          //     setSubscription(singleObj);
+          //   });
+          // } else {
+          //   console.log("androidTokeDecode  selectedVideoId else");
+          //   service.publisherSubscription().then((response) => {
+          //     var data = response.data;
+          //     if (data != undefined)
+          //       data.map((item, index) => {
+          //         singleObj.push(item);
+          //       });
+          //     setSubscription(singleObj);
+          //   });
+          // }
         }
       });
     } else {
       console.log("androidToken else");
-      if (selectedVideoId) {
-        console.log("selectedVideoId");
-        service.videoSubscription(selectedVideoId).then((response) => {
+      fetchPremiumSubscriptions()
+      // if (selectedVideoId) {
+      //   console.log("selectedVideoId");
+        // service.videoSubscription(selectedVideoId).then((response) => {
+      //     var data = response.data;
+      //     if (data != undefined)
+      //       data.map((item, index) => {
+      //         singleObj.push(item);
+      //       });
+      //     setSubscription(singleObj);
+      //   });
+      // } else {
+      //   console.log("selectedVideoId else");
+      //   service.publisherSubscription().then((response) => {
+      //     var data = response.data;
+      //     if (data != undefined)
+      //       data
+      //         .filter(
+      //           (item) =>
+      //             item.subscription_type_id == 3 ||
+      //             item.subscription_type_id == 4
+      //         )
+      //         .map((item, index) => {
+      //           singleObj.push(item);
+      //         });
+      //     setSubscription(singleObj);
+      //   });
+      // }
+    }
+  }, []);
+
+  const fetchPremiumSubscriptions = () => {
+      service.fetchPremiumSubscriptionList(currentPlan).then((response) => {
           var data = response.data;
           if (data != undefined)
             data.map((item, index) => {
@@ -82,25 +115,7 @@ const SubscriptionList = (state) => {
             });
           setSubscription(singleObj);
         });
-      } else {
-        console.log("selectedVideoId else");
-        service.publisherSubscription().then((response) => {
-          var data = response.data;
-          if (data != undefined)
-            data
-              .filter(
-                (item) =>
-                  item.subscription_type_id == 3 ||
-                  item.subscription_type_id == 4
-              )
-              .map((item, index) => {
-                singleObj.push(item);
-              });
-          setSubscription(singleObj);
-        });
-      }
-    }
-  }, []);
+  }
 
   return (
     <div className="pageWrapper searchPageMain sub__container marginAdjust">

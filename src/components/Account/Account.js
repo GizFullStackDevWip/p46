@@ -10,6 +10,7 @@ const Account = () => {
   const [email, setEmail] = useState("");
   const [subscriptionName, setSubscriptionName] = useState("");
   const [subId, setsubId] = useState();
+  const [upgradeLink, setUpgradeLink] = useState(false)
   const [isSocialLogin, setIsSocialLogin] = useState(false);
   const [haveSubscription, setHaveSubscription] = useState(false);
   const [havePayment, setHavePayment] = useState(false);
@@ -40,6 +41,8 @@ const Account = () => {
             });
           } else {
             setsubId(response.data.sub_id);
+            
+            !response.data.is_premium && setUpgradeLink(true)
           }
         }
         setEmail(response.data.user_email);
@@ -86,11 +89,13 @@ const Account = () => {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
   };
+
+  let upgradeURL = "/subscriptionUpgradeList?cp=" + subId
 
   return (
     <>
@@ -271,6 +276,15 @@ const Account = () => {
                                     >
                                       <strong>Billing details</strong>
                                     </a>
+                                  </div>
+                                  <div className="account-section-item">
+                                    {upgradeLink && <a
+                                      className="account-section-link"
+                                      data-uia="action-billing-details"
+                                      href={upgradeURL}
+                                    >
+                                      <strong>Change Plan</strong>
+                                    </a>}
                                   </div>
                                 </div>
                               </div>

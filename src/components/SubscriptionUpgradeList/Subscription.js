@@ -89,7 +89,7 @@ const Subscription = ({ param }, androidData, isAndroid) => {
 
         <div className="bottom-content">
           <div className="wrapper">
-            
+
             {param.map((param, index) => {
 
               let wrapperClass = "item"

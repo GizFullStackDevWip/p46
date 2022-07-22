@@ -20,7 +20,7 @@ import freeTag from "../../images/free.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 
@@ -59,6 +59,7 @@ const VideoDetails = (categoryId, episode) => {
   const [numberOfSeason, setNumberOfSeason] = useState(-1);
   const [optionsS, setOptionsS] = useState([]);
   const [defaultOptions, setDefaultOptions] = useState([]);
+  const [videoSubscription, setVideoSubscription] = useState([])
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -73,11 +74,14 @@ const VideoDetails = (categoryId, episode) => {
       // if (data.length > 0) {
       var videoDetail = "";
       dispatch({ type: "SHOW_ID", payload: response.data.show_id });
+
+      console.log('response.data', response.data)
       setShowDetails(response.data);
       setCategories(response.data.categories);
       setEpisodeList(response.data.videos[0].videos);
       setAllSeasonList(response.data.videos);
       setCurrentSeason(response.data.videos[0].videos);
+      setVideoSubscription(response.data.videos[0].subscriptions)
       let defaultOpt = [];
       defaultOpt.push(response.data.videos[0]);
       setDefaultOptions(defaultOpt);
@@ -339,7 +343,7 @@ const VideoDetails = (categoryId, episode) => {
         service.videoSubscription(videoDetails.video_id).then((response) => {
           let videoSubLists = response.data;
           let subFlag = true;
-         
+
           let user_id = service.getCookie("userId");
           if (user_id) {
             uId = user_id;
@@ -375,7 +379,7 @@ const VideoDetails = (categoryId, episode) => {
                   } else {
                     let subscribedVideo = userData.filter(
                       (e) =>
-                        e.sub_id == subscription.publisher_subscription_id
+                        e.sub_id == subscription.publisher_subscription_id || (subscription.subscription_type_id == e.subscription_type_id && subscription.price <= e.price)
                     );
                     if (
                       subscribedVideo.length == 0 &&
@@ -422,7 +426,7 @@ const VideoDetails = (categoryId, episode) => {
         videoDetails.subscriptions &&
         videoDetails.subscriptions.length > 0
       ) {
-       
+
         let user_id = service.getCookie("userId");
         if (user_id) {
           uId = user_id;
@@ -477,7 +481,7 @@ const VideoDetails = (categoryId, episode) => {
                   } else {
                     let subscribedVideo = userSubDetails.filter(
                       (e) =>
-                        e.sub_id == subscription.publisher_subscription_id
+                        e.sub_id == subscription.publisher_subscription_id || (subscription.subscription_type_id == e.subscription_type_id && subscription.price <= e.price)
                     );
                     if (
                       subscribedVideo.length == 0 &&
@@ -647,7 +651,7 @@ const VideoDetails = (categoryId, episode) => {
                               );
                             }}
                           >
-                            <div className="buttonBg rounderbutton"></div>
+                            <div className="buttonBg rounderbutton" style={{ borderRadius: '0px', background: '#007bff' }}></div>
                             <div className="buttonContent">
                               {showDetails.single_video === 0 &&
                                 defaultOptions &&
@@ -848,6 +852,20 @@ const VideoDetails = (categoryId, episode) => {
                     }
                   >
                     <div className="vpMiddleInfoSection vpInfoPadding">
+                    <div>
+                          {videoSubscription && videoSubscription.map((subscription) => {
+                            return (
+                              <span style={{
+                                background: '#fedf73',
+                                color: '#000',
+                                fontWeight: '800',
+                                padding: '2px 10px 0px 10px',
+                                marginRight: '10px',
+                                borderRadius: '2px'
+                              }}>{subscription.subscription_name}</span>
+                            )
+                          })}
+                        </div>
                       <div className="vpLengthCensor">
                         <div className="vpLengthYear">
                           {showDetails && (
@@ -879,6 +897,8 @@ const VideoDetails = (categoryId, episode) => {
                           )}
                           <br />
                         </div>
+                        
+                        
                       </div>
                       <div className="vpMovieCategory">
                         <div className="vpCategoryFlex vpCategoryMargin">

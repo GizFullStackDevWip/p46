@@ -1,6 +1,6 @@
 import moment from "moment";
 import { service } from "../network/service";
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 
 export const playerController = (position, playerId) => {
   let screenPosition = document.documentElement.scrollTop;

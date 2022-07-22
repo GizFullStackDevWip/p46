@@ -20,7 +20,7 @@ import { FacebookShareButton, TwitterShareButton } from "react-share";
 // import videothumbnail from "../../images/videothumbnail.png";
 
 
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 var videothumbnail =
   "https://gizmeon.s.llnwi.net/vod/ChicanoHollywood/main.jpg";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";

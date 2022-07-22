@@ -21,7 +21,7 @@ import freeTag from "../../images/free.png";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 var videoImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/thumbnails/";
 

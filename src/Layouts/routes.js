@@ -39,6 +39,7 @@ import SignOutAll from "../components/SignOutAll/Signout";
 import ChangePassword from "../components/Changepassword/changePassword";
 import BilingActivity from "../components/BillingDetails/BilingActivity";
 import SubscriptionList from "../components/SubscriptionList/SubscriptionList";
+import SubscriptionUpgradeList from "../components/SubscriptionUpgradeList/SubscriptionList";
 import Payment from "../components/Payment/Payment";
 
 const routes = () => {
@@ -59,7 +60,7 @@ const routes = () => {
       {!isAndroid && isCoutryAllowed && <Header />}
       {/* {isCoutryAllowed ? ( */}
         <>
-          <div className="closeMenuWrapper">
+          <div className="closeMenuWrapper" style={{background: '#182031 !important'}}>
             <Switch>
               <PublicRoute path="/" exact component={Home} />
               {/* <PublicRoute path="/" exact component={LandingNew} /> */}
@@ -129,6 +130,11 @@ const routes = () => {
                 path="/SubscriptionList"
                 exact
                 component={SubscriptionList}
+              />
+              <PublicRoute
+                path="/SubscriptionUpgradeList"
+                exact
+                component={SubscriptionUpgradeList}
               />
               <PrivateRoute path="/payment" exact component={Payment} />
               <PrivateRoute path="/success" exact component={Success} />

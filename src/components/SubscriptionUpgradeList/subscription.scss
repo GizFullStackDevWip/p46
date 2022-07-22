@@ -1,0 +1,242 @@
+$color_1: #fff;
+$color_2: #1e7ad5;
+$color_3: #fedf73;
+$color_4: #1f80e0;
+$color_5: #303746;
+$color_6: #1e2a48;
+$color_7: #334366;
+$color_8: #194474;
+$color_9: #1f80e0;
+$color_10: #194474;
+
+.subscription-list-wrapper {
+    color: $color_1;
+    margin-right: 40px;
+    margin-bottom: 100px;
+    border-radius: 2px;
+    border: 1px solid $color_5;
+
+    .inner-wrapper {
+        padding: 50px 0px 0px 50px;
+
+        .content-image {
+            display: none !important;
+        }
+
+        .content {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: row;
+            flex-direction: row;
+
+            .packagedetails {
+                width: 50%;
+                padding: 40px 10px 10px 10px;
+
+                h6 {
+                    font-size: 16px;
+                    color: $color_1;
+                }
+
+                span {
+                    font-size: 15px;
+                    color: $color_2;
+                }
+
+                .inner-wrapper {
+                    div {
+                        border-bottom: 1px solid $color_5;
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+
+            .subscription-packages {
+                width: 20%;
+                padding: 10px;
+                margin: 5px 15px;
+                border-radius: 5px;
+                border: transparent;
+                text-align: center;
+
+                h6 {
+                    font-size: 16px;
+                    color: $color_1;
+                }
+
+                img {
+                    width: 20px;
+                }
+
+                div {
+                    margin: 25px 25px 30px 25px;
+                }
+
+                span {
+                    font-size: 12px;
+                    font-weight: 800;
+                }
+            }
+
+            .active {
+                background: $color_6;
+
+                h6 {
+                    color: $color_3;
+                }
+            }
+        }
+
+        .bottom-content {
+            .wrapper {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                width: 100%;
+                padding: 50px;
+
+                .item {
+                    width: 33%;
+                    border: 1px solid $color_7;
+                    border-radius: 5px;
+                    margin: 15px;
+                    padding: 15px;
+                    background: transparent;
+                    cursor: pointer;
+
+                    h6 {
+                        font-size: 16px;
+                        color: $color_1;
+                    }
+
+                    span {
+                        font-size: 20px;
+                        font-weight: 800;
+                    }
+
+                    img {
+                        width: 30px;
+                        margin-left: 20px;
+                        margin-top: -10px;
+                    }
+
+                    &:hover {
+                        background: $color_8;
+                        border: 1px solid;
+
+                        h6 {
+                            color: $color_3;
+                        }
+                    }
+
+                    button {
+                        background: $color_9;
+                        color: $color_1;
+                        font-size: 15px;
+                        margin-top: 30%;
+                        width: 100%;
+                        padding: 15px;
+
+                        &:hover {
+                            background: $color_1;
+                            color: $color_4;
+                            border: 1px solid $color_1;
+                        }
+                    }
+                }
+
+                .submit {
+                    border: transparent;
+
+                    &:hover {
+                        background: transparent;
+                        border: transparent;
+                    }
+                }
+
+                .active {
+                    background: $color_10;
+                    border: 1px solid;
+                    cursor: none;
+
+                    h6 {
+                        color: $color_3;
+                    }
+
+                    img {
+                        width: 30px;
+                        margin-left: 20px;
+                        margin-top: -10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+
+    .subscription-list-wrapper {
+
+        margin-right: 0px;
+
+        .inner-wrapper {
+            padding: 50px 0px 0px 0px;
+
+            .content-image {
+                display: block !important;
+            }
+
+            .content {
+                // width: 100%;
+                // display: -webkit-box;
+                // display: -ms-flexbox;
+                // display: flex;
+                // flex-direction: column;
+
+                // .packagedetails {
+                //     width: 100%;
+                // }
+
+                // .subscription-packages {
+                //     width: 100%;
+                //     margin: 5px 0px;
+                // }
+                display: none !important;
+            }
+
+            .bottom-content {
+                .wrapper {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    flex-direction: column;
+                    width: 100%;
+
+                    .item {
+                        width: 100%;
+                        margin: 5px;
+                        padding: 10px;
+
+                        button {
+                            margin-top: 0px;
+                        }
+                    }
+
+                    .submit {
+                        margin: 5px 0px;
+                        padding: 0px;
+                    }
+                }
+            }
+        }
+    }
+}

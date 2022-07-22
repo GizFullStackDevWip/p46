@@ -12,7 +12,7 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 import { ToastsContainer, ToastsStore } from "react-toasts";
 import { clearUserData } from "../../Utils/utils";
 
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 var showsImageUrl = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
 
 const Show = ({ param, update, categoryId }) => {

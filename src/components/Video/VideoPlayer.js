@@ -10,7 +10,7 @@ import closepanel from "../../img/icon-closepanel.png";
 import "./videoPlayer.css";
 
 
-const uId = service.getCookie("guestUserId");
+let uId = service.getCookie("guestUserId");
 
 var details = [];
 

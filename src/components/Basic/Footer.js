@@ -31,7 +31,7 @@ const Footer = () => {
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerFacebook"
-                    style={{ color: "#d70e1d" }}
+                    style={{ color: "rgb(123 193 244)" }}
                   >
                     <svg
                       className="svgIcon facebookIcon"
@@ -70,7 +70,7 @@ const Footer = () => {
                     rel="noopener"
                     target="_blank"
                     className="linkButton footerTwitter"
-                    style={{ color: "#d70e1d" }}
+                    style={{ color: "rgb(123 193 244)" }}
                   >
                     <svg
                       className="svgIcon"
@@ -91,7 +91,7 @@ const Footer = () => {
                     target="_blank"
                     // className="linkButton footerTwitter"
                     style={{
-                      color: "#d70e1d",
+                      color: "rgb(123 193 244)",
                       // marginTop: "10px"
                     }}
                   >

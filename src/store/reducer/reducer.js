@@ -6,6 +6,7 @@ const initial_state = {
   addToMyList: false,
   signInBlock: false,
   isAndroid: false,
+  isUpgrade: false,
 };
 
 const reducer = (state = initial_state, action) => {
@@ -39,6 +40,11 @@ const reducer = (state = initial_state, action) => {
       return {
         ...state,
         isAndroid: true,
+      };
+    case actionTypes.IS_UPGRADE:
+      return {
+        ...state,
+        isUpgrade: action.payload,
       };
     default:
       return state;

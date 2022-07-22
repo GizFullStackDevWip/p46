@@ -91,7 +91,7 @@ function register(values, facebookId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -138,7 +138,7 @@ function getshowsbyCategory() {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -170,10 +170,10 @@ function getshowsbyCategory() {
 }
 
 function getshowsbyListCategory() {
-  var token     = localStorage.getItem("access-token");
+  var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -195,11 +195,11 @@ function getshowsbyListCategory() {
     },
   };
   return axios
-  // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
+    // .get("https://staging.poppo.tv/test/api/show/list", customConfig)
     .get(process.env.REACT_APP_API_URL + "category/list", customConfig)
     .then((response) => {
       return response.data;
-      console.log(`resp from listcat`,response.data)
+      console.log(`resp from listcat`, response.data)
     })
     .catch((error) => {
       return [];
@@ -209,7 +209,7 @@ function getshowsbyListCategory() {
 
 function searchShow(keyword) {
   // cloud search
-  
+
   let countryCode = getCookie("country_code");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -252,7 +252,7 @@ function getShows(key) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -290,7 +290,7 @@ function verifyEmail(values, userRegisterId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -328,7 +328,7 @@ async function login(values) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -378,7 +378,7 @@ function userSubscription(userLoggedId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -412,7 +412,7 @@ function forgotEmail(values) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -598,7 +598,7 @@ function stripeSession(sub_id) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
- 
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -641,7 +641,7 @@ function stripeDecode(sessionId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -707,11 +707,11 @@ function stripeDecode(sessionId) {
 //     });
 // }
 
-function paymentUpdate(subscription, mode_of_payment, status, phone) {
+function paymentUpdate(subscription, mode_of_payment, status, isUpgrade) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -719,16 +719,23 @@ function paymentUpdate(subscription, mode_of_payment, status, phone) {
   }
   let orginal_amount = localStorage.getItem("selectedAmount");
   let selectedSubId = localStorage.getItem("selectedSubId");
+  let previousSubId = localStorage.getItem('previous_subscription_id')
   let deviceType = localStorage.getItem("deviceType");
   var token = localStorage.getItem("access-token");
-
-  let ideabizPhone = "";
-
-  if (phone == undefined) {
-    ideabizPhone = "";
-  } else {
-    ideabizPhone = phone;
+  let transactionType = 1
+  let updateURL = "subscription/updateTransaction"
+  if (isUpgrade === 'true') {
+    transactionType = 6
+    updateURL = "subscription/upgrade"
   }
+
+  // let ideabizPhone = "";
+
+  // if (phone == undefined) {
+  //   ideabizPhone = "";
+  // } else {
+  //   ideabizPhone = phone;
+  // }
 
   const customConfig = {
     headers: {
@@ -747,7 +754,7 @@ function paymentUpdate(subscription, mode_of_payment, status, phone) {
   };
   const data = {
     device_id: deviceId,
-    transaction_type: 1,
+    transaction_type: transactionType,
     subscription_id: selectedSubId,
     mode_of_payment: mode_of_payment,
     status: status,
@@ -756,12 +763,17 @@ function paymentUpdate(subscription, mode_of_payment, status, phone) {
     receiptid: subscription,
     pubid: process.env.REACT_APP_PUBID,
     device_type: deviceType,
-    country_code: countryCode,
-    ideabiz_phone: ideabizPhone,
+    // country_code: countryCode,
+    // ideabiz_phone: ideabizPhone,
   };
+
+  if (isUpgrade === 'true') {
+    data.previous_subscription_id = previousSubId;
+  }
+
   return axios
     .post(
-      process.env.REACT_APP_API_URL + "subscription/updateTransaction",
+      process.env.REACT_APP_API_URL + updateURL,
       qs.stringify(data),
       customConfig
     )
@@ -891,7 +903,7 @@ function paypalSubscription() {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
- 
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   let subId = localStorage.getItem("selectedSubId");
@@ -932,7 +944,7 @@ async function facebookLogin(facebook_id, facebook_email, name) {
   var token = localStorage.getItem("access-token");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -999,7 +1011,7 @@ function facebokLink(facebook_id, facebook_email) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -1069,13 +1081,13 @@ function getGeoInfo() {
       }
       return response.data;
     })
-    .catch((error) => {});
+    .catch((error) => { });
 }
 function analytics() {
   let countryCode = getCookie("country_code");
   let sessionId = localStorage.getItem("session_id");
   // setCookie('device_analytics',true);
-  
+
   let user_id = getCookie("userId");
   let email_id = getCookie("userEmail");
   if (user_id) {
@@ -1134,7 +1146,7 @@ function analytics() {
     });
 }
 function cookiePlicy() {
-  
+
   let user_id = getCookie("userId");
   let token = localStorage.getItem("access-token");
   if (user_id) {
@@ -1165,7 +1177,7 @@ function cookiePlicy() {
     });
 }
 function generateTvLink() {
-  
+
   let countryCode = getCookie("country_code");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
@@ -1207,7 +1219,7 @@ function generateTvLink() {
 function onVideoPlayFunction() {
   let countryCode = getCookie("country_code");
   let sessionId = localStorage.getItem("session_id");
-  
+
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -1305,7 +1317,7 @@ function getGuestUser() {
 
 function applaunchEvent(event) {
   let sessionId = localStorage.getItem("session_id");
- 
+
   let user_id = getCookie("userId");
   if (user_id) {
     uId = user_id;
@@ -1387,7 +1399,7 @@ function getShowDetails(showId) {
   var token = localStorage.getItem("access-token");
   let ipaddress = localStorage.getItem("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
- 
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {
@@ -1419,12 +1431,12 @@ function getShowDetails(showId) {
     });
 }
 function getSearchSuggestion(keyword) {
-  
+
   let countryCode = getCookie("country_code");
   let ipaddress = getCookie("ipaddress");
   let deviceId = localStorage.getItem("deviceId");
   let user_id = getCookie("userId");
-  let token = localStorage.getItem("access-token"); 
+  let token = localStorage.getItem("access-token");
   if (user_id) {
     uId = user_id;
   }
@@ -1461,7 +1473,7 @@ function getVideoDetails(videoId) {
   var token = localStorage.getItem("access-token");
   let device_id = localStorage.getItem("deviceId");
   let ipaddress = localStorage.getItem("ipaddress");
-  
+
   let user_id = getCookie("userId");
   let countryCode = getCookie("country_code");
   if (user_id) {

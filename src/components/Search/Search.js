@@ -166,7 +166,7 @@ const Search = ({ history }) => {
                                 className="moviePoster imageSizeAdj thumbImage"
                                 style={{
                                   backgroundImage: `url(${
-                                    showsImageUrl + show.logo
+                                    showsImageUrl + show.logo_thumb
                                   })`,
                                 }}
                               >
