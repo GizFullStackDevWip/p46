@@ -6,42 +6,24 @@ const path = require("path");
 const fs = require("fs");
 const axios = require("axios");
 
-const PUB_ID = 50037;
-const CHANNEL_ID = 375;
-const GUEST_ID = 291;
-const THUMBNAIL_URL = "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/";
-
-const WEBSITE_TITLE = "Project Forty-Six";
-const WEBSITE_URL = "https://dev.projectfortysix.com";
-const WEBSITE_DESC =
-  "Project Forty-Six is a conservative news and information service that was created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square. Our goal is to provide insight into Oklahoma’s most pressing social and political issues.";
-const WEBSITE_IMAGE =
-  "https://dev.projectfortysix.com/static/media/logo.a4842a85.png";
-
-const REQUEST_HEADER = {
-  "Content-Type": "application/x-www-form-urlencoded",
-  "Access-Control-Allow-Origin": true,
-  crossorigin: true,
-  uid: GUEST_ID,
-  pubid: PUB_ID,
-  country_code: "US",
-  channelid: CHANNEL_ID,
-  dev_id: "",
-  ip: "",
-  device_type: "web",
-};
-
 app.get("/", function (request, response) {
-  //
+  console.log("/");
   const filePath = path.resolve(__dirname, "./build", "index.html");
   fs.readFile(filePath, "utf8", function (err, data) {
     if (err) {
       return console.log(err);
     }
-    data = data.replace(/\$OG_TITLE/g, WEBSITE_TITLE);
-    data = data.replace(/\$OG_DESCRIPTION/g, WEBSITE_DESC);
-    data = data.replace(/\$OG_IMAGE/g, WEBSITE_IMAGE);
-    result = data.replace(/\$OG_URL/g, WEBSITE_URL + request.originalUrl);
+    data = data.replace(/\$OG_TITLE/g, "Project Forty-Six");
+    data = data.replace(
+      /\$OG_DESCRIPTION/g,
+      "Project Forty-Six is a conservative news and information service that was created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square. Our goal is to provide insight into Oklahoma’s most pressing social and political issues."
+    );
+
+    data = data.replace(/\$OG_IMAGE/g, "");
+    result = data.replace(
+      /\$OG_URL/g,
+      "watch.projectfortysix.com" + request.originalUrl
+    );
     response.send(result);
   });
 });
@@ -138,21 +120,21 @@ app.get("/home/movies", function (request, response) {
                           console.log(
                             "thumb",
                             "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/" +
-                            thumb
+                              thumb
                           );
                           console.log(
                             "url",
-                            "dev.projectfortysix.com/" + request.originalUrl
+                            "watch.projectfortysix.com/" + request.originalUrl
                           );
                           data = data.replace(/\$OG_DESCRIPTION/g, videoDesc);
                           data = data.replace(
                             /\$OG_IMAGE/g,
                             "https://gizmeon.s.llnwi.net/vod/thumbnails/show_logo/" +
-                            thumb
+                              thumb
                           );
                           result = data.replace(
                             /\$OG_URL/g,
-                            "dev.projectfortysix.com" + request.originalUrl
+                            "watch.projectfortysix.com" + request.originalUrl
                           );
                           response.send(result);
                         }
@@ -175,26 +157,30 @@ app.get("/home/movies", function (request, response) {
         }
       })
       .catch((error) => {
-        console.log(error);
-
-        response.sendFile(filePath);
+        // console.log(error);
       });
   });
 });
 
 app.use(express.static(path.resolve(__dirname, "./build")));
 app.get("*", function (request, response) {
-
+  console.log("*");
 
   const filePath = path.resolve(__dirname, "./build", "index.html");
   fs.readFile(filePath, "utf8", function (err, data) {
     if (err) {
       return console.log(err);
     }
-    data = data.replace(/\$OG_TITLE/g, WEBSITE_TITLE);
-    data = data.replace(/\$OG_DESCRIPTION/g, WEBSITE_DESC);
-    data = data.replace(/\$OG_IMAGE/g, WEBSITE_IMAGE);
-    result = data.replace(/\$OG_URL/g, WEBSITE_URL + request.originalUrl);
+    data = data.replace(/\$OG_TITLE/g, "Project Forty-Six");
+    data = data.replace(
+      /\$OG_DESCRIPTION/g,
+      "Project Forty-Six is a conservative news and information service that was created to combat censorship and circumvent the chokehold Big-Tech has on entry to the public square. Our goal is to provide insight into Oklahoma’s most pressing social and political issues."
+    );
+    data = data.replace(/\$OG_IMAGE/g, "");
+    result = data.replace(
+      /\$OG_URL/g,
+      "watch.projectfortysix.com" + request.originalUrl
+    );
     response.send(result);
   });
 });

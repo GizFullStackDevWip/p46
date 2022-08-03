@@ -1127,7 +1127,7 @@ const SignIn = (props) => {
                               }}
                             // onClick={() => {
                             //   window.open(
-                            //     "https://dev.projectfortysix.com/terms/99078"
+                            //     "https://watch.projectfortysix.com/terms/99078"
                             //   );
                             // }}
                             >
@@ -1144,7 +1144,7 @@ const SignIn = (props) => {
                               }}
                             // onClick={() => {
                             //   window.open(
-                            //     "https://dev.projectfortysix.com/privacy/247031"
+                            //     "https://watch.projectfortysix.com/privacy/247031"
                             //   );
                             // }}
                             >

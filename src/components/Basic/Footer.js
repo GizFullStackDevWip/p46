@@ -309,7 +309,7 @@ const Footer = () => {
                       functionOnclick("/termsandconditions");
                     }}
                     // onClick={() => {
-                    //   window.open("https://dev.projectfortysix.com/terms/99078");
+                    //   window.open("https://watch.projectfortysix.com/terms/99078");
                     // }}
                     className="linkButton"
                   >

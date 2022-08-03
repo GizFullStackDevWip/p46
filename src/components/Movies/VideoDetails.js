@@ -746,7 +746,7 @@ const VideoDetails = (categoryId, episode) => {
                                 >
                                   <FacebookShareButton
                                     url={
-                                      "dev.projectfortysix.com/home/movies?show_id=" +
+                                      "watch.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     quote={
@@ -781,7 +781,7 @@ const VideoDetails = (categoryId, episode) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "dev.projectfortysix.com/home/movies?show_id=" +
+                                      "watch.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={
@@ -852,7 +852,7 @@ const VideoDetails = (categoryId, episode) => {
                     }
                   >
                     <div className="vpMiddleInfoSection vpInfoPadding">
-                    <div>
+                    {/* <div>
                           {videoSubscription && videoSubscription.map((subscription) => {
                             return (
                               <span style={{
@@ -865,7 +865,7 @@ const VideoDetails = (categoryId, episode) => {
                               }}>{subscription.subscription_name}</span>
                             )
                           })}
-                        </div>
+                        </div> */}
                       <div className="vpLengthCensor">
                         <div className="vpLengthYear">
                           {showDetails && (

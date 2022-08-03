@@ -606,7 +606,7 @@ const EpisodeDetails = (props) => {
                                 >
                                   <FacebookShareButton
                                     url={
-                                      "dev.projectfortysix.com/home/movies?show_id=" +
+                                      "watch.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     quote={
@@ -639,7 +639,7 @@ const EpisodeDetails = (props) => {
 
                                   <TwitterShareButton
                                     url={
-                                      "dev.projectfortysix.com/home/movies?show_id=" +
+                                      "watch.projectfortysix.com/home/movies?show_id=" +
                                       showDetails.show_id
                                     }
                                     title={showDetails.video_title}
